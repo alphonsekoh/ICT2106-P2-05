@@ -1,0 +1,134 @@
+@model IEnumerable<PainAssessment.Models.Practitioner>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+<div style="margin-top: 20px">
+    <div class="row justify-content-between">
+        <div class="col-sm-6">
+            <h1>Manage Practitioners</h1>
+            <p class="text-muted">
+                Admin can manage practitioners. This include creating, updating, deleting, reading all, reset password.
+            </p>
+        </div>
+
+        <div class="col-sm-2 align-self-center">
+            <a asp-action="Create"
+               type="button"
+               class="btn btn-primary btn-block">
+                Create
+            </a>
+        </div>
+    </div>
+
+    <div class="d-flex-col mt-2">
+        <div class="d-flex justify-content-end">
+            <input class="form-control me-2"
+                   type="search"
+                   placeholder="Search with Name"
+                   aria-label="Search"
+                   id="" />
+            <button class="btn btn-outline-success">
+                Search
+            </button>
+        </div>
+
+        <p class="d-flex justify-content-end text-muted">Displaying 1 to 9 out of 40 records</p>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">
+                        @Html.DisplayNameFor(model => model.Id)
+                    </th>
+                    <th scope="col">
+                        @Html.DisplayNameFor(model => model.Name)
+                    </th>
+                    <th scope="col">
+                        @Html.DisplayNameFor(model => model.Department.Name)
+                    </th>
+                    <th scope="col">
+                        Actions
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Id)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Department.Name) Department
+                        </td>
+                        <td>
+                            <a asp-action="Delete" asp-route-id="@item.Id"
+                               type="button"
+                               class="btn btn-primary btn-sm">
+                                View all Consultations
+                            </a>
+                            <a asp-action="Edit" asp-route-id="@item.Id"
+                               type="button"
+                               class="btn btn-secondary btn-sm">
+                                Edit
+                            </a>
+                            <a asp-action="Delete" asp-route-id="@item.Id"
+                               type="button"
+                               class="btn btn-danger btn-sm">
+                                Reset Password
+                            </a>
+                            <a asp-action="Delete" asp-route-id="@item.Id"
+                               type="button"
+                               class="btn btn-danger btn-sm">
+                                Delete
+                            </a>
+                            @*<a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>*@
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <div class="d-flex justify-content-center">
+            <div>
+                <nav>
+                    <ul class="pagination">
+                        <li class="page-item">
+                            <a class="page-link"
+                               aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                        <li class="page-item active">
+                            <a class="page-link">1</a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link">2</a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link">3</a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link">4</a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link"
+                               aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+</div>
