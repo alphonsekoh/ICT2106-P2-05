@@ -12,6 +12,7 @@ namespace PainAssessment.Models
         public string Password { get; set; }
 
         [Required]
+        [DisplayName("Department Id")]
         public int DepartmentId { get; set; }
 
         public Department Department { get; set; }

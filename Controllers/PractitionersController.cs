@@ -36,28 +36,13 @@ namespace PainAssessment.Controllers
             return View(practitioners);
         }
 
-        //     // GET: Practitioners/Details/5
-        //     public IActionResult Details(int? id)
-        //     {
-        //         if (id == null)
-        //         {
-        //             return NotFound();
-        //         }
-        //         var practitioner = unitOfWork.Practitioners.GetPractitionerWithDetails((int)id);
-
-
-        //         if (practitioner == null)
-        //         {
-        //             return NotFound();
-        //         }
-
-        //         return View(practitioner);
-        //     }
-
         // GET: Practitioners/Create
         public IActionResult Create()
         {
-            //ViewData["DepartmentId"] = new SelectList(unitOfWork.Departments.GetAllDepartments(), "Id", "Name");
+            ViewData["DepartmentId"] = new SelectList(new List<Department> {
+                new Department { Name = "A&C" },
+                new Department { Name = "Female" },
+                new Department { Name = "Clinic" } }, "Id", "Name");
             return View();
         }
 
@@ -78,22 +63,30 @@ namespace PainAssessment.Controllers
             return View(practitioner);
         }
 
-        //// GET: Practitioners/Edit/5
-        //public IActionResult Edit(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return NotFound();
-        //    }
+        // GET: Practitioners/Edit/5
+        public IActionResult Edit(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
 
-        //    var practitioner = unitOfWork.Practitioners.GetPractitionerWithDetails((int)id);
-        //    if (practitioner == null)
-        //    {
-        //        return NotFound();
-        //    }
-        //    ViewData["DepartmentId"] = new SelectList(unitOfWork.Departments.GetAllDepartments(), "Id", "Name");
-        //    return View(practitioner);
-        //}
+            //var practitioner = unitOfWork.Practitioners.GetPractitionerWithDetails((int)id);
+            var practitioner = new Practitioner { Name = "Test", Department = new Department { Name = "A&C" } };
+            if (practitioner == null)
+            {
+                return NotFound();
+            }
+            //ViewData["DepartmentId"] = new SelectList(unitOfWork.Departments.GetAllDepartments(), "Id", "Name");
+
+
+            ViewData["DepartmentId"] = new SelectList(new List<Department> {
+                new Department { Name = "A&C" },
+                new Department { Name = "Female" },
+                new Department { Name = "Clinic" } }, "Id", "Name");
+
+            return View(practitioner);
+        }
 
         //     // POST: Practitioners/Edit/5
         //     // To protect from overposting attacks, enable the specific properties you want to bind to.

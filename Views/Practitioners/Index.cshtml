@@ -58,7 +58,7 @@
 
                 @foreach (var item in Model)
                 {
-                    <tr>
+                    <tr id="row_@item.Id">
                         <td>
                             @Html.DisplayFor(modelItem => item.Id)
                         </td>
@@ -84,11 +84,11 @@
                                class="btn btn-danger btn-sm">
                                 Reset Password
                             </a>
-                            <a asp-action="Delete" asp-route-id="@item.Id"
-                               type="button"
-                               class="btn btn-danger btn-sm">
+                            <button onclick="ConfirmDelete(@item.Id)"
+                                    type="button"
+                                    class="btn btn-danger btn-sm">
                                 Delete
-                            </a>
+                            </button>
                             @*<a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
                                 <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
                                 <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>*@
@@ -130,5 +130,58 @@
             </div>
         </div>
     </div>
-
 </div>
+
+<div class="modal fade" id="deleteModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <a href="#" class="close" data-dismiss="modal">&times;</a>
+                <h3 class="modal-title">Delete Practitioner</h3>
+            </div>
+            <div class="modal-body">
+                <h4>Are you sure you want to delete this Practitioner?</h4>
+
+
+
+            </div>
+            <div class="modal-footer">
+                <a href="#" class="btn btn-default" data-dismiss="modal">Cancel</a>
+                <a href="#" class="btn btn-success" onclick="DeletePractitioner()">Confirm</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<input type="hidden" id="hiddenPractitionerId" />
+
+
+@section scripts{
+    <script>var ConfirmDelete = function (PractitionerId) {
+
+            $("#hiddenPractitionerId").val(PractitionerId);
+            $("#deleteModal").modal('show');
+
+        }
+
+        var DeletePractitioner = function () {
+
+
+
+            var empId = $("#hiddenPractitionerId").val();
+
+            $.ajax({
+
+                type: "POST",
+                url: "/Home/deletePractitionerDetails",
+                data: { Id: empId },
+                success: function (result) {
+
+                    $("#deleteModal").modal("hide");
+                    $("#row_" + empId).remove();
+                }
+            })
+
+        }</script>
+
+}

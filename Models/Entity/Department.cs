@@ -9,7 +9,6 @@ namespace PainAssessment.Models
 {
     public class Department
     {
-        [DisplayName("Department Id")]
         public int Id { get; set; }
         [Required]
         [DisplayName("Department Name")]
