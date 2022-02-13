@@ -22,15 +22,15 @@ namespace PainAssessment.Controllers
         public IActionResult Index()
         {
             var practitioners = new List<Practitioner> {
-                new Practitioner{Name = "Test", Department = new Department{Name ="A&C" }},
-                new Practitioner{Name = "Test2",Department = new Department{Name ="Female" }},
-                new Practitioner{Name = "Test3",Department = new Department{Name ="Clinic" }},
-                new Practitioner{Name = "Test", Department = new Department{Name ="A&C" }},
-                new Practitioner{Name = "Test2",Department = new Department{Name ="Female" }},
-                new Practitioner{Name = "Test3",Department = new Department{Name ="Clinic" }},
-                new Practitioner{Name = "Test", Department = new Department{Name ="A&C" }},
-                new Practitioner{Name = "Test2",Department = new Department{Name ="Female" }},
-                new Practitioner{Name = "Test3",Department = new Department{Name ="Clinic" }}
+                new Practitioner{Id = 1, Name = "Test", Department = new Department{Name ="A&C" }},
+                new Practitioner{Id = 2, Name = "Test2", Department = new Department{Name ="Female" }},
+                new Practitioner{Id = 3, Name = "Test3", Department = new Department{Name ="Clinic" }},
+                new Practitioner{Id = 4, Name = "Test", Department = new Department{Name ="A&C" }},
+                new Practitioner{Id = 5, Name = "Test2", Department = new Department{Name ="Female" }},
+                new Practitioner{Id = 6, Name = "Test3", Department = new Department{Name ="Clinic" }},
+                new Practitioner{Id = 7, Name = "Test", Department = new Department{Name ="A&C" }},
+                new Practitioner{Id = 8, Name = "Test2", Department = new Department{Name ="Female" }},
+                new Practitioner{Id = 9, Name = "Test3", Department = new Department{Name ="Clinic" }}
             };
 
             return View(practitioners);
@@ -153,5 +153,18 @@ namespace PainAssessment.Controllers
         //         return RedirectToAction(nameof(Index));
         //     }
         // }
+
+        public JsonResult deletePractitioner(int Id)
+        {
+
+            //using (var context = new PractitionerDetailsEntities())
+            //{
+            //    var practitioner = context.Practitioner.Where(a => a.Id == Id).FirstOrDefault();
+            //    practitioner.IsDeleted = true;
+            //    context.SaveChanges();
+            //}
+            return Json(new { status = "Success" });
+
+        }
     }
 }
