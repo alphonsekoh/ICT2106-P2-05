@@ -18,7 +18,7 @@ namespace PainAssessment.Areas.Admin.Data
                 return;   // DB has been seeded
             }
             var departments = new Department[]
-            {          
+            {
             new Department{Name="Neurology"},
             new Department{Name="Orthopaedic"},
             new Department{Name="Cardiology"},
@@ -26,10 +26,10 @@ namespace PainAssessment.Areas.Admin.Data
             new Department{Name="General Surgery"},
             new Department{Name="Haematology"},
             new Department{Name="Dermatology"}
-            }; 
+            };
 
             context.Departments.AddRange(departments);
-            
+
             context.SaveChanges();
 
             var practitioners = new Practitioner[]
@@ -57,11 +57,35 @@ namespace PainAssessment.Areas.Admin.Data
             new Practitioner{DepartmentID=6,Name="James"},
             new Practitioner{DepartmentID=6,Name="Benjamin"},
             new Practitioner{DepartmentID=7,Name="Lucas"},
-
             };
             context.Practitioners.AddRange(practitioners);
 
             context.SaveChanges();
+
+
+
+            var patients = new Patient[]
+            {
+                new Patient{ Name= "Stone", BirthDate=DateTime.UtcNow, Gender="Female", Condition = "Unknown", Notes = "Unknown" },
+                new Patient{ Name= "John", BirthDate=DateTime.UtcNow, Gender="Female", Condition = "Unknown", Notes = "Unknown" },
+                new Patient{ Name= "Wong", BirthDate=DateTime.UtcNow, Gender="Male", Condition = "Unknown", Notes = "Unknown" },
+                new Patient{ Name= "Mia", BirthDate=DateTime.UtcNow, Gender="Female", Condition = "Unknown", Notes = "Unknown" },
+                new Patient{ Name= "Nguta", BirthDate=DateTime.UtcNow, Gender="Male", Condition = "Unknown", Notes = "Unknown" },
+                new Patient{ Name= "Ilya", BirthDate=DateTime.UtcNow, Gender="Female", Condition = "Unknown", Notes = "Unknown" },
+                new Patient{ Name= "Ellawala", BirthDate=DateTime.UtcNow, Gender="Female", Condition = "Unknown", Notes = "Unknown" },
+                new Patient{ Name= "Ruveni", BirthDate=DateTime.UtcNow, Gender="Female", Condition = "Unknown", Notes = "Unknown" },
+                new Patient{ Name= "Ponnappa", BirthDate=DateTime.UtcNow, Gender="Male", Condition = "Unknown", Notes = "Unknown" },
+                new Patient{ Name= "Priya", BirthDate=DateTime.UtcNow, Gender="Female", Condition = "Unknown", Notes = "Unknown" },
+                new Patient{ Name= "Peter", BirthDate=DateTime.UtcNow, Gender="Female", Condition = "Unknown", Notes = "Unknown" },
+                new Patient{ Name= "Stanbridge", BirthDate=DateTime.UtcNow, Gender="Female", Condition = "Unknown", Notes = "Unknown" },
+                new Patient{ Name= "Ruveni", BirthDate=DateTime.UtcNow, Gender="Female", Condition = "Unknown", Notes = "Unknown" },
+                new Patient{ Name= "Andrews", BirthDate=DateTime.UtcNow, Gender="Male", Condition = "Unknown", Notes = "Unknown" },
+                new Patient{ Name= "Daly", BirthDate=DateTime.UtcNow, Gender="Female", Condition = "Unknown", Notes = "Unknown" }
+
+            };
+            context.Patients.AddRange(patients);
+            context.SaveChanges();
+
         }
     }
 }
