@@ -6,6 +6,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using PainAssessment.Data;
+using PainAssessment.Domain;
+using PainAssessment.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,6 +31,10 @@ namespace PainAssessment
             options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddDatabaseDeveloperPageExceptionFilter();
             services.AddControllersWithViews();
+            services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+            services.AddTransient<IUnitOfWork, UnitOfWork>();
+            // To add everytime there's new interface
+            services.AddTransient<ITemplateChecklistService, TemplateChecklistService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

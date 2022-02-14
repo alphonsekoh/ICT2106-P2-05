@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using PainAssessment.Interfaces;
 using PainAssessment.Models;
 using System;
 using System.Collections.Generic;
@@ -12,15 +13,19 @@ namespace PainAssessment.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        // Include services
+        private readonly ITemplateChecklistService templateChecklistService;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, ITemplateChecklistService templateChecklistService)
         {
             _logger = logger;
+            this.templateChecklistService = templateChecklistService;
         }
 
         public IActionResult Index()
         {
-            return View();
+            var templateChecklistArr = templateChecklistService.GetAllTemplateChecklist().ToList();
+            return View(templateChecklistArr);
         }
 
         public IActionResult Privacy()
