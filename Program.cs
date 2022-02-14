@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using PainAssessment.Data;
-using PainAssessment.Areas.Admin.Data;
+// using PainAssessment.Areas.Admin.Data;
 
 namespace PainAssessment
 {
@@ -28,7 +28,7 @@ namespace PainAssessment
             try
             {
                 var context = services.GetRequiredService<HospitalContext>();
-                PractitionerDepartmentDbInitializer.Initialize(context);
+               // PractitionerDepartmentDbInitializer.Initialize(context);
             }
             catch (Exception ex)
             {
