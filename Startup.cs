@@ -5,6 +5,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using PainAssessment.Areas.Admin.Data;
+using PainAssessment.Areas.Admin.Services;
 using PainAssessment.Data;
 using System;
 using System.Collections.Generic;
@@ -28,6 +30,14 @@ namespace PainAssessment
             services.AddDbContext<HospitalContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddDatabaseDeveloperPageExceptionFilter();
+
+
+            // Add DI for Services
+            services.AddScoped<IDepartmentService, DepartmentService>();
+            services.AddScoped<IPractitionerService, PractitionerService>();
+            services.AddScoped<IPatientService, PatientService>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+
             services.AddControllersWithViews();
         }
 
