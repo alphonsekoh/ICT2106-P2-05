@@ -39,7 +39,7 @@ namespace PainAssessment.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create([Bind("DepartmentID,Id,Name")] Practitioner practitioner)
+        public IActionResult Create([Bind("PractitionerID,Name,DepartmentID")] Practitioner practitioner)
         {
             if (ModelState.IsValid)
             {
@@ -77,7 +77,7 @@ namespace PainAssessment.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id, [Bind("DepartmentID,Id,Name")] Practitioner practitioner)
+        public IActionResult Edit(int id, [Bind("PractitionerID,Name,DepartmentID")] Practitioner practitioner)
         {
             if (id != practitioner.PractitionerID)
             {
