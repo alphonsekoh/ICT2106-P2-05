@@ -1,4 +1,4 @@
-@model IEnumerable<PainAssessment.Models.Practitioner>
+@model IEnumerable<PainAssessment.Areas.Admin.Models.Practitioner>
 
 @{
     ViewData["Title"] = "Index";
@@ -41,7 +41,7 @@
             <thead>
                 <tr>
                     <th scope="col">
-                        @Html.DisplayNameFor(model => model.Id)
+                        @Html.DisplayNameFor(model => model.PractitionerID)
                     </th>
                     <th scope="col">
                         @Html.DisplayNameFor(model => model.Name)
@@ -58,9 +58,9 @@
 
                 @foreach (var item in Model)
                 {
-                    <tr id="row_@item.Id">
+                    <tr id="row_@item.PractitionerID">
                         <td>
-                            @Html.DisplayFor(modelItem => item.Id)
+                            @Html.DisplayFor(modelItem => item.PractitionerID)
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.Name)
@@ -69,22 +69,22 @@
                             @Html.DisplayFor(modelItem => item.Department.Name) Department
                         </td>
                         <td>
-                            <a asp-action="Delete" asp-route-id="@item.Id"
+                            <a asp-action="Delete" asp-route-id="@item.PractitionerID"
                                type="button"
                                class="btn btn-primary btn-sm">
                                 View all Consultations
                             </a>
-                            <a asp-action="Edit" asp-route-id="@item.Id"
+                            <a asp-action="Edit" asp-route-id="@item.PractitionerID"
                                type="button"
                                class="btn btn-secondary btn-sm">
                                 Edit
                             </a>
-                            <a asp-action="Delete" asp-route-id="@item.Id"
+                            <a asp-action="Delete" asp-route-id="@item.PractitionerID"
                                type="button"
                                class="btn btn-danger btn-sm">
                                 Reset Password
                             </a>
-                            <button onclick="ConfirmDelete(@item.Id, '@item.Name')"
+                            <button onclick="ConfirmDelete(@item.PractitionerID, '@item.Name')"
                                     type="button"
                                     class="btn btn-danger btn-sm">
                                 Delete

@@ -20,9 +20,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="Models\Consultation\" />
+    <None Remove="Areas\Admin\Views\Practitioners\" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Models\Consultation\" />
+    <Folder Include="Areas\Admin\Views\Practitioners\" />
   </ItemGroup>
 </Project>

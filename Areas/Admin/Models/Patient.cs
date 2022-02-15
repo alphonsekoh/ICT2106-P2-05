@@ -20,9 +20,8 @@ namespace PainAssessment.Models
         public string Notes { get; set; }
 
 
-        public ICollection<Consultation> Consultations { get; set; }
-
-        public ICollection<Practitioner> Practitioners { get; set; }
+        //public ICollection<Consultation> Consultations { get; set; }
+        //public ICollection<Practitioner> Practitioners { get; set; }
 
 
     }

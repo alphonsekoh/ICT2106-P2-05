@@ -1,13 +1,11 @@
 ﻿using System.Collections.Generic;
-
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using PainAssessment.Data;
-using PainAssessment.Models;
+using PainAssessment.Areas.Admin.Models;
 
-namespace PainAssessment.Controllers
+namespace PainAssessment.Areas.Admin.Controllers
 {
+    [Area("Admin")]
     public class PractitionersController : Controller
     {
         //private readonly IUnitOfWork unitOfWork;
@@ -22,15 +20,15 @@ namespace PainAssessment.Controllers
         public IActionResult Index()
         {
             var practitioners = new List<Practitioner> {
-                new Practitioner{Id = 1, Name = "Test", Department = new Department{Name ="A&C" }},
-                new Practitioner{Id = 2, Name = "Test2", Department = new Department{Name ="Female" }},
-                new Practitioner{Id = 3, Name = "Test3", Department = new Department{Name ="Clinic" }},
-                new Practitioner{Id = 4, Name = "Test", Department = new Department{Name ="A&C" }},
-                new Practitioner{Id = 5, Name = "Test2", Department = new Department{Name ="Female" }},
-                new Practitioner{Id = 6, Name = "Test3", Department = new Department{Name ="Clinic" }},
-                new Practitioner{Id = 7, Name = "Test", Department = new Department{Name ="A&C" }},
-                new Practitioner{Id = 8, Name = "Test2", Department = new Department{Name ="Female" }},
-                new Practitioner{Id = 9, Name = "Test3", Department = new Department{Name ="Clinic" }}
+                new Practitioner{PractitionerID = 1, Name = "Test", Department = new Department{Name ="A&C" }},
+                new Practitioner{PractitionerID = 2, Name = "Test2", Department = new Department{Name ="Female" }},
+                new Practitioner{PractitionerID = 3, Name = "Test3", Department = new Department{Name ="Clinic" }},
+                new Practitioner{PractitionerID = 4, Name = "Test", Department = new Department{Name ="A&C" }},
+                new Practitioner{PractitionerID = 5, Name = "Test2", Department = new Department{Name ="Female" }},
+                new Practitioner{PractitionerID = 6, Name = "Test3", Department = new Department{Name ="Clinic" }},
+                new Practitioner{PractitionerID = 7, Name = "Test", Department = new Department{Name ="A&C" }},
+                new Practitioner{PractitionerID = 8, Name = "Test2", Department = new Department{Name ="Female" }},
+                new Practitioner{PractitionerID = 9, Name = "Test3", Department = new Department{Name ="Clinic" }}
             };
 
             return View(practitioners);
