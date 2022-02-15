@@ -34,6 +34,11 @@ namespace PainAssessment.Areas.Admin.Services
             return unitOfWork.PractitionerGateway.FindById(id);
         }
 
+        public void SavePractitioner()
+        {
+            unitOfWork.Save();
+        }
+
         public void UpdatePractitioner(Practitioner practitioner)
         {
             unitOfWork.PractitionerGateway.Update(practitioner);
