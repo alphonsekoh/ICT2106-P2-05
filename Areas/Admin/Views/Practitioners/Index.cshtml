@@ -164,10 +164,9 @@
 
         var DeletePractitioner = function () {
             var PractitionerId = $("#hiddenPractitionerId").val();
-
             $.ajax({
                 type: "POST",
-                url: "/Practitioners/deletePractitioner",
+                url: "Practitioners/deletePractitioner",
                 data: { Id: PractitionerId },
                 success: function (result) {
 
