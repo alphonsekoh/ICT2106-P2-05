@@ -11,6 +11,6 @@ namespace PainAssessment.Areas.Admin.Models
         public int DepartmentID { get; set; }
         [StringLength(50, MinimumLength = 3)]
         public string Name { get; set; }
-
+        public ICollection<Practitioner> Practitioners { get; set; }
     }
 }
