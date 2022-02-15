@@ -9,8 +9,9 @@ using PainAssessment.Areas.Admin.Data;
 using PainAssessment.Areas.Admin.Models;
 using PainAssessment.Areas.Admin.Services;
 
-namespace PainAssess.Areas.Admin.Controllers
+namespace PainAssessment.Areas.Admin.Controllers
 {
+    [Area("Admin")]
     public class DepartmentsController : Controller
     {
         private readonly IDepartmentService departmentService;
@@ -20,13 +21,13 @@ namespace PainAssess.Areas.Admin.Controllers
             this.departmentService = departmentService;
         }
 
-        // GET: Departments
+        // GET: Admin/Departments
         public IActionResult Index()
         {
             return View(departmentService.GetAllDepartments());
         }
 
-        // GET: Departments/Details/5
+        // GET: Admin/Departments/Details/5
         public IActionResult Details(int? id)
         {
             if (id == null)
@@ -43,13 +44,13 @@ namespace PainAssess.Areas.Admin.Controllers
             return View(department);
         }
 
-        // GET: Departments/Create
+        // GET: Admin/Departments/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Departments/Create
+        // POST: Admin/Departments/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -65,7 +66,7 @@ namespace PainAssess.Areas.Admin.Controllers
             return View(department);
         }
 
-        // GET: Departments/Edit/5
+        // GET: Admin/Departments/Edit/5
         public IActionResult Edit(int? id)
         {
             if (id == null)
@@ -81,7 +82,7 @@ namespace PainAssess.Areas.Admin.Controllers
             return View(department);
         }
 
-        // POST: Departments/Edit/5
+        // POST: Admin/Departments/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -116,7 +117,7 @@ namespace PainAssess.Areas.Admin.Controllers
             return View(department);
         }
 
-        // GET: Departments/Delete/5
+        // GET: Admin/Departments/Delete/5
         public IActionResult Delete(int? id)
         {
             if (id == null)
@@ -125,7 +126,6 @@ namespace PainAssess.Areas.Admin.Controllers
             }
 
             var department = departmentService.GetDepartment((int)id);
-
             if (department == null)
             {
                 return NotFound();
@@ -134,17 +134,14 @@ namespace PainAssess.Areas.Admin.Controllers
             return View(department);
         }
 
-        // POST: Departments/Delete/5
+        // POST: Admin/Departments/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public IActionResult DeleteConfirmed(int id)
         {
-            var department = departmentService.GetDepartment((int)id);
-            departmentService.DeleteDepartment(department.DepartmentID);
+            departmentService.DeleteDepartment((int)id);
             departmentService.SaveDepartment();
             return RedirectToAction(nameof(Index));
         }
-
-
     }
 }
