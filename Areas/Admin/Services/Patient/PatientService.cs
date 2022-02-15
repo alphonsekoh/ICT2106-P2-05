@@ -34,6 +34,11 @@ namespace PainAssessment.Areas.Admin.Services
             return unitOfWork.PatientGateway.FindById(id);
         }
 
+        public void SavePatient()
+        {
+            unitOfWork.Save();
+        }
+
         public void UpdatePatient(Patient patient)
         {
             unitOfWork.PatientGateway.Update(patient);

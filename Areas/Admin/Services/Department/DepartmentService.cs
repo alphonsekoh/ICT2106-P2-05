@@ -34,9 +34,17 @@ namespace PainAssessment.Areas.Admin.Services
             return unitOfWork.DepartmentGateway.FindById(id);
         }
 
+        public void SaveDepartment()
+        {
+            unitOfWork.Save();
+        }
+
         public void UpdateDepartment(Department department)
         {
             unitOfWork.DepartmentGateway.Update(department);
         }
+
+
+        
     }
 }

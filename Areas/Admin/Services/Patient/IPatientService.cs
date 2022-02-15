@@ -13,6 +13,7 @@ namespace PainAssessment.Areas.Admin.Services
         void CreatePatient(Patient patient);
         void UpdatePatient(Patient patient);
         void DeletePatient(int id);
+        void SavePatient();
 
     }
 }
