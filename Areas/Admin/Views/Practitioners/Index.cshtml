@@ -69,7 +69,7 @@
                             @Html.DisplayFor(modelItem => item.Name)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.DepartmentID) Department
+                            @Html.DisplayFor(modelItem => item.Department.Name) Department
                         </td>
                         <td>
                             <a asp-action="Delete" asp-route-id="@item.PractitionerID"
