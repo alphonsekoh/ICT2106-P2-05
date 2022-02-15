@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using PainAssessment.Areas.Admin.Models;
@@ -21,23 +22,36 @@ namespace PainAssessment.Areas.Admin.Controllers
         // GET: Admin/Practitioners?page=1&name=gerald
         public IActionResult Index(int page = 1, string name = "")
         {
-            int total_count = practitionerService.GetPractitionersCount();
-            int max_page = (int)Math.Ceiling((decimal)(total_count / 8.0));
+            IEnumerable<Practitioner> practitioners = practitionerService.GetAllPractitioners();
+
+            if (name != null)
+            {
+                practitioners = practitioners.Where(p => p.Name.ToLower().Contains(name.ToLower()));
+            }
+
+            ViewData["total_count"] = practitioners.Count();
+
+            int max_page = (int)Math.Ceiling((decimal)(practitioners.Count() / 8.0));
 
             if (page > max_page)
             {
                 page = max_page;
             }
-            else if (page < 1)
+            if (page < 1)
             {
                 page = 1;
             }
 
-            ViewData["total_count"] = total_count;
             ViewData["max_page"] = max_page;
             ViewData["current_page"] = page;
+            ViewData["name"] = name;
 
-            return View(practitionerService.GetAllPractitionersByPageAndName(page, name));
+            if (practitioners.Count() > 0)
+            {
+                practitioners = practitioners.ChunkBy(8).ElementAt(page - 1);
+            }
+
+            return View(practitioners);
         }
 
         // GET: Practitioners/Create
@@ -170,5 +184,27 @@ namespace PainAssessment.Areas.Admin.Controllers
             return Json(new { status = "Success" });
 
         }
+    }
+}
+
+
+public static class ListExtensions
+{
+    public static List<List<T>> ChunkBy<T>(this List<T> source, int chunkSize)
+    {
+        return source
+            .Select((x, i) => new { Index = i, Value = x })
+            .GroupBy(x => x.Index / chunkSize)
+            .Select(x => x.Select(v => v.Value).ToList())
+            .ToList();
+    }
+}
+
+public static class IEnumerableExtensions
+{
+    public static IEnumerable<IEnumerable<T>> ChunkBy<T>(this IEnumerable<T> source, int chunkSize)
+    {
+        for (int i = 0; i < source.Count(); i += chunkSize)
+            yield return source.Skip(i).Take(chunkSize);
     }
 }
