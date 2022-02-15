@@ -11,6 +11,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
+using PainAssessment.Areas.ModuleTwo.Data;
+
 namespace PainAssessment
 {
     public class Startup
@@ -29,6 +31,9 @@ namespace PainAssessment
             options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddDatabaseDeveloperPageExceptionFilter();
             services.AddControllersWithViews();
+
+            services.AddDbContext<MvcChecklistContext>(options =>
+            options.UseSqlServer(Configuration.GetConnectionString("MvcChecklistContext")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
