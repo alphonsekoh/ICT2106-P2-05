@@ -9,7 +9,7 @@ using PainAssessment.Areas.Admin.Data;
 using PainAssessment.Areas.Admin.Models;
 using PainAssessment.Areas.Admin.Services;
 
-namespace PainAssess.Controllers
+namespace PainAssess.Areas.Admin.Controllers
 {
     public class DepartmentsController : Controller
     {
@@ -54,7 +54,7 @@ namespace PainAssess.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create([Bind("Id,Name")] Department department)
+        public IActionResult Create([Bind("DepartmentID,Name")] Department department)
         {
             if (ModelState.IsValid)
             {
@@ -86,7 +86,7 @@ namespace PainAssess.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id, [Bind("Id,Name")] Department department)
+        public IActionResult Edit(int id, [Bind("DepartmentID,Name")] Department department)
         {
             if (id != department.DepartmentID)
             {
