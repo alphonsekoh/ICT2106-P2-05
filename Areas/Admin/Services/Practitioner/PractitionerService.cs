@@ -44,10 +44,14 @@ namespace PainAssessment.Areas.Admin.Services
             unitOfWork.PractitionerGateway.Update(practitioner);
         }
 
-        public IEnumerable<Practitioner> GetAllPractitionersByPage(int page = 1)
-        {
+        //public IEnumerable<Practitioner> GetAllPractitionersByPage(int page = 1)
+        //{
 
-            return GetAllPractitioners().ToList().ChunkBy(8)[page - 1];
+        //    return GetAllPractitioners().ToList().ChunkBy(8)[page - 1];
+        //}
+        public IEnumerable<Practitioner> GetAllPractitionersByPageAndName(int page = 1, string name = "")
+        {
+            return GetAllPractitioners().Where(p => p.Name.ToLower().Contains(name.ToLower())).ToList().ChunkBy(8)[page - 1];
         }
         public int GetPractitionersCount()
         {

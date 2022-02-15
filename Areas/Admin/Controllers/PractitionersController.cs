@@ -18,8 +18,8 @@ namespace PainAssessment.Areas.Admin.Controllers
             this.practitionerService = practitionerService;
         }
 
-        // GET: Admin/Practitioners?page=1
-        public IActionResult Index(int page = 1)
+        // GET: Admin/Practitioners?page=1&name=gerald
+        public IActionResult Index(int page = 1, string name = "")
         {
             int total_count = practitionerService.GetPractitionersCount();
             int max_page = (int)Math.Ceiling((decimal)(total_count / 8.0));
@@ -37,7 +37,7 @@ namespace PainAssessment.Areas.Admin.Controllers
             ViewData["max_page"] = max_page;
             ViewData["current_page"] = page;
 
-            return View(practitionerService.GetAllPractitionersByPage(page));
+            return View(practitionerService.GetAllPractitionersByPageAndName(page, name));
         }
 
         // GET: Practitioners/Create
