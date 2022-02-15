@@ -11,22 +11,16 @@ namespace PainAssessment.Areas.Admin.Controllers
     {
         private readonly IPractitionerService practitionerService;
 
+
         public PractitionersController(IPractitionerService practitionerService)
         {
             this.practitionerService = practitionerService;
         }
-        //private readonly IUnitOfWork unitOfWork;
 
-        //public PractitionersController(IUnitOfWork unitOfWork)
-        //{
-        //    this.unitOfWork = unitOfWork;
-        //}
-
-
-        // GET: Practitioners
-        public IActionResult Index()
+        // GET: Admin/Practitioners?page=1
+        public IActionResult Index(int page = 1)
         {
-            return View(practitionerService.GetAllPractitioners());
+            return View(practitionerService.GetAllPractitionersByPage(page));
         }
 
         // GET: Practitioners/Create

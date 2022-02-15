@@ -10,6 +10,7 @@ namespace PainAssessment.Areas.Admin.Services
     {
         Practitioner GetPractitioner(int id);
         IEnumerable<Practitioner> GetAllPractitioners();
+        IEnumerable<Practitioner> GetAllPractitionersByPage(int page);
         void CreatePractitioner(Practitioner practitioner);
         void UpdatePractitioner(Practitioner practitioner);
         void DeletePractitioner(int id);
