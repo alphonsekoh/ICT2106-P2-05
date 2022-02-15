@@ -28,7 +28,11 @@ namespace PainAssessment
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<HospitalContext>(options =>
-            options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            // Localdb connection 
+            // options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            // MySQL connection
+            options.UseMySQL(Configuration.GetConnectionString("DefaultConnection")));
+
             services.AddDatabaseDeveloperPageExceptionFilter();
             services.AddControllersWithViews();
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
