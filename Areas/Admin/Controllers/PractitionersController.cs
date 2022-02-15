@@ -2,12 +2,19 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using PainAssessment.Areas.Admin.Models;
+using PainAssessment.Areas.Admin.Services;
 
 namespace PainAssessment.Areas.Admin.Controllers
 {
     [Area("Admin")]
     public class PractitionersController : Controller
     {
+        private readonly IPractitionerService practitionerService;
+
+        public PractitionersController(IPractitionerService practitionerService)
+        {
+            this.practitionerService = practitionerService;
+        }
         //private readonly IUnitOfWork unitOfWork;
 
         //public PractitionersController(IUnitOfWork unitOfWork)
@@ -19,19 +26,7 @@ namespace PainAssessment.Areas.Admin.Controllers
         // GET: Practitioners
         public IActionResult Index()
         {
-            var practitioners = new List<Practitioner> {
-                new Practitioner{PractitionerID = 1, Name = "Test", Department = new Department{Name ="A&C" }},
-                new Practitioner{PractitionerID = 2, Name = "Test2", Department = new Department{Name ="Female" }},
-                new Practitioner{PractitionerID = 3, Name = "Test3", Department = new Department{Name ="Clinic" }},
-                new Practitioner{PractitionerID = 4, Name = "Test", Department = new Department{Name ="A&C" }},
-                new Practitioner{PractitionerID = 5, Name = "Test2", Department = new Department{Name ="Female" }},
-                new Practitioner{PractitionerID = 6, Name = "Test3", Department = new Department{Name ="Clinic" }},
-                new Practitioner{PractitionerID = 7, Name = "Test", Department = new Department{Name ="A&C" }},
-                new Practitioner{PractitionerID = 8, Name = "Test2", Department = new Department{Name ="Female" }},
-                new Practitioner{PractitionerID = 9, Name = "Test3", Department = new Department{Name ="Clinic" }}
-            };
-
-            return View(practitioners);
+            return View(practitionerService.GetAllPractitioners());
         }
 
         // GET: Practitioners/Create
@@ -40,7 +35,7 @@ namespace PainAssessment.Areas.Admin.Controllers
             ViewData["DepartmentId"] = new SelectList(new List<Department> {
                 new Department { Name = "A&C" },
                 new Department { Name = "Female" },
-                new Department { Name = "Clinic" } }, "Id", "Name");
+                new Department { Name = "Clinic" } }, "DepartmentID", "Name");
             return View();
         }
 
