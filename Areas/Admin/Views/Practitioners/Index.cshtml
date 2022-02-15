@@ -35,7 +35,7 @@
             </button>
         </div>
 
-        <p class="d-flex justify-content-end text-muted">Displaying 1 to 9 out of 40 records</p>
+        <p class="d-flex justify-content-end text-muted">Displaying @((((int)ViewData["current_page"]-1)*8)+1) to @((((int)ViewData["current_page"]-1)*8)+Model.Count())  out of @ViewData["total_count"] records</p>
 
         <table class="table">
             <thead>

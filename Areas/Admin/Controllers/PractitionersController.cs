@@ -21,7 +21,8 @@ namespace PainAssessment.Areas.Admin.Controllers
         // GET: Admin/Practitioners?page=1
         public IActionResult Index(int page = 1)
         {
-            int max_page = (int)Math.Ceiling((decimal)(practitionerService.GetPractitionersCount() / 8.0));
+            int total_count = practitionerService.GetPractitionersCount();
+            int max_page = (int)Math.Ceiling((decimal)(total_count / 8.0));
 
             if (page > max_page)
             {
@@ -32,6 +33,7 @@ namespace PainAssessment.Areas.Admin.Controllers
                 page = 1;
             }
 
+            ViewData["total_count"] = total_count;
             ViewData["max_page"] = max_page;
             ViewData["current_page"] = page;
 
