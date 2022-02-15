@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using PainAssessment.Areas.Admin.Models;
 using PainAssessment.Areas.Admin.Services;
 
@@ -12,11 +13,12 @@ namespace PainAssessment.Areas.Admin.Controllers
     public class PractitionersController : Controller
     {
         private readonly IPractitionerService practitionerService;
+        private readonly IDepartmentService departmentService;
 
-
-        public PractitionersController(IPractitionerService practitionerService)
+        public PractitionersController(IPractitionerService practitionerService, IDepartmentService departmentService)
         {
             this.practitionerService = practitionerService;
+            this.departmentService = departmentService;
         }
 
         // GET: Admin/Practitioners?page=1&name=gerald
@@ -57,10 +59,8 @@ namespace PainAssessment.Areas.Admin.Controllers
         // GET: Practitioners/Create
         public IActionResult Create()
         {
-            ViewData["DepartmentId"] = new SelectList(new List<Department> {
-                new Department { Name = "A&C" },
-                new Department { Name = "Female" },
-                new Department { Name = "Clinic" } }, "DepartmentID", "Name");
+            ViewData["DepartmentID"] = new SelectList(departmentService.GetAllDepartments(), "DepartmentID", "Name");
+
             return View();
         }
 
@@ -69,15 +69,17 @@ namespace PainAssessment.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create([Bind("DepartmentId,Id,Name")] Practitioner practitioner)
+        public IActionResult Create([Bind("PractitionerID,Name,DepartmentID")] Practitioner practitioner)
         {
-            //if (ModelState.IsValid)
-            //{
-            //unitOfWork.Practitioners.CreatePractitioner(practitioner);
-            //unitOfWork.Save();
-            //    return RedirectToAction(nameof(Index));
-            //}
-            //ViewData["DepartmentId"] = new SelectList(unitOfWork.Departments.GetAllDepartments(), "Id", "Name");
+            if (ModelState.IsValid)
+            {
+                practitionerService.CreatePractitioner(practitioner);
+                practitionerService.SavePractitioner();
+                return RedirectToAction(nameof(Index));
+            }
+
+            ViewData["DepartmentID"] = new SelectList(departmentService.GetAllDepartments(), "DepartmentID", "Name");
+
             return View(practitioner);
         }
 
@@ -89,100 +91,78 @@ namespace PainAssessment.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            //var practitioner = unitOfWork.Practitioners.GetPractitionerWithDetails((int)id);
-            var practitioner = new Practitioner { Name = "Test", Department = new Department { Name = "A&C" } };
+            var practitioner = practitionerService.GetPractitioner((int)id);
+
             if (practitioner == null)
             {
                 return NotFound();
             }
-            //ViewData["DepartmentId"] = new SelectList(unitOfWork.Departments.GetAllDepartments(), "Id", "Name");
 
-
-            ViewData["DepartmentId"] = new SelectList(new List<Department> {
-                new Department { Name = "A&C" },
-                new Department { Name = "Female" },
-                new Department { Name = "Clinic" } }, "Id", "Name");
-
+            ViewData["DepartmentID"] = new SelectList(departmentService.GetAllDepartments(), "DepartmentID", "Name");
             return View(practitioner);
         }
 
-        //     // POST: Practitioners/Edit/5
-        //     // To protect from overposting attacks, enable the specific properties you want to bind to.
-        //     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        //     [HttpPost]
-        //     [ValidateAntiForgeryToken]
-        //     public IActionResult Edit(int id, [Bind("DepartmentId,Id,Name")] Practitioner practitioner)
-        //     {
-        //         if (id != practitioner.Id)
-        //         {
-        //             return NotFound();
-        //         }
-
-        //         if (ModelState.IsValid)
-        //         {
-        //             try
-        //             {
-        //                 unitOfWork.Practitioners.UpdatePractitioner(practitioner);
-        //                 unitOfWork.Save();
-        //             }
-        //             catch (DbUpdateConcurrencyException)
-        //             {
-        //                 if (unitOfWork.Practitioners.GetById(practitioner.Id) == null)
-        //                 {
-        //                     return NotFound();
-        //                 }
-        //                 else
-        //                 {
-        //                     throw;
-        //                 }
-        //             }
-        //             return RedirectToAction(nameof(Index));
-        //         }
-        //         ViewData["DepartmentId"] = new SelectList(unitOfWork.Departments.GetAllDepartments(), "Id", "Name");
-        //         return View(practitioner);
-        //     }
-
-        //     // GET: Practitioners/Delete/5
-        //     public IActionResult Delete(int? id)
-        //     {
-        //         if (id == null)
-        //         {
-        //             return NotFound();
-        //         }
-
-        //         var practitioner = unitOfWork.Practitioners.GetPractitionerWithDetails((int)id);
-
-        //         if (practitioner == null)
-        //         {
-        //             return NotFound();
-        //         }
-
-        //         return View(practitioner);
-        //     }
-
-        //     // POST: Practitioners/Delete/5
-        //     [HttpPost, ActionName("Delete")]
-        //     [ValidateAntiForgeryToken]
-        //     public IActionResult DeleteConfirmed(int id)
-        //     {
-        //         var practitioner = unitOfWork.Practitioners.GetPractitionerById((int)id);
-        //         unitOfWork.Practitioners.DeletePractitioner(practitioner);
-        //         unitOfWork.Save();
-        //         return RedirectToAction(nameof(Index));
-        //     }
-        // }
-
-        public JsonResult deletePractitioner(int Id)
+        // POST: Practitioners/Edit/5
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Edit(int id, [Bind("PractitionerID,Name,DepartmentID")] Practitioner practitioner)
         {
+            if (id != practitioner.PractitionerID)
+            {
+                return NotFound();
+            }
 
-            //using (var context = new PractitionerDetailsEntities())
-            //{
-            //    var practitioner = context.Practitioner.Where(a => a.Id == Id).FirstOrDefault();
-            //    practitioner.IsDeleted = true;
-            //    context.SaveChanges();
-            //}
-            return Json(new { status = "Success" });
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    practitionerService.UpdatePractitioner(practitioner);
+                    practitionerService.SavePractitioner();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (practitionerService.GetPractitioner(practitioner.PractitionerID) == null)
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(Index));
+            }
 
+            ViewData["DepartmentID"] = new SelectList(departmentService.GetAllDepartments(), "DepartmentID", "Name");
+            return View(practitioner);
+        }
+
+    public JsonResult deletePractitioner(int Id)
+        {
+            if (practitionerService.GetPractitioner(Id) == null)
+            {
+                return Json(new { status = "Fail" });
+            }
+
+            try
+            {
+                practitionerService.DeletePractitioner(Id);
+                practitionerService.SavePractitioner();
+                return Json(new { status = "Success" });
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (practitionerService.GetPractitioner(Id) == null)
+                {
+                    return Json(new { status = "Fail" });
+                }
+                else
+                {
+                    throw;
+                }
+            }
         }
     }
 }
