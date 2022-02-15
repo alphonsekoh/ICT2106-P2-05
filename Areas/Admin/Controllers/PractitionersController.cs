@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using PainAssessment.Areas.Admin.Models;
@@ -20,6 +21,20 @@ namespace PainAssessment.Areas.Admin.Controllers
         // GET: Admin/Practitioners?page=1
         public IActionResult Index(int page = 1)
         {
+            int max_page = (int)Math.Ceiling((decimal)(practitionerService.GetPractitionersCount() / 8.0));
+
+            if (page > max_page)
+            {
+                page = max_page;
+            }
+            else if (page < 1)
+            {
+                page = 1;
+            }
+
+            ViewData["max_page"] = max_page;
+            ViewData["current_page"] = page;
+
             return View(practitionerService.GetAllPractitionersByPage(page));
         }
 

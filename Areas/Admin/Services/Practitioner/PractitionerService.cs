@@ -49,6 +49,10 @@ namespace PainAssessment.Areas.Admin.Services
 
             return GetAllPractitioners().ToList().ChunkBy(8)[page - 1];
         }
+        public int GetPractitionersCount()
+        {
+            return GetAllPractitioners().Count();
+        }
     }
 }
 
