@@ -4,31 +4,20 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace PainAssessment.Models
+namespace PainAssessment.Areas.Admin.Models
 {
     public class Patient
     {
-        [Key]
-        public int Id { get; set; }
+        public int PatientID { get; set; }
         [Required]
+        [StringLength(50, MinimumLength = 3)]
         public string Name { get; set; }
         [Required]
-        public Genders Gender { get; set; }
+        public string Gender { get; set; }
         [Required]
         public DateTime BirthDate { get; set; }
         public string Condition { get; set; }
         public string Notes { get; set; }
-
-
-        //public ICollection<Consultation> Consultations { get; set; }
-        //public ICollection<Practitioner> Practitioners { get; set; }
-
-
-    }
-
-    public enum Genders
-    {
-        Male,
-        Female,
+        public ICollection<Practitioner> Practitioners { get; set; }
     }
 }
