@@ -29,7 +29,7 @@ namespace PainAssessment.Areas.Admin.Data.Gateways
 
         public Department FindById(int id)
         {
-            return context.Departments.Find(id);
+            return context.Departments.Include(d=>d.Practitioners).Where(d=> d.DepartmentID == id ).FirstOrDefault();
         
         }
 

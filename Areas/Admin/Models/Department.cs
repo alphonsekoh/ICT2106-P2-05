@@ -14,6 +14,6 @@ namespace PainAssessment.Areas.Admin.Models
         [Required]
         [DisplayName("Department Name")]
         public string Name { get; set; }
-
+        public ICollection<Practitioner> Practitioners { get; set; }
     }
 }
