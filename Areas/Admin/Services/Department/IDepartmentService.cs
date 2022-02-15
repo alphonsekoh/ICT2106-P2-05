@@ -13,6 +13,6 @@ namespace PainAssessment.Areas.Admin.Services
         void CreateDepartment(Department department);
         void UpdateDepartment(Department department);
         void DeleteDepartment(int id);
-
+        void SaveDepartment();
     }
 }

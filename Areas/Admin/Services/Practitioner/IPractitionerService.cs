@@ -14,5 +14,6 @@ namespace PainAssessment.Areas.Admin.Services
         void UpdatePractitioner(Practitioner practitioner);
         void DeletePractitioner(int id);
 
+        void SavePractitioner();
     }
 }
