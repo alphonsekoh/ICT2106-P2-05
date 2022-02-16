@@ -6,7 +6,7 @@
 <div class="row justify-content-between">
     <div class="col-sm-6">
         <h1>Manage Departments</h1>
-        <p class="text-muted">Admins can create, read, update and delete departments</p>
+        <p class="text-muted">Admin can manage departments. This includes creating, reading, updating and deleting departments</p>
     </div>
     <div class="col-sm-2 align-self-center">
         <a asp-action="Create" type="button" class="btn btn-primary btn-block">Create New</a>
@@ -24,6 +24,8 @@
             Search
         </button>
     </form>
+
+    <p class="d-flex justify-content-end text-muted">Displaying @((((int)ViewData["current_page"]-1)*8)+1) to @((((int)ViewData["current_page"]-1)*8)+Model.Count())  out of @ViewData["total_count"] records</p>
 
     <table class="table">
         <thead>

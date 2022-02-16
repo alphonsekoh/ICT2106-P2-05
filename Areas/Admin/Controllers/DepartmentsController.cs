@@ -45,7 +45,7 @@ namespace PainAssessment.Areas.Admin.Controllers
                 department = department.Where(d => d.Name.Contains(searchString));
             }
 
-            ViewData["total_count"] = department.Count();
+            ViewData["total_count"] = department.Count(); // get count of all from
 
             int max_page = (int)Math.Ceiling((decimal)(department.Count() / 8.0));
 
