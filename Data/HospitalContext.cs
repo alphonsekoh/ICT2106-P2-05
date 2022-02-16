@@ -17,8 +17,7 @@ namespace PainAssessment.Data
         }
 
         public DbSet<AccountUser> Accounts { get; set; }
-        public DbSet<Practitioner> Practitioners { get; set; }
-        public DbSet<Administrator> Administrators { get; set; }
+
 
         public DbSet<Patient> Patients { get; set; }
         public DbSet<TemplateChecklist> TemplateChecklists { get; set; }
@@ -27,8 +26,7 @@ namespace PainAssessment.Data
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(HospitalContext).Assembly);
-            modelBuilder.Entity<Administrator>().HasKey(a => a.AccountId);
-            modelBuilder.Entity<Practitioner>().HasKey(p => p.AccountId);
+
         }
     }
 }

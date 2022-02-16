@@ -12,13 +12,6 @@ namespace PainAssessment.Areas.Identity.Controllers
     public class AccountUserController : Controller
     {
 
-        private const string ROLE_COL = "AccountRole";
-        private const string NAME_COL = "FullName";
-        private const string ACCID_COL = "AccountId";
-        private const string Statussql = "AccountStatus";
-
-        private const string REDIRECT_CNTR = "Home";
-        private const string REDIRECT_ACTN = "Index";
         private const string DIRECT_CNTR = "AccountUser";
         private const string DIRECT_ACTN = "LoginPage";
 

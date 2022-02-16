@@ -14,11 +14,11 @@ namespace PainAssessment.Areas.Identity.Data
     public class AccountUser : IdentityUser
     {
 
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
+        private string FirstName { get; set; }
+        private string LastName { get; set; }
 
         [Required]
-        public string Role { get; set; }
+        private string Role { get; set; }
 
         //[Required]
         //[DisplayName("Department Id")]
