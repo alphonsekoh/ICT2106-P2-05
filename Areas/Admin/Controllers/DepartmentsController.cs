@@ -22,18 +22,27 @@ namespace PainAssessment.Areas.Admin.Controllers
         }
 
         // GET: Admin/Departments
-        public IActionResult Index(string sortOrder, int page = 1)
+        /*
+         Index function to take in input from get upon search, sorting and page change
+         */
+        public IActionResult Index(string sortOrder, string searchString, int page = 1)
         {
             ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "Name" : "";
-            var department = from s in departmentService.GetAllDepartments() select s;
-            switch (sortOrder)
+            var department = from d in departmentService.GetAllDepartments() select d;
+            switch (sortOrder) // check input of what is being sorted
             {
                 case "Name":
-                    department = department.OrderByDescending(s => s.Name);
+                    department = department.OrderByDescending(d => d.Name);
                     break;
                 default:
-                    department = department.OrderBy(s => s.Name);
+                    department = department.OrderBy(d => d.Name);
                     break;
+            }
+
+            // check if not search input not empty
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                department = department.Where(d => d.Name.Contains(searchString));
             }
 
             ViewData["total_count"] = department.Count();
