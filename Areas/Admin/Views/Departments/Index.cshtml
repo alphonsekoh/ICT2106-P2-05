@@ -3,33 +3,89 @@
 @{
     ViewData["Title"] = "Index";
 }
+<div class="row justify-content-between">
+    <div class="col-sm-6">
+        <h1>Manage Departments</h1>
+        <p class="text-muted">Admins can create, read, update and delete departments</p>
+    </div>
+    <div class="col-sm-2 align-self-center">
+        <a asp-action="Create" type="button" class="btn btn-primary btn-block">Create New</a>
+    </div>
+</div>
 
-<h1>Index</h1>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
 <table class="table">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
+            <th scope="col">
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParm"]">
+                    @Html.DisplayNameFor(model => model.Name)
+                </a>
             </th>
-            <th></th>
+            <th scope="col">
+                Actions
+            </th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.DepartmentID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.DepartmentID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.DepartmentID">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr id="row_@item.DepartmentID">
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    <a type="button" class="btn btn-primary btn-sm" asp-action="Edit" asp-route-id="@item.DepartmentID">Edit Department Details</a> |
+                    <a type="button" class="btn btn-secondary btn-sm" asp-action="Details" asp-route-id="@item.DepartmentID">View Department Details</a> |
+                    <a type="button" class="btn btn-danger btn-sm" asp-action="Delete" asp-route-id="@item.DepartmentID">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
+
+<div class="d-flex justify-content-center">
+    <div>
+        <nav>
+            <ul class="pagination">
+                @if ((int)ViewData["current_page"] > 1)
+                {
+                    <li class="page-item">
+                        <a class="page-link"
+                           aria-label="Previous" asp-action="Index" asp-route-page=@((int) ViewData["current_page"]-1) asp-route-name=@ViewData["name"]>
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                }
+
+
+                @for (int i = 1; i < (int)ViewData["max_page"] + 1; i++)
+                {
+
+                    if (i == (int)ViewData["current_page"])
+                    {
+                        <li class="page-item active">
+                            <a class="page-link">@i</a>
+                        </li>
+                    }
+                    else
+                    {
+
+                        <li class="page-item">
+                            <a class="page-link" asp-action="Index" asp-route-page=@i asp-route-name=@ViewData["name"]>@i</a>
+                        </li>
+                    }
+                }
+
+                @if ((int)ViewData["current_page"] < (int)ViewData["max_page"])
+                {
+                    <li class="page-item">
+                        <a class="page-link"
+                           aria-label="Next" asp-action="Index" asp-route-page=@((int)ViewData["current_page"] + 1) asp-route-name=@ViewData["name"]>
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                }
+            </ul>
+        </nav>
+    </div>
+</div>

@@ -22,9 +22,42 @@ namespace PainAssessment.Areas.Admin.Controllers
         }
 
         // GET: Admin/Departments
-        public IActionResult Index()
+        public IActionResult Index(string sortOrder, int page = 1)
         {
-            return View(departmentService.GetAllDepartments());
+            ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "Name" : "";
+            var department = from s in departmentService.GetAllDepartments() select s;
+            switch (sortOrder)
+            {
+                case "Name":
+                    department = department.OrderByDescending(s => s.Name);
+                    break;
+                default:
+                    department = department.OrderBy(s => s.Name);
+                    break;
+            }
+
+            ViewData["total_count"] = department.Count();
+
+            int max_page = (int)Math.Ceiling((decimal)(department.Count() / 8.0));
+
+            if (page > max_page)
+            {
+                page = max_page;
+            }
+            if (page < 1)
+            {
+                page = 1;
+            }
+
+            ViewData["max_page"] = max_page;
+            ViewData["current_page"] = page;
+
+            if (department.Count() > 0)
+            {
+                department = department.ChunkBy(8).ElementAt(page - 1);
+            }
+
+            return View(department.ToList());
         }
 
         // GET: Admin/Departments/Details/5
@@ -142,6 +175,27 @@ namespace PainAssessment.Areas.Admin.Controllers
             departmentService.DeleteDepartment((int)id);
             departmentService.SaveDepartment();
             return RedirectToAction(nameof(Index));
+        }
+    }
+
+    public static class ListExtensions
+    {
+        public static List<List<T>> ChunkBy<T>(this List<T> source, int chunkSize)
+        {
+            return source
+                .Select((x, i) => new { Index = i, Value = x })
+                .GroupBy(x => x.Index / chunkSize)
+                .Select(x => x.Select(v => v.Value).ToList())
+                .ToList();
+        }
+    }
+
+    public static class IEnumerableExtensions
+    {
+        public static IEnumerable<IEnumerable<T>> ChunkBy<T>(this IEnumerable<T> source, int chunkSize)
+        {
+            for (int i = 0; i < source.Count(); i += chunkSize)
+                yield return source.Skip(i).Take(chunkSize);
         }
     }
 }
