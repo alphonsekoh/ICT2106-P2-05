@@ -19,4 +19,10 @@
 	  <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Remove="Areas\Admin\Views\Practitioners\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Areas\Admin\Views\Practitioners\" />
+  </ItemGroup>
 </Project>

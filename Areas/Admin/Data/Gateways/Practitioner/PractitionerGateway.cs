@@ -7,7 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 
 namespace PainAssessment.Areas.Admin.Data.Gateways
-{ 
+{
     public class PractitionerGateway : IPractitionerGateway
     {
         internal HospitalContext context;
@@ -30,12 +30,13 @@ namespace PainAssessment.Areas.Admin.Data.Gateways
 
         public Practitioner FindById(int id)
         {
-            return context.Practitioners.Include(p=> p.Department).Where(p=> p.PractitionerID == id).FirstOrDefault();
+            return context.Practitioners.Include(p => p.Department).Where(p => p.PractitionerID == id).FirstOrDefault();
         }
 
         public IEnumerable<Practitioner> GetAll()
         {
-            return context.Practitioners.ToList();
+            //return context.Practitioners.ToList();
+            return context.Practitioners.Include(p => p.Department).ToList();
         }
 
         public void Update(Practitioner practitioner)
