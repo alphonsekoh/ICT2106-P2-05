@@ -50,7 +50,8 @@
                         @Html.DisplayNameFor(model => model.Name)
                     </th>
                     <th scope="col">
-                        @Html.DisplayNameFor(model => model.Department.Name)
+                        Department
+                        @*@Html.DisplayNameFor(model => model.Department.Name)*@
                     </th>
                     <th scope="col">
                         Actions
@@ -69,7 +70,7 @@
                             @Html.DisplayFor(modelItem => item.Name)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.Department.Name) Department
+                            @Html.DisplayFor(modelItem => item.Department.Name) @*Department*@
                         </td>
                         <td>
                             <a asp-action="Delete" asp-route-id="@item.PractitionerID"
