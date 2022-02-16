@@ -33,6 +33,12 @@ namespace PainAssessment.Controllers
             return View();
         }
 
+        public IActionResult ManageTemplateChecklist()
+        {
+            var templateChecklistArr = templateChecklistService.GetAllTemplateChecklist().ToList();
+            return View(templateChecklistArr);
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

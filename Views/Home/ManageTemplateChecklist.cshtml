@@ -1,0 +1,35 @@
+﻿@model List<PainAssessment.Models.TemplateChecklist>
+
+@{
+    ViewData["Title"] = "Manage Template Checklist";
+}
+
+<div class="text-center">
+    <h1 class="display-4">This the page for managing your checklist questions. </h1>
+</div>
+
+<table>
+    <thead>
+        <tr>
+            <th>TemplateID</th>
+            <th>Template Name</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TemplateChecklistId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TemplateName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
