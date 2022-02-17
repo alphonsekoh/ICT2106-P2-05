@@ -37,60 +37,218 @@
                 </h5>
             </div>
         </div>
-    </div>
 
-    <!-- Card body -->
-    <div id="cMATable" class="collapse" role="tabpanel" aria-labelledby="cMATableHeading"
-         data-parent="#accordionDCL">
-        <div class="card-body">
-            <table class="table table-hover">
-                <thead>
-                    <tr>
-                        <th class="th-lg"><a>ID.<i class="fas fa-sort ml-1"></i></a></th>
-                        <th class="th-lg"><a>Question <i class="fas fa-sort ml-1"></i></a></th>
-                        <th class="th-lg"><a>Weightage <i class="fas fa-sort ml-1"></i></a></th>
-                        <th class="th-lg"><a>Action <i class="fas fa-sort ml-1"></i></a></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach(var item in Model)
-                    {
-                        @if(item.PainSection == 0)
+
+        <!-- Card body -->
+        <div id="cMATable" class="collapse" role="tabpanel" aria-labelledby="cMATableHeading"
+             data-parent="#accordionDCL">
+            <div class="card-body">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th class="th-lg"><a>ID.<i class="fas fa-sort ml-1"></i></a></th>
+                            <th class="th-lg"><a>Question <i class="fas fa-sort ml-1"></i></a></th>
+                            <th class="th-lg"><a>Weightage <i class="fas fa-sort ml-1"></i></a></th>
+                            <th class="th-lg"><a>Action <i class="fas fa-sort ml-1"></i></a></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach(var item in Model)
                         {
-                            <tr id="row_@item.DQID">
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.DQID)
-                                </td>
-                                <td>
-                                    <input type="text" id="qString_@item.DQID" name="qString_@item.DQID" value="@Html.DisplayFor(modelItem => item.QString)">
+                            @if(item.PainSection == 0)
+                            {
+                                <tr id="row_@item.DQID">
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.DQID)
+                                    </td>
+                                    <td>
+                                        <input type="text" id="qString_@item.DQID" name="qString_@item.DQID" value="@Html.DisplayFor(modelItem => item.QString)">
 
-                                </td>
-                                <td>
-                                    <input type="number" id="weightage_@item.DQID" name="weightage_@item.DQID" value="@Html.DisplayFor(modelItem => item.Weightage)">
+                                    </td>
+                                    <td>
+                                        <input type="number" id="weightage_@item.DQID" name="weightage_@item.DQID" value="@Html.DisplayFor(modelItem => item.Weightage)">
 
-                                </td>
-                                <td>
-                                    <button onclick="UpdateQuestion(@item.DQID, $('#qString_@item.DQID').val(), $('#weightage_@item.DQID').val())"
-                                            type="button"
-                                            class="btn btn-primary btn-sm">
-                                        Update
-                                    </button>
-                                    <button onclick="ConfirmDeletion(@item.DQID, $('#qString_@item.DQID'))"
-                                            type="button"
-                                            class="btn btn-danger btn-sm">
-                                        Delete
-                                    </button>
-                                </td>
-                            </tr>
+                                    </td>
+                                    <td>
+                                        <button onclick="UpdateQuestion(@item.DQID, $('#qString_@item.DQID').val(), $('#weightage_@item.DQID').val())"
+                                                type="button"
+                                                class="btn btn-primary btn-sm">
+                                            Update
+                                        </button>
+                                        <button onclick="ConfirmDeletion(@item.DQID, $('#qString_@item.DQID'))"
+                                                type="button"
+                                                class="btn btn-danger btn-sm">
+                                            Delete
+                                        </button>
+                                    </td>
+                                </tr>
+                            }
                         }
-                    }
-                </tbody>
-            </table>
-            <button onclick="AddQuestion(@Model.Count(), 0)"
-                    type="button"
-                    class="btn btn-primary btn-sm">
-                Add new question to section
-            </button>
+                    </tbody>
+                </table>
+                <button onclick="AddQuestion(@Model.Count(), 0)"
+                        type="button"
+                        class="btn btn-primary btn-sm">
+                    Add new question to section
+                </button>
+            </div>
+        </div>
+
+
+        <!-- Accordion card -->
+        <div class="card">
+            <!-- Card header -->
+            <div class="card-header" role="tab" id="rIATableHeading">
+                <!--Options-->
+                <div class="float-left">
+
+                    <button class="btn btn-primary btn-sm" type="button"
+                            data-toggle="collapse" data-parent="#accordionDCL" href="#rIATable" aria-expanded="true"
+                            aria-controls="rIATable">
+                        Expand
+                    </button>
+                </div>
+                <h5 class="mt-1 mb-0">
+                    <span class="ml-3">
+                        Regional Influence Assessment
+                    </span>
+                </h5>
+            </div>
+        </div>
+
+
+        <!-- Card body -->
+        <div id="rIATable" class="collapse" role="tabpanel" aria-labelledby="rIATableHeading"
+             data-parent="#accordionDCL">
+            <div class="card-body">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th class="th-lg"><a>ID.<i class="fas fa-sort ml-1"></i></a></th>
+                            <th class="th-lg"><a>Question <i class="fas fa-sort ml-1"></i></a></th>
+                            <th class="th-lg"><a>Weightage <i class="fas fa-sort ml-1"></i></a></th>
+                            <th class="th-lg"><a>Action <i class="fas fa-sort ml-1"></i></a></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach(var item in Model)
+                        {
+                            @if(item.PainSection == 1)
+                            {
+                                <tr id="row_@item.DQID">
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.DQID)
+                                    </td>
+                                    <td>
+                                        <input type="text" id="qString_@item.DQID" name="qString_@item.DQID" value="@Html.DisplayFor(modelItem => item.QString)">
+
+                                    </td>
+                                    <td>
+                                        <input type="number" id="weightage_@item.DQID" name="weightage_@item.DQID" value="@Html.DisplayFor(modelItem => item.Weightage)">
+
+                                    </td>
+                                    <td>
+                                        <button onclick="UpdateQuestion(@item.DQID, $('#qString_@item.DQID').val(), $('#weightage_@item.DQID').val())"
+                                                type="button"
+                                                class="btn btn-primary btn-sm">
+                                            Update
+                                        </button>
+                                        <button onclick="ConfirmDeletion(@item.DQID, $('#qString_@item.DQID'))"
+                                                type="button"
+                                                class="btn btn-danger btn-sm">
+                                            Delete
+                                        </button>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+                <button onclick="AddQuestion(@Model.Count(), 1)"
+                        type="button"
+                        class="btn btn-primary btn-sm">
+                    Add new question to section
+                </button>
+            </div>
+        </div>
+
+
+
+        <!-- Accordion card -->
+        <div class="card">
+            <!-- Card header -->
+            <div class="card-header" role="tab" id="lSATableHeading">
+                <!--Options-->
+                <div class="float-left">
+
+                    <button class="btn btn-primary btn-sm" type="button"
+                            data-toggle="collapse" data-parent="#accordionDCL" href="#lSATable" aria-expanded="true"
+                            aria-controls="lSATable">
+                        Expand
+                    </button>
+                </div>
+                <h5 class="mt-1 mb-0">
+                    <span class="ml-3">
+                        Local Stimulation Assessment
+                    </span>
+                </h5>
+            </div>
+        </div>
+
+
+        <!-- Card body -->
+        <div id="lSATable" class="collapse" role="tabpanel" aria-labelledby="lSATableHeading"
+             data-parent="#accordionDCL">
+            <div class="card-body">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th class="th-lg"><a>ID.<i class="fas fa-sort ml-1"></i></a></th>
+                            <th class="th-lg"><a>Question <i class="fas fa-sort ml-1"></i></a></th>
+                            <th class="th-lg"><a>Weightage <i class="fas fa-sort ml-1"></i></a></th>
+                            <th class="th-lg"><a>Action <i class="fas fa-sort ml-1"></i></a></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach(var item in Model)
+                        {
+                            @if(item.PainSection == 2)
+                            {
+                                <tr id="row_@item.DQID">
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.DQID)
+                                    </td>
+                                    <td>
+                                        <input type="text" id="qString_@item.DQID" name="qString_@item.DQID" value="@Html.DisplayFor(modelItem => item.QString)">
+
+                                    </td>
+                                    <td>
+                                        <input type="number" id="weightage_@item.DQID" name="weightage_@item.DQID" value="@Html.DisplayFor(modelItem => item.Weightage)">
+
+                                    </td>
+                                    <td>
+                                        <button onclick="UpdateQuestion(@item.DQID, $('#qString_@item.DQID').val(), $('#weightage_@item.DQID').val())"
+                                                type="button"
+                                                class="btn btn-primary btn-sm">
+                                            Update
+                                        </button>
+                                        <button onclick="ConfirmDeletion(@item.DQID, $('#qString_@item.DQID'))"
+                                                type="button"
+                                                class="btn btn-danger btn-sm">
+                                            Delete
+                                        </button>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+                <button onclick="AddQuestion(@Model.Count(), 2)"
+                        type="button"
+                        class="btn btn-primary btn-sm">
+                    Add new question to section
+                </button>
+            </div>
         </div>
     </div>
 </div>
