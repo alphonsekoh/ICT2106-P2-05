@@ -11,6 +11,7 @@ namespace PainAssessment.Interfaces
         IGenericRepository<Practitioner> PractitionerRepository { get; }
         IGenericRepository<Patient> PatientRepository { get; }
         IGenericRepository<TemplateChecklist> TemplateChecklistRepository { get; }
+        IGenericRepository<DefaultQuestion> DefaultQuestionRepository { get; }
         void Save();
 
     }

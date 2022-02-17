@@ -8,6 +8,8 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
+using System.Diagnostics; // TO REMOVE
+
 namespace PainAssessment.Controllers
 {
     public class HomeController : Controller
@@ -15,11 +17,13 @@ namespace PainAssessment.Controllers
         private readonly ILogger<HomeController> _logger;
         // Include services
         private readonly ITemplateChecklistService templateChecklistService;
+        private readonly IDefaultQuestionsService defaultQuestionsService;
 
-        public HomeController(ILogger<HomeController> logger, ITemplateChecklistService templateChecklistService)
+        public HomeController(ILogger<HomeController> logger, ITemplateChecklistService templateChecklistService, IDefaultQuestionsService defaultQuestionsService)
         {
             _logger = logger;
             this.templateChecklistService = templateChecklistService;
+            this.defaultQuestionsService = defaultQuestionsService;
         }
 
         public IActionResult Index()
@@ -31,6 +35,42 @@ namespace PainAssessment.Controllers
         public IActionResult Privacy()
         {
             return View();
+        }
+
+        public IActionResult ManageTemplateChecklist()
+        {
+            var templateQuestionsArr = defaultQuestionsService.GetAllDefaultQuestionsFromTemplateChecklist(1).ToList();
+            return View(templateQuestionsArr);
+        }
+
+        [HttpPost]
+        public string UpdateQuestion(int DQID, string QString, string weightage)
+        {
+            Debug.Write(weightage);
+            DefaultQuestion temp = defaultQuestionsService.GetDefaultQuestion(DQID);
+
+            defaultQuestionsService.UpdateDefaultQuestion(DQID, QString, temp.QDescription, temp.PainSection, double.Parse(weightage));
+
+
+
+            return "Privacy";
+        }
+
+        [HttpPost]
+        public string AddQuestion(int DQID, string QString, string PainSection, string weightage)
+        {
+
+            defaultQuestionsService.CreateDefaultQuestion(1, QString, "", int.Parse(PainSection), double.Parse(weightage));
+
+            return "nth wrong";
+        }
+
+        [HttpPost]
+        public string DeleteQuestion(int DQID)
+        {
+            Console.WriteLine(DQID);
+            defaultQuestionsService.DeleteDefaultQuestion(DQID);
+            return "nth wrong";
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
