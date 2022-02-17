@@ -27,7 +27,8 @@ namespace PainAssessment.Domain
 
         public void DeleteDefaultQuestion(int defaultQuestionID)
         {
-            throw new System.NotImplementedException();
+            _unitOfWork.DefaultQuestionRepository.Delete(defaultQuestionID);
+            _unitOfWork.Save();
         }
 
         public IEnumerable<DefaultQuestion> GetAllDefaultQuestions()

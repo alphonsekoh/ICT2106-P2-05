@@ -75,11 +75,11 @@
                                             class="btn btn-primary btn-sm">
                                         Update
                                     </button>
-                                    @*<button onclick="ConfirmDelete(@item.PractitionerID, '@item.Name')"
-                                                type="button"
-                                                class="btn btn-danger btn-sm">
-                                            Delete
-                                        </button>*@
+                                    <button onclick="ConfirmDeletion(@item.DQID, $('#qString_@item.DQID'))"
+                                            type="button"
+                                            class="btn btn-danger btn-sm">
+                                        Delete
+                                    </button>
                                 </td>
                             </tr>
                         }
@@ -112,21 +112,29 @@
     </div>
 </div>
 
-<div class="modal fade" id="creationSuccessModal" role="dialog">
+
+<div class="modal fade" id="deletionModal" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Question Added</h5>
+                <h5 class="modal-title">Delete Question</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
+            <input type="hidden" id="deletionDQID" />
             <div class="modal-body">
-                <p>Question "<span id="createdQuestion"></span>" has been added!</p>
+                <p>Are you sure you want to delete the question "<span id="deletingQuestion"></span>"?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" data-dismiss="modal" class="btn btn-secondary">Cancel</button>
+                <button type="button" onclick="DeleteQuestionFromDB($('#deletionDQID').val())" class="btn btn-danger">Delete</button>
+
             </div>
         </div>
     </div>
 </div>
+
 
 <div class="modal fade" id="creationModal" role="dialog">
     <div class="modal-dialog">
@@ -163,48 +171,63 @@
             </div>
         </div>
     </div>
+</div>
 
 
-    @section scripts{
-        <script>
-            var UpdateQuestion = function (DQID, QString, weightage) {
-                console.log(weightage);
-                $.ajax({
-                    type: "POST",
-                    url: "UpdateQuestion",
-                    data: { DQID: DQID, QString: QString, weightage: weightage },
-                    success: function (result) {
-                        $("#updatedQuestion").text(QString);
-                        $("#updateModal").modal("show");
-                    }
-                })
-            }
+@section scripts{
+    <script>
+        var UpdateQuestion = function (DQID, QString, weightage) {
+            $.ajax({
+                type: "POST",
+                url: "UpdateQuestion",
+                data: { DQID: DQID, QString: QString, weightage: weightage },
+                success: function (result) {
+                    $("#updatedQuestion").text(QString);
+                    $("#updateModal").modal("show");
+                }
+            })
+        }
 
-            var AddQuestionToDB = function (DQID, QString, PainSection, weightage) {
-                console.log(weightage);
-                $.ajax({
-                    type: "POST",
-                    url: "AddQuestion",
-                    data: { DQID: DQID, QString: QString, PainSection: PainSection, weightage: weightage },
-                    success: function (result) {
-                        //$("#createdQuestion").text(QString);
-                        //$("#creationSuccessModal").modal("show");
-                        location.reload();
-                    }
-                })
-            }
+        var AddQuestionToDB = function (DQID, QString, PainSection, weightage) {
+            $.ajax({
+                type: "POST",
+                url: "AddQuestion",
+                data: { DQID: DQID, QString: QString, PainSection: PainSection, weightage: weightage },
+                success: function (result) {
+                    location.reload();
+                }
+            })
+        }
 
-            var AddQuestion = function (Count, Section) {
-                // Store value of section
-                $('#new_section').val(Section)
-                $('#new_DQID').html(Count + 1)
-                // Show creation modal
-                $("#creationModal").modal("show");
-            }
+        var DeleteQuestionFromDB = function (DQID) {
+            console.log(DQID)
+            $.ajax({
+                type: "POST",
+                url: "DeleteQuestion",
+                data: { DQID: DQID },
+                success: function (result) {
+                    $("#deletionModal").modal("hide");
+                    $(("#row_" + DQID)).hide();
+                }
+            })
+        }
 
-            var countPOne = function (int) {
-                return int++;
-            }
+        var AddQuestion = function (Count, Section) {
+            // Store value of section
+            $('#new_section').val(Section)
+            $('#new_DQID').html(Count + 1)
+            // Show creation modal
+            $("#creationModal").modal("show");
+        }
 
-        </script>
-    }
+        var ConfirmDeletion = function (DQID, QString) {
+            // Store value of section
+            $('#deletionDQID').val(DQID)
+            $('#deletingQuestion').text(QString.val())
+            // Show creation modal
+            $("#deletionModal").modal("show");
+        }
+
+
+    </script>
+}

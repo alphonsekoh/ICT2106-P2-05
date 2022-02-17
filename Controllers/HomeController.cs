@@ -65,6 +65,14 @@ namespace PainAssessment.Controllers
             return "nth wrong";
         }
 
+        [HttpPost]
+        public string DeleteQuestion(int DQID)
+        {
+            Console.WriteLine(DQID);
+            defaultQuestionsService.DeleteDefaultQuestion(DQID);
+            return "nth wrong";
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
