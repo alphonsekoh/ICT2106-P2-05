@@ -56,6 +56,15 @@ namespace PainAssessment.Controllers
             return "Privacy";
         }
 
+        [HttpPost]
+        public string AddQuestion(int DQID, string QString, string PainSection, string weightage)
+        {
+
+            defaultQuestionsService.CreateDefaultQuestion(1, QString, "", int.Parse(PainSection), double.Parse(weightage));
+
+            return "nth wrong";
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

@@ -14,7 +14,15 @@ namespace PainAssessment.Domain
         }
         public void CreateDefaultQuestion(int templateID, string questionString, string questionDescription, int painSection, double weightage)
         {
-            throw new System.NotImplementedException();
+            DefaultQuestion newQuestion = new DefaultQuestion();
+            newQuestion.TCID = templateID;
+            newQuestion.QString = questionString;
+            newQuestion.QDescription = questionDescription;
+            newQuestion.PainSection = painSection;
+            newQuestion.Weightage = weightage;
+
+            _unitOfWork.DefaultQuestionRepository.Add(newQuestion);
+            _unitOfWork.Save();
         }
 
         public void DeleteDefaultQuestion(int defaultQuestionID)
