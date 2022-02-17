@@ -29,17 +29,31 @@ namespace PainAssessment.Domain
 
         public IEnumerable<DefaultQuestion> GetAllDefaultQuestionsFromTemplateChecklist(int templateID)
         {
-            throw new System.NotImplementedException();
+            // TODO implement return table by id
+            //IEnumerable<DefaultQuestion> tempArr = _unitOfWork.DefaultQuestionRepository.GetAll();
+            //foreach(var entry in tempArr)
+            //{
+            //    if(entry.TCID == templateID)
+            //    {
+
+            //    }
+            //}
+            return _unitOfWork.DefaultQuestionRepository.GetAll();
         }
 
-        public DefaultQuestion GetDefaultQuestion(string templateID)
+        public DefaultQuestion GetDefaultQuestion(int templateID)
         {
-            throw new System.NotImplementedException();
+            return _unitOfWork.DefaultQuestionRepository.GetById(templateID);
         }
 
         public void UpdateDefaultQuestion(int defaultQuestionID, string questionString, string questionDescription, int painSection, double weightage)
         {
-            throw new System.NotImplementedException();
+            DefaultQuestion temp = GetDefaultQuestion(defaultQuestionID);
+            temp.QString = questionString;
+            temp.QDescription = questionDescription;
+            temp.PainSection = painSection;
+            temp.Weightage = weightage;
+            _unitOfWork.Save();
         }
     }
 }

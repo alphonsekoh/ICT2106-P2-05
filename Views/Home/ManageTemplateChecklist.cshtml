@@ -1,4 +1,4 @@
-﻿@model List<PainAssessment.Models.TemplateChecklist>
+﻿@model List<PainAssessment.Models.DefaultQuestion>
 
 @{
     ViewData["Title"] = "Manage Template Checklist";
@@ -55,38 +55,56 @@
                 <tbody>
                     @foreach(var item in Model)
                     {
-                        <tr>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.TemplateChecklistId)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.TemplateName)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Description)
-                            </td>
-                            <td>
-                                @*<button onclick="ConfirmDelete(@item.PractitionerID, '@item.Name')"
-                                        type="button"
-                                        class="btn btn-danger btn-sm">
-                                    Delete
-                                </button>
-                                <button onclick="ConfirmDelete(@item.PractitionerID, '@item.Name')"
-                                        type="button"
-                                        class="btn btn-danger btn-sm">
-                                    Delete
-                                </button>*@
-                            </td>
-                        </tr>
+                        @if(item.PainSection == 0)
+                        {
+                            <tr id="row_@item.DQID">
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.DQID)
+                                </td>
+                                <td>
+                                    <input type="text" id="qString_@item.DQID" name="qString_@item.DQID" value="@Html.DisplayFor(modelItem => item.QString)">
+
+                                </td>
+                                <td>
+                                    <input type="number" id="weightage_@item.DQID" name="weightage_@item.DQID" value="@Html.DisplayFor(modelItem => item.Weightage)">
+
+                                </td>
+                                <td>
+                                    <button onclick="UpdateQuestion(@item.DQID, $('#qString_@item.DQID').val(), $('#weightage_@item.DQID').val())"
+                                            type="button"
+                                            class="btn btn-danger btn-sm">
+                                        Update
+                                    </button>
+                                    @*<button onclick="ConfirmDelete(@item.PractitionerID, '@item.Name')"
+                                                type="button"
+                                                class="btn btn-danger btn-sm">
+                                            Delete
+                                        </button>*@
+                                </td>
+                            </tr>
+                        }
                     }
                 </tbody>
             </table>
         </div>
     </div>
 
-
-
-
-
-
 </div>
+
+@section scripts{
+    <script>
+        var UpdateQuestion = function (DQID, QString, weightage) {
+            console.log(weightage);
+            $.ajax({
+                type: "POST",
+                url: "UpdateQuestion",
+                data: { DQID: DQID, QString: QString, weightage: weightage },
+                success: function (result) {
+
+                    $("#row_" + DQID).remove();
+                }
+            })
+        }
+
+    </script>
+}

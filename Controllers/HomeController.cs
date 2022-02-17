@@ -8,6 +8,8 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
+using System.Diagnostics; // TO REMOVE
+
 namespace PainAssessment.Controllers
 {
     public class HomeController : Controller
@@ -15,11 +17,13 @@ namespace PainAssessment.Controllers
         private readonly ILogger<HomeController> _logger;
         // Include services
         private readonly ITemplateChecklistService templateChecklistService;
+        private readonly IDefaultQuestionsService defaultQuestionsService;
 
-        public HomeController(ILogger<HomeController> logger, ITemplateChecklistService templateChecklistService)
+        public HomeController(ILogger<HomeController> logger, ITemplateChecklistService templateChecklistService, IDefaultQuestionsService defaultQuestionsService)
         {
             _logger = logger;
             this.templateChecklistService = templateChecklistService;
+            this.defaultQuestionsService = defaultQuestionsService;
         }
 
         public IActionResult Index()
@@ -35,8 +39,21 @@ namespace PainAssessment.Controllers
 
         public IActionResult ManageTemplateChecklist()
         {
-            var templateChecklistArr = templateChecklistService.GetAllTemplateChecklist().ToList();
-            return View(templateChecklistArr);
+            var templateQuestionsArr = defaultQuestionsService.GetAllDefaultQuestionsFromTemplateChecklist(1).ToList();
+            return View(templateQuestionsArr);
+        }
+
+        [HttpPost]
+        public string UpdateQuestion(int DQID, string QString, string weightage)
+        {
+            Debug.Write(weightage);
+            DefaultQuestion temp = defaultQuestionsService.GetDefaultQuestion(DQID);
+
+            defaultQuestionsService.UpdateDefaultQuestion(DQID, QString, temp.QDescription, temp.PainSection, double.Parse(weightage));
+
+
+
+            return "Privacy";
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
