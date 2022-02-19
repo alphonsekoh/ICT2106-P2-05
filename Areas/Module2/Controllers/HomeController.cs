@@ -7,9 +7,9 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace PainAssessment.Areas.Module2.Controllers
+namespace PainAssessment.Areas.ModuleTwo.Controllers
 {
-    [Area("Module2")]
+    [Area("ModuleTwo")]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
