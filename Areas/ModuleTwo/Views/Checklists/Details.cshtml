@@ -1,0 +1,36 @@
+﻿@model PainAssessment.Areas.ModuleTwo.Models.Checklist
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Checklist</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.checklistID)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.checklistID)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.checklistName)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.checklistName)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.checklistDescription)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.checklistDescription)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
