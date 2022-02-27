@@ -50,8 +50,16 @@
                         @Html.DisplayNameFor(model => model.Name)
                     </th>
                     <th scope="col">
-                        ClinicalArea
-                        @*@Html.DisplayNameFor(model => model.ClinicalArea.Name)*@
+                        @Html.DisplayNameFor(model => model.PracticeType)
+                    </th>
+                    <th scope="col">
+                        @Html.DisplayNameFor(model => model.Experience)
+                    </th>
+                    <th scope="col">
+                        Clinical Area
+                    </th>
+                    <th scope="col">
+                        Prior Pain Education
                     </th>
                     <th scope="col">
                         Actions
@@ -62,39 +70,51 @@
 
                 @foreach (var item in Model)
                 {
-                    <tr id="row_@item.PractitionerID">
-                        <td>
-                            @Html.DisplayFor(modelItem => item.PractitionerID)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Name)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.ClinicalArea.Name) @*ClinicalArea*@
-                        </td>
-                        <td>
-                            <a asp-action="Delete" asp-route-id="@item.PractitionerID"
-                               type="button"
-                               class="btn btn-primary btn-sm">
-                                View all Consultations
-                            </a>
-                            <a asp-action="Edit" asp-route-id="@item.PractitionerID"
-                               type="button"
-                               class="btn btn-secondary btn-sm">
-                                Edit
-                            </a>
-                            <a asp-action="Delete" asp-route-id="@item.PractitionerID"
-                               type="button"
-                               class="btn btn-danger btn-sm">
-                                Reset Password
-                            </a>
-                            <button onclick="ConfirmDelete(@item.PractitionerID, '@item.Name')"
-                                    type="button"
-                                    class="btn btn-danger btn-sm">
-                                Delete
-                            </button>
-                        </td>
-                    </tr>
+                <tr id="row_@item.PractitionerID">
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PractitionerID)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PracticeType)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Experience)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ClinicalArea.Name) @*ClinicalArea*@
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PriorPainEducation)
+                    </td>
+
+                    <td>
+                        <a asp-action="Delete" asp-route-id="@item.PractitionerID"
+                           type="button"
+                           class="btn btn-primary btn-sm">
+                            View all Consultations
+                        </a>
+                        <a asp-action="Edit" asp-route-id="@item.PractitionerID"
+                           type="button"
+                           class="btn btn-secondary btn-sm">
+                            Edit
+                        </a>
+                        <a asp-action="Delete" asp-route-id="@item.PractitionerID"
+                           type="button"
+                           class="btn btn-danger btn-sm">
+                            Reset Password
+                        </a>
+                        <button onclick="ConfirmDelete(@item.PractitionerID, '@item.Name')"
+                                type="button"
+                                class="btn btn-danger btn-sm">
+                            Delete
+                        </button>
+                    </td>
+                </tr>
                 }
             </tbody>
         </table>
