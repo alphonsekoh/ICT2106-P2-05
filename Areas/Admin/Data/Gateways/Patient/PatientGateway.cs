@@ -1,9 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PainAssessment.Areas.Admin.Models;
+using PainAssessment.Areas.Admin.Util;
 using PainAssessment.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace PainAssessment.Areas.Admin.Data.Gateways
@@ -19,6 +21,7 @@ namespace PainAssessment.Areas.Admin.Data.Gateways
 
         public void Add(Patient patient)
         {
+            patient.Name = Regex.Replace(patient.Name, @"\b\w{3,}\b", match => Utility.MaskName(match.Value));
             context.Patients.Add(patient);
         }
 
@@ -42,5 +45,8 @@ namespace PainAssessment.Areas.Admin.Data.Gateways
         {
             context.Entry(patient).State = EntityState.Modified;
         }
+
+
+
     }
 }

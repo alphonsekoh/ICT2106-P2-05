@@ -1,8 +1,10 @@
 ﻿using PainAssessment.Areas.Admin.Models;
+using PainAssessment.Areas.Admin.Util;
 using PainAssessment.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace PainAssessment.Areas.Admin.Data
@@ -86,6 +88,12 @@ namespace PainAssessment.Areas.Admin.Data
                 new Patient{ Name= "Daly", BirthDate=DateTime.UtcNow, Gender="Female", Condition = "Unknown", Notes = "Unknown" }
 
             };
+
+            foreach (Patient p in patients)
+            {
+                p.Name = Regex.Replace(p.Name, @"\b\w{3,}\b", match => Utility.MaskName(match.Value));
+            }
+
             context.Patients.AddRange(patients);
             context.SaveChanges();
 
