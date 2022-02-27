@@ -22,13 +22,13 @@ namespace PainAssessment.Areas.Admin.Data.Gateways
             context.Practitioners.Add(practitioner);
         }
 
-        public void Delete(int id)
+        public void Delete(Guid id)
         {
             Practitioner practitioner = context.Practitioners.Find(id);
             context.Practitioners.Remove(practitioner);
         }
 
-        public Practitioner FindById(int id)
+        public Practitioner FindById(Guid id)
         {
             return context.Practitioners.Include(p => p.ClinicalArea).Where(p => p.PractitionerID == id).FirstOrDefault();
         }

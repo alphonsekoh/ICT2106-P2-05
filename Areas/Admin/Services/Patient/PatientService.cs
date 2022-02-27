@@ -19,7 +19,7 @@ namespace PainAssessment.Areas.Admin.Services
             unitOfWork.PatientGateway.Add(patient);
         }
 
-        public void DeletePatient(int id)
+        public void DeletePatient(Guid id)
         {
             unitOfWork.PatientGateway.Delete(id);
         }
@@ -29,7 +29,7 @@ namespace PainAssessment.Areas.Admin.Services
             return unitOfWork.PatientGateway.GetAll();
         }
 
-        public Patient GetPatient(int id)
+        public Patient GetPatient(Guid id)
         {
             return unitOfWork.PatientGateway.FindById(id);
         }

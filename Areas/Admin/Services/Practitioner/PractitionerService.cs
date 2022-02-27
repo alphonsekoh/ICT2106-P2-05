@@ -19,7 +19,7 @@ namespace PainAssessment.Areas.Admin.Services
             unitOfWork.PractitionerGateway.Add(practitioner);
         }
 
-        public void DeletePractitioner(int id)
+        public void DeletePractitioner(Guid id)
         {
             unitOfWork.PractitionerGateway.Delete(id);
         }
@@ -29,7 +29,7 @@ namespace PainAssessment.Areas.Admin.Services
             return unitOfWork.PractitionerGateway.GetAll();
         }
 
-        public Practitioner GetPractitioner(int id)
+        public Practitioner GetPractitioner(Guid id)
         {
             return unitOfWork.PractitionerGateway.FindById(id);
         }

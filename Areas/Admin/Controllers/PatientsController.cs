@@ -28,14 +28,14 @@ namespace PainAssessment.Areas.Admin.Controllers
         }
 
         // GET: Admin/Patients/Details/5
-        public IActionResult Details(int? id)
+        public IActionResult Details(Guid? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var patient = patientService.GetPatient((int)id);
+            var patient = patientService.GetPatient((Guid)id);
 
             if (patient == null)
             {
@@ -68,14 +68,14 @@ namespace PainAssessment.Areas.Admin.Controllers
         }
 
         // GET: Admin/Patients/Edit/5
-        public IActionResult Edit(int? id)
+        public IActionResult Edit(Guid? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var patient = patientService.GetPatient((int)id);
+            var patient = patientService.GetPatient((Guid)id);
             if (patient == null)
             {
                 return NotFound();
@@ -88,7 +88,7 @@ namespace PainAssessment.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id, [Bind("PatientID,Name,Gender,BirthDate,Condition,Notes")] Patient patient)
+        public IActionResult Edit(Guid id, [Bind("PatientID,Name,Gender,BirthDate,Condition,Notes")] Patient patient)
         {
             if (id != patient.PatientID)
             {
@@ -119,14 +119,14 @@ namespace PainAssessment.Areas.Admin.Controllers
         }
 
         // GET: Admin/Patients/Delete/5
-        public IActionResult Delete(int? id)
+        public IActionResult Delete(Guid? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var patient = patientService.GetPatient((int)id);
+            var patient = patientService.GetPatient((Guid)id);
 
             if (patient == null)
             {
@@ -139,7 +139,7 @@ namespace PainAssessment.Areas.Admin.Controllers
         // POST: Admin/Patients/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public IActionResult DeleteConfirmed(int id)
+        public IActionResult DeleteConfirmed(Guid id)
         {
             patientService.DeletePatient(id);
             patientService.SavePatient();

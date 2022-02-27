@@ -84,14 +84,14 @@ namespace PainAssessment.Areas.Admin.Controllers
         }
 
         // GET: Practitioners/Edit/5
-        public IActionResult Edit(int? id)
+        public IActionResult Edit(Guid? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var practitioner = practitionerService.GetPractitioner((int)id);
+            var practitioner = practitionerService.GetPractitioner((Guid)id);
 
             if (practitioner == null)
             {
@@ -107,7 +107,7 @@ namespace PainAssessment.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id, [Bind("PractitionerID,Name,ClinicalAreaID")] Practitioner practitioner)
+        public IActionResult Edit(Guid id, [Bind("PractitionerID,Name,ClinicalAreaID")] Practitioner practitioner)
         {
             if (id != practitioner.PractitionerID)
             {
@@ -139,7 +139,7 @@ namespace PainAssessment.Areas.Admin.Controllers
             return View(practitioner);
         }
 
-    public JsonResult deletePractitioner(int Id)
+    public JsonResult deletePractitioner(Guid Id)
         {
             if (practitionerService.GetPractitioner(Id) == null)
             {
