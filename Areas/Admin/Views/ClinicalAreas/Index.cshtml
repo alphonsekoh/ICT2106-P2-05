@@ -1,11 +1,11 @@
-﻿@model IEnumerable<PainAssessment.Areas.Admin.Models.Department>
+﻿@model IEnumerable<PainAssessment.Areas.Admin.Models.ClinicalArea>
 
 @{
     ViewData["Title"] = "Index";
 }
 <div class="row justify-content-between">
     <div class="col-sm-6">
-        <h1>Manage Departments</h1>
+        <h1>Manage ClinicalAreas</h1>
         <p class="text-muted">Admin can manage departments. This includes creating, reading, updating and deleting departments</p>
     </div>
     <div class="col-sm-2 align-self-center">
@@ -43,14 +43,14 @@
         <tbody>
             @foreach (var item in Model)
             {
-                <tr id="row_@item.DepartmentID">
+                <tr id="row_@item.ClinicalAreaID">
                     <td>
                         @Html.DisplayFor(modelItem => item.Name)
                     </td>
                     <td>
-                        <a type="button" class="btn btn-primary btn-sm" asp-action="Edit" asp-route-id="@item.DepartmentID">Edit Department Details</a> |
-                        <a type="button" class="btn btn-secondary btn-sm" asp-action="Details" asp-route-id="@item.DepartmentID">View Department Details</a> |
-                        <a type="button" class="btn btn-danger btn-sm" asp-action="Delete" asp-route-id="@item.DepartmentID">Delete</a>
+                        <a type="button" class="btn btn-primary btn-sm" asp-action="Edit" asp-route-id="@item.ClinicalAreaID">Edit ClinicalArea Details</a> |
+                        <a type="button" class="btn btn-secondary btn-sm" asp-action="Details" asp-route-id="@item.ClinicalAreaID">View ClinicalArea Details</a> |
+                        <a type="button" class="btn btn-danger btn-sm" asp-action="Delete" asp-route-id="@item.ClinicalAreaID">Delete</a>
                     </td>
                 </tr>
             }
