@@ -1,4 +1,4 @@
-﻿@model PainAssessment.Areas.Admin.Models.Department
+﻿@model PainAssessment.Areas.Admin.Models.ClinicalArea
 
 @{
     ViewData["Title"] = "Details";
@@ -7,7 +7,7 @@
 <h1>Details</h1>
 
 <div>
-    <h4>Department</h4>
+    <h4>ClinicalArea</h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
@@ -19,6 +19,6 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.DepartmentID" type="button" class="btn btn-primary btn-sm">Edit</a> |
+    <a asp-action="Edit" asp-route-id="@Model.ClinicalAreaID" type="button" class="btn btn-primary btn-sm">Edit</a> |
     <a asp-action="Index" type="button" class="btn btn-secondary btn-sm" >Back to List</a>
 </div>

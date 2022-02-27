@@ -8,7 +8,7 @@ namespace PainAssessment.Areas.Admin.Data
 {
     public interface IUnitOfWork : IDisposable
     {
-        IDepartmentGateway DepartmentGateway { get; }
+        IClinicalAreaGateway ClinicalAreaGateway { get; }
         IPatientGateway PatientGateway { get; }
         IPractitionerGateway PractitionerGateway { get; }
         void Save();

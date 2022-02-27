@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace PainAssessment.Areas.Admin.Models.Configuration
 {
-    public class DepartmentConfiguration : IEntityTypeConfiguration<Department>
+    public class ClinicalAreaConfiguration : IEntityTypeConfiguration<ClinicalArea>
     {
-        public void Configure(EntityTypeBuilder<Department> builder)
+        public void Configure(EntityTypeBuilder<ClinicalArea> builder)
         {
-            builder.ToTable("Department");
+            builder.ToTable("ClinicalArea");
         }
     }
 }

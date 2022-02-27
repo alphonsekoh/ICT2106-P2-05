@@ -6,12 +6,12 @@ using PainAssessment.Areas.Admin.Models;
 
 namespace PainAssessment.Areas.Admin.Data.Gateways
 {
-    public interface IDepartmentGateway
+    public interface IClinicalAreaGateway
     {
-        void Add(Department department);
-        Department FindById(int id);
-        IEnumerable<Department> GetAll();
-        void Update(Department department);
+        void Add(ClinicalArea clinicalArea);
+        ClinicalArea FindById(int id);
+        IEnumerable<ClinicalArea> GetAll();
+        void Update(ClinicalArea clinicalArea);
         void Delete(int id);
 
     }

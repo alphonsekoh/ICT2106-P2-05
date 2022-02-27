@@ -11,8 +11,8 @@ namespace PainAssessment.Areas.Admin.Models
         public int PractitionerID { get; set; }
         [Required]
         public string Name { get; set; }
-        public int DepartmentID { get; set; }
-        public Department Department { get; set; }
+        public int ClinicalAreaID { get; set; }
+        public ClinicalArea ClinicalArea { get; set; }
 
     }
 }

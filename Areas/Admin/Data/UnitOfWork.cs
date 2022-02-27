@@ -11,7 +11,7 @@ namespace PainAssessment.Areas.Admin.Data
     {
 
         internal HospitalContext context;
-        public IDepartmentGateway departmentGateway;
+        public IClinicalAreaGateway clinicalAreaGateway;
         public IPatientGateway patientGateway;
         public IPractitionerGateway practitionerGateway;
 
@@ -19,15 +19,15 @@ namespace PainAssessment.Areas.Admin.Data
         {
             this.context = context;
         }
-        public IDepartmentGateway DepartmentGateway
+        public IClinicalAreaGateway ClinicalAreaGateway
         {
             get
             {
-                if (this.departmentGateway == null)
+                if (this.clinicalAreaGateway == null)
                 {
-                    departmentGateway = new DepartmentGateway(context);
+                    clinicalAreaGateway = new ClinicalAreaGateway(context);
                 }
-                return departmentGateway;
+                return clinicalAreaGateway;
             }
         }
 
