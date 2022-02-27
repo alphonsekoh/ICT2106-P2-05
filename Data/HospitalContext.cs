@@ -12,7 +12,7 @@ namespace PainAssessment.Data
         public HospitalContext(DbContextOptions<HospitalContext> options) : base(options)
         {
         }
-        public DbSet<Department> Departments { get; set; }
+        public DbSet<ClinicalArea> ClinicalAreas { get; set; }
         public DbSet<Practitioner> Practitioners { get; set; }
         public DbSet<Patient> Patients { get; set; }
 

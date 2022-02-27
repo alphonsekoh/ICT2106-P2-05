@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace PainAssessment.Areas.Admin.Models
 {
-    public class Department
+    public class ClinicalArea
     {
-        public int DepartmentID { get; set; }
+        public int ClinicalAreaID { get; set; }
         [StringLength(50, MinimumLength = 3)]
         [Required]
-        [DisplayName("Department Name")]
+        [DisplayName("Clinical Area")]
         public string Name { get; set; }
         public ICollection<Practitioner> Practitioners { get; set; }
     }

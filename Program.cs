@@ -28,7 +28,7 @@ namespace PainAssessment
             try
             {
                 var context = services.GetRequiredService<HospitalContext>();
-                PractitionerDepartmentDbInitializer.Initialize(context);
+                PractitionerClinicDbInitializer.Initialize(context);
             }
             catch (Exception ex)
             {

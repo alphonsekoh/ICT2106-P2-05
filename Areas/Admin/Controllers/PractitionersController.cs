@@ -13,12 +13,12 @@ namespace PainAssessment.Areas.Admin.Controllers
     public class PractitionersController : Controller
     {
         private readonly IPractitionerService practitionerService;
-        private readonly IDepartmentService departmentService;
+        private readonly IClinicalAreaService clinicalAreaService;
 
-        public PractitionersController(IPractitionerService practitionerService, IDepartmentService departmentService)
+        public PractitionersController(IPractitionerService practitionerService, IClinicalAreaService clinicalAreaService)
         {
             this.practitionerService = practitionerService;
-            this.departmentService = departmentService;
+            this.clinicalAreaService = clinicalAreaService;
         }
 
         // GET: Admin/Practitioners?page=1&name=gerald
@@ -59,7 +59,7 @@ namespace PainAssessment.Areas.Admin.Controllers
         // GET: Practitioners/Create
         public IActionResult Create()
         {
-            ViewData["DepartmentID"] = new SelectList(departmentService.GetAllDepartments(), "DepartmentID", "Name");
+            ViewData["ClinicalAreaID"] = new SelectList(clinicalAreaService.GetAllClinicalAreas(), "ClinicalAreaID", "Name");
 
             return View();
         }
@@ -69,7 +69,7 @@ namespace PainAssessment.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create([Bind("PractitionerID,Name,DepartmentID")] Practitioner practitioner)
+        public IActionResult Create([Bind("PractitionerID,Name,ClinicalAreaID")] Practitioner practitioner)
         {
             if (ModelState.IsValid)
             {
@@ -78,7 +78,7 @@ namespace PainAssessment.Areas.Admin.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            ViewData["DepartmentID"] = new SelectList(departmentService.GetAllDepartments(), "DepartmentID", "Name");
+            ViewData["ClinicalAreaID"] = new SelectList(clinicalAreaService.GetAllClinicalAreas(), "ClinicalAreaID", "Name");
 
             return View(practitioner);
         }
@@ -98,7 +98,7 @@ namespace PainAssessment.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            ViewData["DepartmentID"] = new SelectList(departmentService.GetAllDepartments(), "DepartmentID", "Name");
+            ViewData["ClinicalAreaID"] = new SelectList(clinicalAreaService.GetAllClinicalAreas(), "ClinicalAreaID", "Name");
             return View(practitioner);
         }
 
@@ -107,7 +107,7 @@ namespace PainAssessment.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id, [Bind("PractitionerID,Name,DepartmentID")] Practitioner practitioner)
+        public IActionResult Edit(int id, [Bind("PractitionerID,Name,ClinicalAreaID")] Practitioner practitioner)
         {
             if (id != practitioner.PractitionerID)
             {
@@ -135,7 +135,7 @@ namespace PainAssessment.Areas.Admin.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            ViewData["DepartmentID"] = new SelectList(departmentService.GetAllDepartments(), "DepartmentID", "Name");
+            ViewData["ClinicalAreaID"] = new SelectList(clinicalAreaService.GetAllClinicalAreas(), "ClinicalAreaID", "Name");
             return View(practitioner);
         }
 

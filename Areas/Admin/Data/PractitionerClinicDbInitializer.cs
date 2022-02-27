@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace PainAssessment.Areas.Admin.Data
 {
-    public static class PractitionerDepartmentDbInitializer
+    public static class PractitionerClinicDbInitializer
     {
         public static void Initialize(HospitalContext context)
         {
@@ -17,46 +17,49 @@ namespace PainAssessment.Areas.Admin.Data
             {
                 return;   // DB has been seeded
             }
-            var departments = new Department[]
+            var departments = new ClinicalArea[]
             {
-            new Department{Name="Neurology"},
-            new Department{Name="Orthopaedic"},
-            new Department{Name="Cardiology"},
-            new Department{Name="Urology"},
-            new Department{Name="General Surgery"},
-            new Department{Name="Haematology"},
-            new Department{Name="Dermatology"}
+            new ClinicalArea{Name="Musculoskeletal"},
+            new ClinicalArea{Name="Neurology/Neurosurgery"},
+            new ClinicalArea{Name="Older People/Falls"},
+            new ClinicalArea{Name="Cardiorespiratory"},
+            new ClinicalArea{Name="Women’s Health/Pelvic Floor"},
+            new ClinicalArea{Name="General Medicine"},
+            new ClinicalArea{Name="Orthopaedic"},            
+            new ClinicalArea{Name="Pain Management"},
+            new ClinicalArea{Name="Intensive Care"},
+            new ClinicalArea{Name="Hand Therapy"},
             };
 
-            context.Departments.AddRange(departments);
+            context.ClinicalAreas.AddRange(departments);
 
             context.SaveChanges();
 
             var practitioners = new Practitioner[]
             {
-            new Practitioner{DepartmentID=1,Name="Alexander"},
-            new Practitioner{DepartmentID=2,Name="Meredith"},
-            new Practitioner{DepartmentID=2,Name="Carson"},
-            new Practitioner{DepartmentID=2,Name="Arturo"},
-            new Practitioner{DepartmentID=3,Name="Gytis"},
-            new Practitioner{DepartmentID=3,Name="Yan"},
-            new Practitioner{DepartmentID=3,Name="Li"},
-            new Practitioner{DepartmentID=4,Name="Alonso"},
-            new Practitioner{DepartmentID=4,Name="Anand"},
-            new Practitioner{DepartmentID=4,Name="Barzdukas"},
-            new Practitioner{DepartmentID=4,Name="Olivetto"},
-            new Practitioner{DepartmentID=5,Name="Nino"},
-            new Practitioner{DepartmentID=5,Name="Peggy"},
-            new Practitioner{DepartmentID=5,Name="Laura"},
-            new Practitioner{DepartmentID=5,Name="Norman"},
-            new Practitioner{DepartmentID=5,Name="Justice"},
-            new Practitioner{DepartmentID=6,Name="Liam"},
-            new Practitioner{DepartmentID=6,Name="Oliver"},
-            new Practitioner{DepartmentID=6,Name="Elijah"},
-            new Practitioner{DepartmentID=6,Name="William"},
-            new Practitioner{DepartmentID=6,Name="James"},
-            new Practitioner{DepartmentID=6,Name="Benjamin"},
-            new Practitioner{DepartmentID=7,Name="Lucas"},
+            new Practitioner{ClinicalAreaID=1,Name="Alexander"},
+            new Practitioner{ClinicalAreaID=2,Name="Meredith"},
+            new Practitioner{ClinicalAreaID=2,Name="Carson"},
+            new Practitioner{ClinicalAreaID=2,Name="Arturo"},
+            new Practitioner{ClinicalAreaID=3,Name="Gytis"},
+            new Practitioner{ClinicalAreaID=3,Name="Yan"},
+            new Practitioner{ClinicalAreaID=3,Name="Li"},
+            new Practitioner{ClinicalAreaID=4,Name="Alonso"},
+            new Practitioner{ClinicalAreaID=4,Name="Anand"},
+            new Practitioner{ClinicalAreaID=4,Name="Barzdukas"},
+            new Practitioner{ClinicalAreaID=4,Name="Olivetto"},
+            new Practitioner{ClinicalAreaID=5,Name="Nino"},
+            new Practitioner{ClinicalAreaID=5,Name="Peggy"},
+            new Practitioner{ClinicalAreaID=5,Name="Laura"},
+            new Practitioner{ClinicalAreaID=5,Name="Norman"},
+            new Practitioner{ClinicalAreaID=5,Name="Justice"},
+            new Practitioner{ClinicalAreaID=6,Name="Liam"},
+            new Practitioner{ClinicalAreaID=6,Name="Oliver"},
+            new Practitioner{ClinicalAreaID=6,Name="Elijah"},
+            new Practitioner{ClinicalAreaID=6,Name="William"},
+            new Practitioner{ClinicalAreaID=6,Name="James"},
+            new Practitioner{ClinicalAreaID=6,Name="Benjamin"},
+            new Practitioner{ClinicalAreaID=7,Name="Lucas"},
             };
             context.Practitioners.AddRange(practitioners);
 
