@@ -9,9 +9,9 @@ namespace PainAssessment.Areas.Admin.Data.Gateways
     public interface IPatientGateway
     {
         void Add(Patient patient);
-        Patient FindById(int id);
+        Patient FindById(Guid id);
         IEnumerable<Patient> GetAll();
         void Update(Patient patient);
-        void Delete(int id);
+        void Delete(Guid id);
     }
 }

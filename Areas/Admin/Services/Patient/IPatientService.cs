@@ -8,11 +8,11 @@ namespace PainAssessment.Areas.Admin.Services
 {
     public interface IPatientService
     {
-        Patient GetPatient(int id);
+        Patient GetPatient(Guid id);
         IEnumerable<Patient> GetAllPatients();
         void CreatePatient(Patient patient);
         void UpdatePatient(Patient patient);
-        void DeletePatient(int id);
+        void DeletePatient(Guid id);
         void SavePatient();
 
     }

@@ -8,9 +8,12 @@ namespace PainAssessment.Areas.Admin.Models
 {
     public class Practitioner
     {
-        public int PractitionerID { get; set; }
+        public Guid PractitionerID { get; set; }
         [Required]
         public string Name { get; set; }
+        public string Experience { get; set; }
+        public string PracticeType { get; set; }
+        public string PriorPainEducation { get; set; }
         public int ClinicalAreaID { get; set; }
         public ClinicalArea ClinicalArea { get; set; }
 
