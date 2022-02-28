@@ -1,13 +1,15 @@
-﻿@{
+﻿@model PainAssessment.Areas.ModuleTwo.Models.Patient
+
+@{
     ViewData["Title"] = "Details";
 }
 
-<h1>Patient Details</h1>
-
 <div class="row">
-    <div class="mb-3 col-12 align-content-end">
-        <a asp-action="Index" class="btn btn-primary">Back to patient list</a>
+    <div class="mb-3 col-12">
+        <a asp-action="Index" class="btn btn-primary ">Back to patient list</a>
     </div>
+    <h1 class="m-sm-2">Patient Details</h1>
+
     <hr />
     <div class="card pt-3 px-5 rounded col-md-12 ">
         <form>
@@ -15,27 +17,37 @@
                 <div class="row">
                     <div class="form-group col-md-6 ">
                         <label for="disabledTextInput" class="lead my-3 font-weight-bold ">Patient Name</label>
-                        <input type="text" id="disabledTextInput" class="form-control" placeholder="Ivan Lee">
+                        <input type="text" id="disabledTextInput" class="form-control" placeholder="@Html.DisplayFor(model => model.patientName)">
                     </div>
-                    <div class="form-group col-md-3">
+                    <div class="form-group col-md-2 ">
+                        <label for="disabledTextInput" class="lead my-3 font-weight-bold ">Patient ID</label>
+                        <input type="text" id="disabledTextInput" class="form-control" placeholder="@Html.DisplayFor(model => model.Id)">
+                    </div>
+                    <div class="form-group col-md-2">
                         <label for="disabledTextInput" class="lead my-3 font-weight-bold ">Age</label>
-                        <input type="text" id="disabledTextInput" class="form-control" placeholder="36">
+                        <input type="text" id="disabledTextInput" class="form-control" placeholder="@Html.DisplayFor(model => model.patientAge)">
                     </div>
-                    <div class="form-group col-md-3">
+                    <div class="form-group col-md-2">
                         <label for="disabledTextInput" class="lead my-3 font-weight-bold ">Gender</label>
-                        <input type="text" id="disabledTextInput" class="form-control" placeholder="Male">
+                        <input type="text" id="disabledTextInput" class="form-control" placeholder="@Html.DisplayFor(model => model.gender)">
                     </div>
                 </div>
                 <div class="row">
                     <div class="form-group col-md-6">
                         <label for="disabledTextInput" class="lead my-3 font-weight-bold ">Condition</label>
-                        <input type="text" id="disabledTextInput" class="form-control" placeholder="Knee">
+                        <input type="text" id="disabledTextInput" class="form-control" placeholder="@Html.DisplayFor(model => model.condition)">
                     </div>
                 </div>
                 <div class="row">
                     <div class="form-group col-md-12">
                         <label for="disabledTextInput" class="lead my-3 font-weight-bold ">Patient Notes</label>
                         <textarea class="form-control" id="" rows="5">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</textarea>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-6 ">
+                        <label for="disabledTextInput" class="lead my-3 font-weight-bold ">Consultation ID</label>
+                        <input type="text" id="disabledTextInput" class="form-control" placeholder="@Html.DisplayFor(model => model.consultationID)">
                     </div>
                 </div>
             </fieldset>
