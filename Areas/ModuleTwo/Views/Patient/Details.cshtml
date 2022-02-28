@@ -16,38 +16,42 @@
             <fieldset disabled>
                 <div class="row">
                     <div class="form-group col-md-6 ">
-                        <label for="disabledTextInput" class="lead my-3 font-weight-bold ">Patient Name</label>
+                        <label for="disabledTextInput" class="lead my-3 font-weight-bold ">@Html.DisplayNameFor(model => model.patientName)</label>
                         <input type="text" id="disabledTextInput" class="form-control" placeholder="@Html.DisplayFor(model => model.patientName)">
                     </div>
                     <div class="form-group col-md-2 ">
-                        <label for="disabledTextInput" class="lead my-3 font-weight-bold ">Patient ID</label>
+                        <label for="disabledTextInput" class="lead my-3 font-weight-bold ">@Html.DisplayNameFor(model => model.Id)</label>
                         <input type="text" id="disabledTextInput" class="form-control" placeholder="@Html.DisplayFor(model => model.Id)">
                     </div>
                     <div class="form-group col-md-2">
-                        <label for="disabledTextInput" class="lead my-3 font-weight-bold ">Age</label>
+                        <label for="disabledTextInput" class="lead my-3 font-weight-bold ">@Html.DisplayNameFor(model => model.patientAge)</label>
                         <input type="text" id="disabledTextInput" class="form-control" placeholder="@Html.DisplayFor(model => model.patientAge)">
                     </div>
                     <div class="form-group col-md-2">
-                        <label for="disabledTextInput" class="lead my-3 font-weight-bold ">Gender</label>
+                        <label for="disabledTextInput" class="lead my-3 font-weight-bold ">@Html.DisplayNameFor(model => model.gender)</label>
                         <input type="text" id="disabledTextInput" class="form-control" placeholder="@Html.DisplayFor(model => model.gender)">
                     </div>
                 </div>
                 <div class="row">
                     <div class="form-group col-md-6">
-                        <label for="disabledTextInput" class="lead my-3 font-weight-bold ">Condition</label>
+                        <label for="disabledTextInput" class="lead my-3 font-weight-bold ">@Html.DisplayNameFor(model => model.condition)</label>
                         <input type="text" id="disabledTextInput" class="form-control" placeholder="@Html.DisplayFor(model => model.condition)">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="disabledTextInput" class="lead my-3 font-weight-bold ">@Html.DisplayNameFor(model => model.lastVisit)</label>
+                        <input type="text" id="disabledTextInput" class="form-control" placeholder="@Html.DisplayFor(model => model.lastVisit)">
                     </div>
                 </div>
                 <div class="row">
                     <div class="form-group col-md-12">
-                        <label for="disabledTextInput" class="lead my-3 font-weight-bold ">Patient Notes</label>
-                        <textarea class="form-control" id="" rows="5">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</textarea>
+                        <label for="disabledTextInput" class="lead my-3 font-weight-bold ">@Html.DisplayNameFor(model => model.patientNotes)</label>
+                        <textarea class="form-control" id="" rows="5">@Html.DisplayFor(model => model.patientNotes)</textarea>
                     </div>
                 </div>
                 <div class="row">
                     <div class="form-group col-md-6 ">
-                        <label for="disabledTextInput" class="lead my-3 font-weight-bold ">Consultation ID</label>
-                        <input type="text" id="disabledTextInput" class="form-control" placeholder="@Html.DisplayFor(model => model.consultationID)">
+                        <label for="disabledTextInput" class="lead my-3 font-weight-bold ">@Html.DisplayNameFor(model => model.sessions)</label>
+                        <input type="text" id="disabledTextInput" class="form-control" placeholder="@Html.DisplayFor(model => model.sessions)">
                     </div>
                 </div>
             </fieldset>

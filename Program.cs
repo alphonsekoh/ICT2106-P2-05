@@ -9,6 +9,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using PainAssessment.Data;
 using PainAssessment.Areas.Admin.Data;
+using PainAssessment.Areas.ModuleTwo.Data;
+using PainAssessment.Areas.ModuleTwo.Models;
 
 namespace PainAssessment
 {
@@ -17,8 +19,27 @@ namespace PainAssessment
         public static void Main(string[] args)
         {
             var host = CreateHostBuilder(args).Build();
-            CreateDbIfNotExists(host);
+
+            using (var scope = host.Services.CreateScope())
+            {
+                var services = scope.ServiceProvider;
+
+                try
+                {
+                    PatientSeedData.Initialize(services);
+                }
+                catch (Exception ex)
+                {
+                    var logger = services.GetRequiredService<ILogger<Program>>();
+                    logger.LogError(ex, "An error occurred seeding the DB.");
+                }
+            }
+
             host.Run();
+
+
+            //CreateDbIfNotExists(host);
+            //host.Run();
         }
 
         private static void CreateDbIfNotExists(IHost host)

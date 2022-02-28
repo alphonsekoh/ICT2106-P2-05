@@ -34,9 +34,19 @@
                 <span asp-validation-for="gender" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="consultationID" class="control-label"></label>
-                <input asp-for="consultationID" class="form-control" />
-                <span asp-validation-for="consultationID" class="text-danger"></span>
+                <label asp-for="sessions" class="control-label"></label>
+                <input asp-for="sessions" class="form-control" />
+                <span asp-validation-for="sessions" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="patientNotes" class="control-label"></label>
+                <input asp-for="patientNotes" class="form-control" />
+                <span asp-validation-for="patientNotes" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="lastVisit" class="control-label"></label>
+                <input asp-for="lastVisit" class="form-control" />
+                <span asp-validation-for="lastVisit" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
