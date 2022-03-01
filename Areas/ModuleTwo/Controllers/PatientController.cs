@@ -21,9 +21,22 @@ namespace PainAssessment.Areas.ModuleTwo.Controllers
         }
 
         // GET: ModuleTwo/Patient
-        public async Task<IActionResult> Index()
+        //public async Task<IActionResult> Index()
+        //{
+        //    return View(await _context.Patient.ToListAsync());
+        //}
+
+        public async Task<IActionResult> Index(string searchString)
         {
-            return View(await _context.Patient.ToListAsync());
+            var patient = from m in _context.Patient
+                         select m;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                patient = patient.Where(s => s.patientName.Contains(searchString));
+            }
+
+            return View(await patient.ToListAsync());
         }
 
         // GET: ModuleTwo/Patient/Details/5
