@@ -9,6 +9,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using PainAssessment.Data;
 using PainAssessment.Areas.Admin.Data;
+using PainAssessment.Areas.ModuleTwo.Models;
 
 namespace PainAssessment
 {
@@ -17,6 +18,22 @@ namespace PainAssessment
         public static void Main(string[] args)
         {
             var host = CreateHostBuilder(args).Build();
+            // Consultation SeedData
+            using (var scope = host.Services.CreateScope())
+            {
+                var services = scope.ServiceProvider;
+
+                try
+                {
+                    ConsultationSeedData.Initialize(services);
+                }
+                catch (Exception ex)
+                {
+                    var logger = services.GetRequiredService<ILogger<Program>>();
+                    logger.LogError(ex, "An error occurred seeding the DB.");
+                }
+            }
+
             CreateDbIfNotExists(host);
             host.Run();
         }
