@@ -16,8 +16,11 @@ namespace PainAssessment.Data
         {
         }
 
-        public DbSet<AccountUser> Accounts { get; set; }
+        //public DbSet<AccountUser> Accounts { get; set; }
 
+        public DbSet<Account> Accounts { get; set; }
+        public DbSet<Administrator> Administrators { get; set; }
+        public DbSet<Practitioner> Practitioners { get; set; }
 
         public DbSet<Patient> Patients { get; set; }
         public DbSet<TemplateChecklist> TemplateChecklists { get; set; }
@@ -29,7 +32,8 @@ namespace PainAssessment.Data
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(HospitalContext).Assembly);
             modelBuilder.Entity<Administrator>().HasKey(a => a.AccountId);
             modelBuilder.Entity<Practitioner>().HasKey(p => p.AccountId);
-            
+            modelBuilder.Entity<DefaultQuestion>().HasKey(dQ => dQ.DQID);
+
         }
     }
 }
