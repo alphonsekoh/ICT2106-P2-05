@@ -73,6 +73,7 @@ namespace PainAssessment
             services.AddTransient<IUnitOfWork, UnitOfWork>();
             // To add everytime there's new interface
             services.AddTransient<ITemplateChecklistService, TemplateChecklistService>();
+            services.AddTransient<IDefaultQuestionsService, DefaultQuestionService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

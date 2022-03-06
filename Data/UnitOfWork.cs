@@ -12,6 +12,7 @@ namespace PainAssessment.Data
         private IGenericRepository<Patient> patientRepository;
 
         private IGenericRepository<TemplateChecklist> templateChecklistRepository;
+        private IGenericRepository<DefaultQuestion> defaultQuestionRepository;
 
         public UnitOfWork(HospitalContext context)
         {
@@ -54,6 +55,18 @@ namespace PainAssessment.Data
                     this.templateChecklistRepository = new GenericRepository<TemplateChecklist>(_context);
                 }
                 return templateChecklistRepository;
+            }
+        }
+
+        public IGenericRepository<DefaultQuestion> DefaultQuestionRepository
+        {
+            get
+            {
+                if(this.defaultQuestionRepository == null)
+                {
+                    this.defaultQuestionRepository = new GenericRepository<DefaultQuestion>(_context);
+                }
+                return defaultQuestionRepository;
             }
         }
 
