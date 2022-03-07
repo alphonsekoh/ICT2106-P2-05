@@ -21,6 +21,7 @@ namespace PainAssessment.Areas.Admin.Models
         public virtual IReadOnlyList<Patient> Patients => _patients.ToList();
 
         private readonly List<PractitionerPatient> _practitionerPatients = new List<PractitionerPatient>();
+        public virtual IReadOnlyList<PractitionerPatient> PractitionerPatients => _practitionerPatients.ToList();
 
         public Practitioner(string name, string experience, string practiceType, string priorPainEducation, int clinicalAreaID)
         {
@@ -41,7 +42,11 @@ namespace PainAssessment.Areas.Admin.Models
             ClinicalAreaID = clinicalAreaID;
         }
 
-        public virtual IReadOnlyList<PractitionerPatient> PractitionerPatients => _practitionerPatients.ToList();
+
+        public void AddPatientRelation(Patient patient)
+        {
+            _patients.Add(patient);
+        }
     }
 }
 
