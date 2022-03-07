@@ -21,16 +21,16 @@ namespace PainAssessment.Areas.Admin.Data
             }
             var departments = new ClinicalArea[]
             {
-            new ClinicalArea{Name="Musculoskeletal"},
-            new ClinicalArea{Name="Neurology/Neurosurgery"},
-            new ClinicalArea{Name="Older People/Falls"},
-            new ClinicalArea{Name="Cardiorespiratory"},
-            new ClinicalArea{Name="Women’s Health/Pelvic Floor"},
-            new ClinicalArea{Name="General Medicine"},
-            new ClinicalArea{Name="Orthopaedic"},
-            new ClinicalArea{Name="Pain Management"},
-            new ClinicalArea{Name="Intensive Care"},
-            new ClinicalArea{Name="Hand Therapy"},
+            new ClinicalArea("Musculoskeletal"),
+            new ClinicalArea("Neurology/Neurosurgery"),
+            new ClinicalArea("Older People/Falls"),
+            new ClinicalArea("Cardiorespiratory"),
+            new ClinicalArea("Women’s Health/Pelvic Floor"),
+            new ClinicalArea("General Medicine"),
+            new ClinicalArea("Orthopaedic"),
+            new ClinicalArea("Pain Management"),
+            new ClinicalArea("Intensive Care"),
+            new ClinicalArea("Hand Therapy"),
             };
 
             context.ClinicalAreas.AddRange(departments);
