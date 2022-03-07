@@ -9,22 +9,13 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
-<style>
-/*table.table.table-hover tr.warning,
-table.table.table-bordered tr.warning,
-table.table.grocery-crud-table tr.warning{
-    background-color:#76A0D3;
-}*/
-</style>
-<b>Consultations</b>
+<h1>Index</h1>
 
 <p>
-    <a class="btn btn-primary btn-sm" role="button" asp-action="Create">Create New</a>
+  <a class="btn btn-primary btn-sm" role="button" asp-action="Create">Create New</a>
 </p>
-
-<div class="">
 <table class="table table-bordered">
-    <thead-light>
+    <thead>
         <tr class="warning">
             <th>
                 @Html.DisplayNameFor(model => model.Date)
@@ -63,24 +54,24 @@ table.table.grocery-crud-table tr.warning{
                 @Html.DisplayFor(modelItem => item.LastVisit)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.ClinicalArea) 
+                @Html.DisplayFor(modelItem => item.ClinicalArea)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.CentralModulation)%
+                @Html.DisplayFor(modelItem => item.CentralModulation)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.RegionalInfluence)%
+                @Html.DisplayFor(modelItem => item.RegionalInfluence)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.LocalStimulation)%
+                @Html.DisplayFor(modelItem => item.LocalStimulation)
             </td>
             <td>
-                <a class="btn btn-primary btn-sm" role="button" asp-action="Edit" asp-route-id="@item.Id">Edit</a> 
-                <a class="btn btn-primary btn-sm" role="button"  asp-action="Details" asp-route-id="@item.Id">Details</a> 
-                <a class="btn btn-danger btn-sm" role="button"  asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                <a class="btn btn-primary btn-sm" asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a class="btn btn-primary btn-sm" asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a class="btn btn-danger btn-sm" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
             </td>
         </tr>
 }
     </tbody>
 </table>
-</div>
+<a class="btn btn-primary btn-sm" asp-area="ModuleTwo" asp-controller="Patient" asp-action="Index">Back to Patient Records</a>
