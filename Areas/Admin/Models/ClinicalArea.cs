@@ -9,11 +9,25 @@ namespace PainAssessment.Areas.Admin.Models
 {
     public class ClinicalArea
     {
-        public int ClinicalAreaID { get; set; }
+        public int ClinicalAreaID { get; private set; }
         [StringLength(50, MinimumLength = 3)]
         [Required]
         [DisplayName("Clinical Area")]
-        public string Name { get; set; }
-        public ICollection<Practitioner> Practitioners { get; set; }
+        public string Name { get; private set; }
+
+        private readonly List<Practitioner> _practitioners = new List<Practitioner>();
+        public virtual IReadOnlyList<Practitioner> Practitioners => _practitioners.ToList();
+
+        public ClinicalArea( string name )
+        {
+            Name = name;
+        }
+
+        public ClinicalArea( string name,int clinicalAreaID)
+        {
+            ClinicalAreaID = clinicalAreaID;
+            Name = name;
+        }
+
     }
 }

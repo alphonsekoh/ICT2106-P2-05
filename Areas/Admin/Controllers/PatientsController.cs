@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using PainAssessment.Areas.Admin.Models;
 using PainAssessment.Data;
 using PainAssessment.Areas.Admin.Services;
+using PainAssessment.Areas.Admin.Models.ModelBinder;
 
 namespace PainAssessment.Areas.Admin.Controllers
 {
@@ -56,7 +57,7 @@ namespace PainAssessment.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create([Bind("PatientID,Name,Gender,BirthDate,Condition,Notes")] Patient patient)
+        public IActionResult Create([ModelBinder(typeof(PatientModelBinder))] Patient patient)
         {
             if (ModelState.IsValid)
             {
@@ -88,7 +89,7 @@ namespace PainAssessment.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(Guid id, [Bind("PatientID,Name,Gender,BirthDate,Condition,Notes")] Patient patient)
+        public IActionResult Edit(Guid id, [ModelBinder(typeof(PatientModelBinder))] Patient patient)
         {
             if (id != patient.PatientID)
             {

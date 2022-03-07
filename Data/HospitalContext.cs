@@ -15,6 +15,8 @@ namespace PainAssessment.Data
         public DbSet<ClinicalArea> ClinicalAreas { get; set; }
         public DbSet<Practitioner> Practitioners { get; set; }
         public DbSet<Patient> Patients { get; set; }
+        
+        public DbSet<PractitionerPatient> PractitionerPatients { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             //1. Use EntityFrameworkCoreExtensions (add DynamicDataMasking support)

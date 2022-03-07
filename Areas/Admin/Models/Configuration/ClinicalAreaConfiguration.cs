@@ -1,9 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace PainAssessment.Areas.Admin.Models.Configuration
 {
@@ -12,6 +8,8 @@ namespace PainAssessment.Areas.Admin.Models.Configuration
         public void Configure(EntityTypeBuilder<ClinicalArea> builder)
         {
             builder.ToTable("ClinicalArea");
+            builder.Metadata.SetPropertyAccessMode(PropertyAccessMode.Field);
+
         }
     }
 }

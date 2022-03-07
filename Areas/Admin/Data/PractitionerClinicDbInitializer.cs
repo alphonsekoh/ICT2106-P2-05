@@ -1,11 +1,8 @@
 ﻿using PainAssessment.Areas.Admin.Models;
-using PainAssessment.Areas.Admin.Util;
 using PainAssessment.Data;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
+
 
 namespace PainAssessment.Areas.Admin.Data
 {
@@ -21,77 +18,69 @@ namespace PainAssessment.Areas.Admin.Data
             }
             var departments = new ClinicalArea[]
             {
-            new ClinicalArea{Name="Musculoskeletal"},
-            new ClinicalArea{Name="Neurology/Neurosurgery"},
-            new ClinicalArea{Name="Older People/Falls"},
-            new ClinicalArea{Name="Cardiorespiratory"},
-            new ClinicalArea{Name="Women’s Health/Pelvic Floor"},
-            new ClinicalArea{Name="General Medicine"},
-            new ClinicalArea{Name="Orthopaedic"},
-            new ClinicalArea{Name="Pain Management"},
-            new ClinicalArea{Name="Intensive Care"},
-            new ClinicalArea{Name="Hand Therapy"},
+            new ClinicalArea("Musculoskeletal"),
+            new ClinicalArea("Neurology/Neurosurgery"),
+            new ClinicalArea("Older People/Falls"),
+            new ClinicalArea("Cardiorespiratory"),
+            new ClinicalArea("Women’s Health/Pelvic Floor"),
+            new ClinicalArea("General Medicine"),
+            new ClinicalArea("Orthopaedic"),
+            new ClinicalArea("Pain Management"),
+            new ClinicalArea("Intensive Care"),
+            new ClinicalArea("Hand Therapy"),
             };
-
             context.ClinicalAreas.AddRange(departments);
 
             context.SaveChanges();
 
             context.Practitioners.AddRange(new Practitioner[]
             {
-            new Practitioner{ ClinicalAreaID=1, Name="Alexander", Experience="2 years ", PracticeType ="Hospital Inpatient", PriorPainEducation ="Pre-registration training - pain topics"},
-            new Practitioner{ ClinicalAreaID=2, Name="Meredith", Experience="2 years ", PracticeType ="Hospital Inpatient", PriorPainEducation ="Pre-registration training - pain topics"},
-            new Practitioner{ ClinicalAreaID=2, Name="Carson", Experience="4 years ", PracticeType ="Hospital Inpatient",  PriorPainEducation ="Inservice"},
-            new Practitioner{ ClinicalAreaID=2, Name="Arturo", Experience="4 years ", PracticeType ="Hospital Outpatient",  PriorPainEducation ="Inservice"},
-            new Practitioner{ ClinicalAreaID=3, Name="Gytis", Experience="6 years ", PracticeType ="Hospital Outpatient", PriorPainEducation ="Professional Body"},
-            new Practitioner{ ClinicalAreaID=3, Name="Yan", Experience="6 years ", PracticeType ="Hospital Outpatient", PriorPainEducation ="Professional Body, Postgraduate qualification pain-specific"},
-            new Practitioner{ ClinicalAreaID=3, Name="Li", Experience="6 years ", PracticeType ="Hospital Outpatient", PriorPainEducation ="Pre-registration training - pain topics"},
-            new Practitioner{ ClinicalAreaID=4, Name="Alonso", Experience="None", PracticeType ="Community Health", PriorPainEducation ="Professional Body, Postgraduate qualification pain-specific"},
-            new Practitioner{ ClinicalAreaID=4, Name="Anand", Experience="1 year", PracticeType ="Community Health", PriorPainEducation ="Pre-registration training - pain topics"},
-            new Practitioner{ ClinicalAreaID=4, Name="Barzdukas", Experience="2 years ", PracticeType ="Community Health", PriorPainEducation ="Pre-registration training - pain topics"},
-            new Practitioner{ ClinicalAreaID=4, Name="Olivetto", Experience="2 years ", PracticeType ="Rehabilitation Clinic", PriorPainEducation ="Pre-registration training - pain topics"},
-            new Practitioner{ ClinicalAreaID=5, Name="Nino", Experience="3 years ", PracticeType ="Rehabilitation Clinic", PriorPainEducation ="Professional Body, Postgraduate qualification not pain-specific"},
-            new Practitioner{ ClinicalAreaID=5, Name="Peggy", Experience="3 years ", PracticeType ="Rehabilitation Clinic", PriorPainEducation ="Pre-registration training - pain topics"},
-            new Practitioner{ ClinicalAreaID=5, Name="Laura", Experience="3 years ", PracticeType ="Private clinic", PriorPainEducation ="Conference (not pain specific)"},
-            new Practitioner{ ClinicalAreaID=5, Name="Norman", Experience="6 years ",  PracticeType ="Private clinic", PriorPainEducation ="Conference (not pain specific)"},
-            new Practitioner{ ClinicalAreaID=5, Name="Justice", Experience="6 years ",  PracticeType ="Private clinic", PriorPainEducation ="Pre-registration training - pain topics"},
-            new Practitioner{ ClinicalAreaID=6, Name="Liam", Experience="8 years ",  PracticeType ="Private clinic", PriorPainEducation ="Private provider course or workshop"},
-            new Practitioner{ ClinicalAreaID=6, Name="Oliver", Experience="8 years ",  PracticeType ="Private clinic", PriorPainEducation ="Pre-registration training - pain topics"},
-            new Practitioner{ ClinicalAreaID=6, Name="Elijah", Experience="9 years ",  PracticeType ="Private clinic", PriorPainEducation ="Conference (pain specific)"},
-            new Practitioner{ ClinicalAreaID=6, Name="William", Experience="9 years ", PracticeType ="Private clinic", PriorPainEducation ="Conference (pain specific)"},
-            new Practitioner{ ClinicalAreaID=6, Name="James", Experience="3 years ",  PracticeType ="Private clinic", PriorPainEducation ="Pre-registration training - pain topics"},
-            new Practitioner{ ClinicalAreaID=6, Name="Benjamin", Experience="1 years ", PracticeType ="Private clinic", PriorPainEducation ="None"},
-            new Practitioner{ ClinicalAreaID=7, Name="Lucas", Experience="1 years ", PracticeType ="Private clinic", PriorPainEducation ="None"},
+            new Practitioner("Alexander", "2 years ", "Hospital Inpatient", "Pre-registration training - pain topics",1),
+            new Practitioner( "Meredith", "2 years ", "Hospital Inpatient", "Pre-registration training - pain topics",1),
+            new Practitioner( "Carson", "4 years ", "Hospital Inpatient",  "Inservice",2),
+            new Practitioner( "Arturo", "4 years ", "Hospital Outpatient",  "Inservice",2),
+            new Practitioner( "Gytis", "6 years ", "Hospital Outpatient", "Professional Body",3),
+            new Practitioner( "Yan", "6 years ", "Hospital Outpatient", "Professional Body, Postgraduate qualification pain-specific",3),
+            new Practitioner( "Li", "6 years ", "Hospital Outpatient", "Pre-registration training - pain topics",4),
+            new Practitioner( "Alonso", "None", "Community Health", "Professional Body, Postgraduate qualification pain-specific",4),
+            new Practitioner( "Anand", "1 year", "Community Health", "Pre-registration training - pain topics",5),
+            new Practitioner( "Barzdukas", "2 years ", "Community Health", "Pre-registration training - pain topics",5),
+            new Practitioner( "Olivetto", "2 years ", "Rehabilitation Clinic", "Pre-registration training - pain topics",6),
+            new Practitioner( "Nino", "3 years ", "Rehabilitation Clinic", "Professional Body, Postgraduate qualification not pain-specific",6),
+            new Practitioner( "Peggy", "3 years ", "Rehabilitation Clinic", "Pre-registration training - pain topics",4),
+            new Practitioner( "Laura", "3 years ", "Private clinic", "Conference (not pain specific)",7),
+            new Practitioner( "Norman", "6 years ",  "Private clinic", "Conference (not pain specific)",7),
+            new Practitioner( "Justice", "6 years ",  "Private clinic", "Pre-registration training - pain topics",8),
+            new Practitioner( "Liam", "8 years ",  "Private clinic", "Private provider course or workshop",8),
+            new Practitioner( "Oliver", "8 years ",  "Private clinic", "Pre-registration training - pain topics",3),
+            new Practitioner( "Elijah", "9 years ",  "Private clinic", "Conference (pain specific)",9),
+            new Practitioner( "William", "9 years ", "Private clinic", "Conference (pain specific)",9),
+            new Practitioner( "James", "3 years ",  "Private clinic", "Pre-registration training - pain topics",10),
+            new Practitioner( "Benjamin", "1 years ", "Private clinic", "None",10),
+            new Practitioner( "Lucas", "1 years ", "Private clinic", "None",10),
             });
 
             context.SaveChanges();
 
-
-
             var patients = new Patient[]
             {
-                new Patient{ Name= "Stone", BirthDate=DateTime.UtcNow, Gender="Female", Condition = "Unknown", Notes = "Unknown" },
-                new Patient{ Name= "John", BirthDate=DateTime.UtcNow, Gender="Female", Condition = "Unknown", Notes = "Unknown" },
-                new Patient{ Name= "Wong", BirthDate=DateTime.UtcNow, Gender="Male", Condition = "Unknown", Notes = "Unknown" },
-                new Patient{ Name= "Mia", BirthDate=DateTime.UtcNow, Gender="Female", Condition = "Unknown", Notes = "Unknown" },
-                new Patient{ Name= "Nguta", BirthDate=DateTime.UtcNow, Gender="Male", Condition = "Unknown", Notes = "Unknown" },
-                new Patient{ Name= "Ilya", BirthDate=DateTime.UtcNow, Gender="Female", Condition = "Unknown", Notes = "Unknown" },
-                new Patient{ Name= "Ellawala", BirthDate=DateTime.UtcNow, Gender="Female", Condition = "Unknown", Notes = "Unknown" },
-                new Patient{ Name= "Ruveni", BirthDate=DateTime.UtcNow, Gender="Female", Condition = "Unknown", Notes = "Unknown" },
-                new Patient{ Name= "Ponnappa", BirthDate=DateTime.UtcNow, Gender="Male", Condition = "Unknown", Notes = "Unknown" },
-                new Patient{ Name= "Priya", BirthDate=DateTime.UtcNow, Gender="Female", Condition = "Unknown", Notes = "Unknown" },
-                new Patient{ Name= "Peter", BirthDate=DateTime.UtcNow, Gender="Female", Condition = "Unknown", Notes = "Unknown" },
-                new Patient{ Name= "Stanbridge", BirthDate=DateTime.UtcNow, Gender="Female", Condition = "Unknown", Notes = "Unknown" },
-                new Patient{ Name= "Ruveni", BirthDate=DateTime.UtcNow, Gender="Female", Condition = "Unknown", Notes = "Unknown" },
-                new Patient{ Name= "Andrews", BirthDate=DateTime.UtcNow, Gender="Male", Condition = "Unknown", Notes = "Unknown" },
-                new Patient{ Name= "Daly", BirthDate=DateTime.UtcNow, Gender="Female", Condition = "Unknown", Notes = "Unknown" }
+                new Patient(  "Stone","Female",DateTime.UtcNow,    "Unknown",  "Unknown" ),
+                new Patient(  "John", "Female",DateTime.UtcNow,  "Unknown",  "Unknown" ),
+                new Patient(  "Wong", "Male",DateTime.UtcNow,  "Unknown",  "Unknown" ),
+                new Patient(  "Mia", "Female",DateTime.UtcNow,  "Unknown",  "Unknown" ),
+                new Patient(  "Nguta",  "Male",DateTime.UtcNow,  "Unknown",  "Unknown" ),
+                new Patient(  "Ilya",  "Female", DateTime.UtcNow, "Unknown",  "Unknown" ),
+                new Patient(  "Ellawala",  "Female",DateTime.UtcNow,  "Unknown",  "Unknown" ),
+                new Patient(  "Ruveni",  "Female",DateTime.UtcNow,  "Unknown",  "Unknown" ),
+                new Patient(  "Ponnappa",  "Male",  DateTime.UtcNow,"Unknown",  "Unknown" ),
+                new Patient(  "Priya",  "Female", DateTime.UtcNow, "Unknown",  "Unknown" ),
+                new Patient(  "Peter",  "Female",  DateTime.UtcNow,"Unknown",  "Unknown" ),
+                new Patient(  "Stanbridge",  "Female", DateTime.UtcNow, "Unknown",  "Unknown" ),
+                new Patient(  "Ruveni",  "Female", DateTime.UtcNow, "Unknown",  "Unknown" ),
+                new Patient(  "Andrews",  "Male",DateTime.UtcNow,  "Unknown",  "Unknown" ),
+                new Patient(  "Daly",  "Female", DateTime.UtcNow, "Unknown",  "Unknown" )
 
             };
-
-            foreach (Patient p in patients)
-            {
-                p.Name = Regex.Replace(p.Name, @"\b\w{3,}\b", match => Utility.MaskName(match.Value));
-            }
 
             context.Patients.AddRange(patients);
             context.SaveChanges();

@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using PainAssessment.Areas.Admin.Data;
 using PainAssessment.Areas.Admin.Models;
+using PainAssessment.Areas.Admin.Models.ModelBinder;
 using PainAssessment.Areas.Admin.Services;
 
 namespace PainAssessment.Areas.Admin.Controllers
@@ -29,15 +29,13 @@ namespace PainAssessment.Areas.Admin.Controllers
         {
             ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "Name" : "";
             var clinicalArea = from d in clinicalAreaService.GetAllClinicalAreas() select d;
-            switch (sortOrder) // check input of what is being sorted
+            clinicalArea = sortOrder switch // check input of what is being sorted
             {
-                case "Name":
-                    clinicalArea = clinicalArea.OrderByDescending(d => d.Name);
-                    break;
-                default:
-                    clinicalArea = clinicalArea.OrderBy(d => d.Name);
-                    break;
-            }
+                "Name" => clinicalArea.OrderByDescending(d => d.Name),
+                _ => clinicalArea.OrderBy(d => d.Name),
+            };
+            
+            
 
             // check if not search input not empty
             if (!String.IsNullOrEmpty(searchString))
@@ -61,7 +59,7 @@ namespace PainAssessment.Areas.Admin.Controllers
             ViewData["max_page"] = max_page;
             ViewData["current_page"] = page;
 
-            if (clinicalArea.Count() > 0)
+            if (clinicalArea.Any())
             {
                 clinicalArea = clinicalArea.ChunkBy(8).ElementAt(page - 1);
             }
@@ -97,7 +95,7 @@ namespace PainAssessment.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create([Bind("ClinicalAreaID,Name")] ClinicalArea clinicalArea)
+        public IActionResult Create([ModelBinder(typeof(ClinicalAreaModelBinder))] ClinicalArea clinicalArea)
         {
             if (ModelState.IsValid)
             {
@@ -129,7 +127,7 @@ namespace PainAssessment.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id, [Bind("ClinicalAreaID,Name")] ClinicalArea clinicalArea)
+        public IActionResult Edit(int id, [ModelBinder(typeof(ClinicalAreaModelBinder))] ClinicalArea clinicalArea)
         {
             if (id != clinicalArea.ClinicalAreaID)
             {
