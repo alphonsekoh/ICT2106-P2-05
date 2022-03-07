@@ -25,7 +25,7 @@ namespace PainAssessment.Areas.Admin.Models
 
         public ICollection<PractitionerPatient> PractitionerPatients { get; private set; }
 
-        public Patient(Guid patientID, string name, string gender, DateTime birthDate, string condition, string notes)
+        public Patient( string name, string gender, DateTime birthDate, string condition, string notes, Guid patientID)
         {
             PatientID = patientID;
             Name = name;
