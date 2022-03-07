@@ -1,11 +1,8 @@
 ﻿using PainAssessment.Areas.Admin.Models;
-using PainAssessment.Areas.Admin.Util;
 using PainAssessment.Data;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
+
 
 namespace PainAssessment.Areas.Admin.Data
 {
@@ -32,7 +29,6 @@ namespace PainAssessment.Areas.Admin.Data
             new ClinicalArea("Intensive Care"),
             new ClinicalArea("Hand Therapy"),
             };
-
             context.ClinicalAreas.AddRange(departments);
 
             context.SaveChanges();
@@ -85,6 +81,8 @@ namespace PainAssessment.Areas.Admin.Data
                 new Patient(  "Daly",  "Female", DateTime.UtcNow, "Unknown",  "Unknown" )
 
             };
+            var test = new Patient("Doesit", "Female", DateTime.UtcNow, "Unknown", "Unknown");
+            var help = new Practitioner { ClinicalAreaID = 6, Name = "Evenwork", Experience = "1 years ", PracticeType = "Private clinic", PriorPainEducation = "None" };
 
             context.Patients.AddRange(patients);
             context.SaveChanges();

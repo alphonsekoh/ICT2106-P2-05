@@ -21,9 +21,11 @@ namespace PainAssessment.Areas.Admin.Models
         public string Condition { get; private set; }
         public string Notes { get; private set; }
 
-        public ICollection<Practitioner> Practitioners { get; private set; }
+        private readonly List<Practitioner> _practitioners = new List<Practitioner>();
+        public virtual IReadOnlyList<Practitioner> Practitioners => _practitioners.ToList();
 
-        public ICollection<PractitionerPatient> PractitionerPatients { get; private set; }
+        private readonly List<PractitionerPatient> _practitionerPatients = new List<PractitionerPatient>();
+        public virtual IReadOnlyList<PractitionerPatient> PractitionerPatients => _practitionerPatients.ToList();
 
         public Patient( string name, string gender, DateTime birthDate, string condition, string notes, Guid patientID)
         {
@@ -42,6 +44,11 @@ namespace PainAssessment.Areas.Admin.Models
             BirthDate = birthDate;
             Condition = condition;
             Notes = notes;
+        }
+
+        public void AddPractitionerRelation(Practitioner practitioner)
+        {
+            _practitioners.Add(practitioner);
         }
 
     }

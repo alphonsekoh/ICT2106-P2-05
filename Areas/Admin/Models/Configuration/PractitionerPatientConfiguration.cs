@@ -10,15 +10,6 @@ namespace PainAssessment.Areas.Admin.Models.Configuration
         {
             builder
                 .ToTable("PractitionerPatient");
-            builder.HasKey(t => new { t.PractitionerID, t.PatientID });
-
-            builder.HasOne(pp => pp.Practitioner)
-                   .WithMany(pp => pp.PractitionerPatients)
-                   .HasForeignKey(pp => pp.PractitionerID);
-
-            builder.HasOne(pp => pp.Patient)
-                   .WithMany(pp => pp.PractitionerPatients)
-                   .HasForeignKey(pp => pp.PatientID);
         }
     }
 }

@@ -13,10 +13,10 @@ namespace PainAssessment.Areas.Admin.Models.ModelBinder
             var data = bindingContext.HttpContext.Request.Form;
             var nameResult = data.TryGetValue("Name", out var name);
             var idResult = data.TryGetValue("PatientID", out var id);
-            var genderResult = data.TryGetValue("Gender", out var gender);
-            var birthDateResult = data.TryGetValue("BirthDate", out var birthDate);
-            var conditionResult = data.TryGetValue("Condition", out var condition);
-            var notesResult = data.TryGetValue("Notes", out var notes);
+            data.TryGetValue("Gender", out var gender);
+            data.TryGetValue("BirthDate", out var birthDate);
+            data.TryGetValue("Condition", out var condition);
+            data.TryGetValue("Notes", out var notes);
 
             if (nameResult)
             {

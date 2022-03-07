@@ -14,7 +14,9 @@ namespace PainAssessment.Areas.Admin.Models
         [Required]
         [DisplayName("Clinical Area")]
         public string Name { get; private set; }
-        public ICollection<Practitioner> Practitioners { get; private set; }
+
+        private readonly List<Practitioner> _practitioners = new List<Practitioner>();
+        public virtual IReadOnlyList<Practitioner> Practitioners => _practitioners.ToList();
 
         public ClinicalArea( string name )
         {
@@ -26,5 +28,6 @@ namespace PainAssessment.Areas.Admin.Models
             ClinicalAreaID = clinicalAreaID;
             Name = name;
         }
+
     }
 }

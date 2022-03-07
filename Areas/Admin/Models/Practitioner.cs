@@ -18,7 +18,7 @@ namespace PainAssessment.Areas.Admin.Models
         public ClinicalArea ClinicalArea { get; set; }
 
         public ICollection<Patient> Patients { get; set; }
-        public ICollection<PractitionerPatient> PractitionerPatients { get; set; }
+        public IList<PractitionerPatient> PractitionerPatients { get; set; }
 
     }
 }

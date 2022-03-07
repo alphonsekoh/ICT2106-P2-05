@@ -34,6 +34,8 @@ namespace PainAssessment.Areas.Admin.Controllers
                 "Name" => clinicalArea.OrderByDescending(d => d.Name),
                 _ => clinicalArea.OrderBy(d => d.Name),
             };
+            
+            
 
             // check if not search input not empty
             if (!String.IsNullOrEmpty(searchString))

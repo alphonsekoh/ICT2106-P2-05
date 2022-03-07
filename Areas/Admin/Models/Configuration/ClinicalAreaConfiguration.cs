@@ -8,6 +8,8 @@ namespace PainAssessment.Areas.Admin.Models.Configuration
         public void Configure(EntityTypeBuilder<ClinicalArea> builder)
         {
             builder.ToTable("ClinicalArea");
+            builder.Metadata.SetPropertyAccessMode(PropertyAccessMode.Field);
+
         }
     }
 }

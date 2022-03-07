@@ -12,6 +12,8 @@ namespace PainAssessment.Areas.Admin.Models.Configuration
         public void Configure(EntityTypeBuilder<Patient> builder)
         {
             builder.ToTable("Patient");
+            builder.Metadata.SetPropertyAccessMode(PropertyAccessMode.Field);
+
         }
     }
 }
