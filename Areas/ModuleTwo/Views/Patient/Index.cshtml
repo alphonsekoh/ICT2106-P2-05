@@ -42,71 +42,70 @@
     </div>
 </div>
 
-<div>
-    <table class="table">
-        <thead>
-            <tr>
-                <th id = "patientNamesCol">
-                    @Html.DisplayNameFor(model => model.patientName)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.patientAge)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.condition)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.gender)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.sessions)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.patientNotes)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.lastVisit)
-                </th>
-                <th>
+<table class="table">
+    <thead>
+        <tr>
+            <th id = "patientNamesCol">
+                @Html.DisplayNameFor(model => model.patientName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.patientAge)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.condition)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.gender)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.sessions)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.patientNotes)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.lastVisit)
+            </th>
+            <th>
 
-                </th>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td class="patientNames">
+                    @Html.DisplayFor(modelItem => item.patientName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.patientAge)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.condition)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.gender)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.sessions)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.patientNotes)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.lastVisit)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
             </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td class="patientNames">
-                        @Html.DisplayFor(modelItem => item.patientName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.patientAge)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.condition)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.gender)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.sessions)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.patientNotes)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.lastVisit)
-                    </td>
-                    <td>
-                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                        <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
-</div>
+        }
+    </tbody>
+</table>
+<a class="btn btn-primary btn-sm" asp-area="ModuleTwo" asp-controller="Consultations" asp-action="Index">Patient Consultation Records</a>
 
 <script>
     window.onload = load;
