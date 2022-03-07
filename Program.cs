@@ -27,6 +27,7 @@ namespace PainAssessment
                 try
                 {
                     PatientSeedData.Initialize(services);
+
                 }
                 catch (Exception ex)
                 {
@@ -34,12 +35,9 @@ namespace PainAssessment
                     logger.LogError(ex, "An error occurred seeding the DB.");
                 }
             }
-
+            CreateDbIfNotExists(host);
             host.Run();
 
-
-            //CreateDbIfNotExists(host);
-            //host.Run();
         }
 
         private static void CreateDbIfNotExists(IHost host)
