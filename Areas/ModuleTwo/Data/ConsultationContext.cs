@@ -3,13 +3,13 @@ using PainAssessment.Areas.ModuleTwo.Models;
 
 namespace PainAssessment.Areas.ModuleTwo.Data
 {
-    public class PatientContext : DbContext
+    public class ConsultationContext : DbContext
     {
-        public PatientContext(DbContextOptions<PatientContext> options)
+        public ConsultationContext(DbContextOptions<ConsultationContext> options)
             : base(options)
         {
         }
 
-        public DbSet<Patient> Patient { get; set; }
+        public DbSet<Consultation> Patient { get; set; }
     }
 }

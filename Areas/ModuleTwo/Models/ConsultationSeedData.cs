@@ -11,9 +11,9 @@ namespace PainAssessment.Areas.ModuleTwo.Models
     {
         public static void Initialize(IServiceProvider serviceProvider)
         {
-            using (var context = new PatientContext(
+            using (var context = new ConsultationContext(
                 serviceProvider.GetRequiredService<
-                    DbContextOptions<PatientContext>>()))
+                    DbContextOptions<ConsultationContext>>()))
             {
                 // Look for any movies.
                 if (context.Patient.Any())
@@ -22,7 +22,7 @@ namespace PainAssessment.Areas.ModuleTwo.Models
                 }
 
                 context.Patient.AddRange(
-                    new Patient
+                    new Consultation
                     {
                         Date = DateTime.Parse("1989-2-12"),
                         SessionNo = 1,
@@ -33,7 +33,7 @@ namespace PainAssessment.Areas.ModuleTwo.Models
                         LocalStimulation = 5
                     },
 
-                    new Patient
+                    new Consultation
                     {
                         Date = DateTime.Parse("1989-5-12"),
                         SessionNo = 1,

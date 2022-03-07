@@ -13,9 +13,9 @@ namespace PainAssessment.Areas.ModuleTwo.Controllers
     [Area("ModuleTwo")]
     public class PatientsController : Controller
     {
-        private readonly PatientContext _context;
+        private readonly ConsultationContext _context;
 
-        public PatientsController(PatientContext context)
+        public PatientsController(ConsultationContext context)
         {
             _context = context;
         }
@@ -55,7 +55,7 @@ namespace PainAssessment.Areas.ModuleTwo.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Date,SessionNo,LastVisit,ClinicalArea,CentralModulation,RegionalInfluence,LocalStimulation")] Patient patient)
+        public async Task<IActionResult> Create([Bind("Id,Date,SessionNo,LastVisit,ClinicalArea,CentralModulation,RegionalInfluence,LocalStimulation")] Consultation patient)
         {
             if (ModelState.IsValid)
             {
@@ -87,7 +87,7 @@ namespace PainAssessment.Areas.ModuleTwo.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Date,SessionNo,LastVisit,ClinicalArea,CentralModulation,RegionalInfluence,LocalStimulation")] Patient patient)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Date,SessionNo,LastVisit,ClinicalArea,CentralModulation,RegionalInfluence,LocalStimulation")] Consultation patient)
         {
             if (id != patient.Id)
             {
