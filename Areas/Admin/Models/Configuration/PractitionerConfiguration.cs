@@ -25,6 +25,7 @@ namespace PainAssessment.Areas.Admin.Models.Configuration
                 {
                     j.HasKey(p => new { p.PractitionerID, p.PatientID });
                 });
+            builder.Metadata.SetPropertyAccessMode(PropertyAccessMode.Field);
 
         }
     }

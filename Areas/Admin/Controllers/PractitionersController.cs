@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using PainAssessment.Areas.Admin.Models;
+using PainAssessment.Areas.Admin.Models.ModelBinder;
 using PainAssessment.Areas.Admin.Services;
 
 namespace PainAssessment.Areas.Admin.Controllers
@@ -69,7 +70,7 @@ namespace PainAssessment.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create([Bind("PractitionerID,Name,ClinicalAreaID")] Practitioner practitioner)
+        public IActionResult Create([ModelBinder(typeof(PractitionerModelBinder))] Practitioner practitioner)
         {
             if (ModelState.IsValid)
             {
@@ -107,7 +108,7 @@ namespace PainAssessment.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(Guid id, [Bind("PractitionerID,Name,ClinicalAreaID")] Practitioner practitioner)
+        public IActionResult Edit(Guid id, [ModelBinder(typeof(PractitionerModelBinder))] Practitioner practitioner)
         {
             if (id != practitioner.PractitionerID)
             {

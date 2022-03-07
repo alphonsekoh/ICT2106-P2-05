@@ -8,17 +8,42 @@ namespace PainAssessment.Areas.Admin.Models
 {
     public class Practitioner
     {
-        public Guid PractitionerID { get; set; }
+        public Guid PractitionerID { get; private set; }
         [Required]
-        public string Name { get; set; }
-        public string Experience { get; set; }
-        public string PracticeType { get; set; }
-        public string PriorPainEducation { get; set; }
-        public int ClinicalAreaID { get; set; }
-        public ClinicalArea ClinicalArea { get; set; }
+        public string Name { get; private set; }
+        public string Experience { get; private set; }
+        public string PracticeType { get; private set; }
+        public string PriorPainEducation { get; private set; }
+        public int ClinicalAreaID { get; private set; }
+        public ClinicalArea ClinicalArea { get; private set; }
 
-        public ICollection<Patient> Patients { get; set; }
-        public IList<PractitionerPatient> PractitionerPatients { get; set; }
+        private readonly List<Patient> _patients = new List<Patient>();
+        public virtual IReadOnlyList<Patient> Patients => _patients.ToList();
 
+        private readonly List<PractitionerPatient> _practitionerPatients = new List<PractitionerPatient>();
+
+        public Practitioner(string name, string experience, string practiceType, string priorPainEducation, int clinicalAreaID)
+        {
+            Name = name;
+            Experience = experience;
+            PracticeType = practiceType;
+            PriorPainEducation = priorPainEducation;
+            ClinicalAreaID = clinicalAreaID;
+        }
+
+        public Practitioner( string name, string experience, string practiceType, string priorPainEducation, int clinicalAreaID, Guid practitionerID)
+        {
+            PractitionerID = practitionerID;
+            Name = name;
+            Experience = experience;
+            PracticeType = practiceType;
+            PriorPainEducation = priorPainEducation;
+            ClinicalAreaID = clinicalAreaID;
+        }
+
+        public virtual IReadOnlyList<PractitionerPatient> PractitionerPatients => _practitionerPatients.ToList();
     }
 }
+
+
+

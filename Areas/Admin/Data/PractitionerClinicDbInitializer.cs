@@ -35,29 +35,29 @@ namespace PainAssessment.Areas.Admin.Data
 
             context.Practitioners.AddRange(new Practitioner[]
             {
-            new Practitioner{ ClinicalAreaID=1, Name="Alexander", Experience="2 years ", PracticeType ="Hospital Inpatient", PriorPainEducation ="Pre-registration training - pain topics"},
-            new Practitioner{ ClinicalAreaID=2, Name="Meredith", Experience="2 years ", PracticeType ="Hospital Inpatient", PriorPainEducation ="Pre-registration training - pain topics"},
-            new Practitioner{ ClinicalAreaID=2, Name="Carson", Experience="4 years ", PracticeType ="Hospital Inpatient",  PriorPainEducation ="Inservice"},
-            new Practitioner{ ClinicalAreaID=2, Name="Arturo", Experience="4 years ", PracticeType ="Hospital Outpatient",  PriorPainEducation ="Inservice"},
-            new Practitioner{ ClinicalAreaID=3, Name="Gytis", Experience="6 years ", PracticeType ="Hospital Outpatient", PriorPainEducation ="Professional Body"},
-            new Practitioner{ ClinicalAreaID=3, Name="Yan", Experience="6 years ", PracticeType ="Hospital Outpatient", PriorPainEducation ="Professional Body, Postgraduate qualification pain-specific"},
-            new Practitioner{ ClinicalAreaID=3, Name="Li", Experience="6 years ", PracticeType ="Hospital Outpatient", PriorPainEducation ="Pre-registration training - pain topics"},
-            new Practitioner{ ClinicalAreaID=4, Name="Alonso", Experience="None", PracticeType ="Community Health", PriorPainEducation ="Professional Body, Postgraduate qualification pain-specific"},
-            new Practitioner{ ClinicalAreaID=4, Name="Anand", Experience="1 year", PracticeType ="Community Health", PriorPainEducation ="Pre-registration training - pain topics"},
-            new Practitioner{ ClinicalAreaID=4, Name="Barzdukas", Experience="2 years ", PracticeType ="Community Health", PriorPainEducation ="Pre-registration training - pain topics"},
-            new Practitioner{ ClinicalAreaID=4, Name="Olivetto", Experience="2 years ", PracticeType ="Rehabilitation Clinic", PriorPainEducation ="Pre-registration training - pain topics"},
-            new Practitioner{ ClinicalAreaID=5, Name="Nino", Experience="3 years ", PracticeType ="Rehabilitation Clinic", PriorPainEducation ="Professional Body, Postgraduate qualification not pain-specific"},
-            new Practitioner{ ClinicalAreaID=5, Name="Peggy", Experience="3 years ", PracticeType ="Rehabilitation Clinic", PriorPainEducation ="Pre-registration training - pain topics"},
-            new Practitioner{ ClinicalAreaID=5, Name="Laura", Experience="3 years ", PracticeType ="Private clinic", PriorPainEducation ="Conference (not pain specific)"},
-            new Practitioner{ ClinicalAreaID=5, Name="Norman", Experience="6 years ",  PracticeType ="Private clinic", PriorPainEducation ="Conference (not pain specific)"},
-            new Practitioner{ ClinicalAreaID=5, Name="Justice", Experience="6 years ",  PracticeType ="Private clinic", PriorPainEducation ="Pre-registration training - pain topics"},
-            new Practitioner{ ClinicalAreaID=6, Name="Liam", Experience="8 years ",  PracticeType ="Private clinic", PriorPainEducation ="Private provider course or workshop"},
-            new Practitioner{ ClinicalAreaID=6, Name="Oliver", Experience="8 years ",  PracticeType ="Private clinic", PriorPainEducation ="Pre-registration training - pain topics"},
-            new Practitioner{ ClinicalAreaID=6, Name="Elijah", Experience="9 years ",  PracticeType ="Private clinic", PriorPainEducation ="Conference (pain specific)"},
-            new Practitioner{ ClinicalAreaID=6, Name="William", Experience="9 years ", PracticeType ="Private clinic", PriorPainEducation ="Conference (pain specific)"},
-            new Practitioner{ ClinicalAreaID=6, Name="James", Experience="3 years ",  PracticeType ="Private clinic", PriorPainEducation ="Pre-registration training - pain topics"},
-            new Practitioner{ ClinicalAreaID=6, Name="Benjamin", Experience="1 years ", PracticeType ="Private clinic", PriorPainEducation ="None"},
-            new Practitioner{ ClinicalAreaID=7, Name="Lucas", Experience="1 years ", PracticeType ="Private clinic", PriorPainEducation ="None"},
+            new Practitioner("Alexander", "2 years ", "Hospital Inpatient", "Pre-registration training - pain topics",1),
+            new Practitioner( "Meredith", "2 years ", "Hospital Inpatient", "Pre-registration training - pain topics",1),
+            new Practitioner( "Carson", "4 years ", "Hospital Inpatient",  "Inservice",2),
+            new Practitioner( "Arturo", "4 years ", "Hospital Outpatient",  "Inservice",2),
+            new Practitioner( "Gytis", "6 years ", "Hospital Outpatient", "Professional Body",3),
+            new Practitioner( "Yan", "6 years ", "Hospital Outpatient", "Professional Body, Postgraduate qualification pain-specific",3),
+            new Practitioner( "Li", "6 years ", "Hospital Outpatient", "Pre-registration training - pain topics",4),
+            new Practitioner( "Alonso", "None", "Community Health", "Professional Body, Postgraduate qualification pain-specific",4),
+            new Practitioner( "Anand", "1 year", "Community Health", "Pre-registration training - pain topics",5),
+            new Practitioner( "Barzdukas", "2 years ", "Community Health", "Pre-registration training - pain topics",5),
+            new Practitioner( "Olivetto", "2 years ", "Rehabilitation Clinic", "Pre-registration training - pain topics",6),
+            new Practitioner( "Nino", "3 years ", "Rehabilitation Clinic", "Professional Body, Postgraduate qualification not pain-specific",6),
+            new Practitioner( "Peggy", "3 years ", "Rehabilitation Clinic", "Pre-registration training - pain topics",4),
+            new Practitioner( "Laura", "3 years ", "Private clinic", "Conference (not pain specific)",7),
+            new Practitioner( "Norman", "6 years ",  "Private clinic", "Conference (not pain specific)",7),
+            new Practitioner( "Justice", "6 years ",  "Private clinic", "Pre-registration training - pain topics",8),
+            new Practitioner( "Liam", "8 years ",  "Private clinic", "Private provider course or workshop",8),
+            new Practitioner( "Oliver", "8 years ",  "Private clinic", "Pre-registration training - pain topics",3),
+            new Practitioner( "Elijah", "9 years ",  "Private clinic", "Conference (pain specific)",9),
+            new Practitioner( "William", "9 years ", "Private clinic", "Conference (pain specific)",9),
+            new Practitioner( "James", "3 years ",  "Private clinic", "Pre-registration training - pain topics",10),
+            new Practitioner( "Benjamin", "1 years ", "Private clinic", "None",10),
+            new Practitioner( "Lucas", "1 years ", "Private clinic", "None",10),
             });
 
             context.SaveChanges();
@@ -81,8 +81,6 @@ namespace PainAssessment.Areas.Admin.Data
                 new Patient(  "Daly",  "Female", DateTime.UtcNow, "Unknown",  "Unknown" )
 
             };
-            var test = new Patient("Doesit", "Female", DateTime.UtcNow, "Unknown", "Unknown");
-            var help = new Practitioner { ClinicalAreaID = 6, Name = "Evenwork", Experience = "1 years ", PracticeType = "Private clinic", PriorPainEducation = "None" };
 
             context.Patients.AddRange(patients);
             context.SaveChanges();
