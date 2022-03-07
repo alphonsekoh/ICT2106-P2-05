@@ -12,7 +12,7 @@ namespace PainAssessment.Areas.Admin.Models.Configuration
         public void Configure(EntityTypeBuilder<Practitioner> builder)
         {
             builder.ToTable("Practitioner");
-
+            
         }
     }
 }

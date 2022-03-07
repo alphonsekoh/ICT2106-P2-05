@@ -18,5 +18,10 @@ namespace PainAssessment.Areas.Admin.Models
         public DateTime BirthDate { get; set; }
         public string Condition { get; set; }
         public string Notes { get; set; }
+
+        public ICollection<Practitioner> Practitioners { get; set; }
+
+        public ICollection<PractitionerPatient> PractitionerPatients { get; set; }
+
     }
 }

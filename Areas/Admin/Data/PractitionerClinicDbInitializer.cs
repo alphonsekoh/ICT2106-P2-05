@@ -66,8 +66,6 @@ namespace PainAssessment.Areas.Admin.Data
 
             context.SaveChanges();
 
-
-
             var patients = new Patient[]
             {
                 new Patient{ Name= "Stone", BirthDate=DateTime.UtcNow, Gender="Female", Condition = "Unknown", Notes = "Unknown" },
