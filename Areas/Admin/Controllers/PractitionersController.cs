@@ -48,7 +48,7 @@ namespace PainAssessment.Areas.Admin.Controllers
             ViewData["current_page"] = page;
             ViewData["name"] = name;
 
-            if (practitioners.Count() > 0)
+            if (practitioners.Any())
             {
                 practitioners = practitioners.ChunkBy(8).ElementAt(page - 1);
             }
@@ -139,7 +139,7 @@ namespace PainAssessment.Areas.Admin.Controllers
             return View(practitioner);
         }
 
-    public JsonResult deletePractitioner(Guid Id)
+    public JsonResult DeletePractitioner(Guid Id)
         {
             if (practitionerService.GetPractitioner(Id) == null)
             {

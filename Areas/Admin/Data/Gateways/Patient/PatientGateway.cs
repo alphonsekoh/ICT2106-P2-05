@@ -21,7 +21,6 @@ namespace PainAssessment.Areas.Admin.Data.Gateways
 
         public void Add(Patient patient)
         {
-            patient.Name = Regex.Replace(patient.Name, @"\b\w{3,}\b", match => Utility.MaskName(match.Value));
             context.Patients.Add(patient);
         }
 
@@ -45,8 +44,6 @@ namespace PainAssessment.Areas.Admin.Data.Gateways
         {
             context.Entry(patient).State = EntityState.Modified;
         }
-
-
 
     }
 }
