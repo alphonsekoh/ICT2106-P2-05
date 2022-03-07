@@ -15,7 +15,7 @@
         <form>
             <fieldset disabled>
                 <div class="row">
-                    <div class="form-group col-md-6 ">
+                    <div class="form-group col-md-6 " id="patientName">
                         <label for="disabledTextInput" class="lead my-3 font-weight-bold ">@Html.DisplayNameFor(model => model.patientName)</label>
                         <input type="text" id="disabledTextInput" class="form-control" placeholder="@Html.DisplayFor(model => model.patientName)">
                     </div>
@@ -58,3 +58,18 @@
         </form>
     </div>
 </div>
+
+<script>
+    window.onload = load;
+
+    function load() {
+        var switchState = sessionStorage.getItem("toggleSwitchState");
+        var patientName = document.getElementById("patientName");
+        if (switchState === "true") {
+            patientName.style.display = "none";
+        }
+        else {
+            patientName.style.display = "block";
+        }
+    }
+</script>
