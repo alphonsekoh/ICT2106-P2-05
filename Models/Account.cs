@@ -1,12 +1,11 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace PainAssessment.Models
 {
     public class Account
     {
         [Key]
-        public Guid AccountId { get; set; }
+        public int AccountId { get; set; }
         [Required]
         public string Username { get; set; }
         [DataType(DataType.Password)]
