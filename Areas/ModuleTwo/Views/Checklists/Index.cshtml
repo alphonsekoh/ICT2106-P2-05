@@ -1,7 +1,11 @@
-﻿@model IEnumerable<PainAssessment.Areas.ModuleTwo.Models.Checklist>
+﻿@using PainAssessment.Areas.ModuleTwo.Services
+@using System.Collections.ObjectModel
+@model IEnumerable<PainAssessment.Areas.ModuleTwo.Models.Checklist>
 
 @{
     ViewData["Title"] = "Index";
+    PainAssessment.Areas.ModuleTwo.Services.ICalculateWeightageService calculateWeightageService = new CalculateWeightageService();
+    ReadOnlyDictionary<string, double> weightageDict = calculateWeightageService.calcWeightageFromThreeInputs(12.2, 22.2, 33.3);
 }
 
 <h1>Index</h1>
@@ -45,3 +49,11 @@
 }
     </tbody>
 </table>
+
+<!-- Testing CalculateWeightageService Service -->
+<h1>Test CalcualateWeightageServices</h1>
+<p>
+    <p>@weightageDict["local"]</p>
+    <p>@weightageDict["central"]</p>
+    <p>@weightageDict["regional"]</p>
+</p>

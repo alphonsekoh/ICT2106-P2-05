@@ -3,7 +3,7 @@ using PainAssessment.Areas.ModuleTwo.Services;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
-namespace PainAssessment.Services
+namespace PainAssessment.Areas.ModuleTwo.Services
 {
     public class CalculateWeightageService : ICalculateWeightageService
     {
