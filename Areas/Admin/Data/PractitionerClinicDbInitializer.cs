@@ -10,13 +10,14 @@ namespace PainAssessment.Areas.Admin.Data
     {
         public static void Initialize(HospitalContext context)
         {
+
             //context.Database.EnsureCreated();
             // Look for any practitioner
             if (context.Practitioners.Any())
             {
                 return;   // DB has been seeded
             }
-            var departments = new ClinicalArea[]
+            ClinicalArea[] departments = new ClinicalArea[]
             {
             new ClinicalArea("Musculoskeletal"),
             new ClinicalArea("Neurology/Neurosurgery"),
@@ -62,7 +63,7 @@ namespace PainAssessment.Areas.Admin.Data
 
             context.SaveChanges();
 
-            var patients = new Patient[]
+            Patient[] patients = new Patient[]
             {
                 new Patient(  "Stone","Female",DateTime.UtcNow,    "Unknown",  "Unknown" ),
                 new Patient(  "John", "Female",DateTime.UtcNow,  "Unknown",  "Unknown" ),
@@ -81,6 +82,7 @@ namespace PainAssessment.Areas.Admin.Data
                 new Patient(  "Daly",  "Female", DateTime.UtcNow, "Unknown",  "Unknown" )
 
             };
+
 
             context.Patients.AddRange(patients);
             context.SaveChanges();

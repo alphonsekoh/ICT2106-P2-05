@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
+using PainAssessment.Areas.Admin.Models.Factory;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace PainAssessment.Areas.Admin.Models.ModelBinder
@@ -10,24 +9,29 @@ namespace PainAssessment.Areas.Admin.Models.ModelBinder
     {
         public Task BindModelAsync(ModelBindingContext bindingContext)
         {
-            var data = bindingContext.HttpContext.Request.Form;
-            var nameResult = data.TryGetValue("Name", out var name);
-            var idResult = data.TryGetValue("PractitionerID", out var id);
-            data.TryGetValue("Experience", out var experience);
-            data.TryGetValue("PracticeType", out var practiceType);
-            data.TryGetValue("PriorPainEducation", out var priorPainEducation);
-            data.TryGetValue("ClinicalAreaID", out var clinicalAreaID);
+            IPersonFactory personFactory = new PersonFactory();
+            IPractitioner practitioner;
+
+            Microsoft.AspNetCore.Http.IFormCollection data = bindingContext.HttpContext.Request.Form;
+            bool nameResult = data.TryGetValue("Name", out Microsoft.Extensions.Primitives.StringValues name);
+            bool idResult = data.TryGetValue("Id", out Microsoft.Extensions.Primitives.StringValues id);
+            data.TryGetValue("Experience", out Microsoft.Extensions.Primitives.StringValues experience);
+            data.TryGetValue("PracticeType", out Microsoft.Extensions.Primitives.StringValues practiceType);
+            data.TryGetValue("PriorPainEducation", out Microsoft.Extensions.Primitives.StringValues priorPainEducation);
+            data.TryGetValue("ClinicalAreaID", out Microsoft.Extensions.Primitives.StringValues clinicalAreaID);
 
             if (nameResult)
             {
-                var practitioner = new Practitioner(name.ToString(), experience.ToString(), practiceType.ToString(), priorPainEducation.ToString(), Int32.Parse(clinicalAreaID));
                 if (idResult)
                 {
-                    practitioner = new Practitioner(name.ToString(), experience.ToString(), practiceType.ToString(), priorPainEducation.ToString(), Int32.Parse(clinicalAreaID), Guid.Parse(id.ToString()));
+                    practitioner = personFactory.CreatePractitioner(name.ToString(), experience.ToString(), practiceType.ToString(), priorPainEducation.ToString(), Int32.Parse(clinicalAreaID), Guid.Parse(id.ToString()));
+                }
+                else
+                {
+                    practitioner = personFactory.CreatePractitioner(name.ToString(), experience.ToString(), practiceType.ToString(), priorPainEducation.ToString(), Int32.Parse(clinicalAreaID));
                 }
                 bindingContext.Result = ModelBindingResult.Success(practitioner);
             }
-
             return Task.CompletedTask;
         }
     }

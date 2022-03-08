@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using PainAssessment.Areas.Admin.Models;
 using PainAssessment.Areas.Admin.Models.ModelBinder;
 using PainAssessment.Areas.Admin.Services;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace PainAssessment.Areas.Admin.Controllers
 {
@@ -15,11 +15,14 @@ namespace PainAssessment.Areas.Admin.Controllers
     {
         private readonly IPractitionerService practitionerService;
         private readonly IClinicalAreaService clinicalAreaService;
+        private readonly IPatientService patientService;
         private readonly ILog log;
-        public PractitionersController(IPractitionerService practitionerService, IClinicalAreaService clinicalAreaService)
+        public PractitionersController(IPractitionerService practitionerService, IClinicalAreaService clinicalAreaService, IPatientService patientService)
         {
             this.practitionerService = practitionerService;
             this.clinicalAreaService = clinicalAreaService;
+            this.patientService = patientService;
+
             log = Log.GetInstance;
         }
 
@@ -61,7 +64,7 @@ namespace PainAssessment.Areas.Admin.Controllers
         // GET: Practitioners/Create
         public IActionResult Create()
         {
-            ViewData["ClinicalAreaID"] = new SelectList(clinicalAreaService.GetAllClinicalAreas(), "ClinicalAreaID", "Name");
+            ViewData["ClinicalAreaID"] = new SelectList(clinicalAreaService.GetAllClinicalAreas(), "Id", "Name");
 
             return View();
         }
@@ -77,10 +80,10 @@ namespace PainAssessment.Areas.Admin.Controllers
             {
                 practitionerService.CreatePractitioner(practitioner);
                 practitionerService.SavePractitioner();
-                log.LogMessage("Info", this.GetType().Name, string.Format("{0} was created.", practitioner.Name));
+                log.LogMessage("Info", GetType().Name, string.Format("{0} was created.", practitioner.Name));
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ClinicalAreaID"] = new SelectList(clinicalAreaService.GetAllClinicalAreas(), "ClinicalAreaID", "Name");
+            ViewData["ClinicalAreaID"] = new SelectList(clinicalAreaService.GetAllClinicalAreas(), "Id", "Name");
             return View(practitioner);
         }
 
@@ -92,14 +95,14 @@ namespace PainAssessment.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var practitioner = practitionerService.GetPractitioner((Guid)id);
+            Practitioner practitioner = practitionerService.GetPractitioner((Guid)id);
 
             if (practitioner == null)
             {
                 return NotFound();
             }
 
-            ViewData["ClinicalAreaID"] = new SelectList(clinicalAreaService.GetAllClinicalAreas(), "ClinicalAreaID", "Name");
+            ViewData["ClinicalAreaID"] = new SelectList(clinicalAreaService.GetAllClinicalAreas(), "Id", "Name");
             return View(practitioner);
         }
 
@@ -110,7 +113,7 @@ namespace PainAssessment.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Edit(Guid id, [ModelBinder(typeof(PractitionerModelBinder))] Practitioner practitioner)
         {
-            if (id != practitioner.PractitionerID)
+            if (id != practitioner.Id)
             {
                 return NotFound();
             }
@@ -121,11 +124,11 @@ namespace PainAssessment.Areas.Admin.Controllers
                 {
                     practitionerService.UpdatePractitioner(practitioner);
                     practitionerService.SavePractitioner();
-                    log.LogMessage("Info", this.GetType().Name, string.Format("{0} was modified.", practitioner.Name));
+                    log.LogMessage("Info", GetType().Name, string.Format("{0} was modified.", practitioner.Name));
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (practitionerService.GetPractitioner(practitioner.PractitionerID) == null)
+                    if (practitionerService.GetPractitioner(practitioner.Id) == null)
                     {
                         return NotFound();
                     }
@@ -137,11 +140,11 @@ namespace PainAssessment.Areas.Admin.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            ViewData["ClinicalAreaID"] = new SelectList(clinicalAreaService.GetAllClinicalAreas(), "ClinicalAreaID", "Name");
+            ViewData["ClinicalAreaID"] = new SelectList(clinicalAreaService.GetAllClinicalAreas(), "Id", "Name");
             return View(practitioner);
         }
 
-    public JsonResult DeletePractitioner(Guid Id)
+        public JsonResult DeletePractitioner(Guid Id)
         {
             if (practitionerService.GetPractitioner(Id) == null)
             {
@@ -152,7 +155,7 @@ namespace PainAssessment.Areas.Admin.Controllers
             {
                 practitionerService.DeletePractitioner(Id);
                 practitionerService.SavePractitioner();
-                log.LogMessage("Info", this.GetType().Name, string.Format("{0} was deleted.", Id));
+                log.LogMessage("Info", GetType().Name, string.Format("{0} was deleted.", Id));
                 return Json(new { status = "Success" });
             }
             catch (DbUpdateConcurrencyException)
@@ -171,23 +174,4 @@ namespace PainAssessment.Areas.Admin.Controllers
 }
 
 
-public static class ListExtensions
-{
-    public static List<List<T>> ChunkBy<T>(this List<T> source, int chunkSize)
-    {
-        return source
-            .Select((x, i) => new { Index = i, Value = x })
-            .GroupBy(x => x.Index / chunkSize)
-            .Select(x => x.Select(v => v.Value).ToList())
-            .ToList();
-    }
-}
 
-public static class IEnumerableExtensions
-{
-    public static IEnumerable<IEnumerable<T>> ChunkBy<T>(this IEnumerable<T> source, int chunkSize)
-    {
-        for (int i = 0; i < source.Count(); i += chunkSize)
-            yield return source.Skip(i).Take(chunkSize);
-    }
-}

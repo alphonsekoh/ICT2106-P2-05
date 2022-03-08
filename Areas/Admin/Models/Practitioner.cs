@@ -1,26 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace PainAssessment.Areas.Admin.Models
 {
-    public class Practitioner
+    public class Practitioner : Person, IPractitioner
     {
-        public Guid PractitionerID { get; private set; }
-        [Required]
-        public string Name { get; private set; }
         public string Experience { get; private set; }
         public string PracticeType { get; private set; }
         public string PriorPainEducation { get; private set; }
         public int ClinicalAreaID { get; private set; }
         public ClinicalArea ClinicalArea { get; private set; }
 
-        private readonly List<Patient> _patients = new List<Patient>();
+        private readonly List<Patient> _patients = new();
         public virtual IReadOnlyList<Patient> Patients => _patients.ToList();
 
-        private readonly List<PractitionerPatient> _practitionerPatients = new List<PractitionerPatient>();
+        private readonly List<PractitionerPatient> _practitionerPatients = new();
         public virtual IReadOnlyList<PractitionerPatient> PractitionerPatients => _practitionerPatients.ToList();
 
         public Practitioner(string name, string experience, string practiceType, string priorPainEducation, int clinicalAreaID)
@@ -32,9 +27,9 @@ namespace PainAssessment.Areas.Admin.Models
             ClinicalAreaID = clinicalAreaID;
         }
 
-        public Practitioner( string name, string experience, string practiceType, string priorPainEducation, int clinicalAreaID, Guid practitionerID)
+        public Practitioner(string name, string experience, string practiceType, string priorPainEducation, int clinicalAreaID, Guid practitionerID)
         {
-            PractitionerID = practitionerID;
+            Id = practitionerID;
             Name = name;
             Experience = experience;
             PracticeType = practiceType;

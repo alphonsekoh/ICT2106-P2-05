@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PainAssessment.Areas.Admin.Models;
-using PainAssessment.Data;
-using PainAssessment.Areas.Admin.Services;
 using PainAssessment.Areas.Admin.Models.ModelBinder;
-using PainAssessment.Areas.Admin.Util;
+using PainAssessment.Areas.Admin.Services;
+using System;
 
 namespace PainAssessment.Areas.Admin.Controllers
 {
@@ -40,7 +34,7 @@ namespace PainAssessment.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var patient = patientService.GetPatient((Guid)id);
+            Patient patient = patientService.GetPatient((Guid)id);
 
             if (patient == null)
             {
@@ -67,7 +61,7 @@ namespace PainAssessment.Areas.Admin.Controllers
             {
                 patientService.CreatePatient(patient);
                 patientService.SavePatient();
-                log.LogMessage("Info", this.GetType().Name, string.Format("{0} was created.", patient.Name));
+                log.LogMessage("Info", GetType().Name, string.Format("{0} was created.", patient.Name));
                 return RedirectToAction(nameof(Index));
             }
             return View(patient);
@@ -81,7 +75,7 @@ namespace PainAssessment.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var patient = patientService.GetPatient((Guid)id);
+            Patient patient = patientService.GetPatient((Guid)id);
             if (patient == null)
             {
                 return NotFound();
@@ -96,7 +90,7 @@ namespace PainAssessment.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Edit(Guid id, [ModelBinder(typeof(PatientModelBinder))] Patient patient)
         {
-            if (id != patient.PatientID)
+            if (id != patient.Id)
             {
                 return NotFound();
             }
@@ -107,12 +101,12 @@ namespace PainAssessment.Areas.Admin.Controllers
                 {
                     patientService.UpdatePatient(patient);
                     patientService.SavePatient();
-                    log.LogMessage("Info", this.GetType().Name, string.Format("{0} was modified.", patient.Name));
+                    log.LogMessage("Info", GetType().Name, string.Format("{0} was modified.", patient.Name));
 
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (patientService.GetPatient(patient.PatientID) == null)
+                    if (patientService.GetPatient(patient.Id) == null)
                     {
                         return NotFound();
                     }
@@ -134,7 +128,7 @@ namespace PainAssessment.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var patient = patientService.GetPatient((Guid)id);
+            Patient patient = patientService.GetPatient((Guid)id);
 
             if (patient == null)
             {
@@ -151,7 +145,7 @@ namespace PainAssessment.Areas.Admin.Controllers
         {
             patientService.DeletePatient(id);
             patientService.SavePatient();
-            log.LogMessage("Info", this.GetType().Name, string.Format("{0} was deleted.", id));
+            log.LogMessage("Info", GetType().Name, string.Format("{0} was deleted.", id));
             return RedirectToAction(nameof(Index));
         }
     }

@@ -43,14 +43,14 @@
         <tbody>
             @foreach (var item in Model)
             {
-                <tr id="row_@item.ClinicalAreaID">
+                <tr id="row_@item.Id">
                     <td>
                         @Html.DisplayFor(modelItem => item.Name)
                     </td>
                     <td>
-                        <a type="button" class="btn btn-primary btn-sm" asp-action="Edit" asp-route-id="@item.ClinicalAreaID">Edit ClinicalArea Details</a> |
-                        <a type="button" class="btn btn-secondary btn-sm" asp-action="Details" asp-route-id="@item.ClinicalAreaID">View ClinicalArea Details</a> |
-                        <a type="button" class="btn btn-danger btn-sm" asp-action="Delete" asp-route-id="@item.ClinicalAreaID">Delete</a>
+                        <a type="button" class="btn btn-primary btn-sm" asp-action="Edit" asp-route-id="@item.Id">Edit ClinicalArea Details</a> |
+                        <a type="button" class="btn btn-secondary btn-sm" asp-action="Details" asp-route-id="@item.Id">View ClinicalArea Details</a> |
+                        <a type="button" class="btn btn-danger btn-sm" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
                     </td>
                 </tr>
             }

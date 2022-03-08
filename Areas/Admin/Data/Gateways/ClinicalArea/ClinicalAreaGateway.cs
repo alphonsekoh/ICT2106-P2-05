@@ -1,10 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PainAssessment.Areas.Admin.Models;
 using PainAssessment.Data;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace PainAssessment.Areas.Admin.Data.Gateways
 {
@@ -29,8 +27,8 @@ namespace PainAssessment.Areas.Admin.Data.Gateways
 
         public ClinicalArea FindById(int id)
         {
-            return context.ClinicalAreas.Include(d=>d.Practitioners).Where(d=> d.ClinicalAreaID == id ).FirstOrDefault();
-        
+            return context.ClinicalAreas.Include(d => d.Practitioners).Where(d => d.Id == id).FirstOrDefault();
+
         }
 
         public IEnumerable<ClinicalArea> GetAll()

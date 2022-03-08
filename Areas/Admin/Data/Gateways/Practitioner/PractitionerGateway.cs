@@ -4,7 +4,6 @@ using PainAssessment.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace PainAssessment.Areas.Admin.Data.Gateways
 {
@@ -30,7 +29,7 @@ namespace PainAssessment.Areas.Admin.Data.Gateways
 
         public Practitioner FindById(Guid id)
         {
-            return context.Practitioners.Include(p => p.ClinicalArea).Include(p => p.PractitionerPatients).ThenInclude(p => p.Patient).Where(p => p.PractitionerID == id).FirstOrDefault();
+            return context.Practitioners.Include(p => p.ClinicalArea).Include(p => p.PractitionerPatients).ThenInclude(p => p.Patient).Where(p => p.Id == id).FirstOrDefault();
         }
 
         public IEnumerable<Practitioner> GetAll()
