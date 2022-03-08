@@ -56,7 +56,7 @@
                     @*Html.EditorFor(x => x.Central[i].SubDomain, new { htmlAttributes = new { @class = "form-control" } })*@
                     <input asp-for="@Model.Central[i].SubDomain" class="form-control" />
                 <td>
-                    <input type="hidden" asp-for="@Model.Central[i].IsDeleted" />
+                    <input type="hidden" asp-for="@Model.Central[i].IsCentralDeleted" />
                     @*Html.EditorFor(x => x.Central[i].Determinant, new { htmlAttributes = new { @class = "form-control" } })*@
                     <input asp-for="@Model.Central[i].Determinant" class="form-control" />
                 </td>
@@ -98,7 +98,7 @@
                     @*Html.EditorFor(x => x.Regional[i].SubDomain, new { htmlAttributes = new { @class = "form-control" } })*@
                     <input asp-for="@Model.Regional[i].SubDomain" class="form-control" />
                 <td>
-                    <input type="hidden" asp-for="@Model.Regional[i].IsDeleted" />
+                    <input type="hidden" asp-for="@Model.Regional[i].IsRegionalDeleted" />
                     @*Html.EditorFor(x => x.Regional[i].Determinant, new { htmlAttributes = new { @class = "form-control" } })*@
                     <input asp-for="@Model.Regional[i].Determinant" class="form-control" />
                 </td>
@@ -140,7 +140,7 @@
                     @*Html.EditorFor(x => x.Local[i].SubDomain, new { htmlAttributes = new { @class = "form-control" } })*@
                     <input asp-for="@Model.Local[i].SubDomain" class="form-control" />
                 <td>
-                    <input type="hidden" asp-for="@Model.Local[i].IsDeleted" />
+                    <input type="hidden" asp-for="@Model.Local[i].IsLocalDeleted" />
                     @*Html.EditorFor(x => x.Local[i].Determinant, new { htmlAttributes = new { @class = "form-control" } })*@
                     <input asp-for="@Model.Local[i].Determinant" class="form-control" />
                 </td>

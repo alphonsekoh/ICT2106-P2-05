@@ -24,6 +24,6 @@ namespace PainAssessment.Areas.ModuleTwo.Models
         //public string Determinant { get; set; }
 
         [NotMapped]
-        public bool IsDeleted { get; set; } = false;
+        public bool IsCentralDeleted { get; set; } = false;
     }
 }

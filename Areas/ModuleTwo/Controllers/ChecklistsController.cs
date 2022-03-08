@@ -97,9 +97,9 @@ namespace PainAssessment.Areas.ModuleTwo.Controllers
         [HttpPost]
         public IActionResult Create(Checklist checklist)
         {
-            checklist.Central.RemoveAll(n => n.IsDeleted == true);
-            checklist.Regional.RemoveAll(n => n.IsDeleted == true);
-            checklist.Local.RemoveAll(n => n.IsDeleted == true);
+            checklist.Central.RemoveAll(n => n.IsCentralDeleted == true);
+            checklist.Regional.RemoveAll(n => n.IsRegionalDeleted == true);
+            checklist.Local.RemoveAll(n => n.IsLocalDeleted == true);
             _context.Add(checklist);
             _context.SaveChanges();
             return RedirectToAction("index");
@@ -130,9 +130,9 @@ namespace PainAssessment.Areas.ModuleTwo.Controllers
             //checklist.Central.RemoveRange(centralDetails);
             _context.SaveChanges();
 
-            checklist.Central.RemoveAll(n => n.IsDeleted == true);
-            checklist.Regional.RemoveAll(n => n.IsDeleted == true);
-            checklist.Local.RemoveAll(n => n.IsDeleted == true);
+            checklist.Central.RemoveAll(n => n.IsCentralDeleted == true);
+            checklist.Regional.RemoveAll(n => n.IsRegionalDeleted == true);
+            checklist.Local.RemoveAll(n => n.IsLocalDeleted == true);
             _context.Attach(checklist);
             _context.Entry(checklist).State = EntityState.Modified;
             _context.CentralDomain.AddRange(checklist.Central);
