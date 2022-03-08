@@ -10,6 +10,7 @@ namespace PainAssessment.Areas.Admin.Models.Configuration
         {
             builder
                 .ToTable("PractitionerPatient");
+
         }
     }
 }

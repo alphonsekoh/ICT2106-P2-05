@@ -15,11 +15,14 @@ namespace PainAssessment.Areas.Admin.Controllers
     {
         private readonly IPractitionerService practitionerService;
         private readonly IClinicalAreaService clinicalAreaService;
+        private readonly IPatientService patientService;
         private readonly ILog log;
-        public PractitionersController(IPractitionerService practitionerService, IClinicalAreaService clinicalAreaService)
+        public PractitionersController(IPractitionerService practitionerService, IClinicalAreaService clinicalAreaService, IPatientService patientService)
         {
             this.practitionerService = practitionerService;
             this.clinicalAreaService = clinicalAreaService;
+            this.patientService = patientService;
+
             log = Log.GetInstance;
         }
 
