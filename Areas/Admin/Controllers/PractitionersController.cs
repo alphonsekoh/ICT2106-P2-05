@@ -61,7 +61,7 @@ namespace PainAssessment.Areas.Admin.Controllers
         // GET: Practitioners/Create
         public IActionResult Create()
         {
-            ViewData["ClinicalAreaID"] = new SelectList(clinicalAreaService.GetAllClinicalAreas(), "ClinicalAreaID", "Name");
+            ViewData["ClinicalAreaID"] = new SelectList(clinicalAreaService.GetAllClinicalAreas(), "Id", "Name");
 
             return View();
         }
@@ -80,7 +80,7 @@ namespace PainAssessment.Areas.Admin.Controllers
                 log.LogMessage("Info", this.GetType().Name, string.Format("{0} was created.", practitioner.Name));
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ClinicalAreaID"] = new SelectList(clinicalAreaService.GetAllClinicalAreas(), "ClinicalAreaID", "Name");
+            ViewData["ClinicalAreaID"] = new SelectList(clinicalAreaService.GetAllClinicalAreas(), "Id", "Name");
             return View(practitioner);
         }
 
@@ -99,7 +99,7 @@ namespace PainAssessment.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            ViewData["ClinicalAreaID"] = new SelectList(clinicalAreaService.GetAllClinicalAreas(), "ClinicalAreaID", "Name");
+            ViewData["ClinicalAreaID"] = new SelectList(clinicalAreaService.GetAllClinicalAreas(), "Id", "Name");
             return View(practitioner);
         }
 
@@ -137,7 +137,7 @@ namespace PainAssessment.Areas.Admin.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            ViewData["ClinicalAreaID"] = new SelectList(clinicalAreaService.GetAllClinicalAreas(), "ClinicalAreaID", "Name");
+            ViewData["ClinicalAreaID"] = new SelectList(clinicalAreaService.GetAllClinicalAreas(), "Id", "Name");
             return View(practitioner);
         }
 
