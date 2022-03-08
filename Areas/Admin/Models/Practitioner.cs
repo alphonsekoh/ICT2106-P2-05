@@ -6,11 +6,8 @@ using System.Threading.Tasks;
 
 namespace PainAssessment.Areas.Admin.Models
 {
-    public class Practitioner
+    public class Practitioner : Person
     {
-        public Guid PractitionerID { get; private set; }
-        [Required]
-        public string Name { get; private set; }
         public string Experience { get; private set; }
         public string PracticeType { get; private set; }
         public string PriorPainEducation { get; private set; }
@@ -34,7 +31,7 @@ namespace PainAssessment.Areas.Admin.Models
 
         public Practitioner( string name, string experience, string practiceType, string priorPainEducation, int clinicalAreaID, Guid practitionerID)
         {
-            PractitionerID = practitionerID;
+            Id = practitionerID;
             Name = name;
             Experience = experience;
             PracticeType = practiceType;

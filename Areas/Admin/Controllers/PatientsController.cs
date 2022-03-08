@@ -96,7 +96,7 @@ namespace PainAssessment.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Edit(Guid id, [ModelBinder(typeof(PatientModelBinder))] Patient patient)
         {
-            if (id != patient.PatientID)
+            if (id != patient.Id)
             {
                 return NotFound();
             }
@@ -112,7 +112,7 @@ namespace PainAssessment.Areas.Admin.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (patientService.GetPatient(patient.PatientID) == null)
+                    if (patientService.GetPatient(patient.Id) == null)
                     {
                         return NotFound();
                     }

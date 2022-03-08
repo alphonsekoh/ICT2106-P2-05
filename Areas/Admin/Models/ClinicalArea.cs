@@ -9,7 +9,7 @@ namespace PainAssessment.Areas.Admin.Models
 {
     public class ClinicalArea
     {
-        public int ClinicalAreaID { get; private set; }
+        public int Id { get; private set; }
         [StringLength(50, MinimumLength = 3)]
         [Required]
         [DisplayName("Clinical Area")]
@@ -25,7 +25,7 @@ namespace PainAssessment.Areas.Admin.Models
 
         public ClinicalArea( string name,int clinicalAreaID)
         {
-            ClinicalAreaID = clinicalAreaID;
+            Id = clinicalAreaID;
             Name = name;
         }
 

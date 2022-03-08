@@ -29,7 +29,7 @@ namespace PainAssessment.Areas.Admin.Data.Gateways
 
         public ClinicalArea FindById(int id)
         {
-            return context.ClinicalAreas.Include(d=>d.Practitioners).Where(d=> d.ClinicalAreaID == id ).FirstOrDefault();
+            return context.ClinicalAreas.Include(d=>d.Practitioners).Where(d=> d.Id == id ).FirstOrDefault();
         
         }
 

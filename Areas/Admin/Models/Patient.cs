@@ -9,12 +9,8 @@ using System.Threading.Tasks;
 
 namespace PainAssessment.Areas.Admin.Models
 {
-    public class Patient
+    public class Patient : Person
     {
-        public Guid PatientID { get; private set; }
-        [Required]
-        [StringLength(50, MinimumLength = 3)]
-        public string Name { get; private set; }
         [Required]
         public string Gender { get; private set; }
         [Required]
@@ -30,7 +26,7 @@ namespace PainAssessment.Areas.Admin.Models
 
         public Patient( string name, string gender, DateTime birthDate, string condition, string notes, Guid patientID)
         {
-            PatientID = patientID;
+            Id = patientID;
             Name = name;
             Gender = gender;
             BirthDate = birthDate;

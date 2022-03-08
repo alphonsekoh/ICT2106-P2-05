@@ -110,7 +110,7 @@ namespace PainAssessment.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Edit(Guid id, [ModelBinder(typeof(PractitionerModelBinder))] Practitioner practitioner)
         {
-            if (id != practitioner.PractitionerID)
+            if (id != practitioner.Id)
             {
                 return NotFound();
             }
@@ -125,7 +125,7 @@ namespace PainAssessment.Areas.Admin.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (practitionerService.GetPractitioner(practitioner.PractitionerID) == null)
+                    if (practitionerService.GetPractitioner(practitioner.Id) == null)
                     {
                         return NotFound();
                     }

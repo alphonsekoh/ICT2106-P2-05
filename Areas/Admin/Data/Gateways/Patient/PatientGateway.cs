@@ -32,7 +32,7 @@ namespace PainAssessment.Areas.Admin.Data.Gateways
 
         public Patient FindById(Guid id)
         {
-            return context.Patients.Include(p => p.PractitionerPatients).ThenInclude(p => p.Practitioner).Where(p => p.PatientID == id).FirstOrDefault();
+            return context.Patients.Include(p => p.PractitionerPatients).ThenInclude(p => p.Practitioner).Where(p => p.Id == id).FirstOrDefault();
         }
 
         public IEnumerable<Patient> GetAll()

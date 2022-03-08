@@ -44,7 +44,7 @@
             <thead>
                 <tr>
                     <th scope="col">
-                        @Html.DisplayNameFor(model => model.PractitionerID)
+                        @Html.DisplayNameFor(model => model.Id)
                     </th>
                     <th scope="col">
                         @Html.DisplayNameFor(model => model.Name)
@@ -70,9 +70,9 @@
 
                 @foreach (var item in Model)
                 {
-                <tr id="row_@item.PractitionerID">
+                <tr id="row_@item.Id">
                     <td>
-                        @Html.DisplayFor(modelItem => item.PractitionerID)
+                        @Html.DisplayFor(modelItem => item.Id)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Name)
@@ -93,22 +93,22 @@
                     </td>
 
                     <td>
-                        <a asp-action="Delete" asp-route-id="@item.PractitionerID"
+                        <a asp-action="Delete" asp-route-id="@item.Id"
                            type="button"
                            class="btn btn-primary btn-sm">
                             View all Consultations
                         </a>
-                        <a asp-action="Edit" asp-route-id="@item.PractitionerID"
+                        <a asp-action="Edit" asp-route-id="@item.Id"
                            type="button"
                            class="btn btn-secondary btn-sm">
                             Edit
                         </a>
-                        <a asp-action="Delete" asp-route-id="@item.PractitionerID"
+                        <a asp-action="Delete" asp-route-id="@item.Id"
                            type="button"
                            class="btn btn-danger btn-sm">
                             Reset Password
                         </a>
-                        <button onclick="ConfirmDelete('@item.PractitionerID', '@item.Name')"
+                        <button onclick="ConfirmDelete('@item.Id', '@item.Name')"
                                 type="button"
                                 class="btn btn-danger btn-sm">
                             Delete
@@ -188,28 +188,28 @@
     </div>
 </div>
 
-<input type="hidden" id="hiddenPractitionerId" />
+<input type="hidden" id="hiddenId" />
 
 
 @section scripts{
-    <script>var ConfirmDelete = function (PractitionerId, PractitionerName) {
+    <script>var ConfirmDelete = function (Id, PractitionerName) {
 
             console.log(PractitionerName);
-            $("#hiddenPractitionerId").val(PractitionerId);
+            $("#hiddenId").val(Id);
             $("#modalPractitionerName").text(PractitionerName);
             $("#deleteModal").modal('show');
         }
 
         var DeletePractitioner = function () {
-            var PractitionerId = $("#hiddenPractitionerId").val();
+            var Id = $("#hiddenId").val();
             $.ajax({
                 type: "POST",
                 url: "Practitioners/DeletePractitioner",
-                data: { Id: PractitionerId },
+                data: { Id: Id },
                 success: function (result) {
 
                     $("#deleteModal").modal("hide");
-                    $("#row_" + PractitionerId).remove();
+                    $("#row_" + Id).remove();
                 }
             })
 

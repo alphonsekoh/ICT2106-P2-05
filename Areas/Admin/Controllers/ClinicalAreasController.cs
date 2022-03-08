@@ -133,7 +133,7 @@ namespace PainAssessment.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Edit(int id, [ModelBinder(typeof(ClinicalAreaModelBinder))] ClinicalArea clinicalArea)
         {
-            if (id != clinicalArea.ClinicalAreaID)
+            if (id != clinicalArea.Id)
             {
                 return NotFound();
             }
@@ -147,7 +147,7 @@ namespace PainAssessment.Areas.Admin.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (clinicalAreaService.GetClinicalArea(clinicalArea.ClinicalAreaID) == null)
+                    if (clinicalAreaService.GetClinicalArea(clinicalArea.Id) == null)
                     {
                         return NotFound();
                     }

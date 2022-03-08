@@ -23,6 +23,7 @@
     <None Remove="Areas\Admin\Views\Practitioners\" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Areas\Admin\Factory\" />
     <Folder Include="Areas\Admin\Views\Practitioners\" />
   </ItemGroup>
 </Project>
