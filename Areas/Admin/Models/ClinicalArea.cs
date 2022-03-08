@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace PainAssessment.Areas.Admin.Models
 {
@@ -15,15 +13,15 @@ namespace PainAssessment.Areas.Admin.Models
         [DisplayName("Clinical Area")]
         public string Name { get; private set; }
 
-        private readonly List<Practitioner> _practitioners = new List<Practitioner>();
+        private readonly List<Practitioner> _practitioners = new();
         public virtual IReadOnlyList<Practitioner> Practitioners => _practitioners.ToList();
 
-        public ClinicalArea( string name )
+        public ClinicalArea(string name)
         {
             Name = name;
         }
 
-        public ClinicalArea( string name,int clinicalAreaID)
+        public ClinicalArea(string name, int clinicalAreaID)
         {
             Id = clinicalAreaID;
             Name = name;

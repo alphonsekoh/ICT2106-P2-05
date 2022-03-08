@@ -1,8 +1,4 @@
-﻿using PainAssessment.Areas.Admin.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System;
 
 namespace PainAssessment.Areas.Admin.Models.Factory
 {
@@ -19,7 +15,8 @@ namespace PainAssessment.Areas.Admin.Models.Factory
             {
                 return new Patient(name, gender, birthDate, condition, notes);
 
-            } else
+            }
+            else
             {
                 return new Patient(name, gender, birthDate, condition, notes, (Guid)id);
             }

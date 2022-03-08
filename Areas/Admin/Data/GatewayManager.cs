@@ -1,9 +1,6 @@
 ﻿using PainAssessment.Areas.Admin.Data.Gateways;
 using PainAssessment.Data;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace PainAssessment.Areas.Admin.Data
 {
@@ -23,7 +20,7 @@ namespace PainAssessment.Areas.Admin.Data
         {
             get
             {
-                if (this.clinicalAreaGateway == null)
+                if (clinicalAreaGateway == null)
                 {
                     clinicalAreaGateway = new ClinicalAreaGateway(context);
                 }
@@ -35,7 +32,7 @@ namespace PainAssessment.Areas.Admin.Data
         {
             get
             {
-                if (this.practitionerGateway == null)
+                if (practitionerGateway == null)
                 {
                     practitionerGateway = new PractitionerGateway(context);
                 }
@@ -47,7 +44,7 @@ namespace PainAssessment.Areas.Admin.Data
         {
             get
             {
-                if (this.patientGateway == null)
+                if (patientGateway == null)
                 {
                     patientGateway = new PatientGateway(context);
                 }
@@ -63,14 +60,14 @@ namespace PainAssessment.Areas.Admin.Data
 
         protected virtual void Dispose(bool disposing)
         {
-            if (!this.disposed)
+            if (!disposed)
             {
                 if (disposing)
                 {
                     context.Dispose();
                 }
             }
-            this.disposed = true;
+            disposed = true;
         }
         public void Dispose()
         {

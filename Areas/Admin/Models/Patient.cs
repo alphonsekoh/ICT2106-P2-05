@@ -4,12 +4,11 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 
 namespace PainAssessment.Areas.Admin.Models
 {
-    public class Patient : Person , IPatient
+    public class Patient : Person, IPatient
     {
         [Required]
         public string Gender { get; private set; }
@@ -18,10 +17,10 @@ namespace PainAssessment.Areas.Admin.Models
         public string Condition { get; private set; }
         public string Notes { get; private set; }
 
-        private readonly List<Practitioner> _practitioners = new List<Practitioner>();
+        private readonly List<Practitioner> _practitioners = new();
         public virtual IReadOnlyList<Practitioner> Practitioners => _practitioners.ToList();
 
-        private readonly List<PractitionerPatient> _practitionerPatients = new List<PractitionerPatient>();
+        private readonly List<PractitionerPatient> _practitionerPatients = new();
         public virtual IReadOnlyList<PractitionerPatient> PractitionerPatients => _practitionerPatients.ToList();
 
 

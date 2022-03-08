@@ -1,9 +1,6 @@
 ﻿using PainAssessment.Areas.Admin.Data;
 using PainAssessment.Areas.Admin.Models;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace PainAssessment.Areas.Admin.Services
 {
@@ -12,7 +9,7 @@ namespace PainAssessment.Areas.Admin.Services
         internal IGatewayManager gatewayManager;
         public ClinicalAreaService(IGatewayManager gatewayManager)
         {
-             this.gatewayManager = gatewayManager;
+            this.gatewayManager = gatewayManager;
         }
         public void CreateClinicalArea(ClinicalArea department)
         {
@@ -45,6 +42,6 @@ namespace PainAssessment.Areas.Admin.Services
         }
 
 
-        
+
     }
 }

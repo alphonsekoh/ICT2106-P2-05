@@ -1,9 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PainAssessment.Areas.Admin.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace PainAssessment.Data
 {
@@ -15,7 +11,7 @@ namespace PainAssessment.Data
         public DbSet<ClinicalArea> ClinicalAreas { get; set; }
         public DbSet<Practitioner> Practitioners { get; set; }
         public DbSet<Patient> Patients { get; set; }
-        
+
         public DbSet<PractitionerPatient> PractitionerPatients { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

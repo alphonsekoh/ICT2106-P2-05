@@ -2,9 +2,6 @@
 using PainAssessment.Areas.Admin.Models;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace PainAssessment.Areas.Admin.Services
 {
@@ -13,7 +10,7 @@ namespace PainAssessment.Areas.Admin.Services
         internal IGatewayManager gatewayManager;
         public PatientService(IGatewayManager gatewayManager)
         {
-             this.gatewayManager = gatewayManager;
+            this.gatewayManager = gatewayManager;
         }
         public void CreatePatient(Patient patient)
         {

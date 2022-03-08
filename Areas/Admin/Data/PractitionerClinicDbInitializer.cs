@@ -1,5 +1,4 @@
 ﻿using PainAssessment.Areas.Admin.Models;
-using PainAssessment.Areas.Admin.Models.Factory;
 using PainAssessment.Data;
 using System;
 using System.Linq;
@@ -11,7 +10,6 @@ namespace PainAssessment.Areas.Admin.Data
     {
         public static void Initialize(HospitalContext context)
         {
-            IPersonFactory personFactory = new PersonFactory();
 
             //context.Database.EnsureCreated();
             // Look for any practitioner
@@ -19,7 +17,7 @@ namespace PainAssessment.Areas.Admin.Data
             {
                 return;   // DB has been seeded
             }
-            var departments = new ClinicalArea[]
+            ClinicalArea[] departments = new ClinicalArea[]
             {
             new ClinicalArea("Musculoskeletal"),
             new ClinicalArea("Neurology/Neurosurgery"),
@@ -65,7 +63,7 @@ namespace PainAssessment.Areas.Admin.Data
 
             context.SaveChanges();
 
-            var patients = new Patient[]
+            Patient[] patients = new Patient[]
             {
                 new Patient(  "Stone","Female",DateTime.UtcNow,    "Unknown",  "Unknown" ),
                 new Patient(  "John", "Female",DateTime.UtcNow,  "Unknown",  "Unknown" ),

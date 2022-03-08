@@ -1,15 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PainAssessment.Areas.Admin.Models;
-using PainAssessment.Areas.Admin.Util;
 using PainAssessment.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace PainAssessment.Areas.Admin.Data.Gateways
-{ 
+{
     public class PatientGateway : IPatientGateway
     {
         internal HospitalContext context;

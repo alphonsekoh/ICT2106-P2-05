@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using PainAssessment.Areas.Admin.Data;
 using PainAssessment.Areas.Admin.Models;
 using PainAssessment.Areas.Admin.Models.ModelBinder;
 using PainAssessment.Areas.Admin.Services;
-using PainAssessment.Areas.Admin.Util;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace PainAssessment.Areas.Admin.Controllers
 {
@@ -29,14 +26,14 @@ namespace PainAssessment.Areas.Admin.Controllers
         public IActionResult Index(string sortOrder, string searchString, int page = 1)
         {
             ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "Name" : "";
-            var clinicalArea = from d in clinicalAreaService.GetAllClinicalAreas() select d;
+            IEnumerable<ClinicalArea> clinicalArea = from d in clinicalAreaService.GetAllClinicalAreas() select d;
             clinicalArea = sortOrder switch // check input of what is being sorted
             {
                 "Name" => clinicalArea.OrderByDescending(d => d.Name),
                 _ => clinicalArea.OrderBy(d => d.Name),
             };
-            
-            
+
+
 
             // check if not search input not empty
             if (!String.IsNullOrEmpty(searchString))
@@ -76,7 +73,7 @@ namespace PainAssessment.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var clinicalArea = clinicalAreaService.GetClinicalArea((int)id);
+            ClinicalArea clinicalArea = clinicalAreaService.GetClinicalArea((int)id);
             if (clinicalArea == null)
             {
                 return NotFound();
@@ -102,7 +99,7 @@ namespace PainAssessment.Areas.Admin.Controllers
             {
                 clinicalAreaService.CreateClinicalArea(clinicalArea);
                 clinicalAreaService.SaveClinicalArea();
-                log.LogMessage("Info", this.GetType().Name, string.Format("{0} was created.", clinicalArea.Name));
+                log.LogMessage("Info", GetType().Name, string.Format("{0} was created.", clinicalArea.Name));
                 return RedirectToAction(nameof(Index));
             }
             return View(clinicalArea);
@@ -116,7 +113,7 @@ namespace PainAssessment.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var clinicalArea = clinicalAreaService.GetClinicalArea((int)id);
+            ClinicalArea clinicalArea = clinicalAreaService.GetClinicalArea((int)id);
 
             if (clinicalArea == null)
             {
@@ -158,7 +155,7 @@ namespace PainAssessment.Areas.Admin.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            log.LogMessage("Info", this.GetType().Name, string.Format("Renamed to {0}", clinicalArea.Name));
+            log.LogMessage("Info", GetType().Name, string.Format("Renamed to {0}", clinicalArea.Name));
             return View(clinicalArea);
         }
 
@@ -170,7 +167,7 @@ namespace PainAssessment.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var clinicalArea = clinicalAreaService.GetClinicalArea((int)id);
+            ClinicalArea clinicalArea = clinicalAreaService.GetClinicalArea((int)id);
             if (clinicalArea == null)
             {
                 return NotFound();
@@ -184,9 +181,9 @@ namespace PainAssessment.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult DeleteConfirmed(int id)
         {
-            clinicalAreaService.DeleteClinicalArea((int)id);
+            clinicalAreaService.DeleteClinicalArea(id);
             clinicalAreaService.SaveClinicalArea();
-            log.LogMessage("Info", this.GetType().Name, string.Format("{0} was deleted.", id));
+            log.LogMessage("Info", GetType().Name, string.Format("{0} was deleted.", id));
             return RedirectToAction(nameof(Index));
         }
     }
@@ -208,7 +205,9 @@ namespace PainAssessment.Areas.Admin.Controllers
         public static IEnumerable<IEnumerable<T>> ChunkBy<T>(this IEnumerable<T> source, int chunkSize)
         {
             for (int i = 0; i < source.Count(); i += chunkSize)
+            {
                 yield return source.Skip(i).Take(chunkSize);
+            }
         }
     }
 }

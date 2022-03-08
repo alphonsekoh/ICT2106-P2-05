@@ -13,20 +13,21 @@ namespace PainAssessment.Areas.Admin.Models.ModelBinder
             IPersonFactory personFactory = new PersonFactory();
             IPatient patient;
 
-            var data = bindingContext.HttpContext.Request.Form;
-            var nameResult = data.TryGetValue("Name", out var name);
-            var idResult = data.TryGetValue("Id", out var id);
-            data.TryGetValue("Gender", out var gender);
-            data.TryGetValue("BirthDate", out var birthDate);
-            data.TryGetValue("Condition", out var condition);
-            data.TryGetValue("Notes", out var notes);
+            Microsoft.AspNetCore.Http.IFormCollection data = bindingContext.HttpContext.Request.Form;
+            bool nameResult = data.TryGetValue("Name", out Microsoft.Extensions.Primitives.StringValues name);
+            bool idResult = data.TryGetValue("Id", out Microsoft.Extensions.Primitives.StringValues id);
+            data.TryGetValue("Gender", out Microsoft.Extensions.Primitives.StringValues gender);
+            data.TryGetValue("BirthDate", out Microsoft.Extensions.Primitives.StringValues birthDate);
+            data.TryGetValue("Condition", out Microsoft.Extensions.Primitives.StringValues condition);
+            data.TryGetValue("Notes", out Microsoft.Extensions.Primitives.StringValues notes);
 
             if (nameResult)
             {
                 if (idResult)
                 {
                     patient = personFactory.CreatePatient(name.ToString(), gender.ToString(), DateTime.Parse(birthDate.ToString()), condition.ToString(), notes.ToString(), Guid.Parse(id.ToString()));
-                } else
+                }
+                else
                 {
                     patient = personFactory.CreatePatient(name.ToString(), gender.ToString(), DateTime.Parse(birthDate.ToString()), condition.ToString(), notes.ToString());
                 }
