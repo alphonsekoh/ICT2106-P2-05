@@ -7,7 +7,6 @@ using Microsoft.EntityFrameworkCore;
 using PainAssessment.Areas.Admin.Models;
 using PainAssessment.Areas.Admin.Models.ModelBinder;
 using PainAssessment.Areas.Admin.Services;
-using PainAssessment.Areas.Admin.Util;
 
 namespace PainAssessment.Areas.Admin.Controllers
 {

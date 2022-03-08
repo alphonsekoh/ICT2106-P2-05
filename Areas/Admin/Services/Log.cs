@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PainAssessment.Areas.Admin.Util
+namespace PainAssessment.Areas.Admin.Services
 {
     public sealed class Log : ILog
     {
