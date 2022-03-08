@@ -8,6 +8,7 @@ using PainAssessment.Areas.Admin.Data;
 using PainAssessment.Areas.Admin.Models;
 using PainAssessment.Areas.Admin.Models.ModelBinder;
 using PainAssessment.Areas.Admin.Services;
+using PainAssessment.Areas.Admin.Util;
 
 namespace PainAssessment.Areas.Admin.Controllers
 {
@@ -15,12 +16,12 @@ namespace PainAssessment.Areas.Admin.Controllers
     public class ClinicalAreasController : Controller
     {
         private readonly IClinicalAreaService clinicalAreaService;
-
+        private readonly ILog log;
         public ClinicalAreasController(IClinicalAreaService clinicalAreaService)
         {
             this.clinicalAreaService = clinicalAreaService;
+            log = Log.GetInstance;
         }
-
         // GET: Admin/ClinicalAreas
         /*
          Index function to take in input from get upon search, sorting and page change
@@ -101,6 +102,7 @@ namespace PainAssessment.Areas.Admin.Controllers
             {
                 clinicalAreaService.CreateClinicalArea(clinicalArea);
                 clinicalAreaService.SaveClinicalArea();
+                log.LogMessage("Info", this.GetType().Name, string.Format("{0} was created.", clinicalArea.Name));
                 return RedirectToAction(nameof(Index));
             }
             return View(clinicalArea);
@@ -115,10 +117,12 @@ namespace PainAssessment.Areas.Admin.Controllers
             }
 
             var clinicalArea = clinicalAreaService.GetClinicalArea((int)id);
+
             if (clinicalArea == null)
             {
                 return NotFound();
             }
+
             return View(clinicalArea);
         }
 
@@ -154,6 +158,7 @@ namespace PainAssessment.Areas.Admin.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            log.LogMessage("Info", this.GetType().Name, string.Format("Renamed to {0}", clinicalArea.Name));
             return View(clinicalArea);
         }
 
@@ -181,6 +186,7 @@ namespace PainAssessment.Areas.Admin.Controllers
         {
             clinicalAreaService.DeleteClinicalArea((int)id);
             clinicalAreaService.SaveClinicalArea();
+            log.LogMessage("Info", this.GetType().Name, string.Format("{0} was deleted.", id));
             return RedirectToAction(nameof(Index));
         }
     }
