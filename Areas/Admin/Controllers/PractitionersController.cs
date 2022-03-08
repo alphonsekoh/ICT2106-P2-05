@@ -15,11 +15,12 @@ namespace PainAssessment.Areas.Admin.Controllers
     {
         private readonly IPractitionerService practitionerService;
         private readonly IClinicalAreaService clinicalAreaService;
-
+        private readonly ILog log;
         public PractitionersController(IPractitionerService practitionerService, IClinicalAreaService clinicalAreaService)
         {
             this.practitionerService = practitionerService;
             this.clinicalAreaService = clinicalAreaService;
+            log = Log.GetInstance;
         }
 
         // GET: Admin/Practitioners?page=1&name=gerald
@@ -76,11 +77,10 @@ namespace PainAssessment.Areas.Admin.Controllers
             {
                 practitionerService.CreatePractitioner(practitioner);
                 practitionerService.SavePractitioner();
+                log.LogMessage("Info", this.GetType().Name, string.Format("{0} was created.", practitioner.Name));
                 return RedirectToAction(nameof(Index));
             }
-
             ViewData["ClinicalAreaID"] = new SelectList(clinicalAreaService.GetAllClinicalAreas(), "ClinicalAreaID", "Name");
-
             return View(practitioner);
         }
 
@@ -121,6 +121,7 @@ namespace PainAssessment.Areas.Admin.Controllers
                 {
                     practitionerService.UpdatePractitioner(practitioner);
                     practitionerService.SavePractitioner();
+                    log.LogMessage("Info", this.GetType().Name, string.Format("{0} was modified.", practitioner.Name));
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -151,6 +152,7 @@ namespace PainAssessment.Areas.Admin.Controllers
             {
                 practitionerService.DeletePractitioner(Id);
                 practitionerService.SavePractitioner();
+                log.LogMessage("Info", this.GetType().Name, string.Format("{0} was deleted.", Id));
                 return Json(new { status = "Success" });
             }
             catch (DbUpdateConcurrencyException)
