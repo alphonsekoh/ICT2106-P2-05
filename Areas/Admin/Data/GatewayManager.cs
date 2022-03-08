@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace PainAssessment.Areas.Admin.Data
 {
-    public class UnitOfWork : IUnitOfWork
+    public class GatewayManager : IGatewayManager
     {
 
         internal HospitalContext context;
@@ -15,7 +15,7 @@ namespace PainAssessment.Areas.Admin.Data
         public IPatientGateway patientGateway;
         public IPractitionerGateway practitionerGateway;
 
-        public UnitOfWork(HospitalContext context)
+        public GatewayManager(HospitalContext context)
         {
             this.context = context;
         }

@@ -1,4 +1,5 @@
 ﻿using PainAssessment.Areas.Admin.Models;
+using PainAssessment.Areas.Admin.Models.Factory;
 using PainAssessment.Data;
 using System;
 using System.Linq;
@@ -10,6 +11,8 @@ namespace PainAssessment.Areas.Admin.Data
     {
         public static void Initialize(HospitalContext context)
         {
+            IPersonFactory personFactory = new PersonFactory();
+
             //context.Database.EnsureCreated();
             // Look for any practitioner
             if (context.Practitioners.Any())

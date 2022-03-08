@@ -10,39 +10,39 @@ namespace PainAssessment.Areas.Admin.Services
 {
     public class PatientService : IPatientService
     {
-        internal IUnitOfWork unitOfWork;
-        public PatientService(IUnitOfWork unitOfWork)
+        internal IGatewayManager gatewayManager;
+        public PatientService(IGatewayManager gatewayManager)
         {
-             this.unitOfWork = unitOfWork;
+             this.gatewayManager = gatewayManager;
         }
         public void CreatePatient(Patient patient)
         {
-            unitOfWork.PatientGateway.Add(patient);
+            gatewayManager.PatientGateway.Add(patient);
         }
 
         public void DeletePatient(Guid id)
         {
-            unitOfWork.PatientGateway.Delete(id);
+            gatewayManager.PatientGateway.Delete(id);
         }
 
         public IEnumerable<Patient> GetAllPatients()
         {
-            return unitOfWork.PatientGateway.GetAll();
+            return gatewayManager.PatientGateway.GetAll();
         }
 
         public Patient GetPatient(Guid id)
         {
-            return unitOfWork.PatientGateway.FindById(id);
+            return gatewayManager.PatientGateway.FindById(id);
         }
 
         public void SavePatient()
         {
-            unitOfWork.Save();
+            gatewayManager.Save();
         }
 
         public void UpdatePatient(Patient patient)
         {
-            unitOfWork.PatientGateway.Update(patient);
+            gatewayManager.PatientGateway.Update(patient);
         }
 
     }

@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace PainAssessment.Areas.Admin.Data
 {
-    public interface IUnitOfWork : IDisposable
+    public interface IGatewayManager : IDisposable
     {
         IClinicalAreaGateway ClinicalAreaGateway { get; }
         IPatientGateway PatientGateway { get; }
         IPractitionerGateway PractitionerGateway { get; }
-        void Save();
+        public void Save();
     }
 }
