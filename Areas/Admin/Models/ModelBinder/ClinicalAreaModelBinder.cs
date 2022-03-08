@@ -13,7 +13,7 @@ namespace PainAssessment.Areas.Admin.Models.ModelBinder
         {
             var data = bindingContext.HttpContext.Request.Form;
             var nameResult = data.TryGetValue("Name", out var name);
-            var idResult = data.TryGetValue("ClinicalAreaID", out var id);
+            var idResult = data.TryGetValue("Id", out var id);
 
             if (nameResult)
             {
