@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
+using PainAssessment.Areas.Admin.Factory;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,23 +18,20 @@ namespace PainAssessment.Areas.Admin.Models.ModelBinder
             data.TryGetValue("BirthDate", out var birthDate);
             data.TryGetValue("Condition", out var condition);
             data.TryGetValue("Notes", out var notes);
-
+            IPersonFactory personFactory = new PersonFactory();
+            Person person;
             if (nameResult)
             {
-                var patient = new Patient(name.ToString(), gender.ToString(), DateTime.Parse(birthDate.ToString()), condition.ToString(), notes.ToString());
                 if (idResult)
                 {
-                    patient = new Patient(name.ToString(), gender.ToString(), DateTime.Parse(birthDate.ToString()), condition.ToString(), notes.ToString(), Guid.Parse(id.ToString()));
+                    person = personFactory.CreatePatient(name.ToString(), gender.ToString(), DateTime.Parse(birthDate.ToString()), condition.ToString(), notes.ToString(), Guid.Parse(id.ToString()));
+                } else
+                {
+                    person = personFactory.CreatePatient(name.ToString(), gender.ToString(), DateTime.Parse(birthDate.ToString()), condition.ToString(), notes.ToString());
                 }
-                bindingContext.Result = ModelBindingResult.Success(patient);
-
+                bindingContext.Result = ModelBindingResult.Success(person);
             }
-
-
-
             return Task.CompletedTask;
-
-
         }
     }
 }

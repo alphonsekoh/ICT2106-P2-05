@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
+using PainAssessment.Areas.Admin.Factory;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,12 +19,14 @@ namespace PainAssessment.Areas.Admin.Models.ModelBinder
             data.TryGetValue("PriorPainEducation", out var priorPainEducation);
             data.TryGetValue("ClinicalAreaID", out var clinicalAreaID);
 
+            IPersonFactory personFactory = new PersonFactory();
+
             if (nameResult)
             {
-                var practitioner = new Practitioner(name.ToString(), experience.ToString(), practiceType.ToString(), priorPainEducation.ToString(), Int32.Parse(clinicalAreaID));
+                var practitioner = personFactory.CreatePractitioner(name.ToString(), experience.ToString(), practiceType.ToString(), priorPainEducation.ToString(), Int32.Parse(clinicalAreaID));
                 if (idResult)
                 {
-                    practitioner = new Practitioner(name.ToString(), experience.ToString(), practiceType.ToString(), priorPainEducation.ToString(), Int32.Parse(clinicalAreaID), Guid.Parse(id.ToString()));
+                    practitioner = personFactory.CreatePractitioner(name.ToString(), experience.ToString(), practiceType.ToString(), priorPainEducation.ToString(), Int32.Parse(clinicalAreaID), Guid.Parse(id.ToString()));
                 }
                 bindingContext.Result = ModelBindingResult.Success(practitioner);
             }

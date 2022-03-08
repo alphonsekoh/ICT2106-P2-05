@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using PainAssessment.Areas.Admin.Data;
+using PainAssessment.Areas.Admin.Factory;
 using PainAssessment.Areas.Admin.Services;
 using PainAssessment.Data;
 using System;
@@ -30,7 +31,6 @@ namespace PainAssessment
             services.AddDbContext<HospitalContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddDatabaseDeveloperPageExceptionFilter();
-
 
             // Add DI for Services
             services.AddScoped<IClinicalAreaService, ClinicalAreaService>();

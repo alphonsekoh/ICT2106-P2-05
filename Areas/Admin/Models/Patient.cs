@@ -24,19 +24,20 @@ namespace PainAssessment.Areas.Admin.Models
         private readonly List<PractitionerPatient> _practitionerPatients = new List<PractitionerPatient>();
         public virtual IReadOnlyList<PractitionerPatient> PractitionerPatients => _practitionerPatients.ToList();
 
-        public Patient( string name, string gender, DateTime birthDate, string condition, string notes, Guid patientID)
+
+
+        public Patient(string name, string gender, DateTime birthDate, string condition, string notes)
         {
-            Id = patientID;
-            Name = name;
+            Name = Regex.Replace(name, @"\b\w{3,}\b", match => Utility.MaskName(match.Value));
             Gender = gender;
             BirthDate = birthDate;
             Condition = condition;
             Notes = notes;
         }
-
-        public Patient(string name, string gender, DateTime birthDate, string condition, string notes)
+        public Patient(string name, string gender, DateTime birthDate, string condition, string notes, Guid patientID)
         {
-            Name = Regex.Replace(name, @"\b\w{3,}\b", match => Utility.MaskName(match.Value));
+            Id = patientID;
+            Name = name;
             Gender = gender;
             BirthDate = birthDate;
             Condition = condition;
