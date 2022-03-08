@@ -4,10 +4,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace PainAssessment.Areas.Admin.Factory
+namespace PainAssessment.Areas.Admin.Models.Factory
 {
     public class PersonFactory : IPersonFactory
     {
+        public PersonFactory()
+        {
+            // Nothing...
+        }
+
         public Patient CreatePatient(string name, string gender, DateTime birthDate, string condition, string notes, Guid? id = null)
         {
             if (id == null)

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace PainAssessment.Areas.Admin.Models
 {
-    public class Patient : Person
+    public class Patient : Person , IPatient
     {
         [Required]
         public string Gender { get; private set; }

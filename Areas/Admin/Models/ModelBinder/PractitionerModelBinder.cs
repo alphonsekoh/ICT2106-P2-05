@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
-using PainAssessment.Areas.Admin.Factory;
+using PainAssessment.Areas.Admin.Models.Factory;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +11,9 @@ namespace PainAssessment.Areas.Admin.Models.ModelBinder
     {
         public Task BindModelAsync(ModelBindingContext bindingContext)
         {
+            IPersonFactory personFactory = new PersonFactory();
+            IPractitioner practitioner;
+
             var data = bindingContext.HttpContext.Request.Form;
             var nameResult = data.TryGetValue("Name", out var name);
             var idResult = data.TryGetValue("Id", out var id);
@@ -19,18 +22,17 @@ namespace PainAssessment.Areas.Admin.Models.ModelBinder
             data.TryGetValue("PriorPainEducation", out var priorPainEducation);
             data.TryGetValue("ClinicalAreaID", out var clinicalAreaID);
 
-            IPersonFactory personFactory = new PersonFactory();
-
             if (nameResult)
             {
-                var practitioner = personFactory.CreatePractitioner(name.ToString(), experience.ToString(), practiceType.ToString(), priorPainEducation.ToString(), Int32.Parse(clinicalAreaID));
                 if (idResult)
                 {
                     practitioner = personFactory.CreatePractitioner(name.ToString(), experience.ToString(), practiceType.ToString(), priorPainEducation.ToString(), Int32.Parse(clinicalAreaID), Guid.Parse(id.ToString()));
+                } else
+                {
+                    practitioner = personFactory.CreatePractitioner(name.ToString(), experience.ToString(), practiceType.ToString(), priorPainEducation.ToString(), Int32.Parse(clinicalAreaID));
                 }
                 bindingContext.Result = ModelBindingResult.Success(practitioner);
             }
-
             return Task.CompletedTask;
         }
     }

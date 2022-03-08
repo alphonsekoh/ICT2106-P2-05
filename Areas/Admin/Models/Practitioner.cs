@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PainAssessment.Areas.Admin.Models
 {
-    public class Practitioner : Person
+    public class Practitioner : Person , IPractitioner
     {
         public string Experience { get; private set; }
         public string PracticeType { get; private set; }

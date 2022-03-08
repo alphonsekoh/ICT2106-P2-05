@@ -1,10 +1,7 @@
-﻿using PainAssessment.Areas.Admin.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System;
 
-namespace PainAssessment.Areas.Admin.Factory
+
+namespace PainAssessment.Areas.Admin.Models.Factory
 {
     interface IPersonFactory
     {
