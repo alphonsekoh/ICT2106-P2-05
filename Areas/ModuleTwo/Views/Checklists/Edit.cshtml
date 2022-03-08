@@ -1,33 +1,156 @@
 ﻿@model PainAssessment.Areas.ModuleTwo.Models.Checklist
 
-@{
-    ViewData["Title"] = "Edit";
-}
+@{ ViewData["Title"] = "Edit"; }
 
-<h1>Edit</h1>
 
-<h4>Checklist</h4>
+<div class="row">
+    <div class="col sm-1 mb-3">
+        <a class="btn btn-light border border-dark" style="float:left;" asp-action="Index">Back</a>
+    </div>
+    <div class="col lg-10">
+        <h2 class="font-weight-bold fs-4 text">Edit</h2>
+    </div>
+    <div class="col sm-1"></div>
+</div>
+
 <hr />
 <div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
+    <div class="col-md-12 border border-dark rounded-lg">
+        <form asp-action="Edit" enctype="multipart/form-data">
+            <input type="hidden" asp-for="ChecklistId" />
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" />
-            <div class="form-group">
-                <label asp-for="checklistID" class="control-label"></label>
-                <input asp-for="checklistID" class="form-control" />
-                <span asp-validation-for="checklistID" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="checklistName" class="control-label"></label>
+            <div class="form-group mt-2">
+                <label asp-for="checklistName" class="control-label">Checklist Name</label>
                 <input asp-for="checklistName" class="form-control" />
                 <span asp-validation-for="checklistName" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="checklistDescription" class="control-label"></label>
+            <div class="form-group mt-2">
+                <label asp-for="checklistDescription" class="control-label">Checklist Description</label>
                 <input asp-for="checklistDescription" class="form-control" />
                 <span asp-validation-for="checklistDescription" class="text-danger"></span>
             </div>
+            <h3>Central</h3>
+            <div class="col-md-12 p-0 m-0 border border-dark bg-seondary">
+                <table id="Central" class="table table-sm DomainTable">
+                    <thead>
+                        <tr>
+                            <th>
+                                SubDomain
+                            </th>
+                            <th>
+                                Determinant
+                            </th>
+                            <th>
+                                <button id="addCentral" type="button" class="btn btn-sm btn-primary visible"
+                                        onclick="AddCentral(this)">
+                                    Add
+                                </button>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (int i = 0; i < Model.Central.Count; i++)
+                        {
+            <tr class="centralRow" id="addCentralRow-@i">
+                <td>
+                    @*Html.EditorFor(x => x.Central[i].SubDomain, new { htmlAttributes = new { @class = "form-control" } })*@
+                    <input asp-for="@Model.Central[i].SubDomain" class="form-control" />
+                <td>
+                    <input type="hidden" asp-for="@Model.Central[i].IsDeleted" />
+                    @*Html.EditorFor(x => x.Central[i].Determinant, new { htmlAttributes = new { @class = "form-control" } })*@
+                    <input asp-for="@Model.Central[i].Determinant" class="form-control" />
+                </td>
+                <td>
+                    <button id="removeCentral-@i" type="button" class="btn btn-sm btn-danger" onclick="RemoveCentral(this)">Remove</button>
+                </td>
+            </tr>}
+                    </tbody>
+                </table>
+            </div>
+
+            <h3>Regional</h3>
+            <div class="col-md-12 p-0 m-0 border border-dark bg-seondary">
+                <table id="Regional" class="table table-sm DomainTable">
+                    <thead>
+                        <tr>
+                            <th>
+                                SubDomain
+                            </th>
+                            <th>
+                                Determinant
+                            </th>
+                            <th>
+                                <button id="addRegional" type="button" class="btn btn-sm btn-primary visible"
+                                        onclick="AddRegional(this)">
+                                    Add
+                                </button>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (int i = 0; i < Model.Regional.Count; i++)
+                        {
+            <tr class="regionalRow" id="addRegionalRow-@i">
+                <td>
+                    @*Html.EditorFor(x => x.Regional[i].SubDomain, new { htmlAttributes = new { @class = "form-control" } })*@
+                    <input asp-for="@Model.Regional[i].SubDomain" class="form-control" />
+                <td>
+                    <input type="hidden" asp-for="@Model.Regional[i].IsDeleted" />
+                    @*Html.EditorFor(x => x.Regional[i].Determinant, new { htmlAttributes = new { @class = "form-control" } })*@
+                    <input asp-for="@Model.Regional[i].Determinant" class="form-control" />
+                </td>
+                <td>
+                    <button id="removeRegional-@i" type="button" class="btn btn-sm btn-danger" onclick="RemoveRegional(this)">Remove</button>
+                </td>
+            </tr>
+}
+                    </tbody>
+                </table>
+            </div>
+
+            <input type="hidden" id="hiddenRegionalLast" value="0" />
+
+            <h3>Local</h3>
+            <div class="col-md-12 p-0 m-0 border border-dark bg-seondary">
+                <table id="Local" class="table table-sm DomainTable">
+                    <thead>
+                        <tr>
+                            <th>
+                                SubDomain
+                            </th>
+                            <th>
+                                Determinant
+                            </th>
+                            <th>
+                                <button id="addLocal" type="button" class="btn btn-sm btn-primary visible"
+                                        onclick="AddLocal(this)">
+                                    Add
+                                </button>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (int i = 0; i < Model.Local.Count; i++)
+                        {
+            <tr class="localRow" id="addLocalRow-@i">
+                <td>
+                    @*Html.EditorFor(x => x.Local[i].SubDomain, new { htmlAttributes = new { @class = "form-control" } })*@
+                    <input asp-for="@Model.Local[i].SubDomain" class="form-control" />
+                <td>
+                    <input type="hidden" asp-for="@Model.Local[i].IsDeleted" />
+                    @*Html.EditorFor(x => x.Local[i].Determinant, new { htmlAttributes = new { @class = "form-control" } })*@
+                    <input asp-for="@Model.Local[i].Determinant" class="form-control" />
+                </td>
+                <td>
+                    <button id="removeLocal-@i" type="button" class="btn btn-sm btn-danger" onclick="RemoveLocal(this)">Remove</button>
+                </td>
+            </tr>}
+                    </tbody>
+                </table>
+            </div>
+
+            <input type="hidden" id="hiddenLocalLast" value="0" />
+
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
@@ -41,4 +164,5 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
 }
