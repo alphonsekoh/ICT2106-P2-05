@@ -33,7 +33,7 @@ namespace PainAssessment.Areas.Admin.Data.Gateways
 
         public IEnumerable<PracticeType> GetAll()
         {
-            return context.PracticeTypes.ToList();
+            return context.PracticeTypes.Include(d => d.Practitioners).ToList();
         }
 
         public void Update(PracticeType practiceType)

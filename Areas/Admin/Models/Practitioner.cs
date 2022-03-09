@@ -9,6 +9,7 @@ namespace PainAssessment.Areas.Admin.Models
         public string Experience { get; private set; }
         public string PriorPainEducation { get; private set; }
         public int ClinicalAreaID { get; private set; }
+
         public ClinicalArea ClinicalArea { get; private set; }
 
         public int PracticeTypeID { get; private set; }

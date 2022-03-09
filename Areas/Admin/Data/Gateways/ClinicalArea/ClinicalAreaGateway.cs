@@ -33,7 +33,7 @@ namespace PainAssessment.Areas.Admin.Data.Gateways
 
         public IEnumerable<ClinicalArea> GetAll()
         {
-            return context.ClinicalAreas.ToList();
+            return context.ClinicalAreas.Include(d => d.Practitioners).ToList();
         }
 
         public void Update(ClinicalArea clinicalArea)
