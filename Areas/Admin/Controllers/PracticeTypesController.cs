@@ -94,7 +94,7 @@ namespace PainAssessment.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create([ModelBinder(typeof(PracticeTypeModelBinder))] PracticeType practiceType)
+        public IActionResult Create( PracticeType practiceType)
         {
             if (ModelState.IsValid)
             {
@@ -129,7 +129,7 @@ namespace PainAssessment.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id, [ModelBinder(typeof(PracticeTypeModelBinder))] PracticeType practiceType)
+        public IActionResult Edit(int id, PracticeType practiceType)
         {
             if (id != practiceType.Id)
             {

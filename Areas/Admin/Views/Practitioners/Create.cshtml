@@ -37,7 +37,6 @@
                 <label asp-for="PriorPainEducation" class="control-label">PriorPainEducation</label>
                 @Html.ListBoxFor(model => model.SelectedPainEducation, ViewBag.PainEducationID as MultiSelectList, new { id = "PriorPainEducation", multiple = "multiple" })
                 <span asp-validation-for="SelectedPainEducation" class="text-danger"></span>
-
             </div>
 
             @*<div class="form-group">

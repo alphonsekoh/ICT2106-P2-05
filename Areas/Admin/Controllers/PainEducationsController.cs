@@ -94,7 +94,7 @@ namespace PainAssessment.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create([ModelBinder(typeof(PainEducationModelBinder))] PainEducation painEducation)
+        public IActionResult Create(PainEducation painEducation)
         {
             if (ModelState.IsValid)
             {
@@ -129,7 +129,7 @@ namespace PainAssessment.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id, [ModelBinder(typeof(PainEducationModelBinder))] PainEducation painEducation)
+        public IActionResult Edit(int id,PainEducation painEducation)
         {
             if (id != painEducation.Id)
             {

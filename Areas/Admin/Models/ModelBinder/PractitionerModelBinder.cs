@@ -12,7 +12,7 @@ namespace PainAssessment.Areas.Admin.Models.ModelBinder
         private readonly IClinicalAreaService clinicalAreaService;
         private readonly IPracticeTypeService practiceTypeService;
         private readonly IPainEducationService painEducationService;
-        public PractitionerModelBinder(IClinicalAreaService clinicalAreaService, IPracticeTypeService practiceTypeService, IPatientService patientService, IPainEducationService painEducationService)
+        public PractitionerModelBinder(IClinicalAreaService clinicalAreaService, IPracticeTypeService practiceTypeService, IPainEducationService painEducationService)
         {
             this.clinicalAreaService = clinicalAreaService;
             this.practiceTypeService = practiceTypeService;
@@ -32,7 +32,7 @@ namespace PainAssessment.Areas.Admin.Models.ModelBinder
             bool practiceResult = data.TryGetValue("PracticeTypeID", out Microsoft.Extensions.Primitives.StringValues practiceTypeID);
 
             var parseClinicSuccess = int.TryParse(clinicalAreaID, out int parsedClinicID);
-            var parsePracticeSuccess = int.TryParse(clinicalAreaID, out int parsedPracticeTypeID);
+            var parsePracticeSuccess = int.TryParse(practiceTypeID, out int parsedPracticeTypeID);
 
 
             if (!nameResult || !experienceResult || !selectedResult || !clinicResult || !practiceResult)
@@ -46,14 +46,14 @@ namespace PainAssessment.Areas.Admin.Models.ModelBinder
                 List<int> priorEducationList = new();
                 if (!parsePracticeSuccess)
                 {
-                    PracticeType newPracticeType = new PracticeType(practiceTypeID);
+                    PracticeType newPracticeType = new(practiceTypeID);
                     practiceTypeService.CreatePracticeType(newPracticeType);
                     practiceTypeService.SavePracticeType();
                     createdPracticeTypeID = newPracticeType.Id;
                 }
                 if (!parseClinicSuccess)
                 {
-                    ClinicalArea newClinicalArea = new ClinicalArea(clinicalAreaID);
+                    ClinicalArea newClinicalArea = new(clinicalAreaID);
                     clinicalAreaService.CreateClinicalArea(newClinicalArea);
                     clinicalAreaService.SaveClinicalArea();
                     createdClinicID = newClinicalArea.Id;
@@ -66,7 +66,7 @@ namespace PainAssessment.Areas.Admin.Models.ModelBinder
                         priorEducationList.Add(parsedPainEducation);
                     } else
                     {
-                        PainEducation newPainEducation = new PainEducation(prior);
+                        PainEducation newPainEducation = new(prior);
                         painEducationService.CreatePainEducation(newPainEducation);
                         painEducationService.SavePainEducation();
                         priorEducationList.Add(newPainEducation.Id);
