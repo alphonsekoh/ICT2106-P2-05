@@ -187,7 +187,8 @@ namespace PainAssessment.Areas.Admin.Controllers
                 clinicalAreaService.DeleteClinicalArea(id);
                 clinicalAreaService.SaveClinicalArea();
                 log.LogMessage("Info", GetType().Name, string.Format("{0} was deleted.", id));
-            } catch (Exception e)
+            }
+            catch (Exception e)
             {
                 log.LogMessage("Info", GetType().Name, string.Format("{0} cannot be deleted. Practitioners still exist. {1}", id, e));
 

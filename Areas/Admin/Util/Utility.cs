@@ -34,7 +34,7 @@ namespace PainAssessment.Areas.Admin.Util
                 .ToList();
         }
 
-        
+
         public static IEnumerable<IEnumerable<T>> ChunkBy<T>(this IEnumerable<T> source, int chunkSize)
         {
             for (int i = 0; i < source.Count(); i += chunkSize)
@@ -42,7 +42,7 @@ namespace PainAssessment.Areas.Admin.Util
                 yield return source.Skip(i).Take(chunkSize);
             }
         }
-        
+
     }
 
 

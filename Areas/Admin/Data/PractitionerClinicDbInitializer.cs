@@ -34,7 +34,7 @@ namespace PainAssessment.Areas.Admin.Data
 
             context.SaveChanges();
 
-            PracticeType[] practiceTypes  = new PracticeType[]
+            PracticeType[] practiceTypes = new PracticeType[]
             {
             new PracticeType("Hospital Inpatient"),
             new PracticeType("Hospital Outpatient"),
@@ -47,7 +47,7 @@ namespace PainAssessment.Areas.Admin.Data
 
             context.SaveChanges();
 
-             
+
             Practitioner[] practitioners = new Practitioner[]
             {
             new Practitioner("Alexander", "2 years ",  "Pre-registration training - pain topics",1,1),

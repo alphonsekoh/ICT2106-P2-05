@@ -31,7 +31,7 @@ namespace PainAssessment.Areas.Admin.Models.Factory
             }
             else
             {
-                return new Practitioner(name.ToString(), experience.ToString(),  priorPainEducation.ToString(), clinicalAreaID, practitionerID, (Guid)id);
+                return new Practitioner(name.ToString(), experience.ToString(), priorPainEducation.ToString(), clinicalAreaID, practitionerID, (Guid)id);
             }
         }
     }

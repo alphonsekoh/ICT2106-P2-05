@@ -24,7 +24,7 @@ namespace PainAssessment.Areas.Admin.Models.ModelBinder
             {
                 if (idResult)
                 {
-                    practitioner = personFactory.CreatePractitioner(name.ToString(), experience.ToString(),  priorPainEducation.ToString(), Int32.Parse(clinicalAreaID), Int32.Parse(practiceTypeID), Guid.Parse(id.ToString()));
+                    practitioner = personFactory.CreatePractitioner(name.ToString(), experience.ToString(), priorPainEducation.ToString(), Int32.Parse(clinicalAreaID), Int32.Parse(practiceTypeID), Guid.Parse(id.ToString()));
                 }
                 else
                 {
