@@ -1,10 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.AspNetCore.Mvc;
+using PainAssessment.Areas.Admin.Models.ModelBinder;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 
 namespace PainAssessment.Areas.Admin.Models
 {
+    [ModelBinder(typeof(ClinicalAreaModelBinder))]
     public class ClinicalArea
     {
         public int Id { get; private set; }

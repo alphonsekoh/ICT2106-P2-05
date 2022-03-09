@@ -9,6 +9,8 @@ namespace PainAssessment.Areas.Admin.Data
 
         internal HospitalContext context;
         public IClinicalAreaGateway clinicalAreaGateway;
+        public IPracticeTypeGateway practiceTypeGateway;
+        public IPainEducationGateway painEducationGateway;
         public IPatientGateway patientGateway;
         public IPractitionerGateway practitionerGateway;
 
@@ -25,6 +27,30 @@ namespace PainAssessment.Areas.Admin.Data
                     clinicalAreaGateway = new ClinicalAreaGateway(context);
                 }
                 return clinicalAreaGateway;
+            }
+        }
+
+        public IPracticeTypeGateway PracticeTypeGateway
+        {
+            get
+            {
+                if (practiceTypeGateway == null)
+                {
+                    practiceTypeGateway = new PracticeTypeGateway(context);
+                }
+                return practiceTypeGateway;
+            }
+        }
+
+        public IPainEducationGateway PainEducationGateway
+        {
+            get
+            {
+                if (painEducationGateway == null)
+                {
+                    painEducationGateway = new PainEducationGateway(context);
+                }
+                return painEducationGateway;
             }
         }
 

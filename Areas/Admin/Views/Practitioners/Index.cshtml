@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Index";
+    var painDict = (Dictionary< Guid, List<string>>) ViewData["PractitionerPain"];
 }
 
 
@@ -49,14 +50,15 @@
                     <th scope="col">
                         @Html.DisplayNameFor(model => model.Name)
                     </th>
-                    <th scope="col">
-                        @Html.DisplayNameFor(model => model.PracticeType)
-                    </th>
+
                     <th scope="col">
                         @Html.DisplayNameFor(model => model.Experience)
                     </th>
                     <th scope="col">
                         Clinical Area
+                    </th>
+                    <th scope="col">
+                        Practice Type
                     </th>
                     <th scope="col">
                         Prior Pain Education
@@ -77,9 +79,7 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.Name)
                     </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.PracticeType)
-                    </td>
+
                     <td>
                         @Html.DisplayFor(modelItem => item.Experience)
                     </td>
@@ -87,9 +87,23 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.ClinicalArea.Name) @*ClinicalArea*@
                     </td>
-
                     <td>
-                        @Html.DisplayFor(modelItem => item.PriorPainEducation)
+                        @Html.DisplayFor(modelItem => item.PracticeType.Name) @*PracticeType*@
+                    </td>
+                    <td>
+                        <table>
+                            @foreach (var pain in @painDict[item.Id])
+                            {
+                                <tr>
+
+                                    <td>
+                                        @pain
+
+                                    </td>
+                                </tr>
+
+                            }
+                        </table>
                     </td>
 
                     <td>

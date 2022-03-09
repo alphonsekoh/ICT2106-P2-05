@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PainAssessment.Areas.Admin.Models;
-using PainAssessment.Areas.Admin.Models.ModelBinder;
 using PainAssessment.Areas.Admin.Services;
+using PainAssessment.Areas.Admin.Util;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -93,7 +93,7 @@ namespace PainAssessment.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create([ModelBinder(typeof(ClinicalAreaModelBinder))] ClinicalArea clinicalArea)
+        public IActionResult Create(ClinicalArea clinicalArea)
         {
             if (ModelState.IsValid)
             {
@@ -128,7 +128,7 @@ namespace PainAssessment.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id, [ModelBinder(typeof(ClinicalAreaModelBinder))] ClinicalArea clinicalArea)
+        public IActionResult Edit(int id, ClinicalArea clinicalArea)
         {
             if (id != clinicalArea.Id)
             {
@@ -181,33 +181,18 @@ namespace PainAssessment.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult DeleteConfirmed(int id)
         {
-            clinicalAreaService.DeleteClinicalArea(id);
-            clinicalAreaService.SaveClinicalArea();
-            log.LogMessage("Info", GetType().Name, string.Format("{0} was deleted.", id));
-            return RedirectToAction(nameof(Index));
-        }
-    }
-
-    public static class ListExtensions
-    {
-        public static List<List<T>> ChunkBy<T>(this List<T> source, int chunkSize)
-        {
-            return source
-                .Select((x, i) => new { Index = i, Value = x })
-                .GroupBy(x => x.Index / chunkSize)
-                .Select(x => x.Select(v => v.Value).ToList())
-                .ToList();
-        }
-    }
-
-    public static class IEnumerableExtensions
-    {
-        public static IEnumerable<IEnumerable<T>> ChunkBy<T>(this IEnumerable<T> source, int chunkSize)
-        {
-            for (int i = 0; i < source.Count(); i += chunkSize)
+            try
             {
-                yield return source.Skip(i).Take(chunkSize);
+                clinicalAreaService.DeleteClinicalArea(id);
+                clinicalAreaService.SaveClinicalArea();
+                log.LogMessage("Info", GetType().Name, string.Format("{0} was deleted.", id));
             }
+            catch (Exception e)
+            {
+                log.LogMessage("Info", GetType().Name, string.Format("{0} cannot be deleted. Practitioners still exist. {1}", id, e));
+
+            }
+            return RedirectToAction(nameof(Index));
         }
     }
 }
