@@ -23,19 +23,6 @@ namespace PainAssessment.Data
             this._context = context;
         }
 
-        //public IGenericRepository<AccountUser> AccountRepository
-        //{
-        //    get
-        //    {
-        //        if (this.accountRepository == null)
-        //        {
-        //            this.accountRepository = new GenericRepository<AccountUser>(_context);
-        //        }
-        //        return accountRepository;
-        //    }
-
-        //}
-
         public IGenericRepository<Account> AccountRepository
         {
             get
@@ -74,8 +61,6 @@ namespace PainAssessment.Data
             }
 
         }
-
-
 
         public IGenericRepository<Patient> PatientRepository
         {
