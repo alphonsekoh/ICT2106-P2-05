@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using PainAssessment.Areas.Admin.Models;
 using PainAssessment.Areas.Admin.Models.ModelBinder;
 using PainAssessment.Areas.Admin.Services;
+using PainAssessment.Areas.Admin.Util;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -185,29 +186,6 @@ namespace PainAssessment.Areas.Admin.Controllers
             clinicalAreaService.SaveClinicalArea();
             log.LogMessage("Info", GetType().Name, string.Format("{0} was deleted.", id));
             return RedirectToAction(nameof(Index));
-        }
-    }
-
-    public static class ListExtensions
-    {
-        public static List<List<T>> ChunkBy<T>(this List<T> source, int chunkSize)
-        {
-            return source
-                .Select((x, i) => new { Index = i, Value = x })
-                .GroupBy(x => x.Index / chunkSize)
-                .Select(x => x.Select(v => v.Value).ToList())
-                .ToList();
-        }
-    }
-
-    public static class IEnumerableExtensions
-    {
-        public static IEnumerable<IEnumerable<T>> ChunkBy<T>(this IEnumerable<T> source, int chunkSize)
-        {
-            for (int i = 0; i < source.Count(); i += chunkSize)
-            {
-                yield return source.Skip(i).Take(chunkSize);
-            }
         }
     }
 }
