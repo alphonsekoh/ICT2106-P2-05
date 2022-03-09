@@ -22,16 +22,16 @@ namespace PainAssessment.Areas.Admin.Models.Factory
             }
         }
 
-        public IPractitioner CreatePractitioner(string name, string experience, string practiceType, string priorPainEducation, int clinicalAreaID, Guid? id = null)
+        public IPractitioner CreatePractitioner(string name, string experience, string priorPainEducation, int clinicalAreaID, int practitionerID, Guid? id = null)
         {
             if (id == null)
             {
-                return new Practitioner(name.ToString(), experience.ToString(), practiceType.ToString(), priorPainEducation.ToString(), clinicalAreaID);
+                return new Practitioner(name.ToString(), experience.ToString(), priorPainEducation.ToString(), clinicalAreaID, practitionerID);
 
             }
             else
             {
-                return new Practitioner(name.ToString(), experience.ToString(), practiceType.ToString(), priorPainEducation.ToString(), clinicalAreaID, (Guid)id);
+                return new Practitioner(name.ToString(), experience.ToString(),  priorPainEducation.ToString(), clinicalAreaID, practitionerID, (Guid)id);
             }
         }
     }
