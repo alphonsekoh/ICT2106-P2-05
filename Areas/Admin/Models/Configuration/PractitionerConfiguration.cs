@@ -21,6 +21,12 @@ namespace PainAssessment.Areas.Admin.Models.Configuration
                 {
                     j.HasKey(p => new { p.PractitionerID, p.PatientID });
                 });
+            builder.HasOne(p => p.ClinicalArea)
+                    .WithMany(ca => ca.Practitioners)
+                    .OnDelete(DeleteBehavior.Restrict);
+            builder.HasOne(p => p.PracticeType)
+                .WithMany(ca => ca.Practitioners)
+                .OnDelete(DeleteBehavior.Restrict);
             builder.Metadata.SetPropertyAccessMode(PropertyAccessMode.Field);
 
         }

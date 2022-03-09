@@ -11,9 +11,9 @@ namespace PainAssessment.Areas.Admin.Services
         {
             this.gatewayManager = gatewayManager;
         }
-        public void CreateClinicalArea(ClinicalArea department)
+        public void CreateClinicalArea(ClinicalArea clinicalArea)
         {
-            gatewayManager.ClinicalAreaGateway.Add(department);
+            gatewayManager.ClinicalAreaGateway.Add(clinicalArea);
         }
 
         public void DeleteClinicalArea(int id)
@@ -36,12 +36,10 @@ namespace PainAssessment.Areas.Admin.Services
             gatewayManager.Save();
         }
 
-        public void UpdateClinicalArea(ClinicalArea department)
+        public void UpdateClinicalArea(ClinicalArea clinicalArea)
         {
-            gatewayManager.ClinicalAreaGateway.Update(department);
+            gatewayManager.ClinicalAreaGateway.Update(clinicalArea);
         }
-
-
 
     }
 }

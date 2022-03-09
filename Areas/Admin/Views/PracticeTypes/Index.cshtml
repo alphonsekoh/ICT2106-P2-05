@@ -1,12 +1,12 @@
-﻿@model IEnumerable<PainAssessment.Areas.Admin.Models.ClinicalArea>
+﻿@model IEnumerable<PainAssessment.Areas.Admin.Models.PracticeType>
 
 @{
     ViewData["Title"] = "Index";
 }
 <div class="row justify-content-between">
     <div class="col-sm-6">
-        <h1>Manage ClinicalAreas</h1>
-        <p class="text-muted">Admin can manage Clinical Areas. This includes creating, reading, updating and deleting clinical areas.</p>
+        <h1>Manage PracticeTypes</h1>
+        <p class="text-muted">Admin can manage Practice Types. This includes creating, reading, updating and deleting practice types.</p>
     </div>
     <div class="col-sm-2 align-self-center">
         <a asp-action="Create" type="button" class="btn btn-primary btn-block">Create New</a>
@@ -48,8 +48,8 @@
                         @Html.DisplayFor(modelItem => item.Name)
                     </td>
                     <td>
-                        <a type="button" class="btn btn-secondary btn-sm" asp-action="Details" asp-route-id="@item.Id">View</a> 
-                        <a type="button" class="btn btn-primary btn-sm" asp-action="Edit" asp-route-id="@item.Id">Edit</a> 
+                        <a type="button" class="btn btn-secondary btn-sm" asp-action="Details" asp-route-id="@item.Id">View</a>
+                        <a type="button" class="btn btn-primary btn-sm" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
                         <a type="button" class="btn btn-danger btn-sm" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
                     </td>
                 </tr>

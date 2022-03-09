@@ -29,6 +29,7 @@ namespace PainAssessment
 
             // Add DI for Services
             services.AddScoped<IClinicalAreaService, ClinicalAreaService>();
+            services.AddScoped<IPracticeTypeService, PracticeTypeService>();
             services.AddScoped<IPractitionerService, PractitionerService>();
             services.AddScoped<IPatientService, PatientService>();
             services.AddScoped<IGatewayManager, GatewayManager>();

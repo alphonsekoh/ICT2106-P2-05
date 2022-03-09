@@ -3,11 +3,11 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace PainAssessment.Areas.Admin.Models.Configuration
 {
-    public class ClinicalAreaConfiguration : IEntityTypeConfiguration<ClinicalArea>
+    public class PracticeTypeConfiguration : IEntityTypeConfiguration<PracticeType>
     {
-        public void Configure(EntityTypeBuilder<ClinicalArea> builder)
+        public void Configure(EntityTypeBuilder<PracticeType> builder)
         {
-            builder.ToTable("ClinicalArea");
+            builder.ToTable("PracticeType");
             builder.Metadata.SetPropertyAccessMode(PropertyAccessMode.Field);
         }
     }

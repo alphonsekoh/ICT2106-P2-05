@@ -11,27 +11,27 @@ using System.Linq;
 namespace PainAssessment.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    public class ClinicalAreasController : Controller
+    public class PracticeTypesController : Controller
     {
-        private readonly IClinicalAreaService clinicalAreaService;
+        private readonly IPracticeTypeService practiceTypeService;
         private readonly ILog log;
-        public ClinicalAreasController(IClinicalAreaService clinicalAreaService)
+        public PracticeTypesController(IPracticeTypeService practiceTypeService)
         {
-            this.clinicalAreaService = clinicalAreaService;
+            this.practiceTypeService = practiceTypeService;
             log = Log.GetInstance;
         }
-        // GET: Admin/ClinicalAreas
+        // GET: Admin/PracticeTypes
         /*
          Index function to take in input from get upon search, sorting and page change
          */
         public IActionResult Index(string sortOrder, string searchString, int page = 1)
         {
             ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "Name" : "";
-            IEnumerable<ClinicalArea> clinicalArea = from d in clinicalAreaService.GetAllClinicalAreas() select d;
-            clinicalArea = sortOrder switch // check input of what is being sorted
+            IEnumerable<PracticeType> practiceType = from d in practiceTypeService.GetAllPracticeTypes() select d;
+            practiceType = sortOrder switch // check input of what is being sorted
             {
-                "Name" => clinicalArea.OrderByDescending(d => d.Name),
-                _ => clinicalArea.OrderBy(d => d.Name),
+                "Name" => practiceType.OrderByDescending(d => d.Name),
+                _ => practiceType.OrderBy(d => d.Name),
             };
 
 
@@ -39,12 +39,12 @@ namespace PainAssessment.Areas.Admin.Controllers
             // check if not search input not empty
             if (!String.IsNullOrEmpty(searchString))
             {
-                clinicalArea = clinicalArea.Where(d => d.Name.Contains(searchString));
+                practiceType = practiceType.Where(d => d.Name.Contains(searchString));
             }
 
-            ViewData["total_count"] = clinicalArea.Count(); // get count of all from
+            ViewData["total_count"] = practiceType.Count(); // get count of all from
 
-            int max_page = (int)Math.Ceiling((decimal)(clinicalArea.Count() / 8.0));
+            int max_page = (int)Math.Ceiling((decimal)(practiceType.Count() / 8.0));
 
             if (page > max_page)
             {
@@ -58,15 +58,15 @@ namespace PainAssessment.Areas.Admin.Controllers
             ViewData["max_page"] = max_page;
             ViewData["current_page"] = page;
 
-            if (clinicalArea.Any())
+            if (practiceType.Any())
             {
-                clinicalArea = clinicalArea.ChunkBy(8).ElementAt(page - 1);
+                practiceType = practiceType.ChunkBy(8).ElementAt(page - 1);
             }
 
-            return View(clinicalArea.ToList());
+            return View(practiceType.ToList());
         }
 
-        // GET: Admin/ClinicalAreas/Details/5
+        // GET: Admin/PracticeTypes/Details/5
         public IActionResult Details(int? id)
         {
             if (id == null)
@@ -74,39 +74,39 @@ namespace PainAssessment.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            ClinicalArea clinicalArea = clinicalAreaService.GetClinicalArea((int)id);
-            if (clinicalArea == null)
+            PracticeType practiceType = practiceTypeService.GetPracticeType((int)id);
+            if (practiceType == null)
             {
                 return NotFound();
             }
 
-            return View(clinicalArea);
+            return View(practiceType);
         }
 
-        // GET: Admin/ClinicalAreas/Create
+        // GET: Admin/PracticeTypes/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Admin/ClinicalAreas/Create
+        // POST: Admin/PracticeTypes/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create([ModelBinder(typeof(ClinicalAreaModelBinder))] ClinicalArea clinicalArea)
+        public IActionResult Create([ModelBinder(typeof(PracticeTypeModelBinder))] PracticeType practiceType)
         {
             if (ModelState.IsValid)
             {
-                clinicalAreaService.CreateClinicalArea(clinicalArea);
-                clinicalAreaService.SaveClinicalArea();
-                log.LogMessage("Info", GetType().Name, string.Format("{0} was created.", clinicalArea.Name));
+                practiceTypeService.CreatePracticeType(practiceType);
+                practiceTypeService.SavePracticeType();
+                log.LogMessage("Info", GetType().Name, string.Format("{0} was created.", practiceType.Name));
                 return RedirectToAction(nameof(Index));
             }
-            return View(clinicalArea);
+            return View(practiceType);
         }
 
-        // GET: Admin/ClinicalAreas/Edit/5
+        // GET: Admin/PracticeTypes/Edit/5
         public IActionResult Edit(int? id)
         {
             if (id == null)
@@ -114,24 +114,24 @@ namespace PainAssessment.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            ClinicalArea clinicalArea = clinicalAreaService.GetClinicalArea((int)id);
+            PracticeType practiceType = practiceTypeService.GetPracticeType((int)id);
 
-            if (clinicalArea == null)
+            if (practiceType == null)
             {
                 return NotFound();
             }
 
-            return View(clinicalArea);
+            return View(practiceType);
         }
 
-        // POST: Admin/ClinicalAreas/Edit/5
+        // POST: Admin/PracticeTypes/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id, [ModelBinder(typeof(ClinicalAreaModelBinder))] ClinicalArea clinicalArea)
+        public IActionResult Edit(int id, [ModelBinder(typeof(PracticeTypeModelBinder))] PracticeType practiceType)
         {
-            if (id != clinicalArea.Id)
+            if (id != practiceType.Id)
             {
                 return NotFound();
             }
@@ -140,12 +140,12 @@ namespace PainAssessment.Areas.Admin.Controllers
             {
                 try
                 {
-                    clinicalAreaService.UpdateClinicalArea(clinicalArea);
-                    clinicalAreaService.SaveClinicalArea();
+                    practiceTypeService.UpdatePracticeType(practiceType);
+                    practiceTypeService.SavePracticeType();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (clinicalAreaService.GetClinicalArea(clinicalArea.Id) == null)
+                    if (practiceTypeService.GetPracticeType(practiceType.Id) == null)
                     {
                         return NotFound();
                     }
@@ -156,11 +156,11 @@ namespace PainAssessment.Areas.Admin.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            log.LogMessage("Info", GetType().Name, string.Format("Renamed to {0}", clinicalArea.Name));
-            return View(clinicalArea);
+            log.LogMessage("Info", GetType().Name, string.Format("Renamed to {0}", practiceType.Name));
+            return View(practiceType);
         }
 
-        // GET: Admin/ClinicalAreas/Delete/5
+        // GET: Admin/PracticeTypes/Delete/5
         public IActionResult Delete(int? id)
         {
             if (id == null)
@@ -168,30 +168,29 @@ namespace PainAssessment.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            ClinicalArea clinicalArea = clinicalAreaService.GetClinicalArea((int)id);
-            if (clinicalArea == null)
+            PracticeType practiceType = practiceTypeService.GetPracticeType((int)id);
+            if (practiceType == null)
             {
                 return NotFound();
             }
 
-            return View(clinicalArea);
+            return View(practiceType);
         }
 
-        // POST: Admin/ClinicalAreas/Delete/5
+        // POST: Admin/PracticeTypes/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public IActionResult DeleteConfirmed(int id)
         {
             try
             {
-                clinicalAreaService.DeleteClinicalArea(id);
-                clinicalAreaService.SaveClinicalArea();
-                log.LogMessage("Info", GetType().Name, string.Format("{0} was deleted.", id));
+                practiceTypeService.DeletePracticeType(id);
+                practiceTypeService.SavePracticeType();
+                log.LogMessage("Info", GetType().Name, string.Format("{0} deleted.", id));
             }
             catch (Exception e)
             {
                 log.LogMessage("Info", GetType().Name, string.Format("{0} cannot be deleted. Practitioners still exist. {1}", id, e));
-
             }
             return RedirectToAction(nameof(Index));
         }

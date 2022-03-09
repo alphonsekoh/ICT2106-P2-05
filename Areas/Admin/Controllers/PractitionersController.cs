@@ -16,12 +16,14 @@ namespace PainAssessment.Areas.Admin.Controllers
     {
         private readonly IPractitionerService practitionerService;
         private readonly IClinicalAreaService clinicalAreaService;
+        private readonly IPracticeTypeService practiceTypeService;
         private readonly IPatientService patientService;
         private readonly ILog log;
-        public PractitionersController(IPractitionerService practitionerService, IClinicalAreaService clinicalAreaService, IPatientService patientService)
+        public PractitionersController(IPractitionerService practitionerService, IClinicalAreaService clinicalAreaService, IPracticeTypeService practiceTypeService, IPatientService patientService)
         {
             this.practitionerService = practitionerService;
             this.clinicalAreaService = clinicalAreaService;
+            this.practiceTypeService = practiceTypeService;
             this.patientService = patientService;
 
             log = Log.GetInstance;
@@ -66,6 +68,7 @@ namespace PainAssessment.Areas.Admin.Controllers
         public IActionResult Create()
         {
             ViewData["ClinicalAreaID"] = new SelectList(clinicalAreaService.GetAllClinicalAreas(), "Id", "Name");
+            ViewData["PracticeTypeID"] = new SelectList(practiceTypeService.GetAllPracticeTypes(), "Id", "Name");
 
             return View();
         }
@@ -84,7 +87,9 @@ namespace PainAssessment.Areas.Admin.Controllers
                 log.LogMessage("Info", GetType().Name, string.Format("{0} was created.", practitioner.Name));
                 return RedirectToAction(nameof(Index));
             }
+
             ViewData["ClinicalAreaID"] = new SelectList(clinicalAreaService.GetAllClinicalAreas(), "Id", "Name");
+            ViewData["PracticeTypeID"] = new SelectList(practiceTypeService.GetAllPracticeTypes(), "Id", "Name");
             return View(practitioner);
         }
 
@@ -104,6 +109,8 @@ namespace PainAssessment.Areas.Admin.Controllers
             }
 
             ViewData["ClinicalAreaID"] = new SelectList(clinicalAreaService.GetAllClinicalAreas(), "Id", "Name");
+            ViewData["PracticeTypeID"] = new SelectList(practiceTypeService.GetAllPracticeTypes(), "Id", "Name");
+
             return View(practitioner);
         }
 
@@ -142,6 +149,7 @@ namespace PainAssessment.Areas.Admin.Controllers
             }
 
             ViewData["ClinicalAreaID"] = new SelectList(clinicalAreaService.GetAllClinicalAreas(), "Id", "Name");
+            ViewData["PracticeTypeID"] = new SelectList(practiceTypeService.GetAllPracticeTypes(), "Id", "Name");
             return View(practitioner);
         }
 
