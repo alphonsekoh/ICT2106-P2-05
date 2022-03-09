@@ -45,34 +45,52 @@ namespace PainAssessment.Areas.Admin.Data
             };
             context.PracticeTypes.AddRange(practiceTypes);
 
+
+            context.SaveChanges();
+
+            PainEducation[] painEducations = new PainEducation[]
+            {
+            new PainEducation("None"),
+            new PainEducation("Pre-registration training - pain topics"),
+            new PainEducation("Private provider course or workshop"),
+            new PainEducation("Inservice"),
+            new PainEducation("Professional Body"),
+            new PainEducation("Postgraduate qualification (not pain-specific)"),
+            new PainEducation("Postgraduate qualification (pain-specific)"),
+            new PainEducation("Conference (pain specific)"),
+            };
+
+            context.PainEducations.AddRange(painEducations);
+
+
             context.SaveChanges();
 
 
             Practitioner[] practitioners = new Practitioner[]
             {
-            new Practitioner("Alexander", "2 years ",  "Pre-registration training - pain topics",1,1),
-            new Practitioner( "Meredith", "2 years ",  "Pre-registration training - pain topics",1,1),
-            new Practitioner( "Carson", "4 years ",   "Inservice",2,1),
-            new Practitioner( "Arturo", "4 years ",   "Inservice",2,1),
-            new Practitioner( "Gytis", "6 years ",  "Professional Body",3,2),
-            new Practitioner( "Yan", "6 years ",  "Professional Body, Postgraduate qualification pain-specific",3,2),
-            new Practitioner( "Li", "6 years ",  "Pre-registration training - pain topics",4,2),
-            new Practitioner( "Alonso", "None",  "Professional Body, Postgraduate qualification pain-specific",4,2),
-            new Practitioner( "Anand", "1 year",  "Pre-registration training - pain topics",5,2),
-            new Practitioner( "Barzdukas", "2 years ",  "Pre-registration training - pain topics",5,3),
-            new Practitioner( "Olivetto", "2 years ",  "Pre-registration training - pain topics",6,3),
-            new Practitioner( "Nino", "3 years ",  "Professional Body, Postgraduate qualification not pain-specific",6,3),
-            new Practitioner( "Peggy", "3 years ",  "Pre-registration training - pain topics",4,3),
-            new Practitioner( "Laura", "3 years ",  "Conference (not pain specific)",7,3),
-            new Practitioner( "Norman", "6 years ",   "Conference (not pain specific)",7,3),
-            new Practitioner( "Justice", "6 years ",   "Pre-registration training - pain topics",8,4),
-            new Practitioner( "Liam", "8 years ",   "Private provider course or workshop",8,4),
-            new Practitioner( "Oliver", "8 years ",   "Pre-registration training - pain topics",3,4),
-            new Practitioner( "Elijah", "9 years ",   "Conference (pain specific)",9,4),
-            new Practitioner( "William", "9 years ",  "Conference (pain specific)",9,4),
-            new Practitioner( "James", "3 years ",   "Pre-registration training - pain topics",10,1),
-            new Practitioner( "Benjamin", "1 years ",  "None",10,1),
-            new Practitioner( "Lucas", "1 years ",  "None",10,1),
+            new Practitioner("Alexander", "2 years ",  "1",1,1),
+            new Practitioner( "Meredith", "2 years ",  "1",1,1),
+            new Practitioner( "Carson", "4 years ",   "2",2,1),
+            new Practitioner( "Arturo", "4 years ",   "2",2,1),
+            new Practitioner( "Gytis", "6 years ",  "2",3,2),
+            new Practitioner( "Yan", "6 years ",  "3",3,2),
+            new Practitioner( "Li", "6 years ",  "3",4,2),
+            new Practitioner( "Alonso", "None",  "3",4,2),
+            new Practitioner( "Anand", "1 year",  "4",5,2),
+            new Practitioner( "Barzdukas", "2 years ",  "4",5,3),
+            new Practitioner( "Olivetto", "2 years ",  "4",6,3),
+            new Practitioner( "Nino", "3 years ",  "5",6,3),
+            new Practitioner( "Peggy", "3 years ",  "5",4,3),
+            new Practitioner( "Laura", "3 years ",  "5",7,3),
+            new Practitioner( "Norman", "6 years ",   "6",7,3),
+            new Practitioner( "Justice", "6 years ",   "6",8,4),
+            new Practitioner( "Liam", "8 years ",   "6",8,4),
+            new Practitioner( "Oliver", "8 years ",   "6",3,4),
+            new Practitioner( "Elijah", "9 years ",   "7",9,4),
+            new Practitioner( "William", "9 years ",  "8",9,4),
+            new Practitioner( "James", "3 years ",   "1,2",10,1),
+            new Practitioner( "Benjamin", "1 years ",  "1,2",10,1),
+            new Practitioner( "Lucas", "1 years ",  "3,4",10,1),
             };
             context.Practitioners.AddRange(practitioners);
             context.SaveChanges();

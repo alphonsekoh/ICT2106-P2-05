@@ -17,14 +17,16 @@ namespace PainAssessment.Areas.Admin.Controllers
         private readonly IPractitionerService practitionerService;
         private readonly IClinicalAreaService clinicalAreaService;
         private readonly IPracticeTypeService practiceTypeService;
+        private readonly IPainEducationService painEducationService;
         private readonly IPatientService patientService;
         private readonly ILog log;
-        public PractitionersController(IPractitionerService practitionerService, IClinicalAreaService clinicalAreaService, IPracticeTypeService practiceTypeService, IPatientService patientService)
+        public PractitionersController(IPractitionerService practitionerService, IClinicalAreaService clinicalAreaService, IPracticeTypeService practiceTypeService, IPatientService patientService, IPainEducationService painEducationService)
         {
             this.practitionerService = practitionerService;
             this.clinicalAreaService = clinicalAreaService;
             this.practiceTypeService = practiceTypeService;
             this.patientService = patientService;
+            this.painEducationService = painEducationService;
 
             log = Log.GetInstance;
         }
@@ -61,6 +63,30 @@ namespace PainAssessment.Areas.Admin.Controllers
                 practitioners = practitioners.ChunkBy(8).ElementAt(page - 1);
             }
 
+            Dictionary<Guid, List<string>> practitionerPain = new();
+            // convert comma delimited string to list
+
+
+            Dictionary<int, string> painEducationDict = painEducationService.GetAllPainEducations().ToList().ToDictionary(x => x.Id, x => x.Name);
+            
+            foreach (Practitioner practitioner in practitioners)
+            {
+                List<string> tempPainList = new();
+                var painEducationID = practitioner.PriorPainEducation.Split(',').Select(int.Parse).ToList();
+                foreach(int id in painEducationID)
+                {
+                    bool exists = painEducationDict.TryGetValue(id, out string painName);
+                    if (exists)
+                    {
+                        tempPainList.Add(painName);
+                    } else
+                    {
+                        tempPainList.Add(string.Format("${0} do not exist", id));
+                    }
+                }
+                practitionerPain.Add(practitioner.Id, tempPainList);
+            }
+            ViewData["PractitionerPain"] = practitionerPain;
             return View(practitioners);
         }
 
@@ -69,7 +95,7 @@ namespace PainAssessment.Areas.Admin.Controllers
         {
             ViewData["ClinicalAreaID"] = new SelectList(clinicalAreaService.GetAllClinicalAreas(), "Id", "Name");
             ViewData["PracticeTypeID"] = new SelectList(practiceTypeService.GetAllPracticeTypes(), "Id", "Name");
-
+            ViewData["PainEducationID"] = new MultiSelectList(painEducationService.GetAllPainEducations(), "Id", "Name");
             return View();
         }
 
@@ -87,9 +113,9 @@ namespace PainAssessment.Areas.Admin.Controllers
                 log.LogMessage("Info", GetType().Name, string.Format("{0} was created.", practitioner.Name));
                 return RedirectToAction(nameof(Index));
             }
-
             ViewData["ClinicalAreaID"] = new SelectList(clinicalAreaService.GetAllClinicalAreas(), "Id", "Name");
             ViewData["PracticeTypeID"] = new SelectList(practiceTypeService.GetAllPracticeTypes(), "Id", "Name");
+            ViewData["PainEducationID"] = new MultiSelectList(painEducationService.GetAllPainEducations(), "Id", "Name");
             return View(practitioner);
         }
 
@@ -110,6 +136,10 @@ namespace PainAssessment.Areas.Admin.Controllers
 
             ViewData["ClinicalAreaID"] = new SelectList(clinicalAreaService.GetAllClinicalAreas(), "Id", "Name");
             ViewData["PracticeTypeID"] = new SelectList(practiceTypeService.GetAllPracticeTypes(), "Id", "Name");
+            ViewData["PainEducationID"] = new MultiSelectList(painEducationService.GetAllPainEducations(), "Id", "Name");
+
+            // multi select
+            practitioner.SelectedPainEducation = practitioner.PriorPainEducation.Split(',').ToArray();
 
             return View(practitioner);
         }
@@ -150,6 +180,7 @@ namespace PainAssessment.Areas.Admin.Controllers
 
             ViewData["ClinicalAreaID"] = new SelectList(clinicalAreaService.GetAllClinicalAreas(), "Id", "Name");
             ViewData["PracticeTypeID"] = new SelectList(practiceTypeService.GetAllPracticeTypes(), "Id", "Name");
+            ViewData["PainEducationID"] = new MultiSelectList(painEducationService.GetAllPainEducations(), "Id", "Name");
             return View(practitioner);
         }
 

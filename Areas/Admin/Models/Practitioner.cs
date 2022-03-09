@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 
 namespace PainAssessment.Areas.Admin.Models
@@ -9,6 +10,7 @@ namespace PainAssessment.Areas.Admin.Models
         public string Experience { get; private set; }
         public string PriorPainEducation { get; private set; }
         public int ClinicalAreaID { get; private set; }
+
         public ClinicalArea ClinicalArea { get; private set; }
 
         public int PracticeTypeID { get; private set; }
@@ -20,6 +22,11 @@ namespace PainAssessment.Areas.Admin.Models
 
         private readonly List<PractitionerPatient> _practitionerPatients = new();
         public virtual IReadOnlyList<PractitionerPatient> PractitionerPatients => _practitionerPatients.ToList();
+
+        [NotMapped]
+        public string[] SelectedPainEducation { get; set; }
+
+
 
         public Practitioner(string name, string experience, string priorPainEducation, int clinicalAreaID, int practiceTypeID)
         {

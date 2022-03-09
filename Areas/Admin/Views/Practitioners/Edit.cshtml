@@ -22,6 +22,10 @@
                 <select asp-for="PracticeTypeID" class="form-control" asp-items="ViewBag.PracticeTypeID"></select>
                 <span asp-validation-for="PracticeTypeID" class="text-danger"></span>
             </div>
+            <div class="form-group">
+                <label asp-for="PriorPainEducation" class="control-label"></label>
+                @Html.ListBoxFor(model => model.SelectedPainEducation, ViewBag.PainEducationID as MultiSelectList, new { id = "PriorPainEducation", multiple = "multiple" })
+            </div>
             <input type="hidden" asp-for="Id" />
             <div class="form-group">
                 <label asp-for="Name" class="control-label"></label>
@@ -32,11 +36,6 @@
                 <label asp-for="Experience" class="control-label"></label>
                 <input asp-for="Experience" class="form-control" />
                 <span asp-validation-for="Experience" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PriorPainEducation" class="control-label"></label>
-                <input asp-for="PriorPainEducation" class="form-control" />
-                <span asp-validation-for="PriorPainEducation" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
@@ -51,4 +50,10 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script type="text/javascript">
+        $(function () {
+            $("#PriorPainEducation").chosen({
+            });
+        })
+    </script>
 }
