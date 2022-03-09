@@ -1,53 +1,49 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using PainAssessment.Areas.Admin.Models;
+using PainAssessment.Areas.Admin.Models.ModelBinder;
+using PainAssessment.Areas.Admin.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using PainAssessment.Areas.Admin.Data;
-using PainAssessment.Areas.Admin.Models;
-using PainAssessment.Areas.Admin.Services;
 
 namespace PainAssessment.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    public class DepartmentsController : Controller
+    public class ClinicalAreasController : Controller
     {
-        private readonly IDepartmentService departmentService;
-
-        public DepartmentsController(IDepartmentService departmentService)
+        private readonly IClinicalAreaService clinicalAreaService;
+        private readonly ILog log;
+        public ClinicalAreasController(IClinicalAreaService clinicalAreaService)
         {
-            this.departmentService = departmentService;
+            this.clinicalAreaService = clinicalAreaService;
+            log = Log.GetInstance;
         }
-
-        // GET: Admin/Departments
+        // GET: Admin/ClinicalAreas
         /*
          Index function to take in input from get upon search, sorting and page change
          */
         public IActionResult Index(string sortOrder, string searchString, int page = 1)
         {
             ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "Name" : "";
-            var department = from d in departmentService.GetAllDepartments() select d;
-            switch (sortOrder) // check input of what is being sorted
+            IEnumerable<ClinicalArea> clinicalArea = from d in clinicalAreaService.GetAllClinicalAreas() select d;
+            clinicalArea = sortOrder switch // check input of what is being sorted
             {
-                case "Name":
-                    department = department.OrderByDescending(d => d.Name);
-                    break;
-                default:
-                    department = department.OrderBy(d => d.Name);
-                    break;
-            }
+                "Name" => clinicalArea.OrderByDescending(d => d.Name),
+                _ => clinicalArea.OrderBy(d => d.Name),
+            };
+
+
 
             // check if not search input not empty
             if (!String.IsNullOrEmpty(searchString))
             {
-                department = department.Where(d => d.Name.Contains(searchString));
+                clinicalArea = clinicalArea.Where(d => d.Name.Contains(searchString));
             }
 
-            ViewData["total_count"] = department.Count(); // get count of all from
+            ViewData["total_count"] = clinicalArea.Count(); // get count of all from
 
-            int max_page = (int)Math.Ceiling((decimal)(department.Count() / 8.0));
+            int max_page = (int)Math.Ceiling((decimal)(clinicalArea.Count() / 8.0));
 
             if (page > max_page)
             {
@@ -61,15 +57,15 @@ namespace PainAssessment.Areas.Admin.Controllers
             ViewData["max_page"] = max_page;
             ViewData["current_page"] = page;
 
-            if (department.Count() > 0)
+            if (clinicalArea.Any())
             {
-                department = department.ChunkBy(8).ElementAt(page - 1);
+                clinicalArea = clinicalArea.ChunkBy(8).ElementAt(page - 1);
             }
 
-            return View(department.ToList());
+            return View(clinicalArea.ToList());
         }
 
-        // GET: Admin/Departments/Details/5
+        // GET: Admin/ClinicalAreas/Details/5
         public IActionResult Details(int? id)
         {
             if (id == null)
@@ -77,38 +73,39 @@ namespace PainAssessment.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var department = departmentService.GetDepartment((int)id);
-            if (department == null)
+            ClinicalArea clinicalArea = clinicalAreaService.GetClinicalArea((int)id);
+            if (clinicalArea == null)
             {
                 return NotFound();
             }
 
-            return View(department);
+            return View(clinicalArea);
         }
 
-        // GET: Admin/Departments/Create
+        // GET: Admin/ClinicalAreas/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Admin/Departments/Create
+        // POST: Admin/ClinicalAreas/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create([Bind("DepartmentID,Name")] Department department)
+        public IActionResult Create([ModelBinder(typeof(ClinicalAreaModelBinder))] ClinicalArea clinicalArea)
         {
             if (ModelState.IsValid)
             {
-                departmentService.CreateDepartment(department);
-                departmentService.SaveDepartment();
+                clinicalAreaService.CreateClinicalArea(clinicalArea);
+                clinicalAreaService.SaveClinicalArea();
+                log.LogMessage("Info", GetType().Name, string.Format("{0} was created.", clinicalArea.Name));
                 return RedirectToAction(nameof(Index));
             }
-            return View(department);
+            return View(clinicalArea);
         }
 
-        // GET: Admin/Departments/Edit/5
+        // GET: Admin/ClinicalAreas/Edit/5
         public IActionResult Edit(int? id)
         {
             if (id == null)
@@ -116,22 +113,24 @@ namespace PainAssessment.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var department = departmentService.GetDepartment((int)id);
-            if (department == null)
+            ClinicalArea clinicalArea = clinicalAreaService.GetClinicalArea((int)id);
+
+            if (clinicalArea == null)
             {
                 return NotFound();
             }
-            return View(department);
+
+            return View(clinicalArea);
         }
 
-        // POST: Admin/Departments/Edit/5
+        // POST: Admin/ClinicalAreas/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id, [Bind("DepartmentID,Name")] Department department)
+        public IActionResult Edit(int id, [ModelBinder(typeof(ClinicalAreaModelBinder))] ClinicalArea clinicalArea)
         {
-            if (id != department.DepartmentID)
+            if (id != clinicalArea.Id)
             {
                 return NotFound();
             }
@@ -140,12 +139,12 @@ namespace PainAssessment.Areas.Admin.Controllers
             {
                 try
                 {
-                    departmentService.UpdateDepartment(department);
-                    departmentService.SaveDepartment();
+                    clinicalAreaService.UpdateClinicalArea(clinicalArea);
+                    clinicalAreaService.SaveClinicalArea();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (departmentService.GetDepartment(department.DepartmentID) == null)
+                    if (clinicalAreaService.GetClinicalArea(clinicalArea.Id) == null)
                     {
                         return NotFound();
                     }
@@ -156,10 +155,11 @@ namespace PainAssessment.Areas.Admin.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(department);
+            log.LogMessage("Info", GetType().Name, string.Format("Renamed to {0}", clinicalArea.Name));
+            return View(clinicalArea);
         }
 
-        // GET: Admin/Departments/Delete/5
+        // GET: Admin/ClinicalAreas/Delete/5
         public IActionResult Delete(int? id)
         {
             if (id == null)
@@ -167,22 +167,23 @@ namespace PainAssessment.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var department = departmentService.GetDepartment((int)id);
-            if (department == null)
+            ClinicalArea clinicalArea = clinicalAreaService.GetClinicalArea((int)id);
+            if (clinicalArea == null)
             {
                 return NotFound();
             }
 
-            return View(department);
+            return View(clinicalArea);
         }
 
-        // POST: Admin/Departments/Delete/5
+        // POST: Admin/ClinicalAreas/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public IActionResult DeleteConfirmed(int id)
         {
-            departmentService.DeleteDepartment((int)id);
-            departmentService.SaveDepartment();
+            clinicalAreaService.DeleteClinicalArea(id);
+            clinicalAreaService.SaveClinicalArea();
+            log.LogMessage("Info", GetType().Name, string.Format("{0} was deleted.", id));
             return RedirectToAction(nameof(Index));
         }
     }
@@ -204,7 +205,9 @@ namespace PainAssessment.Areas.Admin.Controllers
         public static IEnumerable<IEnumerable<T>> ChunkBy<T>(this IEnumerable<T> source, int chunkSize)
         {
             for (int i = 0; i < source.Count(); i += chunkSize)
+            {
                 yield return source.Skip(i).Take(chunkSize);
+            }
         }
     }
 }

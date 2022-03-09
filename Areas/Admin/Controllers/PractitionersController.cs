@@ -1,11 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using PainAssessment.Areas.Admin.Models;
+using PainAssessment.Areas.Admin.Models.ModelBinder;
 using PainAssessment.Areas.Admin.Services;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace PainAssessment.Areas.Admin.Controllers
 {
@@ -13,12 +14,16 @@ namespace PainAssessment.Areas.Admin.Controllers
     public class PractitionersController : Controller
     {
         private readonly IPractitionerService practitionerService;
-        private readonly IDepartmentService departmentService;
-
-        public PractitionersController(IPractitionerService practitionerService, IDepartmentService departmentService)
+        private readonly IClinicalAreaService clinicalAreaService;
+        private readonly IPatientService patientService;
+        private readonly ILog log;
+        public PractitionersController(IPractitionerService practitionerService, IClinicalAreaService clinicalAreaService, IPatientService patientService)
         {
             this.practitionerService = practitionerService;
-            this.departmentService = departmentService;
+            this.clinicalAreaService = clinicalAreaService;
+            this.patientService = patientService;
+
+            log = Log.GetInstance;
         }
 
         // GET: Admin/Practitioners?page=1&name=gerald
@@ -48,7 +53,7 @@ namespace PainAssessment.Areas.Admin.Controllers
             ViewData["current_page"] = page;
             ViewData["name"] = name;
 
-            if (practitioners.Count() > 0)
+            if (practitioners.Any())
             {
                 practitioners = practitioners.ChunkBy(8).ElementAt(page - 1);
             }
@@ -59,7 +64,7 @@ namespace PainAssessment.Areas.Admin.Controllers
         // GET: Practitioners/Create
         public IActionResult Create()
         {
-            ViewData["DepartmentID"] = new SelectList(departmentService.GetAllDepartments(), "DepartmentID", "Name");
+            ViewData["ClinicalAreaID"] = new SelectList(clinicalAreaService.GetAllClinicalAreas(), "Id", "Name");
 
             return View();
         }
@@ -69,36 +74,35 @@ namespace PainAssessment.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create([Bind("PractitionerID,Name,DepartmentID")] Practitioner practitioner)
+        public IActionResult Create([ModelBinder(typeof(PractitionerModelBinder))] Practitioner practitioner)
         {
             if (ModelState.IsValid)
             {
                 practitionerService.CreatePractitioner(practitioner);
                 practitionerService.SavePractitioner();
+                log.LogMessage("Info", GetType().Name, string.Format("{0} was created.", practitioner.Name));
                 return RedirectToAction(nameof(Index));
             }
-
-            ViewData["DepartmentID"] = new SelectList(departmentService.GetAllDepartments(), "DepartmentID", "Name");
-
+            ViewData["ClinicalAreaID"] = new SelectList(clinicalAreaService.GetAllClinicalAreas(), "Id", "Name");
             return View(practitioner);
         }
 
         // GET: Practitioners/Edit/5
-        public IActionResult Edit(int? id)
+        public IActionResult Edit(Guid? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var practitioner = practitionerService.GetPractitioner((int)id);
+            Practitioner practitioner = practitionerService.GetPractitioner((Guid)id);
 
             if (practitioner == null)
             {
                 return NotFound();
             }
 
-            ViewData["DepartmentID"] = new SelectList(departmentService.GetAllDepartments(), "DepartmentID", "Name");
+            ViewData["ClinicalAreaID"] = new SelectList(clinicalAreaService.GetAllClinicalAreas(), "Id", "Name");
             return View(practitioner);
         }
 
@@ -107,9 +111,9 @@ namespace PainAssessment.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id, [Bind("PractitionerID,Name,DepartmentID")] Practitioner practitioner)
+        public IActionResult Edit(Guid id, [ModelBinder(typeof(PractitionerModelBinder))] Practitioner practitioner)
         {
-            if (id != practitioner.PractitionerID)
+            if (id != practitioner.Id)
             {
                 return NotFound();
             }
@@ -120,10 +124,11 @@ namespace PainAssessment.Areas.Admin.Controllers
                 {
                     practitionerService.UpdatePractitioner(practitioner);
                     practitionerService.SavePractitioner();
+                    log.LogMessage("Info", GetType().Name, string.Format("{0} was modified.", practitioner.Name));
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (practitionerService.GetPractitioner(practitioner.PractitionerID) == null)
+                    if (practitionerService.GetPractitioner(practitioner.Id) == null)
                     {
                         return NotFound();
                     }
@@ -135,11 +140,11 @@ namespace PainAssessment.Areas.Admin.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            ViewData["DepartmentID"] = new SelectList(departmentService.GetAllDepartments(), "DepartmentID", "Name");
+            ViewData["ClinicalAreaID"] = new SelectList(clinicalAreaService.GetAllClinicalAreas(), "Id", "Name");
             return View(practitioner);
         }
 
-    public JsonResult deletePractitioner(int Id)
+        public JsonResult DeletePractitioner(Guid Id)
         {
             if (practitionerService.GetPractitioner(Id) == null)
             {
@@ -150,6 +155,7 @@ namespace PainAssessment.Areas.Admin.Controllers
             {
                 practitionerService.DeletePractitioner(Id);
                 practitionerService.SavePractitioner();
+                log.LogMessage("Info", GetType().Name, string.Format("{0} was deleted.", Id));
                 return Json(new { status = "Success" });
             }
             catch (DbUpdateConcurrencyException)
@@ -168,23 +174,4 @@ namespace PainAssessment.Areas.Admin.Controllers
 }
 
 
-public static class ListExtensions
-{
-    public static List<List<T>> ChunkBy<T>(this List<T> source, int chunkSize)
-    {
-        return source
-            .Select((x, i) => new { Index = i, Value = x })
-            .GroupBy(x => x.Index / chunkSize)
-            .Select(x => x.Select(v => v.Value).ToList())
-            .ToList();
-    }
-}
 
-public static class IEnumerableExtensions
-{
-    public static IEnumerable<IEnumerable<T>> ChunkBy<T>(this IEnumerable<T> source, int chunkSize)
-    {
-        for (int i = 0; i < source.Count(); i += chunkSize)
-            yield return source.Skip(i).Take(chunkSize);
-    }
-}

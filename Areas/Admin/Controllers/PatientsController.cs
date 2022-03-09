@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PainAssessment.Areas.Admin.Models;
-using PainAssessment.Data;
+using PainAssessment.Areas.Admin.Models.ModelBinder;
 using PainAssessment.Areas.Admin.Services;
+using System;
 
 namespace PainAssessment.Areas.Admin.Controllers
 {
@@ -15,10 +11,13 @@ namespace PainAssessment.Areas.Admin.Controllers
     public class PatientsController : Controller
     {
         private readonly IPatientService patientService;
+        private readonly ILog log;
 
         public PatientsController(IPatientService patientService)
         {
             this.patientService = patientService;
+            log = Log.GetInstance;
+
         }
 
         // GET: Admin/Patients
@@ -28,14 +27,14 @@ namespace PainAssessment.Areas.Admin.Controllers
         }
 
         // GET: Admin/Patients/Details/5
-        public IActionResult Details(int? id)
+        public IActionResult Details(Guid? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var patient = patientService.GetPatient((int)id);
+            Patient patient = patientService.GetPatient((Guid)id);
 
             if (patient == null)
             {
@@ -56,26 +55,27 @@ namespace PainAssessment.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create([Bind("PatientID,Name,Gender,BirthDate,Condition,Notes")] Patient patient)
+        public IActionResult Create([ModelBinder(typeof(PatientModelBinder))] Patient patient)
         {
             if (ModelState.IsValid)
             {
                 patientService.CreatePatient(patient);
                 patientService.SavePatient();
+                log.LogMessage("Info", GetType().Name, string.Format("{0} was created.", patient.Name));
                 return RedirectToAction(nameof(Index));
             }
             return View(patient);
         }
 
         // GET: Admin/Patients/Edit/5
-        public IActionResult Edit(int? id)
+        public IActionResult Edit(Guid? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var patient = patientService.GetPatient((int)id);
+            Patient patient = patientService.GetPatient((Guid)id);
             if (patient == null)
             {
                 return NotFound();
@@ -88,9 +88,9 @@ namespace PainAssessment.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id, [Bind("PatientID,Name,Gender,BirthDate,Condition,Notes")] Patient patient)
+        public IActionResult Edit(Guid id, [ModelBinder(typeof(PatientModelBinder))] Patient patient)
         {
-            if (id != patient.PatientID)
+            if (id != patient.Id)
             {
                 return NotFound();
             }
@@ -101,10 +101,12 @@ namespace PainAssessment.Areas.Admin.Controllers
                 {
                     patientService.UpdatePatient(patient);
                     patientService.SavePatient();
+                    log.LogMessage("Info", GetType().Name, string.Format("{0} was modified.", patient.Name));
+
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (patientService.GetPatient(patient.PatientID) == null)
+                    if (patientService.GetPatient(patient.Id) == null)
                     {
                         return NotFound();
                     }
@@ -119,14 +121,14 @@ namespace PainAssessment.Areas.Admin.Controllers
         }
 
         // GET: Admin/Patients/Delete/5
-        public IActionResult Delete(int? id)
+        public IActionResult Delete(Guid? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var patient = patientService.GetPatient((int)id);
+            Patient patient = patientService.GetPatient((Guid)id);
 
             if (patient == null)
             {
@@ -139,10 +141,11 @@ namespace PainAssessment.Areas.Admin.Controllers
         // POST: Admin/Patients/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public IActionResult DeleteConfirmed(int id)
+        public IActionResult DeleteConfirmed(Guid id)
         {
             patientService.DeletePatient(id);
             patientService.SavePatient();
+            log.LogMessage("Info", GetType().Name, string.Format("{0} was deleted.", id));
             return RedirectToAction(nameof(Index));
         }
     }

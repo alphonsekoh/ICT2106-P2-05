@@ -1,20 +1,14 @@
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace PainAssessment.Models
+namespace PainAssessment.Areas.Admin.Models
 {
     public abstract class Person
     {
-        public int Id { get; set; }
+        public Guid Id { get; protected set; }
         [Required]
-        public string Name { get; set; }
-        //[Required]
-        //public string Username { get; set; }
-        //[Required]
-        //public string Password { get; set; }
+        [StringLength(50, MinimumLength = 3)]
+        public string Name { get; protected set; }
 
     }
 }

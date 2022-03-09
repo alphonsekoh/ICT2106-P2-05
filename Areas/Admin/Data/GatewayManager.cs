@@ -1,33 +1,30 @@
 ﻿using PainAssessment.Areas.Admin.Data.Gateways;
 using PainAssessment.Data;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace PainAssessment.Areas.Admin.Data
 {
-    public class UnitOfWork : IUnitOfWork
+    public class GatewayManager : IGatewayManager
     {
 
         internal HospitalContext context;
-        public IDepartmentGateway departmentGateway;
+        public IClinicalAreaGateway clinicalAreaGateway;
         public IPatientGateway patientGateway;
         public IPractitionerGateway practitionerGateway;
 
-        public UnitOfWork(HospitalContext context)
+        public GatewayManager(HospitalContext context)
         {
             this.context = context;
         }
-        public IDepartmentGateway DepartmentGateway
+        public IClinicalAreaGateway ClinicalAreaGateway
         {
             get
             {
-                if (this.departmentGateway == null)
+                if (clinicalAreaGateway == null)
                 {
-                    departmentGateway = new DepartmentGateway(context);
+                    clinicalAreaGateway = new ClinicalAreaGateway(context);
                 }
-                return departmentGateway;
+                return clinicalAreaGateway;
             }
         }
 
@@ -35,7 +32,7 @@ namespace PainAssessment.Areas.Admin.Data
         {
             get
             {
-                if (this.practitionerGateway == null)
+                if (practitionerGateway == null)
                 {
                     practitionerGateway = new PractitionerGateway(context);
                 }
@@ -47,7 +44,7 @@ namespace PainAssessment.Areas.Admin.Data
         {
             get
             {
-                if (this.patientGateway == null)
+                if (patientGateway == null)
                 {
                     patientGateway = new PatientGateway(context);
                 }
@@ -63,14 +60,14 @@ namespace PainAssessment.Areas.Admin.Data
 
         protected virtual void Dispose(bool disposing)
         {
-            if (!this.disposed)
+            if (!disposed)
             {
                 if (disposing)
                 {
                     context.Dispose();
                 }
             }
-            this.disposed = true;
+            disposed = true;
         }
         public void Dispose()
         {
