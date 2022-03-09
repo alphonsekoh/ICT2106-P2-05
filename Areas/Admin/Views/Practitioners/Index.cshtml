@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Index";
+    var painDict = (Dictionary< Guid, List<string>>) ViewData["PractitionerPain"];
 }
 
 
@@ -90,7 +91,19 @@
                         @Html.DisplayFor(modelItem => item.PracticeType.Name) @*PracticeType*@
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.PriorPainEducation)
+                        <table>
+                            @foreach (var pain in @painDict[item.Id])
+                            {
+                                <tr>
+
+                                    <td>
+                                        @pain
+
+                                    </td>
+                                </tr>
+
+                            }
+                        </table>
                     </td>
 
                     <td>

@@ -63,6 +63,30 @@ namespace PainAssessment.Areas.Admin.Controllers
                 practitioners = practitioners.ChunkBy(8).ElementAt(page - 1);
             }
 
+            Dictionary<Guid, List<string>> practitionerPain = new();
+            // convert comma delimited string to list
+
+
+            Dictionary<int, string> painEducationDict = painEducationService.GetAllPainEducations().ToList().ToDictionary(x => x.Id, x => x.Name);
+            
+            foreach (Practitioner practitioner in practitioners)
+            {
+                List<string> tempPainList = new();
+                var painEducationID = practitioner.PriorPainEducation.Split(',').Select(int.Parse).ToList();
+                foreach(int id in painEducationID)
+                {
+                    bool exists = painEducationDict.TryGetValue(id, out string painName);
+                    if (exists)
+                    {
+                        tempPainList.Add(painName);
+                    } else
+                    {
+                        tempPainList.Add(string.Format("${0} do not exist", id));
+                    }
+                }
+                practitionerPain.Add(practitioner.Id, tempPainList);
+            }
+            ViewData["PractitionerPain"] = practitionerPain;
             return View(practitioners);
         }
 
