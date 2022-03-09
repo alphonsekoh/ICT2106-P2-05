@@ -9,6 +9,9 @@ namespace PainAssessment.Data
         {
         }
         public DbSet<ClinicalArea> ClinicalAreas { get; set; }
+        public DbSet<PracticeType> PracticeTypes { get; set; }
+        public DbSet<PainEducation> PainEducations { get; set; }
+
         public DbSet<Practitioner> Practitioners { get; set; }
         public DbSet<Patient> Patients { get; set; }
 

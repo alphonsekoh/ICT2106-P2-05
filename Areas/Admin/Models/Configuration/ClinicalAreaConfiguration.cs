@@ -9,7 +9,6 @@ namespace PainAssessment.Areas.Admin.Models.Configuration
         {
             builder.ToTable("ClinicalArea");
             builder.Metadata.SetPropertyAccessMode(PropertyAccessMode.Field);
-
         }
     }
 }
