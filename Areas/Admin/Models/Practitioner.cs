@@ -1,18 +1,26 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using PainAssessment.Areas.Admin.Models.ModelBinder;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 
 namespace PainAssessment.Areas.Admin.Models
 {
+    [ModelBinder(typeof(PractitionerModelBinder))]
     public class Practitioner : Person, IPractitioner
     {
         public string Experience { get; private set; }
+
+        [DisplayName("Prior Pain Education")]
         public string PriorPainEducation { get; private set; }
+        [Required(ErrorMessage = "Clinical Area is required.")]
         public int ClinicalAreaID { get; private set; }
 
         public ClinicalArea ClinicalArea { get; private set; }
-
+        [Required(ErrorMessage = "Practice Type is required.")]
         public int PracticeTypeID { get; private set; }
 
         public PracticeType PracticeType { get; private set; }
@@ -24,6 +32,7 @@ namespace PainAssessment.Areas.Admin.Models
         public virtual IReadOnlyList<PractitionerPatient> PractitionerPatients => _practitionerPatients.ToList();
 
         [NotMapped]
+        [Required(ErrorMessage = "Prior pain education is required.")]
         public string[] SelectedPainEducation { get; set; }
 
 

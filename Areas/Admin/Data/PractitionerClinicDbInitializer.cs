@@ -40,7 +40,7 @@ namespace PainAssessment.Areas.Admin.Data
             new PracticeType("Hospital Outpatient"),
             new PracticeType("Community Health"),
             new PracticeType("Rehabilitation Clinic"),
-            new PracticeType("Private clinic"),
+            new PracticeType("Private Clinic"),
 
             };
             context.PracticeTypes.AddRange(practiceTypes);

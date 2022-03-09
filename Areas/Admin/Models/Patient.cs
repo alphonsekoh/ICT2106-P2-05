@@ -1,4 +1,6 @@
-﻿using PainAssessment.Areas.Admin.Util;
+﻿using Microsoft.AspNetCore.Mvc;
+using PainAssessment.Areas.Admin.Models.ModelBinder;
+using PainAssessment.Areas.Admin.Util;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -8,6 +10,7 @@ using System.Text.RegularExpressions;
 
 namespace PainAssessment.Areas.Admin.Models
 {
+    [ModelBinder(typeof(PatientModelBinder))]
     public class Patient : Person, IPatient
     {
         [Required]

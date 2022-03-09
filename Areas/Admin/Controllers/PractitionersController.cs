@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using PainAssessment.Areas.Admin.Models;
-using PainAssessment.Areas.Admin.Models.ModelBinder;
 using PainAssessment.Areas.Admin.Services;
 using PainAssessment.Areas.Admin.Util;
 using System;
@@ -68,18 +67,19 @@ namespace PainAssessment.Areas.Admin.Controllers
 
 
             Dictionary<int, string> painEducationDict = painEducationService.GetAllPainEducations().ToList().ToDictionary(x => x.Id, x => x.Name);
-            
+
             foreach (Practitioner practitioner in practitioners)
             {
                 List<string> tempPainList = new();
-                var painEducationID = practitioner.PriorPainEducation.Split(',').Select(int.Parse).ToList();
-                foreach(int id in painEducationID)
+                List<int> painEducationID = practitioner.PriorPainEducation.Split(',').Select(int.Parse).ToList();
+                foreach (int id in painEducationID)
                 {
                     bool exists = painEducationDict.TryGetValue(id, out string painName);
                     if (exists)
                     {
                         tempPainList.Add(painName);
-                    } else
+                    }
+                    else
                     {
                         tempPainList.Add(string.Format("${0} do not exist", id));
                     }
@@ -104,7 +104,7 @@ namespace PainAssessment.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create([ModelBinder(typeof(PractitionerModelBinder))] Practitioner practitioner)
+        public IActionResult Create(Practitioner practitioner)
         {
             if (ModelState.IsValid)
             {
@@ -112,6 +112,10 @@ namespace PainAssessment.Areas.Admin.Controllers
                 practitionerService.SavePractitioner();
                 log.LogMessage("Info", GetType().Name, string.Format("{0} was created.", practitioner.Name));
                 return RedirectToAction(nameof(Index));
+            }
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
             }
             ViewData["ClinicalAreaID"] = new SelectList(clinicalAreaService.GetAllClinicalAreas(), "Id", "Name");
             ViewData["PracticeTypeID"] = new SelectList(practiceTypeService.GetAllPracticeTypes(), "Id", "Name");
@@ -149,7 +153,7 @@ namespace PainAssessment.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(Guid id, [ModelBinder(typeof(PractitionerModelBinder))] Practitioner practitioner)
+        public IActionResult Edit(Guid id, Practitioner practitioner)
         {
             if (id != practitioner.Id)
             {
