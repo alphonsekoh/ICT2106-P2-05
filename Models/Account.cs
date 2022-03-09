@@ -12,7 +12,5 @@ namespace PainAssessment.Models
         public string Password { get; set; }
         public string Email { get; set; }
         public string AccountStatus { get; set; }
-        [Required]
-        public string Role { get; set; }
     }
 }

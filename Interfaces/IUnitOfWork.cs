@@ -1,5 +1,4 @@
-﻿using PainAssessment.Areas.Identity.Data;
-using PainAssessment.Models;
+﻿using PainAssessment.Models;
 using System;
 
 namespace PainAssessment.Interfaces
@@ -13,6 +12,7 @@ namespace PainAssessment.Interfaces
         IGenericRepository<Patient> PatientRepository { get; }
         IGenericRepository<TemplateChecklist> TemplateChecklistRepository { get; }
         IGenericRepository<DefaultQuestion> DefaultQuestionRepository { get; }
+        IGenericRepository<User> UserRepository { get; }
         void Save();
 
     }

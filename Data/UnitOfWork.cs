@@ -1,5 +1,4 @@
-﻿using PainAssessment.Areas.Identity.Data;
-using PainAssessment.Interfaces;
+﻿using PainAssessment.Interfaces;
 using PainAssessment.Models;
 
 namespace PainAssessment.Data
@@ -17,6 +16,7 @@ namespace PainAssessment.Data
 
         private IGenericRepository<TemplateChecklist> templateChecklistRepository;
         private IGenericRepository<DefaultQuestion> defaultQuestionRepository;
+        private IGenericRepository<User> userRepository;
 
         public UnitOfWork(HospitalContext context)
         {
@@ -110,6 +110,18 @@ namespace PainAssessment.Data
                     this.defaultQuestionRepository = new GenericRepository<DefaultQuestion>(_context);
                 }
                 return defaultQuestionRepository;
+            }
+        }
+
+        public IGenericRepository<User> UserRepository
+        {
+            get
+            {
+                if (this.userRepository == null)
+                {
+                    this.userRepository = new GenericRepository<User>(_context);
+                }
+                return userRepository;
             }
         }
 

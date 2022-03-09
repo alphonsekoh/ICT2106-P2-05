@@ -1,11 +1,10 @@
 ﻿using PainAssessment.Models;
-using System;
 using System.Collections.Generic;
 
 namespace PainAssessment.Interfaces
 {
-    public interface ILoginService
+    public interface IProfileService
     {
-        User Login(int accountId, string password);
+        User GetUser(int accountId);
     }
 }
