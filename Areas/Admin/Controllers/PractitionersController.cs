@@ -104,7 +104,7 @@ namespace PainAssessment.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create([ModelBinder(typeof(PractitionerModelBinder))] Practitioner practitioner)
+        public IActionResult Create( Practitioner practitioner)
         {
             if (ModelState.IsValid)
             {
@@ -112,6 +112,10 @@ namespace PainAssessment.Areas.Admin.Controllers
                 practitionerService.SavePractitioner();
                 log.LogMessage("Info", GetType().Name, string.Format("{0} was created.", practitioner.Name));
                 return RedirectToAction(nameof(Index));
+            }
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
             }
             ViewData["ClinicalAreaID"] = new SelectList(clinicalAreaService.GetAllClinicalAreas(), "Id", "Name");
             ViewData["PracticeTypeID"] = new SelectList(practiceTypeService.GetAllPracticeTypes(), "Id", "Name");
@@ -149,7 +153,7 @@ namespace PainAssessment.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(Guid id, [ModelBinder(typeof(PractitionerModelBinder))] Practitioner practitioner)
+        public IActionResult Edit(Guid id, Practitioner practitioner)
         {
             if (id != practitioner.Id)
             {

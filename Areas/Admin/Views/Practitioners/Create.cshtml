@@ -34,8 +34,10 @@
             </div>
 
             <div class="form-group">
-                <label asp-for="PriorPainEducation" class="control-label"></label>
+                <label asp-for="PriorPainEducation" class="control-label">PriorPainEducation</label>
                 @Html.ListBoxFor(model => model.SelectedPainEducation, ViewBag.PainEducationID as MultiSelectList, new { id = "PriorPainEducation", multiple = "multiple" })
+                <span asp-validation-for="SelectedPainEducation" class="text-danger"></span>
+
             </div>
 
             @*<div class="form-group">
@@ -65,7 +67,15 @@
 
     <script type="text/javascript">
         $(function () {
-            $("#PriorPainEducation").chosen({
+            clinicalArea = $("#ClinicalAreaID").select2({
+                tags: true
+            });
+            practiceType = $("#PracticeTypeID").select2({
+                tags: true
+
+            });
+            painEducation = $("#PriorPainEducation").select2({
+                tags: true
             });
         })
         </script>
