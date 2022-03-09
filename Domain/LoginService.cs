@@ -4,6 +4,7 @@ using PainAssessment.Models;
 using System;
 using System.Collections.Generic;
 using BC = BCrypt.Net.BCrypt;
+using System.Linq;
 
 namespace PainAssessment.Domain
 {
@@ -16,15 +17,16 @@ namespace PainAssessment.Domain
             _unitOfWork = unitOfWork;
         }
 
-        public User Login(int accountId, string password)
+        public User Login(string username, string password)
         {
-
-            Account account = _unitOfWork.AccountRepository.GetById(accountId);
+            IEnumerable<Account> account = _unitOfWork.AccountRepository.Find(Acc=> Acc.Username.Equals(username));
+            //Account account = _unitOfWork.AccountRepository.GetById(accountId);
             // Check if account exists and password matches to the one in db
             //if (account != null && BC.Verify(password, account.Password))
-            if (account != null && password == account.Password)
+            Account userAcc = account.First();
+            if (userAcc != null && password == userAcc.Password)
             {
-                User user = _unitOfWork.UserRepository.GetById(accountId);
+                User user = _unitOfWork.UserRepository.GetById(userAcc.AccountId);
                 return user;
             }
             else
@@ -32,15 +34,20 @@ namespace PainAssessment.Domain
                 return null;
             }
 
-            //if (password == "123")
-            //{
-            //    return true;
-            //}
-            //else
-            //{
-            //    return false;
-            //}
+        }
 
+        public void UpdatePassword(string username, string password, string confirmPassword)
+        {
+            IEnumerable<Account> account = _unitOfWork.AccountRepository.Find(Acc => Acc.Username.Equals(username));
+            Account userAcc = account.First();
+            if (password.Equals(confirmPassword) && userAcc != null)
+            {
+                // Hash Password
+                var cost = 16;
+                userAcc.Password = BC.HashPassword(password, workFactor: cost);
+                _unitOfWork.AccountRepository.Update(userAcc);
+            }
+          
         }
 
     }

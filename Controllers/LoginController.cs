@@ -9,7 +9,6 @@ using System.Collections.Generic;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace PainAssessment.Controllers
@@ -33,11 +32,10 @@ namespace PainAssessment.Controllers
 
         // GET: LoginController
         [AllowAnonymous]
+        [HttpGet]
         public ActionResult Index()
         {
-            LoginModel loginModel = new LoginModel();
-            loginModel.Test = false;
-            return View(loginModel);
+            return View();
         }
 
         // POST: LoginController
@@ -45,9 +43,6 @@ namespace PainAssessment.Controllers
         [HttpPost]
         public async Task<ActionResult> Index(LoginModel model)
         {
-            var accountId = model.accountId;
-            var password = model.Password;
-
             if (!ModelState.IsValid)
             {
                 return View();
@@ -64,22 +59,23 @@ namespace PainAssessment.Controllers
                 //    return View();
                 //}
 
-                if(await AuthenticateUser(accountId, password) == true)
+                if(await AuthenticateUser(model) == true)
                 {
                     return RedirectToAction(REDIRECT_ACTN, REDIRECT_CNTR);
                 }
                 else
                 {
-                    LoginModel loginModel = new LoginModel();
-                    loginModel.Test = true;
-                    return View(loginModel);
+                    return View(model);
                 }
             }
         }
 
-        private async Task<bool> AuthenticateUser(int accountId, string password)
+        private async Task<bool> AuthenticateUser(LoginModel model)
         {
-            if (loginService.Login(accountId, password) != null)
+            string username = model.Username;
+            string password = model.Password;
+
+            if (loginService.Login(username, password) != null)
             {
 
                 /* TODO 
@@ -93,11 +89,11 @@ namespace PainAssessment.Controllers
                  * 
                  */
 
-                var user = loginService.Login(accountId, password);
+                var user = loginService.Login(username, password);
 
                 // Attributes that are for authentication
                 var claims = new List<Claim> {
-                    new Claim(ClaimTypes.NameIdentifier, Convert.ToString(user.Account.AccountId)),
+                    new Claim(ClaimTypes.NameIdentifier, Convert.ToString(user.Account.Username)),
                     new Claim(ClaimTypes.Name, user.Name),
                     new Claim(ClaimTypes.Role, user.Role),
                     new Claim("Email", user.Email)
@@ -110,8 +106,8 @@ namespace PainAssessment.Controllers
                 
                 await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, new AuthenticationProperties()
                 {
-                    //IsPersistent = objLoginModel.RememberLogin
-                    IsPersistent = true
+                    IsPersistent = model.RememberMe
+                    //IsPersistent = true 
                 });
 
                 return true;
@@ -125,6 +121,31 @@ namespace PainAssessment.Controllers
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             //Redirect to login page
             return LocalRedirect("/");
+        }
+
+        [AllowAnonymous]
+        [HttpGet]
+        public ActionResult ForgetPassword()
+        {
+            return View();
+        }
+
+        [AllowAnonymous]
+        [HttpPost]
+        public ActionResult ForgetPassword(ForgetPasswordModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                loginService.UpdatePassword(model.Username, model.NewPassword, model.ConfirmPassword);
+
+                return View(model);
+            }
+            else
+            {
+                return View();
+
+            }
+
         }
 
     }

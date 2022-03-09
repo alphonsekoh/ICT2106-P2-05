@@ -18,7 +18,8 @@
         <div class="row">
             <div class="col-lg-2">Username</div>
             <div class="col-lg-10">
-                @Html.TextBoxFor(user => user.accountId, new { @class = "form-control" })
+                @Html.TextBoxFor(user => user.Username, new { @class = "form-control" })
+                @Html.ValidationMessageFor(user => user.Username)
             </div>
         </div>
         <br />
@@ -29,6 +30,12 @@
                 @Html.ValidationMessageFor(user => user.Password)
             </div>
         </div>
+         <label class="checkbox-incline" asp-for="RememberMe">
+                                <input asp-for="RememberMe" />Remember Me
+                            </label>
+                            <label>
+                                <a asp-controller="Login" asp-action="ForgetPassword">Forget Password</a>
+                            </label>
         <br />
         <div class="row">
             <div class="col-lg-12"><input type="submit" value="Submit" class="btn btn-primary"></div>
