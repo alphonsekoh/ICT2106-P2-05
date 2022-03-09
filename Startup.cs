@@ -1,15 +1,13 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using PainAssessment.Areas.Admin.Data;
+using PainAssessment.Areas.Admin.Services;
 using PainAssessment.Data;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+
 
 namespace PainAssessment
 {
@@ -28,6 +26,13 @@ namespace PainAssessment
             services.AddDbContext<HospitalContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddDatabaseDeveloperPageExceptionFilter();
+
+            // Add DI for Services
+            services.AddScoped<IClinicalAreaService, ClinicalAreaService>();
+            services.AddScoped<IPractitionerService, PractitionerService>();
+            services.AddScoped<IPatientService, PatientService>();
+            services.AddScoped<IGatewayManager, GatewayManager>();
+
             services.AddControllersWithViews();
         }
 

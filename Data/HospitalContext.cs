@@ -1,9 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PainAssessment.Areas.Admin.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace PainAssessment.Data
 {
@@ -12,8 +8,16 @@ namespace PainAssessment.Data
         public HospitalContext(DbContextOptions<HospitalContext> options) : base(options)
         {
         }
-        public DbSet<Department> Departments { get; set; }
+        public DbSet<ClinicalArea> ClinicalAreas { get; set; }
         public DbSet<Practitioner> Practitioners { get; set; }
+        public DbSet<Patient> Patients { get; set; }
+
+        public DbSet<PractitionerPatient> PractitionerPatients { get; set; }
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            //1. Use EntityFrameworkCoreExtensions (add DynamicDataMasking support)
+            base.OnConfiguring(optionsBuilder);
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
