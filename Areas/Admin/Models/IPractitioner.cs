@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
-
-namespace PainAssessment.Areas.Admin.Models
+﻿namespace PainAssessment.Areas.Admin.Models
 {
     public interface IPractitioner
     {

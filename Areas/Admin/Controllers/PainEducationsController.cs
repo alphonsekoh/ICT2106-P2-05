@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PainAssessment.Areas.Admin.Models;
-using PainAssessment.Areas.Admin.Models.ModelBinder;
 using PainAssessment.Areas.Admin.Services;
 using PainAssessment.Areas.Admin.Util;
 using System;
@@ -129,7 +128,7 @@ namespace PainAssessment.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id,PainEducation painEducation)
+        public IActionResult Edit(int id, PainEducation painEducation)
         {
             if (id != painEducation.Id)
             {

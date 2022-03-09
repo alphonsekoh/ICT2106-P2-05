@@ -22,7 +22,7 @@ namespace PainAssessment.Areas.Admin.Models.ModelBinder
         {
             IPersonFactory personFactory = new PersonFactory();
             IPractitioner practitioner;
-            
+
             Microsoft.AspNetCore.Http.IFormCollection data = bindingContext.HttpContext.Request.Form;
             bool nameResult = data.TryGetValue("Name", out Microsoft.Extensions.Primitives.StringValues name);
             bool idResult = data.TryGetValue("Id", out Microsoft.Extensions.Primitives.StringValues id);
@@ -31,8 +31,8 @@ namespace PainAssessment.Areas.Admin.Models.ModelBinder
             bool clinicResult = data.TryGetValue("ClinicalAreaID", out Microsoft.Extensions.Primitives.StringValues clinicalAreaID);
             bool practiceResult = data.TryGetValue("PracticeTypeID", out Microsoft.Extensions.Primitives.StringValues practiceTypeID);
 
-            var parseClinicSuccess = int.TryParse(clinicalAreaID, out int parsedClinicID);
-            var parsePracticeSuccess = int.TryParse(practiceTypeID, out int parsedPracticeTypeID);
+            bool parseClinicSuccess = int.TryParse(clinicalAreaID, out int parsedClinicID);
+            bool parsePracticeSuccess = int.TryParse(practiceTypeID, out int parsedPracticeTypeID);
 
 
             if (!nameResult || !experienceResult || !selectedResult || !clinicResult || !practiceResult)
@@ -41,7 +41,7 @@ namespace PainAssessment.Areas.Admin.Models.ModelBinder
             }
             else
             {
-                int createdPracticeTypeID = 1 ;
+                int createdPracticeTypeID = 1;
                 int createdClinicID = 1;
                 List<int> priorEducationList = new();
                 if (!parsePracticeSuccess)
@@ -60,11 +60,12 @@ namespace PainAssessment.Areas.Admin.Models.ModelBinder
                 }
                 foreach (string prior in selectedPainEducation)
                 {
-                    var parsePriorSuccess = int.TryParse(prior, out int parsedPainEducation);
+                    bool parsePriorSuccess = int.TryParse(prior, out int parsedPainEducation);
                     if (parsePriorSuccess)
                     {
                         priorEducationList.Add(parsedPainEducation);
-                    } else
+                    }
+                    else
                     {
                         PainEducation newPainEducation = new(prior);
                         painEducationService.CreatePainEducation(newPainEducation);
@@ -79,7 +80,7 @@ namespace PainAssessment.Areas.Admin.Models.ModelBinder
                                     experience.ToString(),
                                     string.Join(",", priorEducationList),
                                     parseClinicSuccess ? parsedClinicID : createdClinicID,
-                                    parsePracticeSuccess? parsedPracticeTypeID : createdPracticeTypeID,
+                                    parsePracticeSuccess ? parsedPracticeTypeID : createdPracticeTypeID,
                                     Guid.Parse(id.ToString()));
                 }
                 else
