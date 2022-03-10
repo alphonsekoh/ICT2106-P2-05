@@ -3,7 +3,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using PainAssessment.Interfaces;
 using PainAssessment.Models;
+using System;
 using System.Diagnostics;
+using System.Linq;
 
 namespace PainAssessment.Controllers
 {

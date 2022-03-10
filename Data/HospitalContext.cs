@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using PainAssessment.Models;
 using System;
@@ -11,7 +10,7 @@ using PainAssessment.Areas.Admin.Models;
 
 namespace PainAssessment.Data
 {
-    public class HospitalContext : IdentityDbContext<IdentityUser>
+    public class HospitalContext : DbContext
     {
         public HospitalContext(DbContextOptions<HospitalContext> options) : base(options)
         {

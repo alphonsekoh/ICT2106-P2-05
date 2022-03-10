@@ -6,13 +6,9 @@ namespace PainAssessment.Data
     public class UnitOfWork : IUnitOfWork
     {
         private HospitalContext _context;
-        //private IGenericRepository<AccountUser> accountRepository;
 
         private IGenericRepository<Account> accountRepository;
         private IGenericRepository<Administrator> adminRepository;
-        private IGenericRepository<Practitioner> practitiionerRepository;
-
-        private IGenericRepository<Patient> patientRepository;
 
         private IGenericRepository<TemplateChecklist> templateChecklistRepository;
         private IGenericRepository<DefaultQuestion> defaultQuestionRepository;
@@ -47,31 +43,6 @@ namespace PainAssessment.Data
                 return adminRepository;
             }
 
-        }
-
-        public IGenericRepository<Practitioner> PractitionerRepository
-        {
-            get
-            {
-                if (this.practitiionerRepository == null)
-                {
-                    this.practitiionerRepository = new GenericRepository<Practitioner>(_context);
-                }
-                return practitiionerRepository;
-            }
-
-        }
-
-        public IGenericRepository<Patient> PatientRepository
-        {
-            get
-            {
-                if (this.patientRepository == null)
-                {
-                    this.patientRepository = new GenericRepository<Patient>(_context);
-                }
-                return patientRepository;
-            }
         }
 
         public IGenericRepository<TemplateChecklist> TemplateChecklistRepository
