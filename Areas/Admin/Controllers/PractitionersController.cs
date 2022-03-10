@@ -18,7 +18,7 @@ namespace PainAssessment.Areas.Admin.Controllers
         private readonly IPracticeTypeService practiceTypeService;
         private readonly IPainEducationService painEducationService;
         private readonly IPatientService patientService;
-        private readonly ILog log;
+        private readonly ILogService log;
         public PractitionersController(IPractitionerService practitionerService, IClinicalAreaService clinicalAreaService, IPracticeTypeService practiceTypeService, IPatientService patientService, IPainEducationService painEducationService)
         {
             this.practitionerService = practitionerService;
@@ -27,7 +27,7 @@ namespace PainAssessment.Areas.Admin.Controllers
             this.patientService = patientService;
             this.painEducationService = painEducationService;
 
-            log = Log.GetInstance;
+            log = LogService.GetInstance;
         }
 
         // GET: Admin/Practitioners?page=1&name=gerald

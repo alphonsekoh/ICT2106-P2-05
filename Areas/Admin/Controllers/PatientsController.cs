@@ -10,12 +10,12 @@ namespace PainAssessment.Areas.Admin.Controllers
     public class PatientsController : Controller
     {
         private readonly IPatientService patientService;
-        private readonly ILog log;
+        private readonly ILogService log;
 
         public PatientsController(IPatientService patientService)
         {
             this.patientService = patientService;
-            log = Log.GetInstance;
+            log = LogService.GetInstance;
 
         }
 
