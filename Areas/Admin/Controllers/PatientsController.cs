@@ -2,7 +2,10 @@
 using Microsoft.EntityFrameworkCore;
 using PainAssessment.Areas.Admin.Models;
 using PainAssessment.Areas.Admin.Services;
+using PainAssessment.Areas.Admin.Util;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace PainAssessment.Areas.Admin.Controllers
 {
@@ -20,9 +23,44 @@ namespace PainAssessment.Areas.Admin.Controllers
         }
 
         // GET: Admin/Patients
-        public IActionResult Index()
+        public IActionResult Index(string sortOrder, string searchString, int page = 1)
         {
-            return View(patientService.GetAllPatients());
+            ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "Name" : "";
+            IEnumerable<Patient> patient = from i in patientService.GetAllPatients() select i;
+            patient = sortOrder switch // check input of what is being sorted
+            {
+                "Name" => patient.OrderByDescending(i => i.Name),
+                _ => patient.OrderBy(i => i.Name),
+            };
+
+            // check if not search input not empty
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                patient = patient.Where(i => i.Name.ToLower().Contains(searchString.ToLower()));
+            }
+
+            ViewData["total_count"] = patient.Count(); // get count of all from
+
+            int max_page = (int)Math.Ceiling((decimal)(patient.Count() / 8.0));
+
+            if (page > max_page)
+            {
+                page = max_page;
+            }
+            if (page < 1)
+            {
+                page = 1;
+            }
+
+            ViewData["max_page"] = max_page;
+            ViewData["current_page"] = page;
+
+            if (patient.Any())
+            {
+                patient = patient.ChunkBy(8).ElementAt(page - 1);
+            }
+
+            return View(patient.ToList());
         }
 
         // GET: Admin/Patients/Details/5
