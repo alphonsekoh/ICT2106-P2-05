@@ -9,7 +9,7 @@ namespace PainAssessment.Areas.Admin.Models.Factory
             // Nothing...
         }
 
-        public Person CreatePatient(string name, string gender, DateTime birthDate, string condition, string notes, Guid? id = null)
+        public Patient CreatePatient(string name, string gender, DateTime birthDate, string condition, string notes, Guid? id = null)
         {
             if (id == null)
             {
@@ -22,7 +22,7 @@ namespace PainAssessment.Areas.Admin.Models.Factory
             }
         }
 
-        public Person CreatePractitioner(string name, string experience, string priorPainEducation, int clinicalAreaID, int practiceTypeID, Guid? id = null)
+        public Practitioner CreatePractitioner(string name, string experience, string priorPainEducation, int clinicalAreaID, int practiceTypeID, Guid? id = null)
         {
             if (id == null)
             {
