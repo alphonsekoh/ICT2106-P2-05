@@ -15,7 +15,7 @@ namespace PainAssessment.Domain
         public User GetUser(int accountId)
         {
             // Implement here
-            User useracc = _unitOfWork.UserRepository.GetById(accountId);
+            User useracc = _unitOfWork.UserRepository.GetById<User, int>(accountId);
             return useracc;
         }
     }

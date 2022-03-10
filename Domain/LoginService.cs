@@ -26,7 +26,7 @@ namespace PainAssessment.Domain
             Account userAcc = account.First();
             if (userAcc != null && password == userAcc.Password)
             {
-                User user = _unitOfWork.UserRepository.GetById(userAcc.AccountId);
+                User user = _unitOfWork.UserRepository.GetById<User, int>(userAcc.AccountId);
                 return user;
             }
             else
