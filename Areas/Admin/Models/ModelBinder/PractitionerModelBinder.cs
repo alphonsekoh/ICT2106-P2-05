@@ -21,7 +21,7 @@ namespace PainAssessment.Areas.Admin.Models.ModelBinder
         public Task BindModelAsync(ModelBindingContext bindingContext)
         {
             IPersonFactory personFactory = new PersonFactory();
-            IPractitioner practitioner;
+            Practitioner practitioner;
 
             Microsoft.AspNetCore.Http.IFormCollection data = bindingContext.HttpContext.Request.Form;
             bool nameResult = data.TryGetValue("Name", out Microsoft.Extensions.Primitives.StringValues name);
@@ -76,7 +76,7 @@ namespace PainAssessment.Areas.Admin.Models.ModelBinder
 
                 if (idResult)
                 {
-                    practitioner = personFactory.CreatePractitioner(name.ToString(),
+                    practitioner = (Practitioner)personFactory.CreatePractitioner(name.ToString(),
                                     experience.ToString(),
                                     string.Join(",", priorEducationList),
                                     parseClinicSuccess ? parsedClinicID : createdClinicID,
@@ -85,7 +85,7 @@ namespace PainAssessment.Areas.Admin.Models.ModelBinder
                 }
                 else
                 {
-                    practitioner = personFactory.CreatePractitioner(name.ToString(),
+                    practitioner = (Practitioner)personFactory.CreatePractitioner(name.ToString(),
                                     experience.ToString(),
                                     string.Join(",", priorEducationList),
                                     parseClinicSuccess ? parsedClinicID : createdClinicID,

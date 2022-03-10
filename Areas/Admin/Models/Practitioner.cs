@@ -10,7 +10,7 @@ using System.Linq;
 namespace PainAssessment.Areas.Admin.Models
 {
     [ModelBinder(typeof(PractitionerModelBinder))]
-    public class Practitioner : Person, IPractitioner
+    public class Practitioner : Person
     {
         public string Experience { get; private set; }
 
