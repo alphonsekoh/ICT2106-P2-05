@@ -1,0 +1,46 @@
+﻿@model PainAssessment.ViewModels.LoginModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+
+<body>
+    @using (Html.BeginForm("Index", "Login", FormMethod.Post))
+    {
+        <div class="row">
+            <div class="col-lg-2">Username</div>
+            <div class="col-lg-10">
+                @Html.TextBoxFor(user => user.Username, new { @class = "form-control" })
+                @Html.ValidationMessageFor(user => user.Username)
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-lg-2">Password</div>
+            <div class="col-lg-10">
+                @Html.PasswordFor(user => user.Password, new { @class = "form-control" })
+                @Html.ValidationMessageFor(user => user.Password)
+            </div>
+        </div>
+         <label class="checkbox-incline" asp-for="RememberMe">
+                                <input asp-for="RememberMe" />Remember Me
+                            </label>
+                            <label>
+                                <a asp-controller="Login" asp-action="ChangePassword">Forget Password</a>
+                            </label>
+        <br />
+        <div class="row">
+            <div class="col-lg-12"><input type="submit" value="Submit" class="btn btn-primary"></div>
+        </div>
+    }
+</body>
+
+</html>

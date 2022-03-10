@@ -1,5 +1,3 @@
-using System;
-
 namespace PainAssessment.Models
 {
     public class ErrorViewModel

@@ -1,5 +1,4 @@
-﻿
-namespace PainAssessment.Models
+﻿namespace PainAssessment.Models
 {
     public class Administrator
     {
