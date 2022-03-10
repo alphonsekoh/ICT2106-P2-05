@@ -1,0 +1,68 @@
+﻿@model PainAssessment.Areas.Admin.Models.Practitioner
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Practitioner</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="ClinicalAreaID" class="control-label"></label>
+                <select asp-for="ClinicalAreaID" class="form-control" asp-items="ViewBag.ClinicalAreaID"></select>
+                <span asp-validation-for="ClinicalAreaID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PracticeTypeID" class="control-label"></label>
+                <select asp-for="PracticeTypeID" class="form-control" asp-items="ViewBag.PracticeTypeID"></select>
+                <span asp-validation-for="PracticeTypeID" class="text-danger"></span>
+            </div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Experience" class="control-label"></label>
+                <input asp-for="Experience" class="form-control" />
+                <span asp-validation-for="Experience" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PriorPainEducation" class="control-label"></label>
+                @Html.ListBoxFor(model => model.SelectedPainEducation, ViewBag.PainEducationID as MultiSelectList, new { id = "PriorPainEducation", multiple = "multiple" })
+                <span asp-validation-for="SelectedPainEducation" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script type="text/javascript">
+        $(function () {
+            clinicalArea = $("#ClinicalAreaID").select2({
+                tags: true
+            });
+            practiceType = $("#PracticeTypeID").select2({
+                tags: true
+            });
+
+            painEducation = $("#PriorPainEducation").select2({
+                tags: true
+            });
+        })
+    </script>
+}
