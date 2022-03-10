@@ -5,6 +5,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using PainAssessment.Areas.Admin.Data;
+using PainAssessment.Areas.Admin.Services;
 using PainAssessment.Data;
 using PainAssessment.Domain;
 using PainAssessment.Interfaces;
@@ -66,6 +68,15 @@ namespace PainAssessment
             options.UseMySQL(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddDatabaseDeveloperPageExceptionFilter();
+
+            // Add DI for Services
+            services.AddScoped<IClinicalAreaService, ClinicalAreaService>();
+            services.AddScoped<IPracticeTypeService, PracticeTypeService>();
+            services.AddScoped<IPractitionerService, PractitionerService>();
+            services.AddScoped<IPatientService, PatientService>();
+            services.AddScoped<IGatewayManager, GatewayManager>();
+            services.AddScoped<IPainEducationService, PainEducationService>();
+
             services.AddControllersWithViews();
             services.AddRazorPages();
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
