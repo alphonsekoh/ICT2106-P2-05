@@ -13,12 +13,22 @@ namespace PainAssessment.Areas.ModuleTwo.Controllers
     [Area("ModuleTwo")]
     public class ChecklistsController : Controller
     {
-        private readonly MvcChecklistContext _context;
+        //private readonly MvcChecklistContext _context;
+        private IUnitOfWork _unitOfWork;
 
+        /*
         public ChecklistsController(MvcChecklistContext context)
         {
-            _context = context;
+           // _context = context;
         }
+        */
+        public ChecklistsController(IUnitOfWork unitOfWork)
+        {
+            // _context = context;
+            _unitOfWork = unitOfWork;
+        }
+
+
 
         // GET: ModuleTwo/Checklists
         /*
@@ -29,10 +39,14 @@ namespace PainAssessment.Areas.ModuleTwo.Controllers
     */
         public IActionResult Index()
         {
+            /*
             List<Checklist> checklists;
             checklists = _context.Checklist.ToList();
             return View(checklists);
+            */
 
+            var checklists = _unitOfWork.ChecklistRepo.GetAll();
+            return View(checklists);
         }
         // GET: ModuleTwo/Checklists/Details/5
         /*
@@ -55,6 +69,7 @@ namespace PainAssessment.Areas.ModuleTwo.Controllers
         */
         public IActionResult Details(int id)
         {
+            /*
             Checklist checklist = _context.Checklist
                 .Include(c => c.Central)
                 .Include(r => r.Regional)
@@ -62,17 +77,23 @@ namespace PainAssessment.Areas.ModuleTwo.Controllers
 
                 .Where(a => a.ChecklistId == id).FirstOrDefault();
             return View(checklist);
-
+            */
+            var checklist = _unitOfWork.ChecklistRepo.GetById(id);
+            return View(checklist);
         }
 
         // GET: ModuleTwo/Checklists/Create
         [HttpGet]
         public IActionResult Create()
         {
+            /*
             Checklist checklist = new Checklist();
             checklist.Central.Add(new CentralDomain() { RowId = 1 });
             checklist.Regional.Add(new RegionalDomain() { RowId = 1 });
             checklist.Local.Add(new LocalDomain() { RowId = 1 });
+            return View(checklist);
+            */
+            var checklist = _unitOfWork.ChecklistRepo.InsertGet();
             return View(checklist);
         }
 
@@ -97,17 +118,22 @@ namespace PainAssessment.Areas.ModuleTwo.Controllers
         [HttpPost]
         public IActionResult Create(Checklist checklist)
         {
+            /*
             checklist.Central.RemoveAll(n => n.IsCentralDeleted == true);
             checklist.Regional.RemoveAll(n => n.IsRegionalDeleted == true);
             checklist.Local.RemoveAll(n => n.IsLocalDeleted == true);
             _context.Add(checklist);
             _context.SaveChanges();
             return RedirectToAction("index");
-
+            */
+            _unitOfWork.ChecklistRepo.InsertPost(checklist);
+            _unitOfWork.Save();
+            return RedirectToAction("index");
         }
         [HttpGet]
         public IActionResult Edit(int id)
         {
+            /*
             Checklist checklist = _context.Checklist
                 .Include(c => c.Central)
                 .Include(r => r.Regional)
@@ -115,12 +141,16 @@ namespace PainAssessment.Areas.ModuleTwo.Controllers
 
                 .Where(a => a.ChecklistId == id).FirstOrDefault();
             return View(checklist);
-
+            */
+            var checklist = _unitOfWork.ChecklistRepo.GetById(id);
+            return View(checklist);
+            
         }
 
         [HttpPost]
         public IActionResult Edit(Checklist checklist)
         {
+            /*
             List<CentralDomain> centralDetails = _context.CentralDomain.Where(d => d.ChecklistId == checklist.ChecklistId).ToList();
             List<RegionalDomain> regionalDetails = _context.RegionalDomain.Where(d => d.ChecklistId == checklist.ChecklistId).ToList();
             List<LocalDomain> localDetails = _context.LocalDomain.Where(d => d.ChecklistId == checklist.ChecklistId).ToList();
@@ -139,6 +169,13 @@ namespace PainAssessment.Areas.ModuleTwo.Controllers
             _context.RegionalDomain.AddRange(checklist.Regional);
             _context.LocalDomain.AddRange(checklist.Local);
             _context.SaveChanges();
+            return RedirectToAction("index");
+            */
+            _unitOfWork.ChecklistRepo.PreUpdate(checklist);
+            _unitOfWork.Save();
+
+            _unitOfWork.ChecklistRepo.Update(checklist);
+            _unitOfWork.Save();
             return RedirectToAction("index");
 
         }
@@ -229,6 +266,7 @@ namespace PainAssessment.Areas.ModuleTwo.Controllers
         [HttpGet]
         public IActionResult Delete(int id)
         {
+            /*
             Checklist checklist = _context.Checklist
                 .Include(c => c.Central)
                 .Include(r => r.Regional)
@@ -236,20 +274,27 @@ namespace PainAssessment.Areas.ModuleTwo.Controllers
 
                 .Where(a => a.ChecklistId == id).FirstOrDefault();
             return View(checklist);
-
+            */
+            var checklist = _unitOfWork.ChecklistRepo.GetById(id);
+            return View(checklist);
         }
         [HttpPost]
         public IActionResult Delete(Checklist checklist)
         {
+            /*
             _context.Attach(checklist);
             _context.Entry(checklist).State = EntityState.Deleted;
             _context.SaveChanges();
             return RedirectToAction("index");
-
+            */
+            _unitOfWork.ChecklistRepo.Delete(checklist);
+            _unitOfWork.Save();
+            return RedirectToAction("index");
         }
         private bool ChecklistExists(int id)
         {
-            return _context.Checklist.Any(e => e.ChecklistId == id);
+            //return _context.Checklist.Any(e => e.ChecklistId == id);
+            return _unitOfWork.ChecklistRepo.CheckExists(id);
         }
     }
 }

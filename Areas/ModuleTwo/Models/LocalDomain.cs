@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace PainAssessment.Areas.ModuleTwo.Models
 {
-    public class LocalDomain : Domain
+    public class LocalDomain : Domain,  IChecklist
     {
         [Key]
         public int RowId { get; set; }
@@ -21,5 +21,55 @@ namespace PainAssessment.Areas.ModuleTwo.Models
 
         [NotMapped]
         public bool IsLocalDeleted { get; set; } = false;
+
+        public void InitialiseBooleanAttribute(string attribute, bool value)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void InitialiseIntAttribute(string attribute, int value)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void InitialiseStringAttribute(string attribute, string value)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool RetrieveBooleanAttribute(string attribute)
+        {
+            if (attribute.Equals("IsLocalDeleted"))
+            {
+                return IsLocalDeleted;
+            }
+
+            return false;
+        }
+
+        public int RetrieveIntAttribute(string attribute)
+        {
+            if (attribute.Equals("ChecklistId"))
+            {
+                return ChecklistId;
+            }
+
+            return 0;
+        }
+
+        public string RetrieveStringAttribute(string attribute)
+        {
+            if (attribute.Equals("SubDomain"))
+            {
+                return SubDomain;
+            }
+
+            else if (attribute.Equals("Determinant"))
+            {
+                return Determinant;
+            }
+
+            return "invalid attribute";
+        }
     }
 }

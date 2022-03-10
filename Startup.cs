@@ -34,6 +34,8 @@ namespace PainAssessment
 
             services.AddDbContext<MvcChecklistContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("MvcChecklistContext")));
+
+            services.AddTransient<IUnitOfWork, UnitOfWork>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
