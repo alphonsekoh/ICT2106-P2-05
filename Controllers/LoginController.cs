@@ -125,28 +125,29 @@ namespace PainAssessment.Controllers
 
         [AllowAnonymous]
         [HttpGet]
-        public ActionResult ForgetPassword()
+        public ActionResult ChangePassword()
         {
             return View();
         }
 
         [AllowAnonymous]
         [HttpPost]
-        public ActionResult ForgetPassword(ForgetPasswordModel model)
+        public ActionResult ChangePassword(ChangePasswordModel model)
         {
             if (!ModelState.IsValid)
             {
                 loginService.UpdatePassword(model.Username, model.NewPassword, model.ConfirmPassword);
-
+                //ViewData["Message"] = "Password successfully changed!";
+                //ViewData["MsgType"] = "success";
                 return View(model);
             }
             else
             {
                 return View();
-
             }
 
         }
+
 
     }
 }

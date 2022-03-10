@@ -44,8 +44,9 @@ namespace PainAssessment.Domain
             {
                 // Hash Password
                 var cost = 16;
-                userAcc.Password = BC.HashPassword(password, workFactor: cost);
+                userAcc.Password = BC.HashPassword(password, cost);
                 _unitOfWork.AccountRepository.Update(userAcc);
+                _unitOfWork.Save();
             }
           
         }

@@ -2,7 +2,7 @@
 
 namespace PainAssessment.ViewModels
 {
-    public class ForgetPasswordModel
+    public class ChangePasswordModel
     {
         [Required(ErrorMessage = "Please enter your username")]
         public string Username { get; set; }
