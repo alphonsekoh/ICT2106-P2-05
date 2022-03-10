@@ -11,7 +11,7 @@ namespace PainAssessment.Areas.Admin.Models.ModelBinder
         public Task BindModelAsync(ModelBindingContext bindingContext)
         {
             IPersonFactory personFactory = new PersonFactory();
-            IPatient patient;
+            Patient patient;
 
             Microsoft.AspNetCore.Http.IFormCollection data = bindingContext.HttpContext.Request.Form;
             bool nameResult = data.TryGetValue("Name", out Microsoft.Extensions.Primitives.StringValues name);

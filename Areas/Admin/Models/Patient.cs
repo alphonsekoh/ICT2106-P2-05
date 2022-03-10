@@ -11,7 +11,7 @@ using System.Text.RegularExpressions;
 namespace PainAssessment.Areas.Admin.Models
 {
     [ModelBinder(typeof(PatientModelBinder))]
-    public class Patient : Person, IPatient
+    public class Patient : Person
     {
         [Required]
         public string Gender { get; private set; }
