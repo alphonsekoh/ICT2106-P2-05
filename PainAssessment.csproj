@@ -18,11 +18,6 @@
 	  </PackageReference>
 	  <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2" />
   </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Areas\Module2\Data\" />
-    <Folder Include="Areas\Module2\Models\" />
-  </ItemGroup>
 	<ItemGroup>
 		<None Remove="Areas\Admin\Views\Practitioners\" />
 	</ItemGroup>
