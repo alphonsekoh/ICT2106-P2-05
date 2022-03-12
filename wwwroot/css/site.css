@@ -70,6 +70,32 @@ body {
   line-height: 60px; /* Vertically center the text there */
 }
 
+
+.DomainTable table {
+    width: 100%
+}
+
+.DomainTable thead {
+    width: calc(100%-1em);
+}
+
+.DomainTable tbody {
+    display: block;
+    height: 140px;
+    overflow-y: auto;
+    overflow-x: hidden
+}
+
+    .DomainTable thead, .DomainTable tbody tr {
+        display: table;
+        width: 97%;
+        table-layout: fixed
+    }
+
+.DomainTable thead, .DomainTable tbody, .DomainTable td {
+    border: none !important;
+}
+
 /* The switch - the box around the slider */
 .switch {
     position: relative;
@@ -152,3 +178,4 @@ table.data td
 border:1px solid #c3c3c3;
 padding:3px;
 }*/
+
