@@ -35,6 +35,9 @@ namespace PainAssessment
             services.AddDbContext<MvcChecklistContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("MvcChecklistContext")));
 
+            services.AddDbContext<MvcConsultationChecklistContext>(options =>
+            options.UseSqlServer(Configuration.GetConnectionString("MvcConsultationChecklistContext")));
+
 
             services.AddTransient<IUnitOfWork, UnitOfWork>();
 

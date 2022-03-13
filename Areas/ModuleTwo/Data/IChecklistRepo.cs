@@ -22,6 +22,5 @@ namespace PainAssessment.Areas.ModuleTwo.Data
         void Delete(Checklist checklist);
 
         Boolean CheckExists(int id);
-
     }
 }
