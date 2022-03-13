@@ -1,19 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using PainAssessment.Areas.ModuleTwo.Services;
 
 namespace PainAssessment.Areas.ModuleTwo.Models
 {
-    public class Checklist : IChecklist
+    public class ConsultationChecklist
     {
         [Key]
         public int ChecklistId { get; set; }
+        public int SessionId { get; set; }
         public string ChecklistName { get; set; }
         public string ChecklistDescription { get; set; }
+        public double Weightage { get; set; }
+        public bool UserEdit { get; set; }
+        public double UserWeightage { get; set; }
 
-        public virtual List<CentralDomain> Central { get; set; } = new List<CentralDomain>();//detail very important
-        public virtual List<RegionalDomain> Regional { get; set; } = new List<RegionalDomain>();//detail very important
-        public virtual List<LocalDomain> Local { get; set; } = new List<LocalDomain>();//detail very important
+        public virtual List<ConsultationCentralDomain> Central { get; set; } = new List<ConsultationCentralDomain>();//detail very important
+        public virtual List<ConsultationRegionalDomain> Regional { get; set; } = new List<ConsultationRegionalDomain>();//detail very important
+        public virtual List<ConsultationLocalDomain> Local { get; set; } = new List<ConsultationLocalDomain>();//detail very important
 
         public void InitialiseBooleanAttribute(string attribute, bool value)
         {
@@ -64,6 +69,7 @@ namespace PainAssessment.Areas.ModuleTwo.Models
 
             return "invalid attribute";
         }
+
 
     }
 }
