@@ -88,7 +88,5 @@ namespace PainAssessment.Areas.ModuleTwo.Data
         {
             return _context.Checklist.Any(e => e.RetrieveIntAttribute("ChecklistId") == id);
         }
-
-        
     }
 }
