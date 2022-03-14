@@ -18,5 +18,14 @@
 	  </PackageReference>
 	  <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2" />
   </ItemGroup>
-
+	<ItemGroup>
+		<None Remove="Areas\Admin\Views\Practitioners\" />
+	</ItemGroup>
+  <ItemGroup>
+    <Folder Include="Areas\Admin\Views\Practitioners\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="wwwroot\css\chosen.min.css" />
+    <None Include="wwwroot\js\chosen.jquery.min.js" />
+  </ItemGroup>
 </Project>
