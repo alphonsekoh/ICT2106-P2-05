@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
+using PainAssessment.Areas.Admin.Models.Builder;
 using PainAssessment.Areas.Admin.Models.Factory;
 using System;
 using System.Threading.Tasks;
@@ -23,14 +24,17 @@ namespace PainAssessment.Areas.Admin.Models.ModelBinder
 
             if (nameResult)
             {
+                PatientBuilder patientBuilder = new PatientBuilder()
+                                                .WithName(name.ToString())
+                                                .WithGender(gender.ToString())
+                                                .WithBirthDate(DateTime.Parse(birthDate.ToString()))
+                                                .WithCondition(condition.ToString())
+                                                .WithNotes(notes.ToString());
                 if (idResult)
                 {
-                    patient = personFactory.CreatePatient(name.ToString(), gender.ToString(), DateTime.Parse(birthDate.ToString()), condition.ToString(), notes.ToString(), Guid.Parse(id.ToString()));
+                    patientBuilder.WithId(Guid.Parse(id.ToString()));
                 }
-                else
-                {
-                    patient = personFactory.CreatePatient(name.ToString(), gender.ToString(), DateTime.Parse(birthDate.ToString()), condition.ToString(), notes.ToString());
-                }
+                patient = patientBuilder.Build();
                 bindingContext.Result = ModelBindingResult.Success(patient);
             }
             return Task.CompletedTask;
