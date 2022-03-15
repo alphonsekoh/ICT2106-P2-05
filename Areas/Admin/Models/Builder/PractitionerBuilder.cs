@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace PainAssessment.Areas.Admin.Models.Builder
 {
@@ -34,19 +31,19 @@ namespace PainAssessment.Areas.Admin.Models.Builder
 
         public IPractitionerBuilder WithName(string name)
         {
-            this.name  = name;
+            this.name = name;
             return this;
         }
 
         public IPractitionerBuilder WithPainEducation(string education)
         {
-            this.painEducation = education;
+            painEducation = education;
             return this;
         }
 
         public IPractitionerBuilder WithPracticeType(int typeId)
         {
-            this.practiceTypeId = typeId;
+            practiceTypeId = typeId;
             return this;
         }
 

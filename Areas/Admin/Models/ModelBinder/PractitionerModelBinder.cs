@@ -77,8 +77,8 @@ namespace PainAssessment.Areas.Admin.Models.ModelBinder
                                                                                    .WithPainEducation(string.Join(",", priorEducationList))
                                                                                    .WithClinic(parseClinicSuccess ? parsedClinicID : createdClinicID)
                                                                                    .WithPracticeType(parsePracticeSuccess ? parsedPracticeTypeID : createdPracticeTypeID);
-                                                                                   
-                                                                                    
+
+
                 if (idResult)
                 {
                     practitionerBuilder.WithId(Guid.Parse(id.ToString()));

@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using PainAssessment.Areas.Admin.Models.Builder;
 using PainAssessment.Areas.Admin.Models.ModelBinder;
 using PainAssessment.Areas.Admin.Util;
 using System;
@@ -27,7 +26,7 @@ namespace PainAssessment.Areas.Admin.Models
         private readonly List<PractitionerPatient> _practitionerPatients = new();
         public virtual IReadOnlyList<PractitionerPatient> PractitionerPatients => _practitionerPatients.ToList();
 
- 
+
         public Patient(string name, string gender, DateTime birthDate, string condition, string notes)
         {
             Name = Regex.Replace(name, @"\b\w{3,}\b", match => Utility.MaskName(match.Value));

@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace PainAssessment.Areas.Admin.Models.Builder
 {
@@ -15,6 +12,6 @@ namespace PainAssessment.Areas.Admin.Models.Builder
         IPatientBuilder WithId(Guid id);
 
         Patient Build();
-        
+
     }
 }

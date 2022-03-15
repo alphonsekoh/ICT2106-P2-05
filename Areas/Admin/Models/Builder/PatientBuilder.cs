@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace PainAssessment.Areas.Admin.Models.Builder
 {
@@ -54,7 +51,7 @@ namespace PainAssessment.Areas.Admin.Models.Builder
 
         public Patient Build()
         {
-            if(String.IsNullOrEmpty(name))
+            if (String.IsNullOrEmpty(name))
             {
                 throw new ArgumentException("Parameter cannot be null", nameof(name));
             }
