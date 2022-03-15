@@ -35,6 +35,7 @@ namespace PainAssessment
             services.AddScoped<IGatewayManager, GatewayManager>();
             services.AddScoped<IPainEducationService, PainEducationService>();
 
+
             services.AddControllersWithViews();
         }
 

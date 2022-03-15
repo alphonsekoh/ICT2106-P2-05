@@ -51,18 +51,41 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-    <script type="text/javascript">
-        $(function () {
-            clinicalArea = $("#ClinicalAreaID").select2({
-                tags: true
-            });
-            practiceType = $("#PracticeTypeID").select2({
-                tags: true
-            });
+<script type="text/javascript">
+    $(function () {
+        clinicalArea = $("#ClinicalAreaID").select2({
+            tags: true,
+            createTag: function (params) {
+                var term = $.trim(params.term);
+                if (term === '') {
+                    return null;
+                }
+                return term.match(/^[a-zA-Z]+$/g) ? { id: params.term, text: params.term, newTag: true } : null;
+            }
+        });
 
-            painEducation = $("#PriorPainEducation").select2({
-                tags: true
-            });
-        })
-    </script>
+        practiceType = $("#PracticeTypeID").select2({
+            tags: true,
+            createTag: function (params) {
+                var term = $.trim(params.term);
+                if (term === '') {
+                    return null;
+                }
+                return term.match(/^[a-zA-Z]+$/g) ? { id: params.term, text: params.term, newTag: true } : null;
+            }
+
+        });
+        painEducation = $("#PriorPainEducation").select2({
+            tags: true,
+            createTag: function (params) {
+                var term = $.trim(params.term);
+                if (term === '') {
+                    return null;
+                }
+                return term.match(/^[a-zA-Z]+$/g) ? { id: params.term, text: params.term, newTag: true } : null;
+            }
+        });
+
+    })
+</script>
 }
