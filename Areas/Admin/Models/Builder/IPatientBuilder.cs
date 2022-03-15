@@ -7,12 +7,14 @@ namespace PainAssessment.Areas.Admin.Models.Builder
 {
     interface IPatientBuilder
     {
-        PatientBuilder WithName(string name);
-        PatientBuilder WithGender(string gender);
-        PatientBuilder WithBirthDate(DateTime birthDate);
-        PatientBuilder WithCondition(string condition);
-        PatientBuilder WithNotes(string notes);
-        PatientBuilder WithId(Guid id);
+        IPatientBuilder WithName(string name);
+        IPatientBuilder WithGender(string gender);
+        IPatientBuilder WithBirthDate(DateTime birthDate);
+        IPatientBuilder WithCondition(string condition);
+        IPatientBuilder WithNotes(string notes);
+        IPatientBuilder WithId(Guid id);
+
+        Patient Build();
         
     }
 }

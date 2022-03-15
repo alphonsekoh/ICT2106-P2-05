@@ -14,24 +14,24 @@ namespace PainAssessment.Areas.Admin.Models.Builder
         private string condition;
         private string notes;
 
-        public PatientBuilder WithName(string name)
+        public IPatientBuilder WithName(string name)
         {
             this.name = name;
             return this;
         }
-        public PatientBuilder WithBirthDate(DateTime birthDate)
+        public IPatientBuilder WithBirthDate(DateTime birthDate)
         {
             this.birthDate = birthDate;
             return this;
         }
 
-        public PatientBuilder WithCondition(string condition)
+        public IPatientBuilder WithCondition(string condition)
         {
             this.condition = condition;
             return this;
         }
 
-        public PatientBuilder WithGender(string gender)
+        public IPatientBuilder WithGender(string gender)
         {
             this.gender = gender;
             return this;
@@ -40,13 +40,13 @@ namespace PainAssessment.Areas.Admin.Models.Builder
 
 
 
-        public PatientBuilder WithNotes(string notes)
+        public IPatientBuilder WithNotes(string notes)
         {
             this.notes = notes;
             return this;
         }
 
-        public PatientBuilder WithId(Guid id)
+        public IPatientBuilder WithId(Guid id)
         {
             this.id = id;
             return this;

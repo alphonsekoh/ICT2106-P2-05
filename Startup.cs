@@ -5,8 +5,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using PainAssessment.Areas.Admin.Data;
-using PainAssessment.Areas.Admin.Models;
-using PainAssessment.Areas.Admin.Models.Builder;
 using PainAssessment.Areas.Admin.Services;
 using PainAssessment.Data;
 
@@ -36,6 +34,8 @@ namespace PainAssessment
             services.AddScoped<IPatientService, PatientService>();
             services.AddScoped<IGatewayManager, GatewayManager>();
             services.AddScoped<IPainEducationService, PainEducationService>();
+
+
             services.AddControllersWithViews();
         }
 
