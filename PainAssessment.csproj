@@ -23,10 +23,7 @@
     <None Remove="Areas\Admin\Views\Practitioners\" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Areas\Admin\Models\NewFolder\" />
     <Folder Include="Areas\Admin\Views\Practitioners\" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="wwwroot\css\chosen.min.css" />
-    <None Include="wwwroot\js\chosen.jquery.min.js" />
   </ItemGroup>
 </Project>

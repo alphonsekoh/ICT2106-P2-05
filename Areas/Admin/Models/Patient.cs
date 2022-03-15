@@ -27,7 +27,6 @@ namespace PainAssessment.Areas.Admin.Models
         public virtual IReadOnlyList<PractitionerPatient> PractitionerPatients => _practitionerPatients.ToList();
 
 
-
         public Patient(string name, string gender, DateTime birthDate, string condition, string notes)
         {
             Name = Regex.Replace(name, @"\b\w{3,}\b", match => Utility.MaskName(match.Value));
@@ -45,6 +44,7 @@ namespace PainAssessment.Areas.Admin.Models
             Condition = condition;
             Notes = notes;
         }
+
 
         public void AddPractitionerRelation(Practitioner practitioner)
         {

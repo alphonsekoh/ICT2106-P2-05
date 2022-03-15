@@ -67,15 +67,38 @@
     <script type="text/javascript">
         $(function () {
             clinicalArea = $("#ClinicalAreaID").select2({
-                tags: true
+                tags: true,
+                createTag: function (params) {
+                    var term = $.trim(params.term);
+                    if (term === '') {
+                        return null;
+                    }
+                    return term.match(/^[a-zA-Z]+$/g) ? {id: params.term, text: params.term , newTag: true} : null;
+                }
             });
+
             practiceType = $("#PracticeTypeID").select2({
-                tags: true
+                tags: true,
+                createTag: function (params) {
+                    var term = $.trim(params.term);
+                    if (term === '') {
+                        return null;
+                    }
+                    return term.match(/^[a-zA-Z]+$/g) ? { id: params.term, text: params.term, newTag: true } : null;
+                }
 
             });
             painEducation = $("#PriorPainEducation").select2({
-                tags: true
+                tags: true,
+                createTag: function (params) {
+                var term = $.trim(params.term);
+                if (term === '') {
+                    return null;
+                }
+                return term.match(/^[a-zA-Z]+$/g) ? { id: params.term, text: params.term, newTag: true } : null;
+                }
             });
+
         })
         </script>
 }
