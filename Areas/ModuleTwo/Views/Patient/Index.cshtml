@@ -1,13 +1,14 @@
-﻿@model IEnumerable<PainAssessment.Areas.ModuleTwo.Models.Patient>
+﻿@*@model IEnumerable<PainAssessment.Areas.ModuleTwo.Models.Patient>*@
+@model IEnumerable<PainAssessment.Areas.Admin.Models.Patient>
 
 @{
     ViewData["Title"] = "Index";
 }
 
 <head>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
 <h1>Index</h1>
 
@@ -50,27 +51,27 @@
 <table class="table">
     <thead>
         <tr>
-            <th id = "patientNamesCol">
-                @Html.DisplayNameFor(model => model.patientName)
+            <th id="patientNamesCol">
+                @Html.DisplayNameFor(model => model.Name)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.patientAge)
+                @Html.DisplayNameFor(model => model.BirthDate)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.condition)
+                @Html.DisplayNameFor(model => model.Condition)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.gender)
+                @Html.DisplayNameFor(model => model.Gender)
             </th>
-            <th>
+            @*<th>
                 @Html.DisplayNameFor(model => model.sessions)
-            </th>
+                </th>*@
             <th>
-                @Html.DisplayNameFor(model => model.patientNotes)
+                @Html.DisplayNameFor(model => model.Notes)
             </th>
-            <th>
+            @*<th>
                 @Html.DisplayNameFor(model => model.lastVisit)
-            </th>
+                </th>*@
             <th>
 
             </th>
@@ -81,27 +82,30 @@
         {
             <tr>
                 <td class="patientNames">
-                    @Html.DisplayFor(modelItem => item.patientName)
+                    @Html.DisplayFor(modelItem => item.Name)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.patientAge)
+                    @Html.DisplayFor(modelItem => item.BirthDate)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.condition)
+                    @Html.DisplayFor(modelItem => item.Condition)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.gender)
+                    @Html.DisplayFor(modelItem => item.Gender)
                 </td>
-                <td>
+                @*<td>
                     @Html.DisplayFor(modelItem => item.sessions)
-                </td>
+                    </td>*@
                 <td>
-                    @Html.DisplayFor(modelItem => item.patientNotes)
+                    @Html.DisplayFor(modelItem => item.Notes)
                 </td>
-                <td>
+                @*<td>
                     @Html.DisplayFor(modelItem => item.lastVisit)
-                </td>
+                    </td>*@
                 <td>
+                    @*<a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>*@
                     <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
                     <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
                     <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
@@ -113,58 +117,58 @@
 <a class="btn btn-primary btn-sm" asp-area="ModuleTwo" asp-controller="Consultations" asp-action="Index">Patient Consultation Records</a>
 
 <script>
-    window.onload = load;
+        window.onload = load;
 
-    function toggleView() {
-        var checkBox = document.getElementById("toggleSwitch");
-        var patientNames = document.getElementById("patientNames");
-        var patientNamesCol = document.getElementById("patientNamesCol");
-        if (checkBox.checked == true) {
-            save();
-            patientNamesCol.style.display = "none";
-            var patientNames = document.getElementsByClassName("patientNames");
-            for (var i = 0; i < patientNames.length; i++) {
-                patientNames[i].style.display = "none";
+        function toggleView() {
+            var checkBox = document.getElementById("toggleSwitch");
+            var patientNames = document.getElementById("patientNames");
+            var patientNamesCol = document.getElementById("patientNamesCol");
+            if (checkBox.checked == true) {
+                save();
+                patientNamesCol.style.display = "none";
+                var patientNames = document.getElementsByClassName("patientNames");
+                for (var i = 0; i < patientNames.length; i++) {
+                    patientNames[i].style.display = "none";
+                }
+            }
+            else {
+                save();
+                patientNamesCol.style.display = "block";
+                var patientNames = document.getElementsByClassName("patientNames");
+                for (var i = 0; i < patientNames.length; i++) {
+                    patientNames[i].style.display = "block";
+                }
             }
         }
-        else {
-            save();
-            patientNamesCol.style.display = "block";
-            var patientNames = document.getElementsByClassName("patientNames");
-            for (var i = 0; i < patientNames.length; i++) {
-                patientNames[i].style.display = "block";
-            }
-        }
+
+        function save() {
+        var checkbox = document.getElementById("toggleSwitch");
+        sessionStorage.setItem("toggleSwitchState", checkbox.checked);
     }
 
-    function save() {
-    var checkbox = document.getElementById("toggleSwitch");
-    sessionStorage.setItem("toggleSwitchState", checkbox.checked);
-}
+        function load() {
+            var checkBox = document.getElementById("toggleSwitch");
+            var switchState = sessionStorage.getItem("toggleSwitchState");
+            if (switchState === "true") {
+                checkBox.checked = true;
+            }
+            else {
+                checkBox.checked = false;
+            }
 
-    function load() {
-        var checkBox = document.getElementById("toggleSwitch");
-        var switchState = sessionStorage.getItem("toggleSwitchState");
-        if (switchState === "true") {
-            checkBox.checked = true;
-        }
-        else {
-            checkBox.checked = false;
-        }
-
-        if(checkBox.checked) {
-            patientNamesCol.style.display = "none";
-            var patientNames = document.getElementsByClassName("patientNames");
-            for (var i = 0; i < patientNames.length; i++) {
-                patientNames[i].style.display = "none";
+            if(checkBox.checked) {
+                patientNamesCol.style.display = "none";
+                var patientNames = document.getElementsByClassName("patientNames");
+                for (var i = 0; i < patientNames.length; i++) {
+                    patientNames[i].style.display = "none";
+                }
+            }
+            else {
+                patientNamesCol.style.display = "block";
+                var patientNames = document.getElementsByClassName("patientNames");
+                for (var i = 0; i < patientNames.length; i++) {
+                    patientNames[i].style.display = "block";
+                }
             }
         }
-        else {
-            patientNamesCol.style.display = "block";
-            var patientNames = document.getElementsByClassName("patientNames");
-            for (var i = 0; i < patientNames.length; i++) {
-                patientNames[i].style.display = "block";
-            }
-        }
-    }
 </script>
