@@ -1,11 +1,9 @@
 ﻿using PainAssessment.Interfaces;
 using PainAssessment.Models;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace PainAssessment.Domain
 {
-    public class AdministratorService
+    public class AdministratorService : IAdministratorService
     {
         private readonly IUnitOfWork _unitOfWork;
 

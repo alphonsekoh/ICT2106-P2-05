@@ -49,14 +49,14 @@ namespace PainAssessment.Domain
         public bool CheckUsername(string username)
         {
             IEnumerable<Account> account = _unitOfWork.AccountRepository.Find(Acc => Acc.Username.Equals(username));
-            Account userAcc = account.First();
-            if (userAcc != null)
+
+            if (account.Any())
             {
-                return false;
+                return true;
             }
             else
             {
-                return true;
+                return false;
             }
         }
 

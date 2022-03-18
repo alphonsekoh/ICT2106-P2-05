@@ -1,12 +1,11 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
 using PainAssessment.Interfaces;
 using PainAssessment.Models;
 using PainAssessment.ViewModels;
 using System;
-using System.Collections.Generic;
+using BC = BCrypt.Net.BCrypt;
 
 namespace PainAssessment.Controllers
 {
@@ -70,12 +69,13 @@ namespace PainAssessment.Controllers
                 if (accountService.CheckUsername(model.Username).Equals(false))
                 {
                     var AccountId = Guid.NewGuid();
+                    var cost = 16;
 
                     Account account = new Account
                     {
                         AccountId = AccountId,
                         Username = model.Username,
-                        Password = model.Password,
+                        Password = BC.HashPassword(model.Password, cost),
                         Role = model.Role,
                         CreatedAt = DateTime.Now,
                         AccountStatus = "active",
@@ -83,21 +83,27 @@ namespace PainAssessment.Controllers
                         IsAuthenticated = false,
                     };
 
-                if(account != null)
-                {
-                    accountService.CreateAcc(account);
+                    if (account != null)
+                    {
+                        accountService.CreateAcc(account);
                         if (account.Role == "Administrator")
                         {
                             // Administrator service
-
+                            Administrator admin = new Administrator
+                            {
+                                Account = account,
+                                FullName = model.FullName,
+                                Experience = 0
+                            };
+                            administratorService.CreateAdmin(admin);
                         }
                         else
                         {
                             // Practitioner service
                         }
-                }
-
-                    return RedirectToAction(DIRECT_ACTN, DIRECT_CNTR);
+                        return RedirectToAction(DIRECT_ACTN, DIRECT_CNTR);
+                    }
+                    return View(model);
                 }
                 else
                 {
@@ -105,7 +111,6 @@ namespace PainAssessment.Controllers
                     ViewData["MsgType"] = "danger";
                     return View(model);
                 }
-
 
             }
             return View(model);
