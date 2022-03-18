@@ -1,8 +1,12 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
 using PainAssessment.Interfaces;
+using PainAssessment.Models;
 using PainAssessment.ViewModels;
+using System;
+using System.Collections.Generic;
 
 namespace PainAssessment.Controllers
 {
@@ -10,11 +14,21 @@ namespace PainAssessment.Controllers
     {
         private readonly ILogger<AccountController> _logger;
         private readonly IAccountService accountService;
+        private readonly IAdministratorService administratorService;
 
         //private const string REDIRECT_CNTR = "Home";
         //private const string REDIRECT_ACTN = "Index";
-        //private const string DIRECT_CNTR = "Account";
-        //private const string DIRECT_ACTN = "Login";
+        private const string DIRECT_CNTR = "Login";
+        private const string DIRECT_ACTN = "Index";
+
+        public AccountController(
+            IAccountService accountService,
+            IAdministratorService administratorService
+           )
+        {
+            this.accountService = accountService;
+            this.administratorService = administratorService;
+        }
 
         [AllowAnonymous]
         [HttpGet]
@@ -39,6 +53,62 @@ namespace PainAssessment.Controllers
                 return View();
             }
 
+        }
+        [HttpGet]
+        [AllowAnonymous]
+        public ActionResult CreateAccount()
+        {
+            return View(new CreateAccountModel());
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        public ActionResult CreateAccount(CreateAccountModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                if (accountService.CheckUsername(model.Username).Equals(false))
+                {
+                    var AccountId = Guid.NewGuid();
+
+                    Account account = new Account
+                    {
+                        AccountId = AccountId,
+                        Username = model.Username,
+                        Password = model.Password,
+                        Role = model.Role,
+                        CreatedAt = DateTime.Now,
+                        AccountStatus = "active",
+                        FirstSignIn = true,
+                        IsAuthenticated = false,
+                    };
+
+                if(account != null)
+                {
+                    accountService.CreateAcc(account);
+                        if (account.Role == "Administrator")
+                        {
+                            // Administrator service
+
+                        }
+                        else
+                        {
+                            // Practitioner service
+                        }
+                }
+
+                    return RedirectToAction(DIRECT_ACTN, DIRECT_CNTR);
+                }
+                else
+                {
+                    ViewData["Message"] = "Username is taken. Please re-enter a username";
+                    ViewData["MsgType"] = "danger";
+                    return View(model);
+                }
+
+
+            }
+            return View(model);
         }
 
     }

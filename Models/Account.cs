@@ -9,12 +9,11 @@ namespace PainAssessment.Models
         public Guid AccountId { get; set; }
         [Required]
         public string Username { get; set; }
-        [DataType(DataType.Password)]
         public string Password { get; set; }
         public string AccountStatus { get; set; }
         public string Role { get; set; }
         public bool IsAuthenticated { get; set; }
-        public DateTime CreatedAt { get; set; } = DateTime.Now;
+        public DateTime CreatedAt { get; set; }
         public bool FirstSignIn { get; set; }
 
     }
