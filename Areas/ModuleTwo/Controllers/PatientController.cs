@@ -30,13 +30,13 @@ namespace PainAssessment.Areas.ModuleTwo.Controllers
         // GET: Admin/Patients
         public IActionResult Index()
         {
-            Practitioner practitioner = practitionerService.GetPractitioner(Guid.Parse("fa352d4d-e50f-43eb-0176-08da04e2f76b"));
-            Patient patient = patientService.GetPatient(Guid.Parse("85f853ef-876e-48fb-173b-08da04e2f772"));
-            practitioner.AddPatientRelation(patient);
-            practitionerService.SavePractitioner();
-            return View(practitioner.Patients);
-            //return View(patientService.GetAllPatients());
-;        }
+            //Practitioner practitioner = practitionerService.GetPractitioner(Guid.Parse("fa352d4d-e50f-43eb-0176-08da04e2f76b"));
+            //Patient patient = patientService.GetPatient(Guid.Parse("85f853ef-876e-48fb-173b-08da04e2f772"));
+            //practitioner.AddPatientRelation(patient);
+            //practitionerService.SavePractitioner();
+            //return View(practitioner.Patients);
+            return View(patientService.GetAllPatients());
+        }
 
         // GET: Admin/Patients/Details/5
         public IActionResult Details(Guid? id)
