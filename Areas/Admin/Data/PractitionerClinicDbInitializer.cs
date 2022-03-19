@@ -111,12 +111,26 @@ namespace PainAssessment.Areas.Admin.Data
                 new Patient(  "Stanbridge",  "Female", 30, "Unknown",  "Unknown" ),
                 new Patient(  "Ruveni",  "Female", 30, "Unknown",  "Unknown" ),
                 new Patient(  "Andrews",  "Male",30,  "Unknown",  "Unknown" ),
-                new Patient(  "Daly",  "Female", 25, "Unknown",  "Unknown" )
+                new Patient(  "Daly",  "Female", 25, "Unknown",  "Unknown" ),
+                new Patient(  "Chub",  "Female", 25, "Unknown",  "Unknown" ),
+                new Patient(  "Druve",  "Female", 25, "Unknown",  "Unknown" ),
+                new Patient(  "Dove",  "Female", 25, "Unknown",  "Unknown" ),
+                new Patient(  "Hona",  "Female", 25, "Unknown",  "Unknown" ),
+                new Patient(  "Dala",  "Female", 25, "Unknown",  "Unknown" ),
+                new Patient(  "Zack",  "Female", 25, "Unknown",  "Unknown" ),
+                new Patient(  "Trads",  "Female", 25, "Unknown",  "Unknown" ),
+                new Patient(  "Jams",  "Female", 25, "Unknown",  "Unknown" ),
 
             };
 
 
             context.Patients.AddRange(patients);
+            context.SaveChanges();
+            
+            for(int i = 0; i < practitioners.Length; i++)
+            {
+                practitioners[i].AddPatientRelation(patients[i]);
+            }
             context.SaveChanges();
 
         }
