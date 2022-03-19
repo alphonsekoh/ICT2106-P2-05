@@ -15,12 +15,18 @@ namespace PainAssessment.Areas.ModuleTwo.Models
         public double Weightage { get; set; }
         public bool UserEdit { get; set; }
         public double UserWeightage { get; set; }
-
         public virtual List<ConsultationCentralDomain> Central { get; set; } = new List<ConsultationCentralDomain>();//detail very important
         public virtual List<ConsultationRegionalDomain> Regional { get; set; } = new List<ConsultationRegionalDomain>();//detail very important
         public virtual List<ConsultationLocalDomain> Local { get; set; } = new List<ConsultationLocalDomain>();//detail very important
+        public double InitialCentralWeight { get; set; }
+        public double InitialRegionalWeight { get; set; }
+        public double InitialLocalWeight { get; set; }
+        public Boolean Overriden { get; set; }
+        public double NewCentralWeight { get; set; }
+        public double NewRegionalWeight { get; set; }
+        public double NewLocalWeight { get; set; }
 
-        public void InitialiseBooleanAttribute(string attribute, bool value)
+public void InitialiseBooleanAttribute(string attribute, bool value)
         {
             
         }
