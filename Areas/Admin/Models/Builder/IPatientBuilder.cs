@@ -6,7 +6,7 @@ namespace PainAssessment.Areas.Admin.Models.Builder
     {
         IPatientBuilder WithName(string name);
         IPatientBuilder WithGender(string gender);
-        IPatientBuilder WithBirthDate(DateTime birthDate);
+        IPatientBuilder WithAge(int age);
         IPatientBuilder WithCondition(string condition);
         IPatientBuilder WithNotes(string notes);
         IPatientBuilder WithId(Guid id);

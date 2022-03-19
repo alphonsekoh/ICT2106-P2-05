@@ -16,7 +16,7 @@ namespace PainAssessment.Areas.Admin.Models.ModelBinder
             bool nameResult = data.TryGetValue("Name", out Microsoft.Extensions.Primitives.StringValues name);
             bool idResult = data.TryGetValue("Id", out Microsoft.Extensions.Primitives.StringValues id);
             data.TryGetValue("Gender", out Microsoft.Extensions.Primitives.StringValues gender);
-            data.TryGetValue("BirthDate", out Microsoft.Extensions.Primitives.StringValues birthDate);
+            data.TryGetValue("Age", out Microsoft.Extensions.Primitives.StringValues age);
             data.TryGetValue("Condition", out Microsoft.Extensions.Primitives.StringValues condition);
             data.TryGetValue("Notes", out Microsoft.Extensions.Primitives.StringValues notes);
 
@@ -25,7 +25,7 @@ namespace PainAssessment.Areas.Admin.Models.ModelBinder
                 IPatientBuilder patientBuilder = new PatientBuilder()
                                                 .WithName(name.ToString())
                                                 .WithGender(gender.ToString())
-                                                .WithBirthDate(DateTime.Parse(birthDate.ToString()))
+                                                .WithAge(Int32.Parse(age.ToString()))
                                                 .WithCondition(condition.ToString())
                                                 .WithNotes(notes.ToString());
                 if (idResult)
