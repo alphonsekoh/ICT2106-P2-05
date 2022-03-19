@@ -1,6 +1,12 @@
-﻿@model IEnumerable<PainAssessment.Areas.ModuleTwo.Models.Checklist>
+﻿@using PainAssessment.Areas.ModuleTwo.Services
+@using System.Collections.ObjectModel
+@model IEnumerable<PainAssessment.Areas.ModuleTwo.Models.Checklist>
 
-@{ ViewData["Title"] = "Index"; }
+
+@{
+    ViewData["Title"] = "Index";
+}
+
 
 <div class="row">
     <div class="col sm-1 mb-3">
@@ -9,7 +15,6 @@
     <div class="col lg-10"></div>
     <div class="col sm-1"><a class="btn btn-light border border-dark" style="float:right;" asp-action="Create">Create</a></div>
 </div>
-
 
 <div class="row">
     <table class="table border border-dark rounded-lg ">
@@ -50,3 +55,4 @@
         </tbody>
     </table>
 </div>
+
