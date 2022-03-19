@@ -88,12 +88,13 @@ namespace PainAssessment.Controllers
                  * 7. return true and redirect to the page after successful login
                  * 
                  */
-
                 var user = loginService.Login(username, password);
+
+                //var hashUsername = loginService.HashValue(username);
 
                 // Attributes that are for authentication
                 var claims = new List<Claim> {
-                    new Claim(ClaimTypes.NameIdentifier, Convert.ToString(user.Username)),
+                    new Claim(ClaimTypes.NameIdentifier, Convert.ToString(user.AccountId)),
                     new Claim(ClaimTypes.Role, user.Role),
                 };
 

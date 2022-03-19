@@ -34,5 +34,19 @@ namespace PainAssessment.Domain
 
         }
 
+        public bool VerifyHash(string unhashedValue, string hashedValue)
+        {
+            if (BC.Verify(unhashedValue, hashedValue).Equals(true))
+            {
+                return true;
+            }
+            else return false;
+        }
+
+        public string HashValue(string input)
+        {
+            return BC.HashPassword(input);
+        }
+
     }
 }
