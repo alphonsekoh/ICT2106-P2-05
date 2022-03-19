@@ -8,12 +8,24 @@ namespace PainAssessment.Areas.ModuleTwo.Models
     {
         [Key]
         public int ChecklistId { get; set; }
+        public int PractitionerId = 0;
+        public int SessionId = 0;
         public string ChecklistName { get; set; }
         public string ChecklistDescription { get; set; }
 
         public virtual List<CentralDomain> Central { get; set; } = new List<CentralDomain>();//detail very important
         public virtual List<RegionalDomain> Regional { get; set; } = new List<RegionalDomain>();//detail very important
         public virtual List<LocalDomain> Local { get; set; } = new List<LocalDomain>();//detail very important
+        public double InitialCentralWeight { get; set; }
+        public double InitialRegionalWeight { get; set; }
+        public double InitialLocalWeight { get; set; }
+        public Boolean Overriden = false;
+        public double NewCentralWeight = 0;
+        public double NewRegionalWeight = 0;
+        public double NewLocalWeight = 0;
+        public Boolean Active { get; set; }
+
+
 
         public void InitialiseBooleanAttribute(string attribute, bool value)
         {

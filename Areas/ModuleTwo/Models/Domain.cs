@@ -9,5 +9,10 @@ namespace PainAssessment.Areas.ModuleTwo.Models
     {
         public string SubDomain { get; set; }
         public string Determinant { get; set; }
+        public String Comment { get; set; }
+        public int MaxValue { get; set; }
+        public int ActualValue { get; set; }
+
+
     }
 }
