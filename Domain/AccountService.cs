@@ -15,6 +15,7 @@ namespace PainAssessment.Domain
         {
             _unitOfWork = unitOfWork;
         }
+
         // Update Password
         public void UpdatePassword(string username, string password, string confirmPassword)
         {
@@ -34,7 +35,32 @@ namespace PainAssessment.Domain
         // Reset Password
 
 
-        // Update 
+        // Update AccountStatus
+
+
+        // Create Account
+        public void CreateAcc(Account account)
+        {
+            _unitOfWork.AccountRepository.Add(account);
+            _unitOfWork.Save();
+        }
+
+        // Check Duplicate Username
+        public bool CheckUsername(string username)
+        {
+            IEnumerable<Account> account = _unitOfWork.AccountRepository.Find(Acc => Acc.Username.Equals(username));
+
+            if (account.Any())
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        // Update Username
 
 
     }
