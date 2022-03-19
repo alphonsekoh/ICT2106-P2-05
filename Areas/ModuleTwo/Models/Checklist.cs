@@ -19,9 +19,7 @@ namespace PainAssessment.Areas.ModuleTwo.Models
         public double InitialCentralWeight { get; set; }
         public double InitialRegionalWeight { get; set; }
         public double InitialLocalWeight { get; set; }
-        public Boolean CentralWeightOverriden = false; 
-        public Boolean RegionalWeightOverriden = false;
-        public Boolean LocalWeightOverriden = false;
+        public Boolean Overriden = false;
         public double NewCentralWeight = 0;
         public double NewRegionalWeight = 0;
         public double NewLocalWeight = 0;
