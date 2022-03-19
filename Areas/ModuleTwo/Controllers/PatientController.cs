@@ -17,18 +17,26 @@ namespace PainAssessment.Areas.ModuleTwo.Controllers
     public class PatientController : Controller
     {
         private readonly IPatientService patientService;
+        private readonly IPractitionerService practitionerService;
 
-        public PatientController(IPatientService patientService)
+        //public PatientController(IPatientService patientService)
+        public PatientController(IPatientService patientService, IPractitionerService practitionerService)
         {
             this.patientService = patientService;
+            this.practitionerService = practitionerService;
             //log = LogService.GetInstance;
         }
 
         // GET: Admin/Patients
         public IActionResult Index()
         {
-            return View(patientService.GetAllPatients());
-        }
+            Practitioner practitioner = practitionerService.GetPractitioner(Guid.Parse("fa352d4d-e50f-43eb-0176-08da04e2f76b"));
+            Patient patient = patientService.GetPatient(Guid.Parse("85f853ef-876e-48fb-173b-08da04e2f772"));
+            practitioner.AddPatientRelation(patient);
+            practitionerService.SavePractitioner();
+            return View(practitioner.Patients);
+            //return View(patientService.GetAllPatients());
+;        }
 
         // GET: Admin/Patients/Details/5
         public IActionResult Details(Guid? id)
