@@ -45,9 +45,6 @@
             <thead>
                 <tr>
                     <th scope="col">
-                        @Html.DisplayNameFor(model => model.Id)
-                    </th>
-                    <th scope="col">
                         @Html.DisplayNameFor(model => model.Name)
                     </th>
 
@@ -73,9 +70,6 @@
                 @foreach (var item in Model)
                 {
                 <tr id="row_@item.Id">
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Id)
-                    </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Name)
                     </td>
@@ -122,11 +116,6 @@
                            class="btn btn-danger btn-sm">
                             Reset Password
                         </a>
-                        <button onclick="ConfirmDelete('@item.Id', '@item.Name')"
-                                type="button"
-                                class="btn btn-danger btn-sm">
-                            Delete
-                        </button>
                     </td>
                 </tr>
                 }
