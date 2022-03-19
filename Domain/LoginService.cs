@@ -21,7 +21,7 @@ namespace PainAssessment.Domain
         {
             IEnumerable<Account> account = _unitOfWork.LoginRepository.Find(Acc => Acc.Username.Equals(username));
             // Check if account exists and password matches to the one in db
-            Account userAcc = account.First();
+            Account userAcc = account.FirstOrDefault();
             if (userAcc != null && BC.Verify(password, userAcc.Password))
             {
                 Account user = _unitOfWork.LoginRepository.GetById<Account, Guid>(userAcc.AccountId);
@@ -34,19 +34,19 @@ namespace PainAssessment.Domain
 
         }
 
-        public bool VerifyHash(string unhashedValue, string hashedValue)
-        {
-            if (BC.Verify(unhashedValue, hashedValue).Equals(true))
-            {
-                return true;
-            }
-            else return false;
-        }
+        //public bool VerifyHash(string unhashedValue, string hashedValue)
+        //{
+        //    if (BC.Verify(unhashedValue, hashedValue).Equals(true))
+        //    {
+        //        return true;
+        //    }
+        //    else return false;
+        //}
 
-        public string HashValue(string input)
-        {
-            return BC.HashPassword(input);
-        }
+        //public string HashValue(string input)
+        //{
+        //    return BC.HashPassword(input);
+        //}
 
     }
 }

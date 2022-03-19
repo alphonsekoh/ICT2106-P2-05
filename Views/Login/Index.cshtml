@@ -13,16 +13,27 @@
 </head>
 
 <body>
+    @if (ViewData["Message"] != null)
+    {
+        <div class="form-group">
+            <div class="col-sm-offset-4 col-sm-5">
+                <div class="alert alert-@ViewData["MsgType"]">
+                    <text>@ViewData["Message"]</text>
+                </div>
+            </div>
+        </div>
+    }
     @using (Html.BeginForm("Index", "Login", FormMethod.Post))
     {
         <div class="form-horizontal">
             <hr />
-            <div class="text-success">
+          @*  <div class="text-success">
                 @ViewBag.Message
-            </div>
+            </div>*@
             <div class="form-group">
                 <label class="control-label col-md-2">Username</label>
                 @Html.TextBoxFor(user => user.Username, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Username)
             </div>
             <div class="form-group">
                 <label class="control-label col-md-2">Password</label>
@@ -43,17 +54,6 @@
                 </div>
             </div>
         </div>
-
-        @*@if (ViewData["Message"] != null)
-            {
-            <div class="form-group">
-            <div class="col-sm-offset-4 col-sm-5">
-            <div class="alert alert-@ViewData["MsgType"]">
-            <text>@ViewData["Message"]</text>
-            </div>
-            </div>
-            </div>
-            }*@
 
     }
 

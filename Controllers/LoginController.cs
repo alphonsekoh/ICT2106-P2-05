@@ -49,22 +49,14 @@ namespace PainAssessment.Controllers
             }
             else
             {
-                //if (loginService.Login(accountId, password) == true)
-                //{
-                //    return RedirectToAction(REDIRECT_ACTN, REDIRECT_CNTR);
-                //}
-                //else
-                //{
-                //    ViewData["test"] = false;
-                //    return View();
-                //}
-
                 if(await AuthenticateUser(model) == true)
                 {
                     return RedirectToAction(REDIRECT_ACTN, REDIRECT_CNTR);
                 }
                 else
                 {
+                    ViewData["Message"] = "Login details is incorrect";
+                    ViewData["MsgType"] = "danger";
                     return View(model);
                 }
             }
