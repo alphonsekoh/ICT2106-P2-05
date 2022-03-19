@@ -93,10 +93,8 @@ namespace PainAssessment.Controllers
 
                 // Attributes that are for authentication
                 var claims = new List<Claim> {
-                    new Claim(ClaimTypes.NameIdentifier, Convert.ToString(user.Account.Username)),
-                    new Claim(ClaimTypes.Name, user.Name),
+                    new Claim(ClaimTypes.NameIdentifier, Convert.ToString(user.Username)),
                     new Claim(ClaimTypes.Role, user.Role),
-                    new Claim("Email", user.Email)
                 };
 
                 // Initialise instance of ClaimsIdentity
@@ -121,31 +119,6 @@ namespace PainAssessment.Controllers
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             //Redirect to login page
             return LocalRedirect("/");
-        }
-
-        [AllowAnonymous]
-        [HttpGet]
-        public ActionResult ChangePassword()
-        {
-            return View();
-        }
-
-        [AllowAnonymous]
-        [HttpPost]
-        public ActionResult ChangePassword(ChangePasswordModel model)
-        {
-            if (!ModelState.IsValid)
-            {
-                loginService.UpdatePassword(model.Username, model.NewPassword, model.ConfirmPassword);
-                //ViewData["Message"] = "Password successfully changed!";
-                //ViewData["MsgType"] = "success";
-                return View(model);
-            }
-            else
-            {
-                return View();
-            }
-
         }
 
 

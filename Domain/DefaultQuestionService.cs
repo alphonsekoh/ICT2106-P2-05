@@ -52,7 +52,7 @@ namespace PainAssessment.Domain
 
         public DefaultQuestion GetDefaultQuestion(int templateID)
         {
-            return _unitOfWork.DefaultQuestionRepository.GetById(templateID);
+            return _unitOfWork.DefaultQuestionRepository.GetById<DefaultQuestion, int>(templateID);
         }
 
         public void UpdateDefaultQuestion(int defaultQuestionID, string questionString, string questionDescription, int painSection, double weightage)

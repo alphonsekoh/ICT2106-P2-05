@@ -13,7 +13,7 @@ namespace PainAssessment.Data
         {
             this._context = context;
         }
-        public T GetById(int id)
+        public T GetById<T1, TId>(TId id)
         {
             return _context.Set<T>().Find(id);
         }

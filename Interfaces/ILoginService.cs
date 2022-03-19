@@ -6,7 +6,13 @@ namespace PainAssessment.Interfaces
 {
     public interface ILoginService
     {
-        User Login(string username, string password);
-        void UpdatePassword(string username, string password, string confirmPassword);
+        Account Login(string username, string password);
+        
+
+        // get role
+
+
+        // is user authenticated
+
     }
 }

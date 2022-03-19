@@ -84,9 +84,9 @@ namespace PainAssessment
             // To add everytime there's new interface
             services.AddTransient<ITemplateChecklistService, TemplateChecklistService>();
             services.AddTransient<IDefaultQuestionsService, DefaultQuestionService>();
-            services.AddTransient<iProfileService, AccountService>();
             services.AddTransient<ILoginService, LoginService>();
-
+            services.AddTransient<IAccountService, AccountService>();
+            services.AddTransient<IAdministratorService, AdministratorService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -123,7 +123,7 @@ namespace PainAssessment
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
-                
+
             });
         }
     }
