@@ -38,18 +38,6 @@
                 @Html.ListBoxFor(model => model.SelectedPainEducation, ViewBag.PainEducationID as MultiSelectList, new { id = "PriorPainEducation", multiple = "multiple" })
                 <span asp-validation-for="SelectedPainEducation" class="text-danger"></span>
             </div>
-
-            @*<div class="form-group">
-                    <label asp-for="Username" class="control-label"></label>
-                    <input asp-for="Username" class="form-control" />
-                    <span asp-validation-for="Username" class="text-danger"></span>
-                </div>
-
-                <div class="form-group">
-                    <label asp-for="Password" class="control-label"></label>
-                    <input asp-for="Password" type="password" class="form-control" />
-                    <span asp-validation-for="Password" class="text-danger"></span>
-                </div>*@
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
@@ -64,26 +52,41 @@
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
     <script type="text/javascript">
+        var lastResults = [];
+
         $(function () {
             clinicalArea = $("#ClinicalAreaID").select2({
                 tags: true,
+                selectOnClose: true,
                 createTag: function (params) {
                     var term = $.trim(params.term);
                     if (term === '') {
                         return null;
                     }
-                    return term.match(/^[a-zA-Z]+$/g) ? { id: params.term, text: params.term, newTag: true } : null;
+                    var capitalizedTerm = term.charAt(0).toUpperCase() + term.slice(1);
+                    return term.match(/^[a-zA-Z]+$/g) ? { id: params.term, text: capitalizedTerm, newTag: true } : null;
+                },
+    
+            }).on("select2:select", function (e) {
+                if (e.params.data.newTag) {
+                    alert(`${e.params.data.text} does not exist. It will be created as a new Clinical Area.`);
                 }
             });
 
             practiceType = $("#PracticeTypeID").select2({
                 tags: true,
+                selectOnClose: true,
                 createTag: function (params) {
                     var term = $.trim(params.term);
                     if (term === '') {
                         return null;
                     }
-                    return term.match(/^[a-zA-Z]+$/g) ? { id: params.term, text: params.term, newTag: true } : null;
+                    var capitalizedTerm = term.charAt(0).toUpperCase() + term.slice(1);
+                    return term.match(/^[a-zA-Z]+$/g) ? { id: params.term, text: capitalizedTerm, newTag: true } : null;
+                },
+            }).on("select2:select", function (e) {
+                if (e.params.data.newTag) {
+                    alert(`${e.params.data.text} does not exist. It will be created as a new Practice Type.`);
                 }
 
             });
@@ -94,7 +97,12 @@
                     if (term === '') {
                         return null;
                     }
-                    return term.match(/^[a-zA-Z]+$/g) ? { id: params.term, text: params.term, newTag: true } : null;
+                    var capitalizedTerm = term.charAt(0).toUpperCase() + term.slice(1);
+                    return term.match(/^[a-zA-Z]+$/g) ? { id: params.term, text: capitalizedTerm, newTag: true } : null;
+                },
+            }).on("select2:select", function (e) {
+                if (e.params.data.newTag) {
+                    alert(`${e.params.data.text} does not exist. It will be created.`);
                 }
             });
 
