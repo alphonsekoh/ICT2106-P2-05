@@ -2,7 +2,7 @@
 
 @{
     ViewData["Title"] = "Index";
-    var painDict = (Dictionary< Guid, List<string>>) ViewData["PractitionerPain"];
+    var painDict = (Dictionary<Guid, List<string>>)ViewData["PractitionerPain"];
 }
 
 
@@ -41,7 +41,7 @@
 
         <p class="d-flex justify-content-end text-muted">Displaying @((((int)ViewData["current_page"]-1)*8)+1) to @((((int)ViewData["current_page"]-1)*8)+Model.Count())  out of @ViewData["total_count"] records</p>
 
-        <table class="table">
+        <table class="table" id="pracTable">
             <thead>
                 <tr>
                     <th scope="col">
@@ -193,9 +193,11 @@
 
 <input type="hidden" id="hiddenId" />
 
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
 
-@section scripts{
-    <script>var ConfirmDelete = function (Id, PractitionerName) {
+        var ConfirmDelete = function (Id, PractitionerName) {
 
             console.log(PractitionerName);
             $("#hiddenId").val(Id);
@@ -217,5 +219,4 @@
             })
 
         }</script>
-
 }

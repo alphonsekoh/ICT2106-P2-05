@@ -6,7 +6,7 @@ namespace PainAssessment.Areas.Admin.Models.Builder
     {
         private Guid id;
         private string name;
-        private DateTime birthDate;
+        private int age;
         private string gender;
         private string condition;
         private string notes;
@@ -16,9 +16,9 @@ namespace PainAssessment.Areas.Admin.Models.Builder
             this.name = name;
             return this;
         }
-        public IPatientBuilder WithBirthDate(DateTime birthDate)
+        public IPatientBuilder WithAge(int age)
         {
-            this.birthDate = birthDate;
+            this.age = age;
             return this;
         }
 
@@ -34,8 +34,6 @@ namespace PainAssessment.Areas.Admin.Models.Builder
             return this;
 
         }
-
-
 
         public IPatientBuilder WithNotes(string notes)
         {
@@ -59,18 +57,18 @@ namespace PainAssessment.Areas.Admin.Models.Builder
             {
                 throw new ArgumentException("Parameter cannot be null", nameof(gender));
             }
-            if (birthDate == default)
+            if (age < 0 )
             {
-                throw new ArgumentException("Parameter cannot be null", nameof(gender));
+                throw new ArgumentException("Age cannot be negative.", nameof(gender));
             }
             if (id == default)
             {
-                return new Patient(name, gender, birthDate, condition, notes);
+                return new Patient(name, gender, age, condition, notes);
 
             }
             else
             {
-                return new Patient(name, gender, birthDate, condition, notes, id);
+                return new Patient(name, gender, age, condition, notes, id);
             }
         }
     }
