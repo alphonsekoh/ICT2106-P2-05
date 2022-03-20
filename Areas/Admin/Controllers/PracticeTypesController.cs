@@ -13,11 +13,11 @@ namespace PainAssessment.Areas.Admin.Controllers
     public class PracticeTypesController : Controller
     {
         private readonly IPracticeTypeService practiceTypeService;
-        private readonly ILog log;
+        private readonly ILogService log;
         public PracticeTypesController(IPracticeTypeService practiceTypeService)
         {
             this.practiceTypeService = practiceTypeService;
-            log = Log.GetInstance;
+            log = LogService.GetInstance;
         }
         // GET: Admin/PracticeTypes
         /*

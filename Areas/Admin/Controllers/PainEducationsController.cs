@@ -13,11 +13,11 @@ namespace PainAssessment.Areas.Admin.Controllers
     public class PainEducationsController : Controller
     {
         private readonly IPainEducationService painEducationService;
-        private readonly ILog log;
+        private readonly ILogService log;
         public PainEducationsController(IPainEducationService painEducationService)
         {
             this.painEducationService = painEducationService;
-            log = Log.GetInstance;
+            log = LogService.GetInstance;
         }
         // GET: Admin/PainEducations
         /*

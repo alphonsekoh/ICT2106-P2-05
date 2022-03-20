@@ -10,8 +10,9 @@ using System.Linq;
 namespace PainAssessment.Areas.Admin.Models
 {
     [ModelBinder(typeof(PractitionerModelBinder))]
-    public class Practitioner : Person, IPractitioner
+    public class Practitioner : Person
     {
+        [Required(ErrorMessage = "Experience is required.")]
         public string Experience { get; private set; }
 
         [DisplayName("Prior Pain Education")]

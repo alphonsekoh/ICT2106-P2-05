@@ -97,26 +97,40 @@ namespace PainAssessment.Areas.Admin.Data
 
             Patient[] patients = new Patient[]
             {
-                new Patient(  "Stone","Female",DateTime.UtcNow,    "Unknown",  "Unknown" ),
-                new Patient(  "John", "Female",DateTime.UtcNow,  "Unknown",  "Unknown" ),
-                new Patient(  "Wong", "Male",DateTime.UtcNow,  "Unknown",  "Unknown" ),
-                new Patient(  "Mia", "Female",DateTime.UtcNow,  "Unknown",  "Unknown" ),
-                new Patient(  "Nguta",  "Male",DateTime.UtcNow,  "Unknown",  "Unknown" ),
-                new Patient(  "Ilya",  "Female", DateTime.UtcNow, "Unknown",  "Unknown" ),
-                new Patient(  "Ellawala",  "Female",DateTime.UtcNow,  "Unknown",  "Unknown" ),
-                new Patient(  "Ruveni",  "Female",DateTime.UtcNow,  "Unknown",  "Unknown" ),
-                new Patient(  "Ponnappa",  "Male",  DateTime.UtcNow,"Unknown",  "Unknown" ),
-                new Patient(  "Priya",  "Female", DateTime.UtcNow, "Unknown",  "Unknown" ),
-                new Patient(  "Peter",  "Female",  DateTime.UtcNow,"Unknown",  "Unknown" ),
-                new Patient(  "Stanbridge",  "Female", DateTime.UtcNow, "Unknown",  "Unknown" ),
-                new Patient(  "Ruveni",  "Female", DateTime.UtcNow, "Unknown",  "Unknown" ),
-                new Patient(  "Andrews",  "Male",DateTime.UtcNow,  "Unknown",  "Unknown" ),
-                new Patient(  "Daly",  "Female", DateTime.UtcNow, "Unknown",  "Unknown" )
+                new Patient(  "Stone","Female",20,    "Unknown",  "Unknown" ),
+                new Patient(  "John", "Female",20,  "Unknown",  "Unknown" ),
+                new Patient(  "Wong", "Male",21,  "Unknown",  "Unknown" ),
+                new Patient(  "Mia", "Female",21,  "Unknown",  "Unknown" ),
+                new Patient(  "Nguta",  "Male",22,  "Unknown",  "Unknown" ),
+                new Patient(  "Ilya",  "Female", 22, "Unknown",  "Unknown" ),
+                new Patient(  "Ellawala",  "Female",23,  "Unknown",  "Unknown" ),
+                new Patient(  "Ruveni",  "Female",23,  "Unknown",  "Unknown" ),
+                new Patient(  "Ponnappa",  "Male",  40,"Unknown",  "Unknown" ),
+                new Patient(  "Priya",  "Female", 40, "Unknown",  "Unknown" ),
+                new Patient(  "Peter",  "Female",  40,"Unknown",  "Unknown" ),
+                new Patient(  "Stanbridge",  "Female", 30, "Unknown",  "Unknown" ),
+                new Patient(  "Ruveni",  "Female", 30, "Unknown",  "Unknown" ),
+                new Patient(  "Andrews",  "Male",30,  "Unknown",  "Unknown" ),
+                new Patient(  "Daly",  "Female", 25, "Unknown",  "Unknown" ),
+                new Patient(  "Chub",  "Female", 25, "Unknown",  "Unknown" ),
+                new Patient(  "Druve",  "Female", 25, "Unknown",  "Unknown" ),
+                new Patient(  "Dove",  "Female", 25, "Unknown",  "Unknown" ),
+                new Patient(  "Hona",  "Female", 25, "Unknown",  "Unknown" ),
+                new Patient(  "Dala",  "Female", 25, "Unknown",  "Unknown" ),
+                new Patient(  "Zack",  "Female", 25, "Unknown",  "Unknown" ),
+                new Patient(  "Trads",  "Female", 25, "Unknown",  "Unknown" ),
+                new Patient(  "Jams",  "Female", 25, "Unknown",  "Unknown" ),
 
             };
 
 
             context.Patients.AddRange(patients);
+            context.SaveChanges();
+            
+            for(int i = 0; i < practitioners.Length; i++)
+            {
+                practitioners[i].AddPatientRelation(patients[i]);
+            }
             context.SaveChanges();
 
         }
