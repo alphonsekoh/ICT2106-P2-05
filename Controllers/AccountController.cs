@@ -6,6 +6,9 @@ using PainAssessment.Models;
 using PainAssessment.ViewModels;
 using System;
 using BC = BCrypt.Net.BCrypt;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace PainAssessment.Controllers
 {
@@ -14,6 +17,7 @@ namespace PainAssessment.Controllers
         private readonly ILogger<AccountController> _logger;
         private readonly IAccountService accountService;
         private readonly IAdministratorService administratorService;
+        private readonly ILoginService loginService;
 
         //private const string REDIRECT_CNTR = "Home";
         //private const string REDIRECT_ACTN = "Index";
@@ -22,11 +26,13 @@ namespace PainAssessment.Controllers
 
         public AccountController(
             IAccountService accountService,
-            IAdministratorService administratorService
+            IAdministratorService administratorService,
+            ILoginService loginService
            )
         {
             this.accountService = accountService;
             this.administratorService = administratorService;
+            this.loginService = loginService;
         }
 
         [AllowAnonymous]
@@ -40,12 +46,25 @@ namespace PainAssessment.Controllers
         [HttpPost]
         public ActionResult ChangePassword(ChangePasswordModel model)
         {
-            if (!ModelState.IsValid)
+            if (ModelState.IsValid)
             {
-                accountService.UpdatePassword(model.Username, model.NewPassword, model.ConfirmPassword);
-                //ViewData["Message"] = "Password successfully changed!";
-                //ViewData["MsgType"] = "success";
-                return View(model);
+                if (accountService.CheckUsername(model.Username).Equals(true))
+                {
+                    System.Diagnostics.Debug.WriteLine(model.NewPassword);
+                    var user = accountService.GetAccount(model.Username);
+                    System.Diagnostics.Debug.WriteLine(user.Password);
+                    if (user != null)
+                    {
+                        user.Password = BC.HashPassword(model.NewPassword);
+                        System.Diagnostics.Debug.WriteLine(user.Password);
+                        accountService.UpdatePassword(user);
+                        ViewData["Message"] = "Password successfully changed!";
+                        ViewData["MsgType"] = "success";
+                        return View(model);
+                    }
+                    return View();
+                };
+                return View();
             }
             else
             {
@@ -54,14 +73,14 @@ namespace PainAssessment.Controllers
 
         }
         [HttpGet]
-        [AllowAnonymous]
+        [Authorize]
         public ActionResult CreateAccount()
         {
             return View(new CreateAccountModel());
         }
 
         [HttpPost]
-        [AllowAnonymous]
+        [Authorize]
         public ActionResult CreateAccount(CreateAccountModel model)
         {
             if (ModelState.IsValid)

@@ -16,26 +16,33 @@ namespace PainAssessment.Domain
             _unitOfWork = unitOfWork;
         }
 
-        // Update Password
-        public void UpdatePassword(string username, string password, string confirmPassword)
+        public Account GetAccount(string username)
         {
             IEnumerable<Account> account = _unitOfWork.AccountRepository.Find(Acc => Acc.Username.Equals(username));
             Account userAcc = account.First();
-            if (password.Equals(confirmPassword) && userAcc != null)
+            if (userAcc != null)
             {
-                // Hash Password
-                var cost = 16;
-                userAcc.Password = BC.HashPassword(password, cost);
-                _unitOfWork.AccountRepository.Update(userAcc);
-                _unitOfWork.Save();
+                return userAcc;
             }
+            else return null;
+        }
+
+        // Update Password
+        public void UpdatePassword(Account account)
+        {
+            _unitOfWork.AccountRepository.Update(account);
+            _unitOfWork.Save();
 
         }
 
-        // Reset Password
+        // Reset Password (might use email??)
 
 
         // Update AccountStatus
+        public void UpdateAccountStatus(Account account)
+        {
+
+        }
 
 
         // Create Account
@@ -59,9 +66,6 @@ namespace PainAssessment.Domain
                 return false;
             }
         }
-
-        // Update Username
-
 
     }
 }

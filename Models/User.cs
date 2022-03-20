@@ -3,16 +3,16 @@ using System.Collections.Generic;
 
 namespace PainAssessment.Models
 {
-    public class Singleton
+    public class User
     {
-        private static Singleton _account;
-        private Dictionary<string, Singleton> _accounts = new Dictionary<string, Singleton>();
+        private static User _account;
+        private Dictionary<string, User> _accounts = new Dictionary<string, User>();
 
-        private Singleton() { }
+        private User() { }
 
         private static object syncLock = new object();
 
-        public static Singleton Instance
+        public static User Instance
         {
             get
             {
@@ -20,7 +20,7 @@ namespace PainAssessment.Models
                 {
                     lock (syncLock)
                     { 
-                        _account = new Singleton();
+                        _account = new User();
                         return _account;
                     }
                 }
@@ -32,9 +32,9 @@ namespace PainAssessment.Models
         }
      }
 
-    //public Singleton this[string singleton]
+    //public User this[string user]
     //{
-    //    get { return _accounts[singleton]; }
-    //    set { _accounts[singleton] = value; }
+    //    get { return _accounts[user]; }
+    //    set { _accounts[user] = value; }
     //}
 }

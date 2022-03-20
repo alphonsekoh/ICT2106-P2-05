@@ -49,22 +49,14 @@ namespace PainAssessment.Controllers
             }
             else
             {
-                //if (loginService.Login(accountId, password) == true)
-                //{
-                //    return RedirectToAction(REDIRECT_ACTN, REDIRECT_CNTR);
-                //}
-                //else
-                //{
-                //    ViewData["test"] = false;
-                //    return View();
-                //}
-
                 if(await AuthenticateUser(model) == true)
                 {
                     return RedirectToAction(REDIRECT_ACTN, REDIRECT_CNTR);
                 }
                 else
                 {
+                    ViewData["Message"] = "Login details is incorrect";
+                    ViewData["MsgType"] = "danger";
                     return View(model);
                 }
             }
@@ -88,12 +80,13 @@ namespace PainAssessment.Controllers
                  * 7. return true and redirect to the page after successful login
                  * 
                  */
-
                 var user = loginService.Login(username, password);
+
+                //var hashUsername = loginService.HashValue(username);
 
                 // Attributes that are for authentication
                 var claims = new List<Claim> {
-                    new Claim(ClaimTypes.NameIdentifier, Convert.ToString(user.Username)),
+                    new Claim(ClaimTypes.NameIdentifier, Convert.ToString(user.AccountId)),
                     new Claim(ClaimTypes.Role, user.Role),
                 };
 
