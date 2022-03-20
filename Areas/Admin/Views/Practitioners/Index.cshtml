@@ -44,6 +44,7 @@
         <table class="table" id="pracTable">
             <thead>
                 <tr>
+
                     <th scope="col">
                         @Html.DisplayNameFor(model => model.Name)
                     </th>
@@ -69,55 +70,56 @@
 
                 @foreach (var item in Model)
                 {
-                <tr id="row_@item.Id">
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Name)
-                    </td>
+                    <tr id="row_@item.Id">
 
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Experience)
-                    </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </td>
 
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ClinicalArea.Name) @*ClinicalArea*@
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.PracticeType.Name) @*PracticeType*@
-                    </td>
-                    <td>
-                        <table>
-                            @foreach (var pain in @painDict[item.Id])
-                            {
-                                <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Experience)
+                        </td>
 
-                                    <td>
-                                        @pain
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ClinicalArea.Name) @*ClinicalArea*@
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PracticeType.Name) @*PracticeType*@
+                        </td>
+                        <td>
+                            <table>
+                                @foreach (var pain in @painDict[item.Id])
+                                {
+                                    <tr>
 
-                                    </td>
-                                </tr>
+                                        <td>
+                                            @pain
 
-                            }
-                        </table>
-                    </td>
+                                        </td>
+                                    </tr>
 
-                    <td>
-                        <a asp-action="Delete" asp-route-id="@item.Id"
-                           type="button"
-                           class="btn btn-primary btn-sm">
-                            View all Consultations
-                        </a>
-                        <a asp-action="Edit" asp-route-id="@item.Id"
-                           type="button"
-                           class="btn btn-secondary btn-sm">
-                            Edit
-                        </a>
-                        <a asp-action="Delete" asp-route-id="@item.Id"
-                           type="button"
-                           class="btn btn-danger btn-sm">
-                            Reset Password
-                        </a>
-                    </td>
-                </tr>
+                                }
+                            </table>
+                        </td>
+
+                        <td>
+                            <a asp-action="Delete" asp-route-id="@item.Id"
+                               type="button"
+                               class="btn btn-primary btn-sm">
+                                View all Consultations
+                            </a>
+                            <a asp-action="Edit" asp-route-id="@item.Id"
+                               type="button"
+                               class="btn btn-secondary btn-sm">
+                                Edit
+                            </a>
+                            <a asp-action="Delete" asp-route-id="@item.Id"
+                               type="button"
+                               class="btn btn-danger btn-sm">
+                                Reset Password
+                            </a>
+                        </td>
+                    </tr>
                 }
             </tbody>
         </table>
