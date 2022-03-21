@@ -18,7 +18,7 @@ namespace PainAssessment.Areas.Admin.Controllers
         private readonly IPracticeTypeService practiceTypeService;
         private readonly IPainEducationService painEducationService;
         private readonly IPatientService patientService;
-        private readonly ILog log;
+        private readonly ILogService log;
         public PractitionersController(IPractitionerService practitionerService, IClinicalAreaService clinicalAreaService, IPracticeTypeService practiceTypeService, IPatientService patientService, IPainEducationService painEducationService)
         {
             this.practitionerService = practitionerService;
@@ -27,7 +27,7 @@ namespace PainAssessment.Areas.Admin.Controllers
             this.patientService = patientService;
             this.painEducationService = painEducationService;
 
-            log = Log.GetInstance;
+            log = LogService.GetInstance;
         }
 
         // GET: Admin/Practitioners?page=1&name=gerald
@@ -106,6 +106,10 @@ namespace PainAssessment.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Create(Practitioner practitioner)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
             if (ModelState.IsValid)
             {
                 practitionerService.CreatePractitioner(practitioner);
@@ -113,10 +117,7 @@ namespace PainAssessment.Areas.Admin.Controllers
                 log.LogMessage("Info", GetType().Name, string.Format("{0} was created.", practitioner.Name));
                 return RedirectToAction(nameof(Index));
             }
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+
             ViewData["ClinicalAreaID"] = new SelectList(clinicalAreaService.GetAllClinicalAreas(), "Id", "Name");
             ViewData["PracticeTypeID"] = new SelectList(practiceTypeService.GetAllPracticeTypes(), "Id", "Name");
             ViewData["PainEducationID"] = new MultiSelectList(painEducationService.GetAllPainEducations(), "Id", "Name");
