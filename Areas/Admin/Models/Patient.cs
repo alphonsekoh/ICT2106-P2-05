@@ -16,7 +16,7 @@ namespace PainAssessment.Areas.Admin.Models
         [Required]
         public string Gender { get; private set; }
         [Required]
-        public DateTime BirthDate { get; private set; }
+        public int Age { get; private set; }
         public string Condition { get; private set; }
         public string Notes { get; private set; }
 
@@ -27,24 +27,24 @@ namespace PainAssessment.Areas.Admin.Models
         public virtual IReadOnlyList<PractitionerPatient> PractitionerPatients => _practitionerPatients.ToList();
 
 
-
-        public Patient(string name, string gender, DateTime birthDate, string condition, string notes)
+        public Patient(string name, string gender, int age, string condition, string notes)
         {
             Name = Regex.Replace(name, @"\b\w{3,}\b", match => Utility.MaskName(match.Value));
             Gender = gender;
-            BirthDate = birthDate;
+            Age = age;
             Condition = condition;
             Notes = notes;
         }
-        public Patient(string name, string gender, DateTime birthDate, string condition, string notes, Guid patientID)
+        public Patient(string name, string gender, int age, string condition, string notes, Guid patientID)
         {
             Id = patientID;
             Name = name;
             Gender = gender;
-            BirthDate = birthDate;
+            Age = age;
             Condition = condition;
             Notes = notes;
         }
+
 
         public void AddPractitionerRelation(Practitioner practitioner)
         {
