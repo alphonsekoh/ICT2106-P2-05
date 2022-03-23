@@ -28,14 +28,14 @@ namespace PainAssessment.Areas.ModuleTwo.Controllers
         }
 
         // GET: Admin/Patients
-        public IActionResult Index()
+        public IActionResult Index()            // Will need to pass in Practitioner GUID here
         {
-            //Practitioner practitioner = practitionerService.GetPractitioner(Guid.Parse("fa352d4d-e50f-43eb-0176-08da04e2f76b"));
+            Practitioner practitioner = practitionerService.GetPractitioner(Guid.Parse("bb4d34c0-a43b-4f6f-138b-08da09bb8f40"));
             //Patient patient = patientService.GetPatient(Guid.Parse("85f853ef-876e-48fb-173b-08da04e2f772"));
             //practitioner.AddPatientRelation(patient);
             //practitionerService.SavePractitioner();
-            //return View(practitioner.Patients);
-            return View(patientService.GetAllPatients());
+            return View(practitioner.Patients);
+            //return View(patientService.GetAllPatients());
         }
 
         // GET: Admin/Patients/Details/5
@@ -120,13 +120,15 @@ namespace PainAssessment.Areas.ModuleTwo.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(Patient patient)
+        public IActionResult Create(Patient patient)            // WILL PROBABLY NEED TO PASS IN PRACTITIONER INFO HERE ALSO
         {
             if (ModelState.IsValid)
             {
                 patientService.CreatePatient(patient);
                 patientService.SavePatient();
-                //log.LogMessage("Info", GetType().Name, string.Format("{0} was created.", patient.Name));
+                Practitioner practitioner = practitionerService.GetPractitioner(Guid.Parse("bb4d34c0-a43b-4f6f-138b-08da09bb8f40"));
+                practitioner.AddPatientRelation(patient);
+                practitionerService.SavePractitioner();
                 return RedirectToAction(nameof(Index));
             }
             return View(patient);
