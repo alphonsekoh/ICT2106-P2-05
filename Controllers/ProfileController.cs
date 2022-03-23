@@ -10,6 +10,7 @@ using PainAssessment.Interfaces;
 using PainAssessment.ViewModels.Profile;
 using System.Security.Claims;
 using PainAssessment.Models;
+using PainAssessment.Areas.Admin.Models;
 
 namespace PainAssessment.Controllers
 {
@@ -20,13 +21,15 @@ namespace PainAssessment.Controllers
         private readonly IAccountService accountService;
         private readonly IPractitionerService practitionerService;
         private readonly IAdministratorService administratorService;
+        private readonly IClinicalAreaService clinicalAreaService;
 
-        public ProfileController(ILogger<ProfileController> logger, IAccountService accountService, IPractitionerService practitionerService, IAdministratorService administratorService)
+        public ProfileController(ILogger<ProfileController> logger, IAccountService accountService, IPractitionerService practitionerService, IAdministratorService administratorService, IClinicalAreaService clinicalAreaService)
         {
             _logger = logger;
             this.accountService = accountService;
             this.practitionerService = practitionerService;
             this.administratorService = administratorService;
+            this.clinicalAreaService = clinicalAreaService;
             
         }
 
@@ -35,16 +38,17 @@ namespace PainAssessment.Controllers
             var userid = User.FindFirst(ClaimTypes.NameIdentifier).Value;
 
             string role = "Admin";
-            if(role =="Admin")
+            string adminUsername = "admin1";
+            Account userAcc = accountService.GetAccount(adminUsername);
+            if (role =="Admin")
             {
-                string username = "admin1";
-                Administrator admin = administratorService.GetOneAdmin(username);
+                Administrator admin = administratorService.GetOneAdmin(userAcc.AccountId);
                 var adminViewModel = new AdministratorModel
                 {
                     Name = admin.Account.Username,
                     FullName = admin.FullName,
                     Role = admin.Account.Role,
-                    Department = 1,
+                    Experience = admin.Experience,
                     AccountID = admin.Account.AccountId
 
                 };
@@ -53,9 +57,18 @@ namespace PainAssessment.Controllers
             }
             else
             {
+                Practitioner practionerDetails = practitionerService.GetPractitioner(userAcc.AccountId);
+                ClinicalArea clinical = clinicalAreaService.GetClinicalArea(practionerDetails.ClinicalAreaID);
                 var practionerViewModel = new PractionerModel
                 {
-                    //var practionerDetails = practitionerService.GetPractitioner(id);
+                    Name = practionerDetails.Name,
+                    FullName = userAcc.Username,
+                    Role = userAcc.Role,
+                    AccountID = userAcc.AccountId,
+                    PriorPainEducation = practionerDetails.PriorPainEducation,
+                    ClinicalArea = clinical.Name,
+                    PracticeType = practionerDetails.PracticeType.Name
+
                 };
                 return View("ViewPractioner", practionerViewModel);
             }

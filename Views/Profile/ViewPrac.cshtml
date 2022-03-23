@@ -2,16 +2,49 @@
 @{
     ViewData["Title"] = "ViewPrac";
 }
-<!DOCTYPE html>
-<html lang="en">
+<div>
+    <h4>Profile</h4>
+    <hr />
+    <div class="row">
+        <div class="col-lg-2"> @Html.DisplayNameFor(model => model.Name)</div>
+        <div class="col-lg-10">
+            @Html.TextBoxFor(model => model.Name)
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-lg-2"> @Html.DisplayNameFor(model => model.FullName)</div>
+        <div class="col-lg-10">
+            @Html.TextBoxFor(model => model.FullName)
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-lg-2"> @Html.DisplayNameFor(model => model.Role)</div>
+        <div class="col-lg-10">
+            @Html.TextBoxFor(model => model.Role)
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-lg-2"> @Html.DisplayNameFor(model => model.PriorPainEducation)</div>
+        <div class="col-lg-10">
+            @Html.TextBoxFor(model => model.PriorPainEducation)
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-lg-2"> @Html.DisplayNameFor(model => model.ClinicalArea)</div>
+        <div class="col-lg-10">
+            @Html.TextBoxFor(model => model.ClinicalArea)
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-lg-2"> @Html.DisplayNameFor(model => model.PracticeType)</div>
+        <div class="col-lg-10">
+            @Html.TextBoxFor(model => model.PracticeType)
+        </div>
+    </div>
 
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>ViewPrac</title>
-</head>
-
-<body>
-   
-</body>
-
-</html>
+</div>

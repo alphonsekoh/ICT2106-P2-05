@@ -23,11 +23,9 @@ namespace PainAssessment.Domain
         }
 
         // Get one Admin
-        public Administrator GetOneAdmin(string username)
+        public Administrator GetOneAdmin(Guid id)
         {
-            IEnumerable<Account> account = _unitOfWork.AccountRepository.Find(Acc => Acc.Username.Equals(username));
-            Account userAcc = account.First();
-            IEnumerable<Administrator> admin = _unitOfWork.AdministratorRepository.Find(Acc => Acc.Account.AccountId.Equals(userAcc.AccountId));
+            IEnumerable<Administrator> admin = _unitOfWork.AdministratorRepository.Find(Acc => Acc.Account.AccountId.Equals(id));
             Administrator adminAcc = admin.First();
             Administrator adminDetails = _unitOfWork.AdministratorRepository.GetById<Administrator,Guid>(adminAcc.AdminId);
             return adminDetails;

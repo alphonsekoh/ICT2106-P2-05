@@ -10,7 +10,7 @@ namespace PainAssessment.ViewModels.Profile
         public string Name { get; set; }
         public string FullName { get; set; }
         public string Role { get; set; }
-        public int Department { get; set; }
+        public int Experience { get; set; }
         public Guid AccountID { get; set; }
     }
 }
