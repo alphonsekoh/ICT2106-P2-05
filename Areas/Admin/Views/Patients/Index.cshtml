@@ -32,21 +32,21 @@
     <table class="table">
         <thead>
             <tr>
-                <th scope = "col">
+                <th scope="col">
                     <a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParm"]">
                         @Html.DisplayNameFor(model => model.Name)
                     </a>
                 </th>
-                <th scope = "col">
+                <th scope="col">
                     @Html.DisplayNameFor(model => model.Gender)
                 </th>
-                <th scope = "col">
+                <th scope="col">
                     @Html.DisplayNameFor(model => model.Age)
                 </th>
-                <th scope = "col">
+                <th scope="col">
                     @Html.DisplayNameFor(model => model.Condition)
                 </th>
-                <th scope = "col">
+                <th scope="col">
                     @Html.DisplayNameFor(model => model.Notes)
                 </th>
             </tr>
@@ -71,9 +71,9 @@
                         @Html.DisplayFor(modelItem => item.Notes)
                     </td>
                     <td>
-                        <a type="button" class="btn btn-secondary btn-sm" asp-action="Details" asp-route-id="@item.Id">View</a> 
-                        <a type="button" class="btn btn-primary btn-sm" asp-action="Edit" asp-route-id="@item.Id">Edit</a> 
-                        <a type="button" class="btn btn-danger btn-sm" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                        <a type="button" class="btn btn-secondary btn-sm" asp-action="Details" asp-route-id="@item.Id">View</a>
+                        <a type="button" class="btn btn-primary btn-sm" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                        @*<a type="button" class="btn btn-danger btn-sm" asp-action="Delete" asp-route-id="@item.Id">Delete</a>*@
                     </td>
                 </tr>
             }
