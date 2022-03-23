@@ -1,10 +1,15 @@
-﻿
+﻿using System.ComponentModel.DataAnnotations;
+
 namespace PainAssessment.Models
 {
     public class Administrator
     {
-        public string AccountId { get; set; }
+        [Key]
+        public int AdminId { get; set; }
+        [Required]
         public Account Account { get; set; }
-        public string AdministratorDetails { get; set; }
+        [Required]
+        public string FullName { get; set; }
+        public int Experience { get; set; }
     }
 }

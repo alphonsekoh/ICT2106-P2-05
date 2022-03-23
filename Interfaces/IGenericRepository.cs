@@ -6,7 +6,7 @@ namespace PainAssessment.Interfaces
 {
     public interface IGenericRepository<T> where T : class
     {
-        T GetById(int id);
+        T GetById<T1, TId>(TId id);
         IEnumerable<T> GetAll();
         IEnumerable<T> Find(Expression<Func<T, bool>> expression);
         void Add(T entity);

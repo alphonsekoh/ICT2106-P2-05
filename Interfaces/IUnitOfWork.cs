@@ -7,9 +7,7 @@ namespace PainAssessment.Interfaces
     {
         IGenericRepository<Account> AccountRepository { get; }
         IGenericRepository<Administrator> AdministratorRepository { get; }
-        IGenericRepository<Department> DepartmentRepository { get; }
-        IGenericRepository<Practitioner> PractitionerRepository { get; }
-        IGenericRepository<Patient> PatientRepository { get; }
+        IGenericRepository<Account> LoginRepository { get; }
         IGenericRepository<TemplateChecklist> TemplateChecklistRepository { get; }
         IGenericRepository<DefaultQuestion> DefaultQuestionRepository { get; }
         void Save();

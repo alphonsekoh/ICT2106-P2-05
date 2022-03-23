@@ -1,4 +1,5 @@
-﻿using PainAssessment.Interfaces;
+﻿using Microsoft.EntityFrameworkCore;
+using PainAssessment.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,11 +10,14 @@ namespace PainAssessment.Data
     public class GenericRepository<T> : IGenericRepository<T> where T : class
     {
         private readonly HospitalContext _context;
+        private readonly DbSet<T> _dbSet;
+
         public GenericRepository(HospitalContext context)
         {
             this._context = context;
+            this._dbSet = this._context.Set<T>();
         }
-        public T GetById(int id)
+        public T GetById<T1, TId>(TId id)
         {
             return _context.Set<T>().Find(id);
         }
