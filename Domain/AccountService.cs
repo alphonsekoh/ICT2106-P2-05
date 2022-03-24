@@ -1,4 +1,4 @@
-﻿using PainAssessment.Interfaces;
+using PainAssessment.Interfaces;
 using PainAssessment.Models;
 using System.Collections.Generic;
 using System.Linq;
