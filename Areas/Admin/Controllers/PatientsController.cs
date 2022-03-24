@@ -29,14 +29,11 @@ namespace PainAssessment.Areas.Admin.Controllers
         {
             ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "Name" : "";
             ViewData["searchString"] = searchString;
+            searchString = String.IsNullOrEmpty(searchString) ? "" : searchString;
 
             IEnumerable<Patient> patient = from i in patientService.GetAllPatients() select i;
-            patient = sortOrder switch // check input of what is being sorted
-            {
-                "Name" => patient.OrderByDescending(i => i.Name),
-                _ => patient.OrderBy(i => i.Name),
-            };
 
+            patient = tableUltilityService.sort(patient, "Name", sortOrder);
             patient = tableUltilityService.search(patient, searchString.ToLower());
             ViewData["total_count"] = patient.Count();
             ViewData["max_page"] = tableUltilityService.getMaxPageCount(patient);

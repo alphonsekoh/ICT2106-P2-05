@@ -46,18 +46,34 @@ namespace PainAssessment.Areas.Admin.Services
             return currentPage;
         }
 
-        public IEnumerable<T> sort(IEnumerable<T> data, string by)
+        public IEnumerable<T> sort(IEnumerable<T> data, string by, string sortOrder)
         {
-            throw new NotImplementedException();
+            if (!String.IsNullOrEmpty(by))
+            {
+
+                if (data.GetType().GetGenericArguments()[0] == typeof(Patient))
+                {
+                    IEnumerable<Patient> patients = (IEnumerable<Patient>)(IEnumerable<T>)data.Cast<Patient>();
+
+                    if (sortOrder == by)
+                    {
+                        patients = patients.OrderByDescending(i => i.Name);
+                    }
+                    else { patients = patients.OrderBy(i => i.Name); }
+
+                    return (IEnumerable<T>)patients;
+                }
+            }
+
+            return data;
         }
 
         public IEnumerable<T> search(IEnumerable<T> data, string search)
         {
-            Type type = data.GetType().GetGenericArguments()[0];
             if (!String.IsNullOrEmpty(search))
             {
                 // TODO: Fix for all types.
-                if (type == typeof(Patient))
+                if (data.GetType().GetGenericArguments()[0] == typeof(Patient))
                 {
                     data = (IEnumerable<T>)data.Cast<Patient>().Where(i => i.Name.ToLower().Contains(search.ToLower()));
                 }
