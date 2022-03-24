@@ -31,16 +31,16 @@ namespace PainAssessment.Areas.Admin.Controllers
             ViewData["searchString"] = searchString;
             searchString = String.IsNullOrEmpty(searchString) ? "" : searchString;
 
-            IEnumerable<Patient> patient = from i in patientService.GetAllPatients() select i;
+            IEnumerable<Patient> patients = from i in patientService.GetAllPatients() select i;
 
-            patient = tableUltilityService.sort(patient, "Name", sortOrder);
-            patient = tableUltilityService.search(patient, searchString.ToLower());
-            ViewData["total_count"] = patient.Count();
-            ViewData["max_page"] = tableUltilityService.getMaxPageCount(patient);
-            ViewData["current_page"] = page = tableUltilityService.validateCurrentPage(page, patient);
-            patient = tableUltilityService.getPageData(patient, page);
+            patients = tableUltilityService.sort(patients, "Name", sortOrder);
+            patients = tableUltilityService.search(patients, searchString.ToLower());
+            ViewData["total_count"] = patients.Count();
+            ViewData["max_page"] = tableUltilityService.getMaxPageCount(patients);
+            ViewData["current_page"] = page = tableUltilityService.validateCurrentPage(page, patients);
+            patients = tableUltilityService.getPageData(patients, page);
 
-            return View(patient.ToList());
+            return View(patients.ToList());
         }
 
         // GET: Admin/Patients/Details/5

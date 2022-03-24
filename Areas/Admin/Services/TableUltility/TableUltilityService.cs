@@ -48,9 +48,9 @@ namespace PainAssessment.Areas.Admin.Services
 
         public IEnumerable<T> sort(IEnumerable<T> data, string by, string sortOrder)
         {
+            // TODO: Fix for all types.
             if (!String.IsNullOrEmpty(by))
             {
-
                 if (data.GetType().GetGenericArguments()[0] == typeof(Patient))
                 {
                     IEnumerable<Patient> patients = (IEnumerable<Patient>)(IEnumerable<T>)data.Cast<Patient>();
