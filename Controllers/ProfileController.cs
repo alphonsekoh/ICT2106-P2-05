@@ -36,13 +36,13 @@ namespace PainAssessment.Controllers
         public ActionResult ViewProfile()
         {
             var userid = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            var role = User.FindFirst(ClaimTypes.Role).Value;
 
-            string role = "Admin";
-            string adminUsername = "admin1";
-            Account userAcc = accountService.GetAccount(adminUsername);
-            if (role =="Admin")
+            Account userAcc = accountService.GetAccount(userid);
+            if (role == "Administrator")
             {
                 Administrator admin = administratorService.GetOneAdmin(userAcc.AccountId);
+                //ClinicalArea clinical = clinicalAreaService.GetClinicalArea(admin.ClinicalAreaID);
                 var adminViewModel = new AdministratorModel
                 {
                     Name = admin.Account.Username,
