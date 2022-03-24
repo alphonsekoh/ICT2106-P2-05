@@ -13,19 +13,23 @@ namespace PainAssessment.Areas.Admin.Controllers
     public class PatientsController : Controller
     {
         private readonly IPatientService patientService;
+        private readonly TableUltilityService<Patient> tableUltilityService;
         private readonly ILogService log;
 
         public PatientsController(IPatientService patientService)
         {
             this.patientService = patientService;
             log = LogService.GetInstance;
+            tableUltilityService = TableUltilityService<Patient>.GetInstance;
 
         }
 
         // GET: Admin/Patients
-        public IActionResult Index(string sortOrder, string searchString, int page = 1)
+        public IActionResult Index(string sortOrder, string searchString = "", int page = 1)
         {
             ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "Name" : "";
+            ViewData["searchString"] = searchString;
+
             IEnumerable<Patient> patient = from i in patientService.GetAllPatients() select i;
             patient = sortOrder switch // check input of what is being sorted
             {
@@ -33,32 +37,11 @@ namespace PainAssessment.Areas.Admin.Controllers
                 _ => patient.OrderBy(i => i.Name),
             };
 
-            // check if not search input not empty
-            if (!String.IsNullOrEmpty(searchString))
-            {
-                patient = patient.Where(i => i.Name.ToLower().Contains(searchString.ToLower()));
-            }
-
-            ViewData["total_count"] = patient.Count(); // get count of all from
-
-            int max_page = (int)Math.Ceiling((decimal)(patient.Count() / 8.0));
-
-            if (page > max_page)
-            {
-                page = max_page;
-            }
-            if (page < 1)
-            {
-                page = 1;
-            }
-
-            ViewData["max_page"] = max_page;
-            ViewData["current_page"] = page;
-
-            if (patient.Any())
-            {
-                patient = patient.ChunkBy(8).ElementAt(page - 1);
-            }
+            patient = tableUltilityService.search(patient, searchString.ToLower());
+            ViewData["total_count"] = patient.Count();
+            ViewData["max_page"] = tableUltilityService.getMaxPageCount(patient);
+            ViewData["current_page"] = page = tableUltilityService.validateCurrentPage(page, patient);
+            patient = tableUltilityService.getPageData(patient, page);
 
             return View(patient.ToList());
         }
