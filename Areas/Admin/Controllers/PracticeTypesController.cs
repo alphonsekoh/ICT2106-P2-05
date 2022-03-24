@@ -34,7 +34,6 @@ namespace PainAssessment.Areas.Admin.Controllers
             };
 
 
-
             // check if not search input not empty
             if (!String.IsNullOrEmpty(searchString))
             {
