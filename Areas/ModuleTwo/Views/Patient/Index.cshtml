@@ -70,15 +70,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.Gender)
             </th>
-            @*<th>
-                @Html.DisplayNameFor(model => model.sessions)
-                </th>*@
             <th>
                 @Html.DisplayNameFor(model => model.Notes)
             </th>
-            @*<th>
-                @Html.DisplayNameFor(model => model.lastVisit)
-                </th>*@
             <th>
 
             </th>
@@ -100,19 +94,10 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Gender)
                 </td>
-                @*<td>
-                    @Html.DisplayFor(modelItem => item.sessions)
-                    </td>*@
                 <td>
                     @Html.DisplayFor(modelItem => item.Notes)
                 </td>
-                @*<td>
-                    @Html.DisplayFor(modelItem => item.lastVisit)
-                    </td>*@
                 <td>
-                    @*<a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                        <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>*@
                     <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
                     <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
                     <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>

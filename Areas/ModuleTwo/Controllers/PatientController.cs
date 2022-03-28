@@ -40,8 +40,11 @@ namespace PainAssessment.Areas.ModuleTwo.Controllers
         //    return View(patientService.GetAllPatients());
         //}
 
-        public async Task<IActionResult> Index(string sortOrder, string searchString)
+        public async Task<IActionResult> Index(string sortOrder, string currentFilter, string searchString, int? pageNumber)
         {
+            //   public async Task<IActionResult> Index(string sortOrder, string searchString){
+
+            ViewData["CurrentSort"] = sortOrder;
             ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "Name" : "";
             ViewData["CurrentFilter"] = searchString;
 
@@ -49,7 +52,17 @@ namespace PainAssessment.Areas.ModuleTwo.Controllers
 
             if (!String.IsNullOrEmpty(searchString))
             {
-                patients = patients.Where(s => s.Name.Contains(searchString));
+                //patients = patients.Where(s => s.Name.Contains(searchString));
+                patients = patients.Where(s => s.Name.IndexOf(searchString, StringComparison.OrdinalIgnoreCase) >= 0);
+            }
+
+            if (searchString != null)
+            {
+                pageNumber = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
             }
 
             switch (sortOrder)
@@ -60,55 +73,13 @@ namespace PainAssessment.Areas.ModuleTwo.Controllers
                 //case "Date":
                 //    students = students.OrderBy(s => s.EnrollmentDate);
                 //    break;
-                //case "date_desc":
-                //    students = students.OrderByDescending(s => s.EnrollmentDate);
-                //    break;
             }
             //return View(await students.AsNoTracking().ToListAsync());
+
+            int pageSize = 3;
+            //return View(await PaginatedList<Patient>.CreateAsync(patients.AsNoTracking(), pageNumber ?? 1, pageSize));
             return View(patients.ToList());
         }
-
-        //========================================================================================
-
-        //public IActionResult Index(string sortOrder, string searchString, int page = 1)
-        //{
-        //    ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "Name" : "";
-        //    IEnumerable<Patient> patient = from i in patientService.GetAllPatients() select i;
-        //    patient = sortOrder switch // check input of what is being sorted
-        //    {
-        //        "Name" => patient.OrderByDescending(i => i.Name),
-        //        _ => patient.OrderBy(i => i.Name),
-        //    };
-
-        //    // check if not search input not empty
-        //    if (!String.IsNullOrEmpty(searchString))
-        //    {
-        //        patient = patient.Where(i => i.Name.ToLower().Contains(searchString.ToLower()));
-        //    }
-
-        //    ViewData["total_count"] = patient.Count(); // get count of all from
-
-        //    int max_page = (int)Math.Ceiling((decimal)(patient.Count() / 8.0));
-
-        //    if (page > max_page)
-        //    {
-        //        page = max_page;
-        //    }
-        //    if (page < 1)
-        //    {
-        //        page = 1;
-        //    }
-
-        //    ViewData["max_page"] = max_page;
-        //    ViewData["current_page"] = page;
-
-        //    if (patient.Any())
-        //    {
-        //        patient = patient.ChunkBy(8).ElementAt(page - 1);
-        //    }
-
-        //    return View(patient.ToList());
-        //}
 
         // GET: Admin/Patients/Details/5
         public IActionResult Details(Guid? id)
@@ -234,152 +205,5 @@ namespace PainAssessment.Areas.ModuleTwo.Controllers
             //log.LogMessage("Info", GetType().Name, string.Format("{0} was deleted.", id));
             return RedirectToAction(nameof(Index));
         }
-
-        //-----------------------------------------------------------------------
-
-        //private readonly MvcPatientContext _context;
-
-        //public PatientController(MvcPatientContext context)
-        //{
-        //    _context = context;
-        //}
-
-        //public async Task<IActionResult> Index(string searchString)
-        //{
-        //    var patient = from m in _context.Patient
-        //                 select m;
-
-        //    if (!String.IsNullOrEmpty(searchString))
-        //    {
-        //        patient = patient.Where(s => s.patientName.Contains(searchString));
-        //    }
-
-        //    return View(await patient.ToListAsync());
-        //}
-
-        //// GET: ModuleTwo/Patient/Details/5
-        //public async Task<IActionResult> Details(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    var patient = await _context.Patient
-        //        .FirstOrDefaultAsync(m => m.Id == id);
-        //    if (patient == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    return View(patient);
-        //}
-
-        //// GET: ModuleTwo/Patient/Create
-        //public IActionResult Create()
-        //{
-        //    return View();
-        //}
-
-        //// POST: ModuleTwo/Patient/Create
-        //// To protect from overposting attacks, enable the specific properties you want to bind to.
-        //// For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Create([Bind("Id,patientName,patientAge,condition,gender,consultationID,patientNotes,lastVisit")] Patient patient)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        _context.Add(patient);
-        //        await _context.SaveChangesAsync();
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    return View(patient);
-        //}
-
-        //// GET: ModuleTwo/Patient/Edit/5
-        //public async Task<IActionResult> Edit(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    var patient = await _context.Patient.FindAsync(id);
-        //    if (patient == null)
-        //    {
-        //        return NotFound();
-        //    }
-        //    return View(patient);
-        //}
-
-        //// POST: ModuleTwo/Patient/Edit/5
-        //// To protect from overposting attacks, enable the specific properties you want to bind to.
-        //// For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Edit(int id, [Bind("Id,patientName,patientAge,condition,gender,consultationID,patientNotes,lastVisit")] Patient patient)
-        //{
-        //    if (id != patient.Id)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    if (ModelState.IsValid)
-        //    {
-        //        try
-        //        {
-        //            _context.Update(patient);
-        //            await _context.SaveChangesAsync();
-        //        }
-        //        catch (DbUpdateConcurrencyException)
-        //        {
-        //            if (!PatientExists(patient.Id))
-        //            {
-        //                return NotFound();
-        //            }
-        //            else
-        //            {
-        //                throw;
-        //            }
-        //        }
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    return View(patient);
-        //}
-
-        //// GET: ModuleTwo/Patient/Delete/5
-        //public async Task<IActionResult> Delete(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    var patient = await _context.Patient
-        //        .FirstOrDefaultAsync(m => m.Id == id);
-        //    if (patient == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    return View(patient);
-        //}
-
-        //// POST: ModuleTwo/Patient/Delete/5
-        //[HttpPost, ActionName("Delete")]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> DeleteConfirmed(int id)
-        //{
-        //    var patient = await _context.Patient.FindAsync(id);
-        //    _context.Patient.Remove(patient);
-        //    await _context.SaveChangesAsync();
-        //    return RedirectToAction(nameof(Index));
-        //}
-
-        //private bool PatientExists(int id)
-        //{
-        //    return _context.Patient.Any(e => e.Id == id);
-        //}
     }
 }
