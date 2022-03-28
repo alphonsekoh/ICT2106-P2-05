@@ -20,13 +20,17 @@
     <table class="table border border-dark rounded-lg ">
         <thead>
             <tr>
-                <th></th>
-
+                <th>
+                    ID
+                </th>
                 <th>
                     @Html.DisplayNameFor(model => model.ChecklistName)
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.ChecklistDescription)
+                </th>
+                <th>
+                    Created By
                 </th>
                 <th></th>
             </tr>
@@ -34,24 +38,28 @@
         <tbody>
             @foreach (var item in Model)
             {
-<tr>
-    <td>
-        <div class="form-check">
-            <input type="checkbox" class="form-check-input" id="selected@item">
-        </div>
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.ChecklistName)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.ChecklistDescription)
-    </td>
-    <td>
-        <a class="btn btn-primary" asp-action="Edit" asp-route-id="@item.ChecklistId">Edit</a>
-        <a class="btn btn-secondary" asp-action="Details" asp-route-id="@item.ChecklistId">Details</a>
-        <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.ChecklistId">Delete</a>
-    </td>
-</tr>}
+                <tr>
+                    <td>
+                        <div class="form-check">
+                            @Html.DisplayFor(modelItem => item.ChecklistId)
+                        </div>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ChecklistName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ChecklistDescription)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PractitionerId)
+                    </td>
+                    <td>
+                        <a class="btn btn-primary" asp-action="Edit" asp-route-id="@item.ChecklistId">Edit</a>
+                        <a class="btn btn-secondary" asp-action="Details" asp-route-id="@item.ChecklistId">Details</a>
+                        <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.ChecklistId">Delete</a>
+                    </td>
+                </tr>
+            }
         </tbody>
     </table>
 </div>

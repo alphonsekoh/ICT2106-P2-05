@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace PainAssessment.Areas.ModuleTwo.Models
 {
-    public class LocalDomain : Domain,  IChecklist
+    public class LocalDomain : Domain,  IChecklist, ILocalDomain
     {
         [Key]
         public int RowId { get; set; }

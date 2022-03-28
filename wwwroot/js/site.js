@@ -161,4 +161,28 @@ function AddLocal(btn) {
             x[cnt].value = '';
 
     }
+
+}
+
+header_list = ["QID", "SubDomain", "Determinant", "Comment", "Max", "Value", ""]
+function generateTable()
+{
+    let table = document.createElement('table')
+    let thead = document.createElement('thead')
+    let tbody = document.createElement('tbody')
+
+    table.appendChild(thead)
+    table.appendChild(tbody)
+
+    document.getElementById('body').appendChild(table)
+
+    let header = document.createElement('tr')
+
+    for (let i = 0; i < header_list.length; i++)
+    {
+
+
+    }
+
+
 }
