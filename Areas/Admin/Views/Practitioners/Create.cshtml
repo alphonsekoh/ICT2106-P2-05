@@ -56,7 +56,7 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-    <script type="text/javascript">var lastResults = [];
+    <script type="text/javascript">var tempPainEducations = [];
 
         $(function () {
             clinicalArea = $("#ClinicalAreaID").select2({
@@ -113,12 +113,24 @@
                 },
             }).on("select2:select", function (e) {
                 if (e.params.data.newTag) {
+                    tempPainEducations.push(e.params.data.text);
                     alert(`${e.params.data.text} does not exist. It will be created as a new Pain Education.`);
-                    @*$("#PriorPainEducationMessage").text(`${e.params.data.text} does not exist. It will be created as a new Pain Education.`);*@
-                } else {
-                    @*$("#PriorPainEducationMessage").text(``);*@
+                }
+
+                if (tempPainEducations.length > 0) {
+                    $("#PriorPainEducationMessage").text(`${tempPainEducations.join(", ")} does not exist. It will be created as a new Pain Education.`);
+                }
+            }).on('select2:unselecting', function (e) {
+                var eduIndex = tempPainEducations.indexOf(e.params.args.data.id.charAt(0).toUpperCase() + e.params.args.data.id.slice(1));
+                if (eduIndex != -1) {
+                    tempPainEducations.splice(eduIndex, 1);
+
+                    if (tempPainEducations.length > 0) {
+                        $("#PriorPainEducationMessage").text(`${tempPainEducations.join(", ")} does not exist. It will be created as a new Pain Education.`);
+                    } else {
+                        $("#PriorPainEducationMessage").text(``);
+                    }
                 }
             });
-
         })</script>
 }
