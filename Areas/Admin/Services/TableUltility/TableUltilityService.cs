@@ -11,8 +11,8 @@ namespace PainAssessment.Areas.Admin.Services
     public sealed class TableUltilityService<T> : ITableUltilityService<T>
     {
         private readonly static double ITEM_PER_PAGE = 8.0;
-        private readonly static String ORDER_BY = "OrderBy";
-        private readonly static String ORDER_BY_DESC = "OrderByDescending";
+        private readonly static string ORDER_BY = "OrderBy";
+        private readonly static string ORDER_BY_DESC = "OrderByDescending";
         private TableUltilityService() { }
 
         private static readonly Lazy<TableUltilityService<T>> instance = new(() => new TableUltilityService<T>());
