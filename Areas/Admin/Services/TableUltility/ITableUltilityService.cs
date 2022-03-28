@@ -1,9 +1,13 @@
 ﻿using System.Collections.Generic;
+using PainAssessment.Areas.Admin.Models;
 
 namespace PainAssessment.Areas.Admin.Services
 {
     public interface ITableUltilityService<T>
     {
+        string ORDER_BY_DESC { get; }
+        string ORDER_BY { get; }
+
         IEnumerable<T> GetPageData(IEnumerable<T> data, int page);
         int GetMaxPageCount(IEnumerable<T> data);
         int ValidateCurrentPage(int currentPage, IEnumerable<T> data);

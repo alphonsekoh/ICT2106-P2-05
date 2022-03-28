@@ -3,17 +3,25 @@ using System.Linq;
 using System.Collections.Generic;
 using PainAssessment.Areas.Admin.Util;
 using PainAssessment.Areas.Admin.Models;
+using System.Linq.Expressions;
+using System.Reflection;
 
 namespace PainAssessment.Areas.Admin.Services
 {
     public sealed class TableUltilityService<T> : ITableUltilityService<T>
     {
         private readonly static double ITEM_PER_PAGE = 8.0;
+        private readonly static String ORDER_BY = "OrderBy";
+        private readonly static String ORDER_BY_DESC = "OrderByDescending";
         private TableUltilityService() { }
 
         private static readonly Lazy<TableUltilityService<T>> instance = new(() => new TableUltilityService<T>());
 
         public static TableUltilityService<T> GetInstance => instance.Value;
+
+        string ITableUltilityService<T>.ORDER_BY_DESC => ORDER_BY_DESC;
+
+        string ITableUltilityService<T>.ORDER_BY => ORDER_BY;
 
         public IEnumerable<T> GetPageData(IEnumerable<T> data, int page)
         {
@@ -48,24 +56,30 @@ namespace PainAssessment.Areas.Admin.Services
 
         public IEnumerable<T> Sort(IEnumerable<T> data, string by, string sortOrder)
         {
-            // TODO: Fix for all types.
-            if (!String.IsNullOrEmpty(by))
+            string[] props = by.Split('.');
+            Type type = typeof(T);
+            ParameterExpression arg = Expression.Parameter(type, "x");
+            Expression expr = arg;
+            foreach (string prop in props)
             {
-                if (data.GetType().GetGenericArguments()[0] == typeof(Patient))
-                {
-                    IEnumerable<Patient> patients = (IEnumerable<Patient>)(IEnumerable<T>)data.Cast<Patient>();
-
-                    if (sortOrder == by)
-                    {
-                        patients = patients.OrderByDescending(i => i.Name);
-                    }
-                    else { patients = patients.OrderBy(i => i.Name); }
-
-                    return (IEnumerable<T>)patients;
-                }
+                PropertyInfo pi = type.GetProperty(prop);
+                expr = Expression.Property(expr, pi);
+                type = pi.PropertyType;
             }
 
-            return data;
+            Type delegateType = typeof(Func<,>).MakeGenericType(typeof(T), type);
+            LambdaExpression lambda = Expression.Lambda(delegateType, expr, arg);
+
+
+            object result = typeof(Enumerable).GetMethods().Single(
+              method => method.Name == sortOrder
+                      && method.IsGenericMethodDefinition
+                      && method.GetGenericArguments().Length == 2
+                      && method.GetParameters().Length == 2)
+              .MakeGenericMethod(typeof(T), type)
+              .Invoke(null, new object[] { data, lambda.Compile() });
+
+            return (IEnumerable<T>)result;
         }
 
         public IEnumerable<T> Search(IEnumerable<T> data, string search)
