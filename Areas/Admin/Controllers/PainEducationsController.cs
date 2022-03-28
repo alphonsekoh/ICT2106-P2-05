@@ -14,11 +14,15 @@ namespace PainAssessment.Areas.Admin.Controllers
     {
         private readonly IPainEducationService painEducationService;
         private readonly ILogService log;
+        private readonly ITableUltilityService<PainEducation> tableUltilityService;
+
         public PainEducationsController(IPainEducationService painEducationService)
         {
             this.painEducationService = painEducationService;
             log = LogService.GetInstance;
+            tableUltilityService = TableUltilityService<PainEducation>.GetInstance;
         }
+
         // GET: Admin/PainEducations
         /*
          Index function to take in input from get upon search, sorting and page change
@@ -26,43 +30,62 @@ namespace PainAssessment.Areas.Admin.Controllers
         public IActionResult Index(string sortOrder, string searchString, int page = 1)
         {
             ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "Name" : "";
-            IEnumerable<PainEducation> painEducation = from d in painEducationService.GetAllPainEducations() select d;
-            painEducation = sortOrder switch // check input of what is being sorted
-            {
-                "Name" => painEducation.OrderByDescending(d => d.Name),
-                _ => painEducation.OrderBy(d => d.Name),
-            };
+            ViewData["searchString"] = searchString;
+            searchString = String.IsNullOrEmpty(searchString) ? "" : searchString;
+
+            IEnumerable<PainEducation> painEducations = painEducationService.GetAllPainEducations();
+
+            painEducations = tableUltilityService.Sort(painEducations, "Name", String.IsNullOrEmpty(sortOrder) ? tableUltilityService.ORDER_BY : tableUltilityService.ORDER_BY_DESC);
+
+            painEducations = tableUltilityService.Search(painEducations, searchString.ToLower());
+
+            // Pagination.
+            ViewData["max_page"] = tableUltilityService.GetMaxPageCount(painEducations);
+            ViewData["current_page"] = page = tableUltilityService.ValidateCurrentPage(page, painEducations);
+            painEducations = tableUltilityService.GetPageData(painEducations, page);
+
+            ViewData["total_count"] = painEducations.Count();
+
+            return View(painEducations.ToList());
+
+            //ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "Name" : "";
+            //IEnumerable<PainEducation> painEducation = from d in painEducationService.GetAllPainEducations() select d;
+            //painEducation = sortOrder switch // check input of what is being sorted
+            //{
+            //    "Name" => painEducation.OrderByDescending(d => d.Name),
+            //    _ => painEducation.OrderBy(d => d.Name),
+            //};
 
 
 
-            // check if not search input not empty
-            if (!String.IsNullOrEmpty(searchString))
-            {
-                painEducation = painEducation.Where(d => d.Name.Contains(searchString));
-            }
+            //// check if not search input not empty
+            //if (!String.IsNullOrEmpty(searchString))
+            //{
+            //    painEducation = painEducation.Where(d => d.Name.Contains(searchString));
+            //}
 
-            ViewData["total_count"] = painEducation.Count(); // get count of all from
+            //ViewData["total_count"] = painEducation.Count(); // get count of all from
 
-            int max_page = (int)Math.Ceiling((decimal)(painEducation.Count() / 8.0));
+            //int max_page = (int)Math.Ceiling((decimal)(painEducation.Count() / 8.0));
 
-            if (page > max_page)
-            {
-                page = max_page;
-            }
-            if (page < 1)
-            {
-                page = 1;
-            }
+            //if (page > max_page)
+            //{
+            //    page = max_page;
+            //}
+            //if (page < 1)
+            //{
+            //    page = 1;
+            //}
 
-            ViewData["max_page"] = max_page;
-            ViewData["current_page"] = page;
+            //ViewData["max_page"] = max_page;
+            //ViewData["current_page"] = page;
 
-            if (painEducation.Any())
-            {
-                painEducation = painEducation.ChunkBy(8).ElementAt(page - 1);
-            }
+            //if (painEducation.Any())
+            //{
+            //    painEducation = painEducation.ChunkBy(8).ElementAt(page - 1);
+            //}
 
-            return View(painEducation.ToList());
+            //return View(painEducation.ToList());
         }
 
         // GET: Admin/PainEducations/Details/5
