@@ -31,12 +31,11 @@ namespace PainAssessment.Areas.Admin.Controllers
             ViewData["searchString"] = searchString;
             searchString = String.IsNullOrEmpty(searchString) ? "" : searchString;
 
-            //IEnumerable<Patient> patients = from i in patientService.GetAllPatients() select i;
             IEnumerable<Patient> patients = patientService.GetAllPatients();
-            //patients = tableUltilityService.Sort(patients, "Name", sortOrder);
 
-            patients = tableUltilityService.KVSort(patients, "Gender", String.IsNullOrEmpty(sortOrder) ? tableUltilityService.ORDER_BY : tableUltilityService.ORDER_BY_DESC);
+            patients = tableUltilityService.Sort(patients, "Name", String.IsNullOrEmpty(sortOrder) ? tableUltilityService.ORDER_BY : tableUltilityService.ORDER_BY_DESC);
             patients = tableUltilityService.Search(patients, searchString.ToLower());
+
             ViewData["total_count"] = patients.Count();
             ViewData["max_page"] = tableUltilityService.GetMaxPageCount(patients);
             ViewData["current_page"] = page = tableUltilityService.ValidateCurrentPage(page, patients);
