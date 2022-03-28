@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using PainAssessment.Areas.Admin.Models;
 
 namespace PainAssessment.Areas.Admin.Services
 {
