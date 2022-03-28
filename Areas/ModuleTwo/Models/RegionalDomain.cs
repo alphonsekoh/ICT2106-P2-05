@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace PainAssessment.Areas.ModuleTwo.Models
 {
-    public class RegionalDomain : Domain, IChecklist
+    public class RegionalDomain : Domain, IChecklist, IRegionalDomain
     {
         [Key]
         public int RowId { get; set; }
@@ -26,6 +26,13 @@ namespace PainAssessment.Areas.ModuleTwo.Models
         {
             throw new NotImplementedException();
         }
+
+        //
+
+        //public void InitialiseBooleanAttribute(string attribute, bool value)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
         public void InitialiseIntAttribute(string attribute, int value)
         {

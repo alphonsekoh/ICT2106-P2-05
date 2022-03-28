@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using PainAssessment.Areas.ModuleTwo.Data;
 using PainAssessment.Areas.ModuleTwo.Models;
+using PainAssessment.Areas.ModuleTwo.Services;
 
 namespace PainAssessment.Areas.ModuleTwo.Controllers
 {
@@ -15,6 +16,7 @@ namespace PainAssessment.Areas.ModuleTwo.Controllers
     {
         //private readonly MvcChecklistContext _context;
         private IUnitOfWork _unitOfWork;
+        private IChecklistService _checklistService;
 
         /*
         public ChecklistsController(MvcChecklistContext context)
@@ -85,7 +87,7 @@ namespace PainAssessment.Areas.ModuleTwo.Controllers
 
         // GET: ModuleTwo/Checklists/Create
         [HttpGet]
-        public IActionResult Create()
+        public IActionResult Create(int user)
         {
             /*
             Checklist checklist = new Checklist();

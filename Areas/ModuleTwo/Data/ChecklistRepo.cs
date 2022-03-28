@@ -25,6 +25,24 @@ namespace PainAssessment.Areas.ModuleTwo.Data
             return checklists;
         }
 
+        public List<Checklist> GetAllChecklistsFrom(int id)
+        {
+            List<Checklist> checklists;
+            checklists = _context.Checklist
+                .Where(a => a.PractitionerId == id)
+                .ToList();
+            return checklists;
+        }
+
+        public List<Checklist> GetActiveChecklists()
+        {
+            List<Checklist> checklists;
+            checklists = _context.Checklist
+                .Where(a => a.Active == true)
+                .ToList();
+            return checklists;
+        }
+
         public Checklist GetById(int id)
         {
             Checklist checklist = _context.Checklist
@@ -37,6 +55,7 @@ namespace PainAssessment.Areas.ModuleTwo.Data
             return checklist;
         }
 
+
         public void Delete(Checklist checklist)
         {
             _context.Attach(checklist);
@@ -46,6 +65,9 @@ namespace PainAssessment.Areas.ModuleTwo.Data
         public Checklist InsertGet()
         {
             Checklist checklist = new Checklist();
+            //checklist.Central.Add(1);
+            //checklist.Regional.Add(2);
+            //checklist.Local.Add(3);
             checklist.Central.Add(new CentralDomain() { RowId = 1 });
             checklist.Regional.Add(new RegionalDomain() { RowId = 1 });
             checklist.Local.Add(new LocalDomain() { RowId = 1 });
@@ -55,7 +77,7 @@ namespace PainAssessment.Areas.ModuleTwo.Data
 
         public void InsertPost(Checklist checklist)
         {
-            checklist.Central.RemoveAll(n => n.IsCentralDeleted == true);
+            checklist.Central.RemoveAll(n => n.getIsCentralDeleted() == true);
             checklist.Regional.RemoveAll(n => n.IsRegionalDeleted == true);
             checklist.Local.RemoveAll(n => n.IsLocalDeleted == true);
             _context.Add(checklist);
@@ -88,5 +110,6 @@ namespace PainAssessment.Areas.ModuleTwo.Data
         {
             return _context.Checklist.Any(e => e.RetrieveIntAttribute("ChecklistId") == id);
         }
+
     }
 }

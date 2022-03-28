@@ -10,6 +10,8 @@ namespace PainAssessment.Areas.ModuleTwo.Data
     public interface IChecklistRepo
     {
         List<Checklist> GetAll();
+        List<Checklist> GetActiveChecklists();
+        List<Checklist> GetAllChecklistsFrom(int id);
         Checklist GetById(int id);
         Checklist InsertGet();
 

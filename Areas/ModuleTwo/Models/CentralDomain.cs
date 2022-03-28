@@ -7,12 +7,8 @@ using System.Threading.Tasks;
 
 namespace PainAssessment.Areas.ModuleTwo.Models
 {
-    public class CentralDomain : Domain, IChecklist
+    public class CentralDomain : Domain, IChecklist, ICentralDomain
     {
-        public CentralDomain()
-        {
-
-        }
         [Key]
         public int RowId { get; set; }
 
@@ -26,10 +22,22 @@ namespace PainAssessment.Areas.ModuleTwo.Models
         [NotMapped]
         public bool IsCentralDeleted { get; set; } = false;
 
+        public bool getIsCentralDeleted()
+        {
+            return IsCentralDeleted;
+        }
+
         public void InitialiseBooleanAttribute(string attribute, bool value)
         {
             throw new NotImplementedException();
         }
+
+        //
+
+        //public void InitialiseBooleanAttribute(string attribute, bool value)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
         public void InitialiseIntAttribute(string attribute, int value)
         {
@@ -43,7 +51,7 @@ namespace PainAssessment.Areas.ModuleTwo.Models
 
         public bool RetrieveBooleanAttribute(string attribute)
         {
-            if (attribute.Equals("IsCentralDeleted"))
+            if (attribute.Equals("IsRegionalDeleted"))
             {
                 return IsCentralDeleted;
             }
@@ -63,7 +71,7 @@ namespace PainAssessment.Areas.ModuleTwo.Models
 
         public string RetrieveStringAttribute(string attribute)
         {
-            if(attribute.Equals("SubDomain"))
+            if (attribute.Equals("SubDomain"))
             {
                 return SubDomain;
             }
