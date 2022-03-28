@@ -18,13 +18,13 @@
                     <select asp-for="ClinicalAreaID" class="form-control" asp-items="ViewBag.ClinicalAreaID"></select>
                 </div>
                 <span asp-validation-for="ClinicalAreaID" class="text-danger align-self-center"></span>
-                <span id="ClinicalAreaMessage"></span>
+                <span id="ClinicalAreaMessage" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label class="control-label"> Practice Type</label>
                 <select asp-for="PracticeTypeID" class="form-control" asp-items="ViewBag.PracticeTypeID"></select>
                 <span asp-validation-for="PracticeTypeID" class="text-danger"></span>
-                <span id="PracticeTypeMessage"></span>
+                <span id="PracticeTypeMessage" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Name" class="control-label"></label>
@@ -41,7 +41,7 @@
                 <label asp-for="PriorPainEducation" class="control-label">PriorPainEducation</label>
                 @Html.ListBoxFor(model => model.SelectedPainEducation, ViewBag.PainEducationID as MultiSelectList, new { id = "PriorPainEducation", multiple = "multiple" })
                 <span asp-validation-for="SelectedPainEducation" class="text-danger"></span>
-                <span id="PriorPainEducationMessage"></span>
+                <span id="PriorPainEducationMessage" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
