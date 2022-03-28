@@ -84,12 +84,28 @@ namespace PainAssessment.Areas.Admin.Services
 
         public IEnumerable<T> Search(IEnumerable<T> data, string search)
         {
+            Type type = typeof(T);
             if (!String.IsNullOrEmpty(search))
             {
-                // TODO: Fix for all types.
-                if (data.GetType().GetGenericArguments()[0] == typeof(Patient))
+                if (type == typeof(Patient))
                 {
                     data = (IEnumerable<T>)data.Cast<Patient>().Where(i => i.Name.ToLower().Contains(search.ToLower()));
+                }
+                else if (type == typeof(PracticeType))
+                {
+                    data = (IEnumerable<T>)data.Cast<PracticeType>().Where(i => i.Name.ToLower().Contains(search.ToLower()));
+                }
+                else if (type == typeof(Practitioner))
+                {
+                    data = (IEnumerable<T>)data.Cast<Practitioner>().Where(i => i.Name.ToLower().Contains(search.ToLower()));
+                }
+                else if (type == typeof(PainEducation))
+                {
+                    data = (IEnumerable<T>)data.Cast<PainEducation>().Where(i => i.Name.ToLower().Contains(search.ToLower()));
+                }
+                else if (type == typeof(ClinicalArea))
+                {
+                    data = (IEnumerable<T>)data.Cast<ClinicalArea>().Where(i => i.Name.ToLower().Contains(search.ToLower()));
                 }
             }
 
