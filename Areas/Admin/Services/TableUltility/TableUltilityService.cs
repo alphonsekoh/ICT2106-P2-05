@@ -8,7 +8,7 @@ namespace PainAssessment.Areas.Admin.Services
 {
     public sealed class TableUltilityService<T> : ITableUltilityService<T>
     {
-        private static double ITEM_PER_PAGE = 8.0;
+        private readonly static double ITEM_PER_PAGE = 8.0;
         private TableUltilityService() { }
 
         private static readonly Lazy<TableUltilityService<T>> instance = new(() => new TableUltilityService<T>());
