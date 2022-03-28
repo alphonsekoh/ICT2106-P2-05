@@ -2,7 +2,6 @@
 using Microsoft.EntityFrameworkCore;
 using PainAssessment.Areas.Admin.Models;
 using PainAssessment.Areas.Admin.Services;
-using PainAssessment.Areas.Admin.Util;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -47,45 +46,6 @@ namespace PainAssessment.Areas.Admin.Controllers
             ViewData["total_count"] = painEducations.Count();
 
             return View(painEducations.ToList());
-
-            //ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "Name" : "";
-            //IEnumerable<PainEducation> painEducation = from d in painEducationService.GetAllPainEducations() select d;
-            //painEducation = sortOrder switch // check input of what is being sorted
-            //{
-            //    "Name" => painEducation.OrderByDescending(d => d.Name),
-            //    _ => painEducation.OrderBy(d => d.Name),
-            //};
-
-
-
-            //// check if not search input not empty
-            //if (!String.IsNullOrEmpty(searchString))
-            //{
-            //    painEducation = painEducation.Where(d => d.Name.Contains(searchString));
-            //}
-
-            //ViewData["total_count"] = painEducation.Count(); // get count of all from
-
-            //int max_page = (int)Math.Ceiling((decimal)(painEducation.Count() / 8.0));
-
-            //if (page > max_page)
-            //{
-            //    page = max_page;
-            //}
-            //if (page < 1)
-            //{
-            //    page = 1;
-            //}
-
-            //ViewData["max_page"] = max_page;
-            //ViewData["current_page"] = page;
-
-            //if (painEducation.Any())
-            //{
-            //    painEducation = painEducation.ChunkBy(8).ElementAt(page - 1);
-            //}
-
-            //return View(painEducation.ToList());
         }
 
         // GET: Admin/PainEducations/Details/5

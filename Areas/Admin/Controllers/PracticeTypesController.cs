@@ -2,7 +2,6 @@
 using Microsoft.EntityFrameworkCore;
 using PainAssessment.Areas.Admin.Models;
 using PainAssessment.Areas.Admin.Services;
-using PainAssessment.Areas.Admin.Util;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,11 +13,15 @@ namespace PainAssessment.Areas.Admin.Controllers
     {
         private readonly IPracticeTypeService practiceTypeService;
         private readonly ILogService log;
+        private readonly ITableUltilityService<PracticeType> tableUltilityService;
+
         public PracticeTypesController(IPracticeTypeService practiceTypeService)
         {
             this.practiceTypeService = practiceTypeService;
             log = LogService.GetInstance;
+            tableUltilityService = TableUltilityService<PracticeType>.GetInstance;
         }
+
         // GET: Admin/PracticeTypes
         /*
          Index function to take in input from get upon search, sorting and page change
@@ -26,42 +29,23 @@ namespace PainAssessment.Areas.Admin.Controllers
         public IActionResult Index(string sortOrder, string searchString, int page = 1)
         {
             ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "Name" : "";
-            IEnumerable<PracticeType> practiceType = from d in practiceTypeService.GetAllPracticeTypes() select d;
-            practiceType = sortOrder switch // check input of what is being sorted
-            {
-                "Name" => practiceType.OrderByDescending(d => d.Name),
-                _ => practiceType.OrderBy(d => d.Name),
-            };
+            ViewData["searchString"] = searchString;
+            searchString = String.IsNullOrEmpty(searchString) ? "" : searchString;
 
+            IEnumerable<PracticeType> practiceTypes = practiceTypeService.GetAllPracticeTypes();
 
-            // check if not search input not empty
-            if (!String.IsNullOrEmpty(searchString))
-            {
-                practiceType = practiceType.Where(d => d.Name.Contains(searchString));
-            }
+            practiceTypes = tableUltilityService.Sort(practiceTypes, "Name", String.IsNullOrEmpty(sortOrder) ? tableUltilityService.ORDER_BY : tableUltilityService.ORDER_BY_DESC);
 
-            ViewData["total_count"] = practiceType.Count(); // get count of all from
+            practiceTypes = tableUltilityService.Search(practiceTypes, searchString.ToLower());
 
-            int max_page = (int)Math.Ceiling((decimal)(practiceType.Count() / 8.0));
+            // Pagination.
+            ViewData["max_page"] = tableUltilityService.GetMaxPageCount(practiceTypes);
+            ViewData["current_page"] = page = tableUltilityService.ValidateCurrentPage(page, practiceTypes);
+            practiceTypes = tableUltilityService.GetPageData(practiceTypes, page);
 
-            if (page > max_page)
-            {
-                page = max_page;
-            }
-            if (page < 1)
-            {
-                page = 1;
-            }
+            ViewData["total_count"] = practiceTypes.Count();
 
-            ViewData["max_page"] = max_page;
-            ViewData["current_page"] = page;
-
-            if (practiceType.Any())
-            {
-                practiceType = practiceType.ChunkBy(8).ElementAt(page - 1);
-            }
-
-            return View(practiceType.ToList());
+            return View(practiceTypes.ToList());
         }
 
         // GET: Admin/PracticeTypes/Details/5
