@@ -13,7 +13,7 @@ namespace PainAssessment.Areas.Admin.Controllers
     public class PatientsController : Controller
     {
         private readonly IPatientService patientService;
-        private readonly TableUltilityService<Patient> tableUltilityService;
+        private readonly ITableUltilityService<Patient> tableUltilityService;
         private readonly ILogService log;
 
         public PatientsController(IPatientService patientService)
