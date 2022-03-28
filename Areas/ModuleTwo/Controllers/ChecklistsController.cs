@@ -131,7 +131,7 @@ namespace PainAssessment.Areas.ModuleTwo.Controllers
             */
             _unitOfWork.ChecklistRepo.InsertPost(checklist);
 
-            var checklist2 = new ConsultationChecklist();
+            var checklist2 = new Checklist();
             checklist2.SessionId = 2;
             checklist2.ChecklistName = "test consult2";
             checklist2.ChecklistDescription = "test2";
