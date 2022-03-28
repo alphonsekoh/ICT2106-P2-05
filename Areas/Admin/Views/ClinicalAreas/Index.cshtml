@@ -64,7 +64,7 @@
                     {
                         <li class="page-item">
                             <a class="page-link"
-                               aria-label="Previous" asp-action="Index" asp-route-page=@((int) ViewData["current_page"]-1) asp-route-name=@ViewData["name"]>
+                               aria-label="Previous" asp-action="Index" asp-route-page=@((int) ViewData["current_page"]-1) asp-route-name=@ViewData["name"] asp-route-searchString=@ViewData["searchString"]>
                                 <span aria-hidden="true">&laquo;</span>
                             </a>
                         </li>
@@ -84,7 +84,7 @@
                         {
 
                             <li class="page-item">
-                                <a class="page-link" asp-action="Index" asp-route-page=@i asp-route-name=@ViewData["name"]>@i</a>
+                                <a class="page-link" asp-action="Index" asp-route-page=@i asp-route-name=@ViewData["name"] asp-route-searchString=@ViewData["searchString"]>@i</a>
                             </li>
                         }
                     }
@@ -93,7 +93,7 @@
                     {
                         <li class="page-item">
                             <a class="page-link"
-                               aria-label="Next" asp-action="Index" asp-route-page=@((int)ViewData["current_page"] + 1) asp-route-name=@ViewData["name"]>
+                               aria-label="Next" asp-action="Index" asp-route-page=@((int)ViewData["current_page"] + 1) asp-route-name=@ViewData["name"] asp-route-searchString=@ViewData["searchString"]>
                                 <span aria-hidden="true">&raquo;</span>
                             </a>
                         </li>
