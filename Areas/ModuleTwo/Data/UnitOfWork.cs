@@ -8,11 +8,15 @@ namespace PainAssessment.Areas.ModuleTwo.Data
     public class UnitOfWork : IUnitOfWork
     {
         private MvcChecklistContext _context;
-        private IChecklistRepo checklistRepo;
+        private MvcConsultationChecklistContext _Consultationcontext;
 
-        public UnitOfWork(MvcChecklistContext context)
+        private IChecklistRepo checklistRepo;
+        private IConsultationChecklistRepo consultationChecklistRepo;
+
+        public UnitOfWork(MvcChecklistContext context, MvcConsultationChecklistContext context2)
         {
             _context = context;
+            _Consultationcontext = context2;
         }
 
         public IChecklistRepo ChecklistRepo
@@ -23,10 +27,19 @@ namespace PainAssessment.Areas.ModuleTwo.Data
             }
         }
 
+        public IConsultationChecklistRepo ConsultationChecklistRepo
+        {
+            get
+            {
+                return consultationChecklistRepo = consultationChecklistRepo ?? new ConsultationChecklistRepo(_Consultationcontext);
+            }
+        }
+
 
         public void Save()
         {
             _context.SaveChanges();
+            _Consultationcontext.SaveChanges();
         }
     }
 }

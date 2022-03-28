@@ -1,4 +1,5 @@
-﻿@model PainAssessment.Areas.ModuleTwo.Models.Patient
+﻿@*@model PainAssessment.Areas.ModuleTwo.Models.Patient*@
+@model PainAssessment.Areas.Admin.Models.Patient
 
 @{
     ViewData["Title"] = "Create";
@@ -13,34 +14,34 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="patientName" class="control-label"></label>
-                <input asp-for="patientName" class="form-control" />
-                <span asp-validation-for="patientName" class="text-danger"></span>
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="patientAge" class="control-label"></label>
-                <input asp-for="patientAge" class="form-control" />
-                <span asp-validation-for="patientAge" class="text-danger"></span>
+                <label asp-for="Age" class="control-label"></label>
+                <input asp-for="Age" class="form-control" />
+                <span asp-validation-for="Age" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="condition" class="control-label"></label>
-                <input asp-for="condition" class="form-control" />
-                <span asp-validation-for="condition" class="text-danger"></span>
+                <label asp-for="Condition" class="control-label"></label>
+                <input asp-for="Condition" class="form-control" />
+                <span asp-validation-for="Condition" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="gender" class="control-label"></label>
-                <input asp-for="gender" class="form-control" />
-                <span asp-validation-for="gender" class="text-danger"></span>
+                <label asp-for="Gender" class="control-label"></label>
+                <input asp-for="Gender" class="form-control" />
+                <span asp-validation-for="Gender" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            @*<div class="form-group">
                 <label asp-for="sessions" class="control-label"></label>
                 <input asp-for="sessions" class="form-control" />
                 <span asp-validation-for="sessions" class="text-danger"></span>
-            </div>
+            </div>*@
             <div class="form-group">
-                <label asp-for="patientNotes" class="control-label"></label>
-                <input asp-for="patientNotes" class="form-control" />
-                <span asp-validation-for="patientNotes" class="text-danger"></span>
+                <label asp-for="Notes" class="control-label"></label>
+                <input asp-for="Notes" class="form-control" />
+                <span asp-validation-for="Notes" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />

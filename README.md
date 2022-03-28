@@ -17,6 +17,19 @@ The [Area](https://docs.microsoft.com/en-us/aspnet/core/mvc/controllers/areas?vi
 - Create your own areas in [Areas](./Areas). Use Visual Studio to scaffold 👍
 - Add your newly created Area route to [Startup.cs](./Startup.cs)
 
-## Resources for
+## Prerequisite
 
-[Database Migration](https://docs.microsoft.com/en-us/ef/core/managing-schemas/migrations/?tabs=dotnet-core-cli)
+1. [SQL Server](https://www.microsoft.com/en-sg/sql-server/sql-server-downloads)
+
+## Initial Setup for Database
+
+```bash
+dotnet ef migrations add InitialCreate
+dotnet ef database update
+```
+
+For more information, read [Database Migration](https://docs.microsoft.com/en-us/ef/core/managing-schemas/migrations/?tabs=dotnet-core-cli).
+
+> Note: Migration folder is .gitignored.
+>
+> For any subsequent setup for database, delete the Migrations folder generated from ef migrations, and delete the database from your local mysql server. Then repeat the `migrations add InitialCreate` and `database update` commands.
