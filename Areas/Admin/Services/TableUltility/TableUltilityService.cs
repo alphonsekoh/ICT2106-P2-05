@@ -15,7 +15,7 @@ namespace PainAssessment.Areas.Admin.Services
 
         public static TableUltilityService<T> GetInstance => instance.Value;
 
-        public IEnumerable<T> getPageData(IEnumerable<T> data, int page)
+        public IEnumerable<T> GetPageData(IEnumerable<T> data, int page)
         {
             if (data.Any())
             {
@@ -24,14 +24,14 @@ namespace PainAssessment.Areas.Admin.Services
             return data;
         }
 
-        public int getMaxPageCount(IEnumerable<T> data)
+        public int GetMaxPageCount(IEnumerable<T> data)
         {
             return (int)Math.Ceiling((decimal)(data.Count() / ITEM_PER_PAGE));
         }
 
-        public int validateCurrentPage(int currentPage, IEnumerable<T> data)
+        public int ValidateCurrentPage(int currentPage, IEnumerable<T> data)
         {
-            int max_page = getMaxPageCount(data);
+            int max_page = GetMaxPageCount(data);
 
             if (currentPage > max_page)
             {
@@ -46,7 +46,7 @@ namespace PainAssessment.Areas.Admin.Services
             return currentPage;
         }
 
-        public IEnumerable<T> sort(IEnumerable<T> data, string by, string sortOrder)
+        public IEnumerable<T> Sort(IEnumerable<T> data, string by, string sortOrder)
         {
             // TODO: Fix for all types.
             if (!String.IsNullOrEmpty(by))
@@ -68,7 +68,7 @@ namespace PainAssessment.Areas.Admin.Services
             return data;
         }
 
-        public IEnumerable<T> search(IEnumerable<T> data, string search)
+        public IEnumerable<T> Search(IEnumerable<T> data, string search)
         {
             if (!String.IsNullOrEmpty(search))
             {

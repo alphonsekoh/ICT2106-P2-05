@@ -33,12 +33,12 @@ namespace PainAssessment.Areas.Admin.Controllers
 
             IEnumerable<Patient> patients = from i in patientService.GetAllPatients() select i;
 
-            patients = tableUltilityService.sort(patients, "Name", sortOrder);
-            patients = tableUltilityService.search(patients, searchString.ToLower());
+            patients = tableUltilityService.Sort(patients, "Name", sortOrder);
+            patients = tableUltilityService.Search(patients, searchString.ToLower());
             ViewData["total_count"] = patients.Count();
-            ViewData["max_page"] = tableUltilityService.getMaxPageCount(patients);
-            ViewData["current_page"] = page = tableUltilityService.validateCurrentPage(page, patients);
-            patients = tableUltilityService.getPageData(patients, page);
+            ViewData["max_page"] = tableUltilityService.GetMaxPageCount(patients);
+            ViewData["current_page"] = page = tableUltilityService.ValidateCurrentPage(page, patients);
+            patients = tableUltilityService.GetPageData(patients, page);
 
             return View(patients.ToList());
         }
