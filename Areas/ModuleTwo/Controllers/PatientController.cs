@@ -9,6 +9,8 @@ using PainAssessment.Areas.Admin.Models;
 //using PainAssessment.Areas.ModuleTwo.Data;
 //using PainAssessment.Areas.ModuleTwo.Models;
 using PainAssessment.Areas.Admin.Services;
+using System.Collections.Generic;
+using System.Linq;
 
 
 namespace PainAssessment.Areas.ModuleTwo.Controllers
@@ -28,15 +30,85 @@ namespace PainAssessment.Areas.ModuleTwo.Controllers
         }
 
         // GET: Admin/Patients
-        public IActionResult Index()            // Will need to pass in Practitioner GUID here
+        //public IActionResult Index()            // Will need to pass in Practitioner GUID here
+        //{
+        //    //Practitioner practitioner = practitionerService.GetPractitioner(Guid.Parse("bb4d34c0-a43b-4f6f-138b-08da09bb8f40"));
+        //    //Patient patient = patientService.GetPatient(Guid.Parse("85f853ef-876e-48fb-173b-08da04e2f772"));
+        //    //practitioner.AddPatientRelation(patient);
+        //    //practitionerService.SavePractitioner();
+        //    //return View(practitioner.Patients);
+        //    return View(patientService.GetAllPatients());
+        //}
+
+        public async Task<IActionResult> Index(string sortOrder, string searchString)
         {
-            Practitioner practitioner = practitionerService.GetPractitioner(Guid.Parse("bb4d34c0-a43b-4f6f-138b-08da09bb8f40"));
-            //Patient patient = patientService.GetPatient(Guid.Parse("85f853ef-876e-48fb-173b-08da04e2f772"));
-            //practitioner.AddPatientRelation(patient);
-            //practitionerService.SavePractitioner();
-            return View(practitioner.Patients);
-            //return View(patientService.GetAllPatients());
+            ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "Name" : "";
+            ViewData["CurrentFilter"] = searchString;
+
+            IEnumerable<Patient> patients = from s in patientService.GetAllPatients() select s;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                patients = patients.Where(s => s.Name.Contains(searchString));
+            }
+
+            switch (sortOrder)
+            {
+                case "Name":
+                    patients = patients.OrderByDescending(s => s.Name);
+                    break;
+                //case "Date":
+                //    students = students.OrderBy(s => s.EnrollmentDate);
+                //    break;
+                //case "date_desc":
+                //    students = students.OrderByDescending(s => s.EnrollmentDate);
+                //    break;
+            }
+            //return View(await students.AsNoTracking().ToListAsync());
+            return View(patients.ToList());
         }
+
+        //========================================================================================
+
+        //public IActionResult Index(string sortOrder, string searchString, int page = 1)
+        //{
+        //    ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "Name" : "";
+        //    IEnumerable<Patient> patient = from i in patientService.GetAllPatients() select i;
+        //    patient = sortOrder switch // check input of what is being sorted
+        //    {
+        //        "Name" => patient.OrderByDescending(i => i.Name),
+        //        _ => patient.OrderBy(i => i.Name),
+        //    };
+
+        //    // check if not search input not empty
+        //    if (!String.IsNullOrEmpty(searchString))
+        //    {
+        //        patient = patient.Where(i => i.Name.ToLower().Contains(searchString.ToLower()));
+        //    }
+
+        //    ViewData["total_count"] = patient.Count(); // get count of all from
+
+        //    int max_page = (int)Math.Ceiling((decimal)(patient.Count() / 8.0));
+
+        //    if (page > max_page)
+        //    {
+        //        page = max_page;
+        //    }
+        //    if (page < 1)
+        //    {
+        //        page = 1;
+        //    }
+
+        //    ViewData["max_page"] = max_page;
+        //    ViewData["current_page"] = page;
+
+        //    if (patient.Any())
+        //    {
+        //        patient = patient.ChunkBy(8).ElementAt(page - 1);
+        //    }
+
+        //    return View(patient.ToList());
+        //}
 
         // GET: Admin/Patients/Details/5
         public IActionResult Details(Guid? id)
