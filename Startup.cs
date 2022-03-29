@@ -1,17 +1,16 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using PainAssessment.Areas.Admin.Data;
+using PainAssessment.Areas.Admin.Services;
 using PainAssessment.Data;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+
 
 using PainAssessment.Areas.ModuleTwo.Data;
+using PainAssessment.Areas.ModuleTwo.Services;
 
 namespace PainAssessment
 {
@@ -30,10 +29,34 @@ namespace PainAssessment
             services.AddDbContext<HospitalContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddDatabaseDeveloperPageExceptionFilter();
+
+            // Add DI for Services
+            services.AddScoped<IClinicalAreaService, ClinicalAreaService>();
+            services.AddScoped<IPracticeTypeService, PracticeTypeService>();
+            services.AddScoped<IPractitionerService, PractitionerService>();
+            services.AddScoped<IPatientService, PatientService>();
+            services.AddScoped<IGatewayManager, GatewayManager>();
+            services.AddScoped<IPainEducationService, PainEducationService>();
+
+
             services.AddControllersWithViews();
 
             services.AddDbContext<MvcChecklistContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("MvcChecklistContext")));
+
+            services.AddDbContext<MvcConsultationChecklistContext>(options =>
+            options.UseSqlServer(Configuration.GetConnectionString("MvcConsultationChecklistContext")));
+
+
+            services.AddTransient<IUnitOfWork, UnitOfWork>();
+
+            services.AddTransient<IChecklistService, ChecklistService>();
+
+            services.AddDbContext<MvcPatientContext>(options =>
+            options.UseSqlServer(Configuration.GetConnectionString("MvcPatientContext")));
+            services.AddDbContext<ConsultationContext>(options =>
+            options.UseSqlServer(Configuration.GetConnectionString("ConsultationContext")));
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

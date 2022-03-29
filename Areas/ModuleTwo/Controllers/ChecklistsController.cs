@@ -7,148 +7,94 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using PainAssessment.Areas.ModuleTwo.Data;
 using PainAssessment.Areas.ModuleTwo.Models;
+using PainAssessment.Areas.ModuleTwo.Services;
 
 namespace PainAssessment.Areas.ModuleTwo.Controllers
 {
     [Area("ModuleTwo")]
     public class ChecklistsController : Controller
     {
-        private readonly MvcChecklistContext _context;
+        private IChecklistService checklistService;
 
-        public ChecklistsController(MvcChecklistContext context)
+        public ChecklistsController(IChecklistService checklistServ)
         {
-            _context = context;
+
+            checklistService = checklistServ;
         }
 
-        // GET: ModuleTwo/Checklists
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            return View(await _context.Checklist.ToListAsync());
-        }
 
+            var checklists = checklistService.GetAll(2);
+
+            return View(checklists);
+        }
         // GET: ModuleTwo/Checklists/Details/5
-        public async Task<IActionResult> Details(int? id)
+
+        public IActionResult Details(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
 
-            var checklist = await _context.Checklist
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (checklist == null)
-            {
-                return NotFound();
-            }
-
+            var checklist = checklistService.GetById(id);
+            //var checklist = checklistService.GetBySessionId(2);
             return View(checklist);
         }
 
         // GET: ModuleTwo/Checklists/Create
-        public IActionResult Create()
+        [HttpGet]
+        public IActionResult Create(int user)
         {
-            return View();
+
+            var checklist = checklistService.InitialiseChecklist();
+            return View(checklist);
         }
 
         // POST: ModuleTwo/Checklists/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,checklistID,checklistName,checklistDescription")] Checklist checklist)
+        public IActionResult Create(Checklist checklist)
         {
-            if (ModelState.IsValid)
-            {
-                _context.Add(checklist);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
+            checklistService.Insert(checklist);
+
+            return RedirectToAction("index");
+        }
+        [HttpGet]
+        public IActionResult Edit(int id)
+        {
+
+            var checklist = checklistService.GetById(id);
             return View(checklist);
+            
         }
 
-        // GET: ModuleTwo/Checklists/Edit/5
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var checklist = await _context.Checklist.FindAsync(id);
-            if (checklist == null)
-            {
-                return NotFound();
-            }
-            return View(checklist);
-        }
-
-        // POST: ModuleTwo/Checklists/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,checklistID,checklistName,checklistDescription")] Checklist checklist)
+        public IActionResult Edit(Checklist checklist)
         {
-            if (id != checklist.Id)
-            {
-                return NotFound();
-            }
 
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(checklist);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!ChecklistExists(checklist.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
+            checklistService.Update(checklist);
+            return RedirectToAction("index");
+
+        }
+
+        [HttpGet]
+        public IActionResult Delete(int id)
+        {
+
+            var checklist = checklistService.GetById(id);
             return View(checklist);
         }
-
-        // GET: ModuleTwo/Checklists/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        [HttpPost]
+        public IActionResult Delete(Checklist checklist)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
 
-            var checklist = await _context.Checklist
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (checklist == null)
-            {
-                return NotFound();
-            }
+            checklistService.Delete(checklist);
+            return RedirectToAction("index");
 
-            return View(checklist);
         }
-
-        // POST: ModuleTwo/Checklists/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var checklist = await _context.Checklist.FindAsync(id);
-            _context.Checklist.Remove(checklist);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
-
         private bool ChecklistExists(int id)
         {
-            return _context.Checklist.Any(e => e.Id == id);
+            return checklistService.ChecklistExists(id);
         }
     }
 }
