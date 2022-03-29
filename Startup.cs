@@ -49,8 +49,6 @@ namespace PainAssessment
 
             services.AddTransient<IUnitOfWork, UnitOfWork>();
 
-            //services.AddDbContext<MvcPatientContext>(options =>
-            //options.UseSqlServer(Configuration.GetConnectionString("MvcPatientContext")));
             services.AddDbContext<ConsultationContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("ConsultationContext")));
 
