@@ -1,4 +1,4 @@
-﻿@model PainAssessment.ViewModels.Profile.AdministratorModel
+﻿@model PainAssessment.Areas.Admin.Models.ViewModels.Profile.AdministratorModel
 @{
     ViewData["Title"] = "ViewAdmin";
 }
@@ -31,6 +31,13 @@
         <div class="col-lg-2"> @Html.DisplayNameFor(model => model.Experience)</div>
         <div class="col-lg-10">
             @Html.TextBoxFor(model => model.Experience)
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-lg-2"> @Html.DisplayNameFor(model => model.ClinicalArea)</div>
+        <div class="col-lg-10">
+            @Html.TextBoxFor(model => model.ClinicalArea)
         </div>
     </div>
 </div>

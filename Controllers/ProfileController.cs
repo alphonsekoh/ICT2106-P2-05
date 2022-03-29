@@ -11,6 +11,8 @@ using PainAssessment.ViewModels.Profile;
 using System.Security.Claims;
 using PainAssessment.Models;
 using PainAssessment.Areas.Admin.Models;
+using PainAssessment.Areas.Admin.Models.ViewModels.Profile;
+using System.Text.Json;
 
 namespace PainAssessment.Controllers
 {
@@ -35,25 +37,30 @@ namespace PainAssessment.Controllers
 
         public ActionResult ViewProfile()
         {
-            var userid = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            //var userid = User.FindFirst(ClaimTypes.NameIdentifier).Value;
             var role = User.FindFirst(ClaimTypes.Role).Value;
+
+            String userid = "admin1";
 
             Account userAcc = accountService.GetAccount(userid);
             if (role == "Administrator")
             {
                 Administrator admin = administratorService.GetOneAdmin(userAcc.AccountId);
-                //ClinicalArea clinical = clinicalAreaService.GetClinicalArea(admin.ClinicalAreaID);
+                ClinicalArea clinical = clinicalAreaService.GetClinicalArea(admin.ClinicalAreaID);
                 var adminViewModel = new AdministratorModel
                 {
                     Name = admin.Account.Username,
                     FullName = admin.FullName,
                     Role = admin.Account.Role,
                     Experience = admin.Experience,
+                    ClinicalArea = clinical.Name,
                     AccountID = admin.Account.AccountId
 
                 };
-                //return RedirectToAction("ViewAdmin", adminViewModel);
-                return View("ViewAdmin",adminViewModel);
+                string jsonString = JsonSerializer.Serialize(adminViewModel);
+                return RedirectToAction(actionName: "ViewAdmin", controllerName: "Home",
+        new { data= jsonString, area = "Admin" });
+                //return View("ViewAdmin",adminViewModel);
             }
             else
             {
@@ -76,10 +83,12 @@ namespace PainAssessment.Controllers
         }
 
 
-        private ActionResult ViewAdmin()
+        /*private ActionResult ViewAdmin()
         {
-            return View();
-        }
+            return RedirectToAction(actionName: "ViewAdmin", controllerName: "Home",
+        new {  area = "Admin" });
+            //return View();
+        }*/
 
         private ActionResult ViewPractioner()
         {

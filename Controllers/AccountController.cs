@@ -9,6 +9,8 @@ using BC = BCrypt.Net.BCrypt;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using PainAssessment.Areas.Admin.Services;
+using PainAssessment.Areas.Admin.Models;
 
 namespace PainAssessment.Controllers
 {

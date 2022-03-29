@@ -1,10 +1,10 @@
-﻿using PainAssessment.Interfaces;
-using PainAssessment.Models;
+﻿using PainAssessment.Areas.Admin.Models;
+using PainAssessment.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace PainAssessment.Domain
+namespace PainAssessment.Areas.Admin.Services
 {
     public class AdministratorService : IAdministratorService
     {
