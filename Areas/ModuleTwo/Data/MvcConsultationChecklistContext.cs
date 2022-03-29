@@ -10,9 +10,9 @@ namespace PainAssessment.Areas.ModuleTwo.Data
         {
         }
 
-        public DbSet<ConsultationChecklist> ConsultationChecklist { get; set; }
-        public DbSet<ConsultationChecklist> ConsultationCentralDomain { get; set; }
-        public DbSet<ConsultationChecklist> ConsultationRegionalDomain { get; set; }
-        public DbSet<ConsultationChecklist> ConsultationLocalDomain { get; set; }
+        public DbSet<Checklist> ConsultationChecklist { get; set; }
+        public DbSet<CentralDomain> ConsultationCentralDomain { get; set; }
+        public DbSet<RegionalDomain> ConsultationRegionalDomain { get; set; }
+        public DbSet<LocalDomain> ConsultationLocalDomain { get; set; }
     }
 }

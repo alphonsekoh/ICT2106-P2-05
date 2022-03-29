@@ -9,8 +9,8 @@ namespace PainAssessment.Areas.ModuleTwo.Data
 {
     public interface IConsultationChecklistRepo
     {
-        ConsultationChecklist GetBySessionId(int attribute);
+        Checklist GetBySessionId(int attribute);
 
-        void InsertConsultationChecklist(ConsultationChecklist attribute);
+        void InsertConsultationChecklist(Checklist attribute);
     }
 }

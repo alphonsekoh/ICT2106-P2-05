@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using PainAssessment.Areas.ModuleTwo.Models;
+using PainAssessment.Areas.ModuleTwo.Iterator;
 
 namespace PainAssessment.Areas.ModuleTwo.Data
 {
@@ -18,9 +19,9 @@ namespace PainAssessment.Areas.ModuleTwo.Data
             _Consultationcontext = context;
         }
 
-        public ConsultationChecklist GetBySessionId(int id)
+        public Checklist GetBySessionId(int id)
         {
-            ConsultationChecklist checklist = _Consultationcontext.ConsultationChecklist
+            Checklist checklist = _Consultationcontext.ConsultationChecklist
                 .Include(c => c.Central)
                 .Include(r => r.Regional)
                 .Include(l => l.Local)
@@ -29,9 +30,13 @@ namespace PainAssessment.Areas.ModuleTwo.Data
             return checklist;
         }
 
-        public void InsertConsultationChecklist(ConsultationChecklist checklist)
+        public void InsertConsultationChecklist(Checklist checklist)
         {
-            _Consultationcontext.Add(checklist);
+            iterator cleanedChecklist = new iterator(checklist);
+
+            cleanedChecklist.resetChecklistID();
+
+            _Consultationcontext.Add(cleanedChecklist.getChecklist());
         }
     }
 }

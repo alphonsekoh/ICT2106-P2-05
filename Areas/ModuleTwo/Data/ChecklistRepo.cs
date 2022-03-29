@@ -18,10 +18,42 @@ namespace PainAssessment.Areas.ModuleTwo.Data
             _context = context;
         }
 
-        public List<Checklist> GetAll()
+        public List<Checklist> GetAll(int user)
         {
             List<Checklist> checklists;
-            checklists = _context.Checklist.ToList();
+            switch(user)
+            {
+                case 0:
+                    checklists = _context.Checklist.ToList();
+                    break;
+                case 1:
+                    checklists = GetAllChecklistsFrom(user);
+                    break;
+                default:
+                    checklists = GetActiveChecklists();
+                    List<Checklist> pract = GetAllChecklistsFrom(user);
+                    checklists.AddRange(pract);
+                    break;
+            }
+            return checklists;
+        }
+
+
+        public List<Checklist> GetAllChecklistsFrom(int id)
+        {
+            List<Checklist> checklists;
+            checklists = _context.Checklist
+                .Where(a => a.PractitionerId == id)
+                .ToList();
+            return checklists;
+        }
+
+        public List<Checklist> GetActiveChecklists()
+        {
+            List<Checklist> checklists;
+            checklists = GetAllChecklistsFrom(1)
+                .Where(a => a.Active == true)
+                .ToList();
             return checklists;
         }
 
@@ -32,10 +64,10 @@ namespace PainAssessment.Areas.ModuleTwo.Data
                 .Include(r => r.Regional)
                 .Include(l => l.Local)
 
-                //.Where(a => a.ChecklistId == id).FirstOrDefault();
                 .Where(a => a.ChecklistId == id).FirstOrDefault();
             return checklist;
         }
+
 
         public void Delete(Checklist checklist)
         {
@@ -53,9 +85,22 @@ namespace PainAssessment.Areas.ModuleTwo.Data
             return checklist;
         }
 
+        public Checklist InsertGetTest()
+        {
+            Checklist checklist = new Checklist();
+            //checklist.Central.Add(1);
+            //checklist.Regional.Add(2);
+            //checklist.Local.Add(3);
+            checklist.Central.Add(new CentralDomain());
+            checklist.Regional.Add(new RegionalDomain());
+            checklist.Local.Add(new LocalDomain());
+
+            return checklist;
+        }
+
         public void InsertPost(Checklist checklist)
         {
-            checklist.Central.RemoveAll(n => n.IsCentralDeleted == true);
+            checklist.Central.RemoveAll(n => n.getIsCentralDeleted() == true);
             checklist.Regional.RemoveAll(n => n.IsRegionalDeleted == true);
             checklist.Local.RemoveAll(n => n.IsLocalDeleted == true);
             _context.Add(checklist);
@@ -88,5 +133,24 @@ namespace PainAssessment.Areas.ModuleTwo.Data
         {
             return _context.Checklist.Any(e => e.RetrieveIntAttribute("ChecklistId") == id);
         }
+
+        public void SetActive(int id)
+        {
+            var checklist = GetById(id);
+            if (checklist.Active == false)
+            {
+                checklist.Active = true;
+            }
+        }
+
+        public void SetInActive(int id)
+        {
+            var checklist = GetById(id);
+            if (checklist.Active == true)
+            {
+                checklist.Active = false;
+            }
+        }
+
     }
 }

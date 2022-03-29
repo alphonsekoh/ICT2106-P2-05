@@ -10,6 +10,7 @@ using PainAssessment.Data;
 
 
 using PainAssessment.Areas.ModuleTwo.Data;
+using PainAssessment.Areas.ModuleTwo.Services;
 
 namespace PainAssessment
 {
@@ -49,9 +50,9 @@ namespace PainAssessment
 
             services.AddTransient<IUnitOfWork, UnitOfWork>();
 
+            services.AddTransient<IChecklistService, ChecklistService>();
             services.AddDbContext<ConsultationContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("ConsultationContext")));
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

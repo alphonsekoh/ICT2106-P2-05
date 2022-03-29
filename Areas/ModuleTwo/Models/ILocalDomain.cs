@@ -5,9 +5,8 @@ using System.Threading.Tasks;
 
 namespace PainAssessment.Areas.ModuleTwo.Models
 {
-    public interface IChecklist
+    public interface ILocalDomain : IDomain
     {
-        public int RetrieveIntAttribute(String attribute);
-        public String RetrieveStringAttribute(String attribute);
+        public Boolean getIsLocalDeleted();
     }
 }

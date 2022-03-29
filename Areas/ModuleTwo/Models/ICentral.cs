@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 
 namespace PainAssessment.Areas.ModuleTwo.Models
 {
-    public class ChecklistInformation
+    public interface ICentralDomain : IDomain
     {
-
+        public Boolean getIsCentralDeleted();
     }
 }

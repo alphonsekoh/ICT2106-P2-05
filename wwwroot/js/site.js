@@ -3,6 +3,7 @@
 
 // Write your JavaScript code.
 
+
 function RemoveCentral(btn) {
     //$(btn).closest('tr').remove()
     var t = document.getElementById('Central')
@@ -66,6 +67,8 @@ function RemoveRegional(btn) {
         return;
     }
 
+
+
     var btnIdx = btn.id.replaceAll('removeRegional-', '');
     var idofIsDeleted = btnIdx + "__IsRegionalDeleted";
 
@@ -110,6 +113,7 @@ function AddRegional(btn) {
     }
 }
 
+
 function RemoveLocal(btn) {
     //$(btn).closest('tr').remove()
     var table = document.getElementById('Local')
@@ -127,6 +131,8 @@ function RemoveLocal(btn) {
     document.getElementById(hidIsDelId).value = "true";
 
     $(btn).closest('tr').hide();
+
+
 }
 
 function AddLocal(btn) {
@@ -161,4 +167,5 @@ function AddLocal(btn) {
             x[cnt].value = '';
 
     }
+
 }
