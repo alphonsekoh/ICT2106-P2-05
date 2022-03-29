@@ -52,8 +52,7 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-    <script type="text/javascript">
-        var lastResults = [];
+    <script type="text/javascript">var lastResults = [];
 
         $(function () {
             clinicalArea = $("#ClinicalAreaID").select2({
@@ -107,7 +106,5 @@
                 }
             });
 
-        })
-    </script>
-}
+        })</script>
 }
