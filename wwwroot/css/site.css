@@ -86,14 +86,29 @@ body {
     overflow-x: hidden
 }
 
-    .DomainTable thead, .DomainTable tbody tr {
-        display: table;
-        width: 97%;
-        table-layout: fixed
-    }
+.DomainTable thead, .DomainTable tbody tr {
+    display: table;
+    width: 97%;
+    /*width: 97%;*/
+    table-layout: fixed;
+}
 
 .DomainTable thead, .DomainTable tbody, .DomainTable td {
     border: none !important;
+}
+
+.TestTable thead>tr>th {
+    
+}
+
+.TestTable tbody {
+    display: block;
+    height: 300px;
+    overflow-y: auto;
+}
+
+.TestTable tr {
+    display: block;
 }
 
 /* The switch - the box around the slider */

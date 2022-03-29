@@ -3,6 +3,13 @@
 
 // Write your JavaScript code.
 
+function generateHeader() {
+    var header_list = { "ID", "SubDomain", "Determinant"};
+    for (var i = 0; i < header_list.length; i++) {
+        document.getElementByClass("tr").innerHTML("<th>" + header_list[i] + "</th>");
+    }
+}
+
 function RemoveCentral(btn) {
     //$(btn).closest('tr').remove()
     var t = document.getElementById('Central')

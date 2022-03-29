@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace PainAssessment.Areas.ModuleTwo.Models
 {
-    public class CentralDomain : Domain, IChecklist, ICentralDomain
+    public class CentralDomain : Domain, ICentralDomain
     {
         [Key]
         public int RowId { get; set; }
@@ -22,7 +22,7 @@ namespace PainAssessment.Areas.ModuleTwo.Models
         [NotMapped]
         public bool IsCentralDeleted { get; set; } = false;
 
-        public bool getIsCentralDeleted()
+        public Boolean getIsCentralDeleted()
         {
             return IsCentralDeleted;
         }

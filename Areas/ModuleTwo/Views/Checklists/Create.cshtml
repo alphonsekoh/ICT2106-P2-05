@@ -52,9 +52,6 @@
                     <table id="Central" class="table table-sm DomainTable">
                         <thead>
                             <tr>
-                                <th style="width:5%">
-
-                                </th>
                                 <th style="width: 20%;">
                                     SubDomain
                                 </th>
@@ -64,10 +61,10 @@
                                 <th style="width: 20%;">
                                     Comment
                                 </th>
-                                <th style="width:10px;">
+                                <th style="width:10%;">
                                     Max
                                 </th>
-                                <th style="width:10px;">
+                                <th style="width:10%;">
                                     Value
                                 </th>
                                 <!--<th style="width:75px;">-->
@@ -82,31 +79,29 @@
                         <tbody>
                             @for (int i = 0; i < Model.Central.Count; i++)
                             {
-                                <tr class="centralRow" id="addCentralRow-@i">
-                                    <td style="width:5%">
-                                    </td>
-                                    <td style="width: 20%;">
+                                <tr class="centralRow" id="addCentralRow-@i">>
+                                    <td style="width:20%">
                                         @*Html.EditorFor(x => x.Central[i].SubDomain, new { htmlAttributes = new { @class = "form-control" } })*@
                                         <input asp-for="@Model.Central[i].SubDomain" class="form-control" />
                                     </td>
-                                    <td style="width: 20%;">
+                                    <td style="width:20%">
                                         <input type="hidden" asp-for="@Model.Central[i].IsCentralDeleted" />
                                         @*Html.EditorFor(x => x.Central[i].Determinant, new { htmlAttributes = new { @class = "form-control" } })*@
                                         <input asp-for="@Model.Central[i].Determinant" class="form-control" />
                                     </td>
-                                    <td style="width: 20%;">
+                                    <td style="width:20%">
                                         @*Html.EditorFor(x => x.Central[i].Comment, new { htmlAttributes = new { @class = "form-control" } })*@
                                         <input asp-for="@Model.Central[i].Comment" class="form-control" />
                                     </td>
-                                    <td style="width: 10%;">
+                                    <td style="width:10%">
                                         @*Html.EditorFor(x => x.Central[i].MaxValue, new { htmlAttributes = new { @class = "form-control" } })*@
                                         <input asp-for="@Model.Central[i].MaxValue" min="0" class="form-control" />
                                     </td>
-                                    <td style="width: 10%;">
+                                    <td style="width:10%">
                                         @*Html.EditorFor(x => x.Central[i].ActualValue, new { htmlAttributes = new { @class = "form-control" } })*@
                                         <input asp-for="@Model.Central[i].ActualValue" min="0" class="form-control" />
                                     </td>
-                                    <td style="width:10%;">
+                                    <td style="width:10%">
                                         <button id="removeCentral-@i" type="button" class="btn btn-sm btn-danger" onclick="RemoveCentral(this)">Remove</button>
                                     </td>
                                 </tr>
@@ -127,9 +122,6 @@
                     <table id="Regional" class="table table-sm DomainTable">
                         <thead>
                             <tr>
-                                <th style="width:5%">
-
-                                </th>
                                 <th style="width: 20%;">
                                     SubDomain
                                 </th>
@@ -139,10 +131,10 @@
                                 <th style="width: 20%;">
                                     Comment
                                 </th>
-                                <th style="width:10px;">
+                                <th style="width:10%;">
                                     Max
                                 </th>
-                                <th style="width:10px;">
+                                <th style="width:10%;">
                                     Value
                                 </th>
                                 <!--<th style="width:75px;">-->
@@ -158,8 +150,7 @@
                             @for (int i = 0; i < Model.Regional.Count; i++)
                             {
                                 <tr class="regionalRow" id="addRegionalRow-@i">
-                                    <td style="width:5%">
-                                    </td>
+
                                     <td style="width: 20%;">
                                         @*Html.EditorFor(x => x.Regional[i].SubDomain, new { htmlAttributes = new { @class = "form-control" } })*@
                                         <input asp-for="@Model.Regional[i].SubDomain" class="form-control" />
@@ -181,7 +172,7 @@
                                         @*Html.EditorFor(x => x.Regional[i].ActualValue, new { htmlAttributes = new { @class = "form-control" } })*@
                                         <input asp-for="@Model.Regional[i].ActualValue" min="0" class="form-control" />
                                     </td>
-                                    <td style="width:10%;">
+                                    <td style="width: 10%;">
                                         <button id="removeRegional-@i" type="button" class="btn btn-sm btn-danger" onclick="RemoveRegional(this)">Remove</button>
                                     </td>
                                 </tr>
@@ -202,9 +193,6 @@
                     <table id="Local" class="table table-sm DomainTable">
                         <thead>
                             <tr>
-                                <th style="width:5%">
-
-                                </th>
                                 <th style="width: 20%;">
                                     SubDomain
                                 </th>
@@ -214,10 +202,10 @@
                                 <th style="width: 20%;">
                                     Comment
                                 </th>
-                                <th style="width:10px;">
+                                <th style="width:10%;">
                                     Max
                                 </th>
-                                <th style="width:10px;">
+                                <th style="width:10%;">
                                     Value
                                 </th>
                                 <!--<th style="width:75px;">-->
@@ -232,15 +220,14 @@
                         <tbody>
                             @for (int i = 0; i < Model.Local.Count; i++)
                             {
-                                <tr class="localRow" id="addRegionalRow-@i">
-                                    <td style="width:5%">
-                                    </td>
+                                <tr class="localRow" id="addLocalRow-@i">
+
                                     <td style="width: 20%;">
                                         @*Html.EditorFor(x => x.Regional[i].SubDomain, new { htmlAttributes = new { @class = "form-control" } })*@
                                         <input asp-for="@Model.Local[i].SubDomain" class="form-control" />
                                     </td>
                                     <td style="width: 20%;">
-                                        <input type="hidden" asp-for="@Model.Local[i].IsLocalDeleted" />
+                                        <input type="hidden" asp-for="@Model.Regional[i].IsRegionalDeleted" />
                                         @*Html.EditorFor(x => x.Central[i].Determinant, new { htmlAttributes = new { @class = "form-control" } })*@
                                         <input asp-for="@Model.Local[i].Determinant" class="form-control" />
                                     </td>
@@ -256,33 +243,33 @@
                                         @*Html.EditorFor(x => x.Regional[i].ActualValue, new { htmlAttributes = new { @class = "form-control" } })*@
                                         <input asp-for="@Model.Local[i].ActualValue" min="0" class="form-control" />
                                     </td>
-                                    <td style="width:10%;">
+                                    <td style="width: 10%;">
                                         <button id="removeLocal-@i" type="button" class="btn btn-sm btn-danger" onclick="RemoveLocal(this)">Remove</button>
                                     </td>
                                 </tr>
                             }
                         </tbody>
                     </table>
-                    <div class="form-group mt-2">
-                        <label asp-for="InitialLocalWeight" class="control-label">Local Weight</label>
-                        <input asp-for="InitialLocalWeight" name="InitialLocalWeight" class="form-control" />
+                        <div class="form-group mt-2">
+                            <label asp-for="InitialLocalWeight" class="control-label">Local Weight</label>
+                            <input asp-for="InitialLocalWeight" name="InitialLocalWeight" class="form-control" />
+                        </div>
                     </div>
-                </div>
 
-                <input type="hidden" id="hiddenLocaLast" value="0" />
+                    <input type="hidden" id="hiddenLocaLast" value="0" />
 
-                <div class="form-group">
-                    <input type="submit" value="Create" class="btn btn-primary" />
-                </div>
-        </form>
+                    <div class="form-group">
+                        <input type="submit" value="Create" class="btn btn-primary" />
+                    </div>
+            </form>
+        </div>
     </div>
-</div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+    <div>
+        <a asp-action="Index">Back to List</a>
+    </div>
 
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @section Scripts {
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 
-}
+    }

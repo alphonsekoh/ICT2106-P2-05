@@ -18,12 +18,26 @@ namespace PainAssessment.Areas.ModuleTwo.Data
             _context = context;
         }
 
-        public List<Checklist> GetAll()
+        public List<Checklist> GetAll(int user)
         {
             List<Checklist> checklists;
-            checklists = _context.Checklist.ToList();
+            switch(user)
+            {
+                case 0:
+                    checklists = _context.Checklist.ToList();
+                    break;
+                case 1:
+                    checklists = GetAllChecklistsFrom(user);
+                    break;
+                default:
+                    checklists = GetActiveChecklists();
+                    List<Checklist> pract = GetAllChecklistsFrom(user);
+                    checklists.AddRange(pract);
+                    break;
+            }
             return checklists;
         }
+
 
         public List<Checklist> GetAllChecklistsFrom(int id)
         {
@@ -37,7 +51,7 @@ namespace PainAssessment.Areas.ModuleTwo.Data
         public List<Checklist> GetActiveChecklists()
         {
             List<Checklist> checklists;
-            checklists = _context.Checklist
+            checklists = GetAllChecklistsFrom(1)
                 .Where(a => a.Active == true)
                 .ToList();
             return checklists;
@@ -109,6 +123,24 @@ namespace PainAssessment.Areas.ModuleTwo.Data
         public Boolean CheckExists(int id)
         {
             return _context.Checklist.Any(e => e.RetrieveIntAttribute("ChecklistId") == id);
+        }
+
+        public void SetActive(int id)
+        {
+            var checklist = GetById(id);
+            if (checklist.Active == false)
+            {
+                checklist.Active = true;
+            }
+        }
+
+        public void SetInActive(int id)
+        {
+            var checklist = GetById(id);
+            if (checklist.Active == true)
+            {
+                checklist.Active = false;
+            }
         }
 
     }

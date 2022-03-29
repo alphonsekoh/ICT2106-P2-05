@@ -10,6 +10,7 @@ using PainAssessment.Data;
 
 
 using PainAssessment.Areas.ModuleTwo.Data;
+using PainAssessment.Areas.ModuleTwo.Services;
 
 namespace PainAssessment
 {
@@ -48,6 +49,8 @@ namespace PainAssessment
 
 
             services.AddTransient<IUnitOfWork, UnitOfWork>();
+
+            services.AddTransient<IChecklistService, ChecklistService>();
 
             services.AddDbContext<MvcPatientContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("MvcPatientContext")));
