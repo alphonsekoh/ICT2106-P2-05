@@ -83,7 +83,7 @@ namespace PainAssessment.Areas.ModuleTwo.Services
         public void InsertConsultationChecklist(Checklist checklist)
         {
             _unitOfWork.ConsultationChecklistRepo.InsertConsultationChecklist(checklist);
-            _unitOfWork.Save();
+            _unitOfWork.ConsultationSave();
         }
         public Boolean ChecklistExists(int id)
         {

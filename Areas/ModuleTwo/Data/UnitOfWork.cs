@@ -35,10 +35,13 @@ namespace PainAssessment.Areas.ModuleTwo.Data
             }
         }
 
-
         public void Save()
         {
             _context.SaveChanges();
+        }
+
+        public void ConsultationSave()
+        {
             _Consultationcontext.SaveChanges();
         }
     }
