@@ -42,6 +42,7 @@ namespace PainAssessment.Areas.ModuleTwo.Controllers
             return View(checklists);
             */
             var checklists = checklistService.GetAll(2);
+            var checklist2 = checklistService.GetBySessionId(4);
             return View(checklists);
         }
         // GET: ModuleTwo/Checklists/Details/5
@@ -104,10 +105,8 @@ namespace PainAssessment.Areas.ModuleTwo.Controllers
             _unitOfWork.Save();
             */
             checklistService.InsertPost(checklist);
-            Checklist checklist2 = checklistService.InitialiseChecklist();
-            checklist2.SessionId = 2;
-            checklist2.ChecklistName = "test consult";
-            checklist2.ChecklistDescription = "test2";
+            var checklist2 = checklistService.GetById(13);
+
             checklistService.InsertConsultationChecklist(checklist2);
             return RedirectToAction("index");
         }

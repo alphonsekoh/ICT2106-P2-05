@@ -11,5 +11,7 @@ namespace PainAssessment.Areas.ModuleTwo.Data
         IConsultationChecklistRepo ConsultationChecklistRepo { get; }
 
         void Save();
+
+        void ConsultationSave();
     }
 }
