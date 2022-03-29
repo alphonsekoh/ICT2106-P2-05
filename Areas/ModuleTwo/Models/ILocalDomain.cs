@@ -7,5 +7,6 @@ namespace PainAssessment.Areas.ModuleTwo.Models
 {
     public interface ILocalDomain : IDomain
     {
+        public Boolean getIsLocalDeleted();
     }
 }

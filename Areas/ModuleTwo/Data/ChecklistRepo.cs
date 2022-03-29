@@ -64,7 +64,6 @@ namespace PainAssessment.Areas.ModuleTwo.Data
                 .Include(r => r.Regional)
                 .Include(l => l.Local)
 
-                //.Where(a => a.ChecklistId == id).FirstOrDefault();
                 .Where(a => a.ChecklistId == id).FirstOrDefault();
             return checklist;
         }
@@ -79,12 +78,22 @@ namespace PainAssessment.Areas.ModuleTwo.Data
         public Checklist InsertGet()
         {
             Checklist checklist = new Checklist();
-            //checklist.Central.Add(1);
-            //checklist.Regional.Add(2);
-            //checklist.Local.Add(3);
             checklist.Central.Add(new CentralDomain() { RowId = 1 });
             checklist.Regional.Add(new RegionalDomain() { RowId = 1 });
             checklist.Local.Add(new LocalDomain() { RowId = 1 });
+
+            return checklist;
+        }
+
+        public Checklist InsertGetTest()
+        {
+            Checklist checklist = new Checklist();
+            //checklist.Central.Add(1);
+            //checklist.Regional.Add(2);
+            //checklist.Local.Add(3);
+            checklist.Central.Add(new CentralDomain());
+            checklist.Regional.Add(new RegionalDomain());
+            checklist.Local.Add(new LocalDomain());
 
             return checklist;
         }

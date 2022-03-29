@@ -23,6 +23,7 @@
 	</ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Admin\Views\Practitioners\" />
+    <Folder Include="Areas\ModuleTwo\Builder\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="wwwroot\css\chosen.min.css" />

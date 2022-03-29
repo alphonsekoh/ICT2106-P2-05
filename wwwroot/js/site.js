@@ -3,12 +3,6 @@
 
 // Write your JavaScript code.
 
-function generateHeader() {
-    var header_list = { "ID", "SubDomain", "Determinant"};
-    for (var i = 0; i < header_list.length; i++) {
-        document.getElementByClass("tr").innerHTML("<th>" + header_list[i] + "</th>");
-    }
-}
 
 function RemoveCentral(btn) {
     //$(btn).closest('tr').remove()
@@ -73,6 +67,8 @@ function RemoveRegional(btn) {
         return;
     }
 
+
+
     var btnIdx = btn.id.replaceAll('removeRegional-', '');
     var idofIsDeleted = btnIdx + "__IsRegionalDeleted";
 
@@ -117,6 +113,7 @@ function AddRegional(btn) {
     }
 }
 
+
 function RemoveLocal(btn) {
     //$(btn).closest('tr').remove()
     var table = document.getElementById('Local')
@@ -134,6 +131,8 @@ function RemoveLocal(btn) {
     document.getElementById(hidIsDelId).value = "true";
 
     $(btn).closest('tr').hide();
+
+
 }
 
 function AddLocal(btn) {
@@ -168,28 +167,5 @@ function AddLocal(btn) {
             x[cnt].value = '';
 
     }
-
-}
-
-header_list = ["QID", "SubDomain", "Determinant", "Comment", "Max", "Value", ""]
-function generateTable()
-{
-    let table = document.createElement('table')
-    let thead = document.createElement('thead')
-    let tbody = document.createElement('tbody')
-
-    table.appendChild(thead)
-    table.appendChild(tbody)
-
-    document.getElementById('body').appendChild(table)
-
-    let header = document.createElement('tr')
-
-    for (let i = 0; i < header_list.length; i++)
-    {
-
-
-    }
-
 
 }
