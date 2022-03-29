@@ -7,5 +7,6 @@ namespace PainAssessment.Areas.ModuleTwo.Models
 {
     public interface ICentralDomain : IDomain
     {
+        public Boolean getIsCentralDeleted();
     }
 }
