@@ -19,10 +19,4 @@
 	  <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2" />
   </ItemGroup>
 
-  <ItemGroup>
-    <None Remove="Areas\Admin\Services\TableUltility\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Areas\Admin\Services\TableUltility\" />
-  </ItemGroup>
 </Project>

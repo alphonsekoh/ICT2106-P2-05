@@ -13,13 +13,13 @@ namespace PainAssessment.Areas.Admin.Controllers
     {
         private readonly IPainEducationService painEducationService;
         private readonly ILogService log;
-        private readonly ITableUltilityService<PainEducation> tableUltilityService;
+        private readonly ITableUtilityService<PainEducation> tableUtilityService;
 
         public PainEducationsController(IPainEducationService painEducationService)
         {
             this.painEducationService = painEducationService;
             log = LogService.GetInstance;
-            tableUltilityService = TableUltilityService<PainEducation>.GetInstance;
+            tableUtilityService = TableUtilityService<PainEducation>.GetInstance;
         }
 
         // GET: Admin/PainEducations
@@ -34,14 +34,14 @@ namespace PainAssessment.Areas.Admin.Controllers
 
             IEnumerable<PainEducation> painEducations = painEducationService.GetAllPainEducations();
 
-            painEducations = tableUltilityService.Sort(painEducations, "Name", String.IsNullOrEmpty(sortOrder) ? tableUltilityService.ORDER_BY : tableUltilityService.ORDER_BY_DESC);
+            painEducations = tableUtilityService.Sort(painEducations, "Name", String.IsNullOrEmpty(sortOrder) ? tableUtilityService.ORDER_BY : tableUtilityService.ORDER_BY_DESC);
 
-            painEducations = tableUltilityService.Search(painEducations, searchString.ToLower());
+            painEducations = tableUtilityService.Search(painEducations, searchString.ToLower());
 
             // Pagination.
-            ViewData["max_page"] = tableUltilityService.GetMaxPageCount(painEducations);
-            ViewData["current_page"] = page = tableUltilityService.ValidateCurrentPage(page, painEducations);
-            painEducations = tableUltilityService.GetPageData(painEducations, page);
+            ViewData["max_page"] = tableUtilityService.GetMaxPageCount(painEducations);
+            ViewData["current_page"] = page = tableUtilityService.ValidateCurrentPage(page, painEducations);
+            painEducations = tableUtilityService.GetPageData(painEducations, page);
 
             ViewData["total_count"] = painEducations.Count();
 

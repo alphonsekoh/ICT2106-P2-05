@@ -13,13 +13,13 @@ namespace PainAssessment.Areas.Admin.Controllers
     {
         private readonly IPracticeTypeService practiceTypeService;
         private readonly ILogService log;
-        private readonly ITableUltilityService<PracticeType> tableUltilityService;
+        private readonly ITableUtilityService<PracticeType> tableUtilityService;
 
         public PracticeTypesController(IPracticeTypeService practiceTypeService)
         {
             this.practiceTypeService = practiceTypeService;
             log = LogService.GetInstance;
-            tableUltilityService = TableUltilityService<PracticeType>.GetInstance;
+            tableUtilityService = TableUtilityService<PracticeType>.GetInstance;
         }
 
         // GET: Admin/PracticeTypes
@@ -34,14 +34,14 @@ namespace PainAssessment.Areas.Admin.Controllers
 
             IEnumerable<PracticeType> practiceTypes = practiceTypeService.GetAllPracticeTypes();
 
-            practiceTypes = tableUltilityService.Sort(practiceTypes, "Name", String.IsNullOrEmpty(sortOrder) ? tableUltilityService.ORDER_BY : tableUltilityService.ORDER_BY_DESC);
+            practiceTypes = tableUtilityService.Sort(practiceTypes, "Name", String.IsNullOrEmpty(sortOrder) ? tableUtilityService.ORDER_BY : tableUtilityService.ORDER_BY_DESC);
 
-            practiceTypes = tableUltilityService.Search(practiceTypes, searchString.ToLower());
+            practiceTypes = tableUtilityService.Search(practiceTypes, searchString.ToLower());
 
             // Pagination.
-            ViewData["max_page"] = tableUltilityService.GetMaxPageCount(practiceTypes);
-            ViewData["current_page"] = page = tableUltilityService.ValidateCurrentPage(page, practiceTypes);
-            practiceTypes = tableUltilityService.GetPageData(practiceTypes, page);
+            ViewData["max_page"] = tableUtilityService.GetMaxPageCount(practiceTypes);
+            ViewData["current_page"] = page = tableUtilityService.ValidateCurrentPage(page, practiceTypes);
+            practiceTypes = tableUtilityService.GetPageData(practiceTypes, page);
 
             ViewData["total_count"] = practiceTypes.Count();
 

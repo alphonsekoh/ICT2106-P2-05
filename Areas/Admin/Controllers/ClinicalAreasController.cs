@@ -12,14 +12,14 @@ namespace PainAssessment.Areas.Admin.Controllers
     public class ClinicalAreasController : Controller
     {
         private readonly IClinicalAreaService clinicalAreaService;
-        private readonly ITableUltilityService<ClinicalArea> tableUltilityService;
+        private readonly ITableUtilityService<ClinicalArea> tableUtilityService;
         private readonly ILogService log;
 
         public ClinicalAreasController(IClinicalAreaService clinicalAreaService)
         {
             this.clinicalAreaService = clinicalAreaService;
             log = LogService.GetInstance;
-            tableUltilityService = TableUltilityService<ClinicalArea>.GetInstance;
+            tableUtilityService = TableUtilityService<ClinicalArea>.GetInstance;
         }
 
         // GET: Admin/ClinicalAreas
@@ -34,14 +34,14 @@ namespace PainAssessment.Areas.Admin.Controllers
 
             IEnumerable<ClinicalArea> clinicalAreas = clinicalAreaService.GetAllClinicalAreas();
 
-            clinicalAreas = tableUltilityService.Sort(clinicalAreas, "Name", String.IsNullOrEmpty(sortOrder) ? tableUltilityService.ORDER_BY : tableUltilityService.ORDER_BY_DESC);
+            clinicalAreas = tableUtilityService.Sort(clinicalAreas, "Name", String.IsNullOrEmpty(sortOrder) ? tableUtilityService.ORDER_BY : tableUtilityService.ORDER_BY_DESC);
 
-            clinicalAreas = tableUltilityService.Search(clinicalAreas, searchString.ToLower());
+            clinicalAreas = tableUtilityService.Search(clinicalAreas, searchString.ToLower());
 
             // Pagination.
-            ViewData["max_page"] = tableUltilityService.GetMaxPageCount(clinicalAreas);
-            ViewData["current_page"] = page = tableUltilityService.ValidateCurrentPage(page, clinicalAreas);
-            clinicalAreas = tableUltilityService.GetPageData(clinicalAreas, page);
+            ViewData["max_page"] = tableUtilityService.GetMaxPageCount(clinicalAreas);
+            ViewData["current_page"] = page = tableUtilityService.ValidateCurrentPage(page, clinicalAreas);
+            clinicalAreas = tableUtilityService.GetPageData(clinicalAreas, page);
 
             ViewData["total_count"] = clinicalAreas.Count();
 

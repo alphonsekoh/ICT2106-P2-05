@@ -12,14 +12,14 @@ namespace PainAssessment.Areas.Admin.Controllers
     public class PatientsController : Controller
     {
         private readonly IPatientService patientService;
-        private readonly ITableUltilityService<Patient> tableUltilityService;
+        private readonly ITableUtilityService<Patient> tableUtilityService;
         private readonly ILogService log;
 
         public PatientsController(IPatientService patientService)
         {
             this.patientService = patientService;
             log = LogService.GetInstance;
-            tableUltilityService = TableUltilityService<Patient>.GetInstance;
+            tableUtilityService = TableUtilityService<Patient>.GetInstance;
 
         }
 
@@ -32,14 +32,14 @@ namespace PainAssessment.Areas.Admin.Controllers
 
             IEnumerable<Patient> patients = patientService.GetAllPatients();
 
-            patients = tableUltilityService.Sort(patients, "Name", String.IsNullOrEmpty(sortOrder) ? tableUltilityService.ORDER_BY : tableUltilityService.ORDER_BY_DESC);
+            patients = tableUtilityService.Sort(patients, "Name", String.IsNullOrEmpty(sortOrder) ? tableUtilityService.ORDER_BY : tableUtilityService.ORDER_BY_DESC);
 
-            patients = tableUltilityService.Search(patients, searchString.ToLower());
+            patients = tableUtilityService.Search(patients, searchString.ToLower());
 
             // Pagination.
-            ViewData["max_page"] = tableUltilityService.GetMaxPageCount(patients);
-            ViewData["current_page"] = page = tableUltilityService.ValidateCurrentPage(page, patients);
-            patients = tableUltilityService.GetPageData(patients, page);
+            ViewData["max_page"] = tableUtilityService.GetMaxPageCount(patients);
+            ViewData["current_page"] = page = tableUtilityService.ValidateCurrentPage(page, patients);
+            patients = tableUtilityService.GetPageData(patients, page);
 
             ViewData["total_count"] = patients.Count();
 

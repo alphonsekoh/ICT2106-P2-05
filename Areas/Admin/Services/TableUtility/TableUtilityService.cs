@@ -8,20 +8,20 @@ using System.Reflection;
 
 namespace PainAssessment.Areas.Admin.Services
 {
-    public sealed class TableUltilityService<T> : ITableUltilityService<T>
+    public sealed class TableUtilityService<T> : ITableUtilityService<T>
     {
         private readonly static double ITEM_PER_PAGE = 8.0;
         private readonly static string ORDER_BY = "OrderBy";
         private readonly static string ORDER_BY_DESC = "OrderByDescending";
-        private TableUltilityService() { }
+        private TableUtilityService() { }
 
-        private static readonly Lazy<TableUltilityService<T>> instance = new(() => new TableUltilityService<T>());
+        private static readonly Lazy<TableUtilityService<T>> instance = new(() => new TableUtilityService<T>());
 
-        public static TableUltilityService<T> GetInstance => instance.Value;
+        public static TableUtilityService<T> GetInstance => instance.Value;
 
-        string ITableUltilityService<T>.ORDER_BY_DESC => ORDER_BY_DESC;
+        string ITableUtilityService<T>.ORDER_BY_DESC => ORDER_BY_DESC;
 
-        string ITableUltilityService<T>.ORDER_BY => ORDER_BY;
+        string ITableUtilityService<T>.ORDER_BY => ORDER_BY;
 
         public IEnumerable<T> GetPageData(IEnumerable<T> data, int page)
         {

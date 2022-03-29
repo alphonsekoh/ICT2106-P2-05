@@ -19,7 +19,7 @@ namespace PainAssessment.Areas.Admin.Controllers
         private readonly IPainEducationService painEducationService;
         private readonly IPatientService patientService;
         private readonly ILogService log;
-        private readonly ITableUltilityService<Practitioner> tableUltilityService;
+        private readonly ITableUtilityService<Practitioner> tableUtilityService;
 
         public PractitionersController(IPractitionerService practitionerService, IClinicalAreaService clinicalAreaService, IPracticeTypeService practiceTypeService, IPatientService patientService, IPainEducationService painEducationService)
         {
@@ -30,7 +30,7 @@ namespace PainAssessment.Areas.Admin.Controllers
             this.painEducationService = painEducationService;
 
             log = LogService.GetInstance;
-            tableUltilityService = TableUltilityService<Practitioner>.GetInstance;
+            tableUtilityService = TableUtilityService<Practitioner>.GetInstance;
         }
 
         // GET: Admin/Practitioners
@@ -45,14 +45,14 @@ namespace PainAssessment.Areas.Admin.Controllers
 
             IEnumerable<Practitioner> practitioners = practitionerService.GetAllPractitioners();
 
-            practitioners = tableUltilityService.Sort(practitioners, "Name", String.IsNullOrEmpty(sortOrder) ? tableUltilityService.ORDER_BY : tableUltilityService.ORDER_BY_DESC);
+            practitioners = tableUtilityService.Sort(practitioners, "Name", String.IsNullOrEmpty(sortOrder) ? tableUtilityService.ORDER_BY : tableUtilityService.ORDER_BY_DESC);
 
-            practitioners = tableUltilityService.Search(practitioners, searchString.ToLower());
+            practitioners = tableUtilityService.Search(practitioners, searchString.ToLower());
 
             // Pagination.
-            ViewData["max_page"] = tableUltilityService.GetMaxPageCount(practitioners);
-            ViewData["current_page"] = page = tableUltilityService.ValidateCurrentPage(page, practitioners);
-            practitioners = tableUltilityService.GetPageData(practitioners, page);
+            ViewData["max_page"] = tableUtilityService.GetMaxPageCount(practitioners);
+            ViewData["current_page"] = page = tableUtilityService.ValidateCurrentPage(page, practitioners);
+            practitioners = tableUtilityService.GetPageData(practitioners, page);
 
             ViewData["total_count"] = practitioners.Count();
 

@@ -2,7 +2,7 @@
 
 namespace PainAssessment.Areas.Admin.Services
 {
-    public interface ITableUltilityService<T>
+    public interface ITableUtilityService<T>
     {
         string ORDER_BY_DESC { get; }
         string ORDER_BY { get; }
