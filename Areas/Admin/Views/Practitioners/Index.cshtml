@@ -219,31 +219,10 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-    <script>var ConfirmDelete = function (Id, PractitionerName) {
-            $("#hiddenId").val(Id);
-            $("#modalPractitionerName").text(PractitionerName);
-            $("#deleteModal").modal('show');
-        }
-
-        var ConfirmResetPassword = function (Id, PractitionerName) {
+    <script>var ConfirmResetPassword = function (Id, PractitionerName) {
             console.log("asd");
             $("#hiddenId").val(Id);
             $("#modalPractitionerNamePassword").text(PractitionerName);
             $("#changePasswordModal").modal('show');
-        }
-
-        var DeletePractitioner = function () {
-            var Id = $("#hiddenId").val();
-            $.ajax({
-                type: "POST",
-                url: "Practitioners/DeletePractitioner",
-                data: { Id: Id },
-                success: function (result) {
-
-                    $("#deleteModal").modal("hide");
-                    $("#row_" + Id).remove();
-                }
-            })
-
         }</script>
 }
