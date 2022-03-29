@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using PainAssessment.Areas.ModuleTwo.Models;
+using PainAssessment.Areas.ModuleTwo.Iterator;
 
 namespace PainAssessment.Areas.ModuleTwo.Data
 {
@@ -31,7 +32,11 @@ namespace PainAssessment.Areas.ModuleTwo.Data
 
         public void InsertConsultationChecklist(Checklist checklist)
         {
-            _Consultationcontext.Add(checklist);
+            iterator cleanedChecklist = new iterator(checklist);
+
+            cleanedChecklist.resetChecklistID();
+
+            _Consultationcontext.Add(cleanedChecklist.getChecklist());
         }
     }
 }
