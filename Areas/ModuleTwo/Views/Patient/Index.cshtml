@@ -15,26 +15,32 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
+<form asp-action="Index" method="get">
+    <div class="form-actions no-color">
+        <p>
+            Find by name: <input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" />
+            <input type="submit" value="Search" class="btn btn-default" /> |
+            <a asp-action="Index">Back to Full List</a>
+        </p>
+    </div>
+</form>
 <div class="row mb-3">
-    <div class="col-md-6">
+    @*<div class="col-md-6">
         <form class="d-flex " asp-controller="Patient" asp-action="Index" method="get">
-            <input class="form-control me-2" type="text" placeholder="Search Patient Name" aria-label="Search" name="SearchString">
+            <input class="form-control me-2" type="text" placeholder="Search Patient Name"
+                   aria-label="Search" name="SearchString" value="@ViewData["CurrentFilter"]">
+            <input type="submit" value="Search" class="btn btn-default" /> |
+            <a asp-action="Index">Back to Full List</a>
             <button class="btn btn-outline-success" type="submit" value="Filter">Filter</button>
         </form>
-        @*<form asp-controller="Patient" asp-action="Index" method="get">
-            <p>
-            Search Patient Name: <input type="text" name="SearchString" />
-            <input type="submit" value="Filter" />
-            </p>
-            </form>*@
-    </div>
+    </div>*@
     <div class="col-md-6">
         <label class="switch">
             <input type="checkbox" id="toggleSwitch" onclick="toggleView()" autocomplete="off">
             <span class="slider round"></span>
         </label>
     </div>
-    <div class="col-md-6">
+    @*<div class="col-md-6">
         <div class="dropdown">
             <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
                 Dropdown link
@@ -45,14 +51,15 @@
                 <li><a class="dropdown-item" href="#">Something else here</a></li>
             </ul>
         </div>
-    </div>
+    </div>*@
 </div>
 
 <table class="table">
     <thead>
         <tr>
             <th id="patientNamesCol">
-                @Html.DisplayNameFor(model => model.Name)
+                @*@Html.DisplayNameFor(model => model.Name)*@
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParm"]">@Html.DisplayNameFor(model => model.Name)</a>
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Age)
@@ -63,15 +70,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.Gender)
             </th>
-            @*<th>
-                @Html.DisplayNameFor(model => model.sessions)
-                </th>*@
             <th>
                 @Html.DisplayNameFor(model => model.Notes)
             </th>
-            @*<th>
-                @Html.DisplayNameFor(model => model.lastVisit)
-                </th>*@
             <th>
 
             </th>
@@ -93,19 +94,10 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Gender)
                 </td>
-                @*<td>
-                    @Html.DisplayFor(modelItem => item.sessions)
-                    </td>*@
                 <td>
                     @Html.DisplayFor(modelItem => item.Notes)
                 </td>
-                @*<td>
-                    @Html.DisplayFor(modelItem => item.lastVisit)
-                    </td>*@
                 <td>
-                    @*<a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                        <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>*@
                     <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
                     <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
                     <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
