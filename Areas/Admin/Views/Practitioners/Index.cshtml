@@ -114,11 +114,11 @@
                                class="btn btn-secondary btn-sm">
                                 Edit
                             </a>
-                            <a asp-action="Delete" asp-route-id="@item.Id"
-                               type="button"
-                               class="btn btn-danger btn-sm">
+                            <button onclick="ConfirmResetPassword('@item.Id', '@item.Name')"
+                                    type="button"
+                                    class="btn btn-danger btn-sm">
                                 Reset Password
-                            </a>
+                            </button>
                         </td>
                     </tr>
                 }
@@ -194,16 +194,42 @@
     </div>
 </div>
 
+<div class="modal fade" id="changePasswordModal" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Reset Practitioner's Password</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to reset <span id="modalPractitionerNamePassword"></span> practitioner password?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" data-dismiss="modal" class="btn btn-secondary">Cancel</button>
+                <button type="button" class="btn btn-danger">Reset Password</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
 <input type="hidden" id="hiddenId" />
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
     <script>var ConfirmDelete = function (Id, PractitionerName) {
-
-            console.log(PractitionerName);
             $("#hiddenId").val(Id);
             $("#modalPractitionerName").text(PractitionerName);
             $("#deleteModal").modal('show');
+        }
+
+        var ConfirmResetPassword = function (Id, PractitionerName) {
+            console.log("asd");
+            $("#hiddenId").val(Id);
+            $("#modalPractitionerNamePassword").text(PractitionerName);
+            $("#changePasswordModal").modal('show');
         }
 
         var DeletePractitioner = function () {
