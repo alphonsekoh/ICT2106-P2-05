@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace PainAssessment.Areas.ModuleTwo.Models
 {
-    public interface IDomain
+    public interface IDomain : IChecklist
     {
     }
 }

@@ -59,30 +59,6 @@ namespace PainAssessment.Areas.ModuleTwo.Models
             Local = new List<LocalDomain>();
         }
 
-
-        public void InitialiseBooleanAttribute(string attribute, bool value)
-        {
-            
-        }
-
-        public void InitialiseIntAttribute(string attribute, int value)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void InitialiseStringAttribute(string attribute, string value)
-        {
-            if (attribute.Equals("ChecklistName"))
-            {
-                ChecklistName = value;
-            }
-        }
-
-        public bool RetrieveBooleanAttribute(string attribute)
-        {
-            throw new NotImplementedException();
-        }
-
         public int RetrieveIntAttribute(String attribute)
         {
             if (attribute.Equals("ChecklistId"))

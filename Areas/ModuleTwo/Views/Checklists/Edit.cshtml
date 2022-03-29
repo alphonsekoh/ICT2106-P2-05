@@ -230,7 +230,7 @@
                                     <input asp-for="@Model.Local[i].SubDomain" class="form-control" />
                                 </td>
                                 <td style="width: 20%;">
-                                    <input type="hidden" asp-for="@Model.Regional[i].IsRegionalDeleted" />
+                                    <input type="hidden" asp-for="@Model.Local[i].IsLocalDeleted" />
                                     @*Html.EditorFor(x => x.Central[i].Determinant, new { htmlAttributes = new { @class = "form-control" } })*@
                                     <input asp-for="@Model.Local[i].Determinant" class="form-control" />
                                 </td>

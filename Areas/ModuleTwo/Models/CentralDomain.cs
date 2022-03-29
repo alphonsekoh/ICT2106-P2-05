@@ -16,8 +16,6 @@ namespace PainAssessment.Areas.ModuleTwo.Models
         public int ChecklistId { get; set; }
         public virtual Checklist Checklist { get; private set; } //very important 
 
-        //public string SubDomain { get; set; }
-        //public string Determinant { get; set; }
 
         [NotMapped]
         public bool IsCentralDeleted { get; set; } = false;
@@ -27,61 +25,5 @@ namespace PainAssessment.Areas.ModuleTwo.Models
             return IsCentralDeleted;
         }
 
-        public void InitialiseBooleanAttribute(string attribute, bool value)
-        {
-            throw new NotImplementedException();
-        }
-
-        //
-
-        //public void InitialiseBooleanAttribute(string attribute, bool value)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-        public void InitialiseIntAttribute(string attribute, int value)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void InitialiseStringAttribute(string attribute, string value)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool RetrieveBooleanAttribute(string attribute)
-        {
-            if (attribute.Equals("IsRegionalDeleted"))
-            {
-                return IsCentralDeleted;
-            }
-
-            return false;
-        }
-
-        public int RetrieveIntAttribute(string attribute)
-        {
-            if (attribute.Equals("ChecklistId"))
-            {
-                return ChecklistId;
-            }
-
-            return 0;
-        }
-
-        public string RetrieveStringAttribute(string attribute)
-        {
-            if (attribute.Equals("SubDomain"))
-            {
-                return SubDomain;
-            }
-
-            else if (attribute.Equals("Determinant"))
-            {
-                return Determinant;
-            }
-
-            return "invalid attribute";
-        }
     }
 }

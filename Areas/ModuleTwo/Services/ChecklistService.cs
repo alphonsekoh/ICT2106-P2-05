@@ -61,7 +61,7 @@ namespace PainAssessment.Areas.ModuleTwo.Services
             return _unitOfWork.ChecklistRepo.InsertGetTest();
         }
 
-        public void InsertPost(Checklist checklist)
+        public void Insert(Checklist checklist)
         {
             _unitOfWork.ChecklistRepo.InsertPost(checklist);
             _unitOfWork.Save();
