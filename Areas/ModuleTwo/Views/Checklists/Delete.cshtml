@@ -17,7 +17,9 @@
 <hr />
 <div class="row">
     <div class="col-md-12 border border-dark rounded-lg">
+        
         <form id="ChecklistForm" asp-action="Delete">
+            <input type="hidden" asp-for="ChecklistId" />
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group mt-2">
                 <label asp-for="ChecklistName" class="control-label">Checklist Name</label>

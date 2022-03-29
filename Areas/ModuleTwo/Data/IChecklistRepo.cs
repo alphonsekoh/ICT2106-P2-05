@@ -14,6 +14,7 @@ namespace PainAssessment.Areas.ModuleTwo.Data
         List<Checklist> GetAllChecklistsFrom(int id);
         Checklist GetById(int id);
         Checklist InsertGet();
+        Checklist InsertGetTest();
 
         void InsertPost(Checklist checklist);
 

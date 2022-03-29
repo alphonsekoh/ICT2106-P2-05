@@ -89,6 +89,19 @@ namespace PainAssessment.Areas.ModuleTwo.Data
             return checklist;
         }
 
+        public Checklist InsertGetTest()
+        {
+            Checklist checklist = new Checklist();
+            //checklist.Central.Add(1);
+            //checklist.Regional.Add(2);
+            //checklist.Local.Add(3);
+            checklist.Central.Add(new CentralDomain());
+            checklist.Regional.Add(new RegionalDomain());
+            checklist.Local.Add(new LocalDomain());
+
+            return checklist;
+        }
+
         public void InsertPost(Checklist checklist)
         {
             checklist.Central.RemoveAll(n => n.getIsCentralDeleted() == true);

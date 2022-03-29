@@ -17,11 +17,12 @@
 <hr />
 <div class="row">
     <div class="col-md-12 border border-dark rounded-lg">
+        
         <form id="ChecklistForm" asp-action="Details">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group mt-2">
                 <label asp-for="ChecklistName" class="control-label">Checklist Name</label>
-                <input asp-for="ChecklistName" name="ChecklistName" class="form-control" readonly/>
+                <input asp-for="ChecklistName" name="ChecklistName" class="form-control" readonly />
             </div>
             <div class="form-group mt-2">
                 <label asp-for="PractitionerId" class="control-label">Created By</label>
@@ -29,11 +30,11 @@
             </div>
             <div class="form-group mt-2">
                 <label asp-for="SessionId" class="control-label">Session</label>
-                <input asp-for="SessionId" name="SessionId" class="form-control" readonly/>
+                <input asp-for="SessionId" name="SessionId" class="form-control" readonly />
             </div>
             <div class="form-group mt-2">
                 <label asp-for="ChecklistDescription" class="control-label">Checklist Description</label>
-                <input asp-for="ChecklistDescription" name="ChecklistDescription" class="form-control" readonly/>
+                <input asp-for="ChecklistDescription" name="ChecklistDescription" class="form-control" readonly />
 
             </div>
             <div class="form-group mt-2">
@@ -74,24 +75,24 @@
                                 >
                                 <td style="width:20%">
                                     @*Html.EditorFor(x => x.Central[i].SubDomain, new { htmlAttributes = new { @class = "form-control" } })*@
-                                    <input asp-for="@Model.Central[i].SubDomain" class="form-control" readonly/>
+                                    <input asp-for="@Model.Central[i].SubDomain" class="form-control" readonly />
                                 </td>
                                 <td style="width:20%">
                                     <input type="hidden" asp-for="@Model.Central[i].IsCentralDeleted" />
                                     @*Html.EditorFor(x => x.Central[i].Determinant, new { htmlAttributes = new { @class = "form-control" } })*@
-                                    <input asp-for="@Model.Central[i].Determinant" class="form-control" readonly/>
+                                    <input asp-for="@Model.Central[i].Determinant" class="form-control" readonly />
                                 </td>
                                 <td style="width:20%">
                                     @*Html.EditorFor(x => x.Central[i].Comment, new { htmlAttributes = new { @class = "form-control" } })*@
-                                    <input asp-for="@Model.Central[i].Comment" class="form-control" readonly/>
+                                    <input asp-for="@Model.Central[i].Comment" class="form-control" readonly />
                                 </td>
                                 <td style="width:10%">
                                     @*Html.EditorFor(x => x.Central[i].MaxValue, new { htmlAttributes = new { @class = "form-control" } })*@
-                                    <input asp-for="@Model.Central[i].MaxValue" min="0" class="form-control" readonly/>
+                                    <input asp-for="@Model.Central[i].MaxValue" min="0" class="form-control" readonly />
                                 </td>
                                 <td style="width:10%">
                                     @*Html.EditorFor(x => x.Central[i].ActualValue, new { htmlAttributes = new { @class = "form-control" } })*@
-                                    <input asp-for="@Model.Central[i].ActualValue" min="0" class="form-control" readonly/>
+                                    <input asp-for="@Model.Central[i].ActualValue" min="0" class="form-control" readonly />
                                 </td>
                             </tr>
                         }
@@ -136,24 +137,24 @@
 
                                 <td style="width: 20%;">
                                     @*Html.EditorFor(x => x.Regional[i].SubDomain, new { htmlAttributes = new { @class = "form-control" } })*@
-                                    <input asp-for="@Model.Regional[i].SubDomain" class="form-control" readonly/>
+                                    <input asp-for="@Model.Regional[i].SubDomain" class="form-control" readonly />
                                 </td>
                                 <td style="width: 20%;">
                                     <input type="hidden" asp-for="@Model.Regional[i].IsRegionalDeleted" />
                                     @*Html.EditorFor(x => x.Central[i].Determinant, new { htmlAttributes = new { @class = "form-control" } })*@
-                                    <input asp-for="@Model.Regional[i].Determinant" class="form-control" readonly/>
+                                    <input asp-for="@Model.Regional[i].Determinant" class="form-control" readonly />
                                 </td>
                                 <td style="width: 20%;">
                                     @*Html.EditorFor(x => x.Central[i].Comment, new { htmlAttributes = new { @class = "form-control" } })*@
-                                    <input asp-for="@Model.Regional[i].Comment" class="form-control" readonly/>
+                                    <input asp-for="@Model.Regional[i].Comment" class="form-control" readonly />
                                 </td>
                                 <td style="width: 10%;">
                                     @*Html.EditorFor(x => x.Regional[i].MaxValue, new { htmlAttributes = new { @class = "form-control" } })*@
-                                    <input asp-for="@Model.Regional[i].MaxValue" min="0" class="form-control" readonly/>
+                                    <input asp-for="@Model.Regional[i].MaxValue" min="0" class="form-control" readonly />
                                 </td>
                                 <td style="width: 10%;">
                                     @*Html.EditorFor(x => x.Regional[i].ActualValue, new { htmlAttributes = new { @class = "form-control" } })*@
-                                    <input asp-for="@Model.Regional[i].ActualValue" min="0" class="form-control" readonly/>
+                                    <input asp-for="@Model.Regional[i].ActualValue" min="0" class="form-control" readonly />
                                 </td>
                             </tr>
                         }
@@ -198,24 +199,24 @@
 
                                 <td style="width: 20%;">
                                     @*Html.EditorFor(x => x.Regional[i].SubDomain, new { htmlAttributes = new { @class = "form-control" } })*@
-                                    <input asp-for="@Model.Local[i].SubDomain" class="form-control" readonly/>
+                                    <input asp-for="@Model.Local[i].SubDomain" class="form-control" readonly />
                                 </td>
                                 <td style="width: 20%;">
                                     <input type="hidden" asp-for="@Model.Regional[i].IsRegionalDeleted" />
                                     @*Html.EditorFor(x => x.Central[i].Determinant, new { htmlAttributes = new { @class = "form-control" } })*@
-                                    <input asp-for="@Model.Local[i].Determinant" class="form-control" readonly/>
+                                    <input asp-for="@Model.Local[i].Determinant" class="form-control" readonly />
                                 </td>
                                 <td style="width: 20%;">
                                     @*Html.EditorFor(x => x.Central[i].Comment, new { htmlAttributes = new { @class = "form-control" } })*@
-                                    <input asp-for="@Model.Local[i].Comment" class="form-control" readonly/>
+                                    <input asp-for="@Model.Local[i].Comment" class="form-control" readonly />
                                 </td>
                                 <td style="width: 10%;">
                                     @*Html.EditorFor(x => x.Regional[i].MaxValue, new { htmlAttributes = new { @class = "form-control" } })*@
-                                    <input asp-for="@Model.Local[i].MaxValue" min="0" class="form-control" readonly/>
+                                    <input asp-for="@Model.Local[i].MaxValue" min="0" class="form-control" readonly />
                                 </td>
                                 <td style="width: 10%;">
                                     @*Html.EditorFor(x => x.Regional[i].ActualValue, new { htmlAttributes = new { @class = "form-control" } })*@
-                                    <input asp-for="@Model.Local[i].ActualValue" min="0" class="form-control" readonly/>
+                                    <input asp-for="@Model.Local[i].ActualValue" min="0" class="form-control" readonly />
                                 </td>
                             </tr>
                         }

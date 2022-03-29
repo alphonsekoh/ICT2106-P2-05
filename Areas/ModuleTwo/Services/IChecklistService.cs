@@ -15,6 +15,7 @@ namespace PainAssessment.Areas.ModuleTwo.Services
         public List<Checklist> GetActiveChecklists();
         public List<Checklist> GetAllChecklistsFrom(int id);
         public Checklist InitialiseChecklist();
+        public Checklist InitialiseConsultChecklist();
         public void Delete(Checklist checklist);
         public void InsertPost(Checklist checklist);
         public void Update(Checklist checklist);
