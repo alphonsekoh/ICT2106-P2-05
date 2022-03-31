@@ -30,7 +30,7 @@ namespace PainAssessment.Areas.ModuleTwo.Models
         public double NewLocalWeight { get; set; }
         public Boolean Active { get; set; }
 
-        public Checklist()
+        /*public Checklist()
         {
             //this.PractitionerId = 0;
             //this.SessionId = 0;
@@ -57,7 +57,7 @@ namespace PainAssessment.Areas.ModuleTwo.Models
         public void BuildLocal()
         {
             Local = new List<LocalDomain>();
-        }
+        }*/
 
         public int RetrieveIntAttribute(String attribute)
         {
