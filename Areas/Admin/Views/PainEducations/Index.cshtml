@@ -5,7 +5,7 @@
 }
 <div class="row justify-content-between">
     <div class="col-sm-6">
-        <h1>Manage PainEducations</h1>
+        <h1>Manage Pain Educations</h1>
         <p class="text-muted">Admin can manage Prior Pain Education. This includes creating, reading, updating and deleting pain education.</p>
     </div>
     <div class="col-sm-2 align-self-center">
@@ -48,9 +48,8 @@
                         @Html.DisplayFor(modelItem => item.Name)
                     </td>
                     <td>
-                        <a type="button" class="btn btn-secondary btn-sm" asp-action="Details" asp-route-id="@item.Id">View</a>
-                        <a type="button" class="btn btn-primary btn-sm" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
-                        <a type="button" class="btn btn-danger btn-sm" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                        <a type="button" class="btn btn-primary btn-sm" asp-action="Details" asp-route-id="@item.Id">View</a>
+                        <a type="button" class="btn btn-secondary btn-sm" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
                     </td>
                 </tr>
             }
@@ -65,7 +64,7 @@
                     {
                         <li class="page-item">
                             <a class="page-link"
-                               aria-label="Previous" asp-action="Index" asp-route-page=@((int) ViewData["current_page"]-1) asp-route-name=@ViewData["name"]>
+                               aria-label="Previous" asp-action="Index" asp-route-page=@((int) ViewData["current_page"]-1) asp-route-searchString=@ViewData["searchString"]>
                                 <span aria-hidden="true">&laquo;</span>
                             </a>
                         </li>
@@ -85,7 +84,7 @@
                         {
 
                             <li class="page-item">
-                                <a class="page-link" asp-action="Index" asp-route-page=@i asp-route-name=@ViewData["name"]>@i</a>
+                                <a class="page-link" asp-action="Index" asp-route-page=@i asp-route-searchString=@ViewData["searchString"]>@i</a>
                             </li>
                         }
                     }
@@ -94,7 +93,7 @@
                     {
                         <li class="page-item">
                             <a class="page-link"
-                               aria-label="Next" asp-action="Index" asp-route-page=@((int)ViewData["current_page"] + 1) asp-route-name=@ViewData["name"]>
+                               aria-label="Next" asp-action="Index" asp-route-page=@((int)ViewData["current_page"] + 1) asp-route-searchString=@ViewData["searchString"]>
                                 <span aria-hidden="true">&raquo;</span>
                             </a>
                         </li>

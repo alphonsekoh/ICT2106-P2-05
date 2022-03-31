@@ -42,6 +42,5 @@ namespace PainAssessment.Areas.Admin.Data.Gateways
         {
             context.Entry(practitioner).State = EntityState.Modified;
         }
-
     }
 }
