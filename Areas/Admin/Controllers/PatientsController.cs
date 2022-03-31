@@ -2,7 +2,6 @@
 using Microsoft.EntityFrameworkCore;
 using PainAssessment.Areas.Admin.Models;
 using PainAssessment.Areas.Admin.Services;
-using PainAssessment.Areas.Admin.Util;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,54 +12,38 @@ namespace PainAssessment.Areas.Admin.Controllers
     public class PatientsController : Controller
     {
         private readonly IPatientService patientService;
+        private readonly ITableUtilityService<Patient> tableUtilityService;
         private readonly ILogService log;
 
         public PatientsController(IPatientService patientService)
         {
             this.patientService = patientService;
             log = LogService.GetInstance;
+            tableUtilityService = TableUtilityService<Patient>.GetInstance;
 
         }
 
         // GET: Admin/Patients
-        public IActionResult Index(string sortOrder, string searchString, int page = 1)
+        public IActionResult Index(string sortOrder, string searchString = "", int page = 1)
         {
             ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "Name" : "";
-            IEnumerable<Patient> patient = from i in patientService.GetAllPatients() select i;
-            patient = sortOrder switch // check input of what is being sorted
-            {
-                "Name" => patient.OrderByDescending(i => i.Name),
-                _ => patient.OrderBy(i => i.Name),
-            };
+            ViewData["searchString"] = searchString;
+            searchString = String.IsNullOrEmpty(searchString) ? "" : searchString;
 
-            // check if not search input not empty
-            if (!String.IsNullOrEmpty(searchString))
-            {
-                patient = patient.Where(i => i.Name.ToLower().Contains(searchString.ToLower()));
-            }
+            IEnumerable<Patient> patients = patientService.GetAllPatients();
 
-            ViewData["total_count"] = patient.Count(); // get count of all from
+            patients = tableUtilityService.Sort(patients, "Name", String.IsNullOrEmpty(sortOrder) ? tableUtilityService.ORDER_BY : tableUtilityService.ORDER_BY_DESC);
 
-            int max_page = (int)Math.Ceiling((decimal)(patient.Count() / 8.0));
+            patients = tableUtilityService.Search(patients, searchString.ToLower());
 
-            if (page > max_page)
-            {
-                page = max_page;
-            }
-            if (page < 1)
-            {
-                page = 1;
-            }
+            // Pagination.
+            ViewData["max_page"] = tableUtilityService.GetMaxPageCount(patients);
+            ViewData["current_page"] = page = tableUtilityService.ValidateCurrentPage(page, patients);
+            patients = tableUtilityService.GetPageData(patients, page);
 
-            ViewData["max_page"] = max_page;
-            ViewData["current_page"] = page;
+            ViewData["total_count"] = patients.Count();
 
-            if (patient.Any())
-            {
-                patient = patient.ChunkBy(8).ElementAt(page - 1);
-            }
-
-            return View(patient.ToList());
+            return View(patients.ToList());
         }
 
         // GET: Admin/Patients/Details/5
