@@ -99,7 +99,7 @@ namespace PainAssessment.Controllers
                         CreatedAt = DateTime.Now,
                         AccountStatus = "active",
                         FirstSignIn = true,
-                        IsAuthenticated = false,
+                        //IsAuthenticated = false,
                     };
 
                     if (account != null)
