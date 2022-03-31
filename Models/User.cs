@@ -5,36 +5,48 @@ namespace PainAssessment.Models
 {
     public class User
     {
-        private static User _account;
-        private Dictionary<string, User> _accounts = new Dictionary<string, User>();
+        private static User _instance = null;
+        private static Guid _AccountId = Guid.Empty;
+        private static string _Role = null;
+        public Guid GetGuid
+        {
+            get { return _AccountId; }
+        }
+
+        public string GetRole
+        {
+            get { return _Role; }
+        }
+
+        //public static Boolean hasEmptyProperty()
+        //{
+        //    return User._AccountId == Guid.Empty || User._Role != null;
+        //}
+
+        public void setProperty(Guid guid, string role)
+        {
+            _Role = role;
+            _AccountId = guid;
+        }
 
         private User() { }
 
         private static object syncLock = new object();
 
-        public static User Instance
+        public static User GetInstance
         {
             get
             {
-                if( _account == null)
+                if (_instance == null)
                 {
                     lock (syncLock)
-                    { 
-                        _account = new User();
-                        return _account;
+                    {
+                        _instance = new User();
                     }
                 }
-                else
-                {
-                    return _account;
-                }
+                return _instance;
+
             }
         }
-     }
-
-    //public User this[string user]
-    //{
-    //    get { return _accounts[user]; }
-    //    set { _accounts[user] = value; }
-    //}
+    }
 }
