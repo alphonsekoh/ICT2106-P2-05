@@ -20,19 +20,19 @@ namespace PainAssessment.Areas.ModuleTwo.Models
             BuildLocal(checklist);
         }
 
-        public void BuildCentral(Checklist checklist)
+        private void BuildCentral(Checklist checklist)
         {
             checklist.Central = new List<CentralDomain>();
             checklist.Central.Add(new CentralDomain() { RowId = 1 });
         }
 
-        public void BuildRegional(Checklist checklist)
+        private void BuildRegional(Checklist checklist)
         {
             checklist.Regional = new List<RegionalDomain>();
             checklist.Regional.Add(new RegionalDomain() { RowId = 1 });
         }
 
-        public void BuildLocal(Checklist checklist)
+        private void BuildLocal(Checklist checklist)
         {
             checklist.Local = new List<LocalDomain>();
             checklist.Local.Add(new LocalDomain() { RowId = 1 });

@@ -6,11 +6,20 @@ namespace PainAssessment.Areas.ModuleTwo.Models
     {
         public void buildChecklist();
 
-        public void BuildCentral(Checklist checklist);
+        private void BuildCentral(Checklist checklist)
+        {
 
-        public void BuildRegional(Checklist checklist);
+        }
 
-        public void BuildLocal(Checklist checklist);
+        private void BuildRegional(Checklist checklist)
+        {
+
+        }
+
+        private void BuildLocal(Checklist checklist)
+        {
+
+        }
 
         public Checklist getChecklist();
     }
