@@ -44,8 +44,8 @@ namespace PainAssessment.Areas.ModuleTwo.Controllers
         public IActionResult Create(int user)
         {
 
-            var checklist = checklistService.InitialiseChecklist();
-            return View(checklist);
+            //var checklist = checklistService.InitialiseChecklist();
+            return View(checklistService.InitialiseChecklist());
         }
 
         // POST: ModuleTwo/Checklists/Create
