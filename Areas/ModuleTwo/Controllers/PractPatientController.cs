@@ -9,20 +9,18 @@ using PainAssessment.Areas.Admin.Models;
 //using PainAssessment.Areas.ModuleTwo.Data;
 //using PainAssessment.Areas.ModuleTwo.Models;
 using PainAssessment.Areas.Admin.Services;
-using System.Collections.Generic;
-using System.Linq;
-
+using System.Data;
 
 namespace PainAssessment.Areas.ModuleTwo.Controllers
 {
     [Area("ModuleTwo")]
-    public class PatientController : Controller
+    public class PractPatientController : Controller
     {
         private readonly IPatientService patientService;
         private readonly IPractitionerService practitionerService;
 
         //public PatientController(IPatientService patientService)
-        public PatientController(IPatientService patientService, IPractitionerService practitionerService)
+        public PractPatientController(IPatientService patientService, IPractitionerService practitionerService)
         {
             this.patientService = patientService;
             this.practitionerService = practitionerService;
@@ -48,7 +46,8 @@ namespace PainAssessment.Areas.ModuleTwo.Controllers
             ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "Name" : "";
             ViewData["CurrentFilter"] = searchString;
 
-            IEnumerable<Patient> patients = from s in patientService.GetAllPatients() select s;
+            //IEnumerable<Patient> patients = from s in patientService.GetAllPatients() select s;
+            var patients = from s in patientService.GetAllPatients() select s;
 
             if (!String.IsNullOrEmpty(searchString))
             {
