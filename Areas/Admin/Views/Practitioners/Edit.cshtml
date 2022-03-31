@@ -16,11 +16,13 @@
                 <label class="control-label">Clinical Area</label>
                 <select asp-for="ClinicalAreaID" class="form-control" asp-items="ViewBag.ClinicalAreaID"></select>
                 <span asp-validation-for="ClinicalAreaID" class="text-danger"></span>
+                <span id="ClinicalAreaMessage" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label class="control-label">Practice Type</label>
                 <select asp-for="PracticeTypeID" class="form-control" asp-items="ViewBag.PracticeTypeID"></select>
                 <span asp-validation-for="PracticeTypeID" class="text-danger"></span>
+                <span id="PracticeTypeMessage" class="text-danger"></span>
             </div>
             <input type="hidden" asp-for="Id" />
             <div class="form-group">
@@ -37,6 +39,7 @@
                 <label asp-for="PriorPainEducation" class="control-label"></label>
                 @Html.ListBoxFor(model => model.SelectedPainEducation, ViewBag.PainEducationID as MultiSelectList, new { id = "PriorPainEducation", multiple = "multiple" })
                 <span asp-validation-for="SelectedPainEducation" class="text-danger"></span>
+                <span id="PriorPainEducationMessage" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
@@ -52,8 +55,7 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-    <script type="text/javascript">
-        var lastResults = [];
+    <script type="text/javascript">var tempPainEducations = [];
 
         $(function () {
             clinicalArea = $("#ClinicalAreaID").select2({
@@ -71,6 +73,9 @@
             }).on("select2:select", function (e) {
                 if (e.params.data.newTag) {
                     alert(`${e.params.data.text} does not exist. It will be created as a new Clinical Area.`);
+                    $("#ClinicalAreaMessage").text(`${e.params.data.text} does not exist. It will be created as a new Clinical Area.`);
+                } else {
+                    $("#ClinicalAreaMessage").text(``);
                 }
             });
 
@@ -88,8 +93,10 @@
             }).on("select2:select", function (e) {
                 if (e.params.data.newTag) {
                     alert(`${e.params.data.text} does not exist. It will be created as a new Practice Type.`);
+                    $("#PracticeTypeMessage").text(`${e.params.data.text} does not exist. It will be created as a new Practice Type.`);
+                } else {
+                    $("#PracticeTypeMessage").text(``);
                 }
-
             });
             painEducation = $("#PriorPainEducation").select2({
                 tags: true,
@@ -103,11 +110,25 @@
                 },
             }).on("select2:select", function (e) {
                 if (e.params.data.newTag) {
-                    alert(`${e.params.data.text} does not exist. It will be created.`);
+                    tempPainEducations.push(e.params.data.text);
+                    alert(`${e.params.data.text} does not exist. It will be created as a new Pain Education.`);
+                }
+
+                if (tempPainEducations.length > 0) {
+                    $("#PriorPainEducationMessage").text(`${tempPainEducations.join(", ")} does not exist. It will be created as a new Pain Education.`);
+                }
+            }).on('select2:unselecting', function (e) {
+                var eduIndex = tempPainEducations.indexOf(e.params.args.data.id.charAt(0).toUpperCase() + e.params.args.data.id.slice(1));
+                if (eduIndex != -1) {
+                    tempPainEducations.splice(eduIndex, 1);
+
+                    if (tempPainEducations.length > 0) {
+                        $("#PriorPainEducationMessage").text(`${tempPainEducations.join(", ")} does not exist. It will be created as a new Pain Education.`);
+                    } else {
+                        $("#PriorPainEducationMessage").text(``);
+                    }
                 }
             });
 
-        })
-    </script>
-}
+        })</script>
 }
