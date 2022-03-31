@@ -19,6 +19,8 @@ namespace PainAssessment.Areas.Admin.Controllers
         private readonly IPainEducationService painEducationService;
         private readonly IPatientService patientService;
         private readonly ILogService log;
+        private readonly ITableUtilityService<Practitioner> tableUtilityService;
+
         public PractitionersController(IPractitionerService practitionerService, IClinicalAreaService clinicalAreaService, IPracticeTypeService practiceTypeService, IPatientService patientService, IPainEducationService painEducationService)
         {
             this.practitionerService = practitionerService;
@@ -28,39 +30,31 @@ namespace PainAssessment.Areas.Admin.Controllers
             this.painEducationService = painEducationService;
 
             log = LogService.GetInstance;
+            tableUtilityService = TableUtilityService<Practitioner>.GetInstance;
         }
 
-        // GET: Admin/Practitioners?page=1&name=gerald
-        public IActionResult Index(int page = 1, string name = "")
+        // GET: Admin/Practitioners
+        /*
+         Index function to take in input from get upon search, sorting and page change
+         */
+        public IActionResult Index(string sortOrder, string searchString, int page = 1)
         {
+            ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "Name" : "";
+            ViewData["searchString"] = searchString;
+            searchString = String.IsNullOrEmpty(searchString) ? "" : searchString;
+
             IEnumerable<Practitioner> practitioners = practitionerService.GetAllPractitioners();
 
-            if (name != null)
-            {
-                practitioners = practitioners.Where(p => p.Name.ToLower().Contains(name.ToLower()));
-            }
+            practitioners = tableUtilityService.Sort(practitioners, "Name", String.IsNullOrEmpty(sortOrder) ? tableUtilityService.ORDER_BY : tableUtilityService.ORDER_BY_DESC);
+
+            practitioners = tableUtilityService.Search(practitioners, searchString.ToLower());
+
+            // Pagination.
+            ViewData["max_page"] = tableUtilityService.GetMaxPageCount(practitioners);
+            ViewData["current_page"] = page = tableUtilityService.ValidateCurrentPage(page, practitioners);
+            practitioners = tableUtilityService.GetPageData(practitioners, page);
 
             ViewData["total_count"] = practitioners.Count();
-
-            int max_page = (int)Math.Ceiling((decimal)(practitioners.Count() / 8.0));
-
-            if (page > max_page)
-            {
-                page = max_page;
-            }
-            if (page < 1)
-            {
-                page = 1;
-            }
-
-            ViewData["max_page"] = max_page;
-            ViewData["current_page"] = page;
-            ViewData["name"] = name;
-
-            if (practitioners.Any())
-            {
-                practitioners = practitioners.ChunkBy(8).ElementAt(page - 1);
-            }
 
             Dictionary<Guid, List<string>> practitionerPain = new();
             // convert comma delimited string to list

@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -53,6 +54,9 @@ namespace PainAssessment
                 app.UseHsts();
             }
             app.UseHttpsRedirection();
+
+            app.UseStatusCodePagesWithReExecute("/Home/ErrorPage", "?statusCode={0}");
+
             app.UseStaticFiles();
 
             app.UseRouting();
@@ -68,6 +72,7 @@ namespace PainAssessment
                       pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
                     );
                 });
+
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");

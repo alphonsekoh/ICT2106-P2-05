@@ -32,22 +32,25 @@
     <table class="table">
         <thead>
             <tr>
-                <th scope = "col">
+                <th scope="col">
                     <a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParm"]">
                         @Html.DisplayNameFor(model => model.Name)
                     </a>
                 </th>
-                <th scope = "col">
+                <th scope="col">
                     @Html.DisplayNameFor(model => model.Gender)
                 </th>
-                <th scope = "col">
+                <th scope="col">
                     @Html.DisplayNameFor(model => model.Age)
                 </th>
-                <th scope = "col">
+                <th scope="col">
                     @Html.DisplayNameFor(model => model.Condition)
                 </th>
-                <th scope = "col">
+                <th scope="col">
                     @Html.DisplayNameFor(model => model.Notes)
+                </th>
+                <th scope="col">
+                    Actions
                 </th>
             </tr>
         </thead>
@@ -71,9 +74,9 @@
                         @Html.DisplayFor(modelItem => item.Notes)
                     </td>
                     <td>
-                        <a type="button" class="btn btn-secondary btn-sm" asp-action="Details" asp-route-id="@item.Id">View</a> 
-                        <a type="button" class="btn btn-primary btn-sm" asp-action="Edit" asp-route-id="@item.Id">Edit</a> 
-                        <a type="button" class="btn btn-danger btn-sm" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                        <a type="button" class="btn btn-primary btn-sm" asp-action="Details" asp-route-id="@item.Id">View</a>
+                        <a type="button" class="btn btn-secondary btn-sm" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                        @*<a type="button" class="btn btn-danger btn-sm" asp-action="Delete" asp-route-id="@item.Id">Delete</a>*@
                     </td>
                 </tr>
             }
@@ -88,7 +91,7 @@
                     {
                         <li class="page-item">
                             <a class="page-link"
-                               aria-label="Previous" asp-action="Index" asp-route-page=@((int) ViewData["current_page"]-1) asp-route-name=@ViewData["name"]>
+                               aria-label="Previous" asp-action="Index" asp-route-page=@((int) ViewData["current_page"]-1) asp-route-searchString=@ViewData["searchString"]>
                                 <span aria-hidden="true">&laquo;</span>
                             </a>
                         </li>
@@ -108,7 +111,7 @@
                         {
 
                             <li class="page-item">
-                                <a class="page-link" asp-action="Index" asp-route-page=@i asp-route-name=@ViewData["name"]>@i</a>
+                                <a class="page-link" asp-action="Index" asp-route-page=@i asp-route-searchString=@ViewData["searchString"]>@i</a>
                             </li>
                         }
                     }
@@ -117,7 +120,7 @@
                     {
                         <li class="page-item">
                             <a class="page-link"
-                               aria-label="Next" asp-action="Index" asp-route-page=@((int)ViewData["current_page"] + 1) asp-route-name=@ViewData["name"]>
+                               aria-label="Next" asp-action="Index" asp-route-page=@((int)ViewData["current_page"] + 1) asp-route-searchString=@ViewData["searchString"]>
                                 <span aria-hidden="true">&raquo;</span>
                             </a>
                         </li>
