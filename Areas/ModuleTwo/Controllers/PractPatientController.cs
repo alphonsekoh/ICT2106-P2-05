@@ -162,13 +162,13 @@ namespace PainAssessment.Areas.ModuleTwo.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(Patient patient)            // WILL PROBABLY NEED TO PASS IN PRACTITIONER INFO HERE ALSO
+        public IActionResult Create(Patient patient)            // WILL NEED TO PASS IN PRACTITIONER INFO HERE
         {
             if (ModelState.IsValid)
             {
                 patientService.CreatePatient(patient);
                 patientService.SavePatient();
-                Practitioner practitioner = practitionerService.GetPractitioner(Guid.Parse("bb4d34c0-a43b-4f6f-138b-08da09bb8f40"));
+                Practitioner practitioner = practitionerService.GetPractitioner(Guid.Parse("b8beed0c-a1b8-42e1-7cee-08da118e2549"));
                 practitioner.AddPatientRelation(patient);
                 practitionerService.SavePractitioner();
                 return RedirectToAction(nameof(Index));
