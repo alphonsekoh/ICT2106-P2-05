@@ -9,20 +9,18 @@ using PainAssessment.Areas.Admin.Models;
 //using PainAssessment.Areas.ModuleTwo.Data;
 //using PainAssessment.Areas.ModuleTwo.Models;
 using PainAssessment.Areas.Admin.Services;
-using System.Collections.Generic;
-using System.Linq;
-
+using System.Data;
 
 namespace PainAssessment.Areas.ModuleTwo.Controllers
 {
     [Area("ModuleTwo")]
-    public class PatientController : Controller
+    public class PractPatientController : Controller
     {
         private readonly IPatientService patientService;
         private readonly IPractitionerService practitionerService;
 
         //public PatientController(IPatientService patientService)
-        public PatientController(IPatientService patientService, IPractitionerService practitionerService)
+        public PractPatientController(IPatientService patientService, IPractitionerService practitionerService)
         {
             this.patientService = patientService;
             this.practitionerService = practitionerService;
@@ -42,13 +40,12 @@ namespace PainAssessment.Areas.ModuleTwo.Controllers
 
         public async Task<IActionResult> Index(string sortOrder, string currentFilter, string searchString, int? pageNumber)
         {
-            //   public async Task<IActionResult> Index(string sortOrder, string searchString){
-
             ViewData["CurrentSort"] = sortOrder;
             ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "Name" : "";
             ViewData["CurrentFilter"] = searchString;
 
-            IEnumerable<Patient> patients = from s in patientService.GetAllPatients() select s;
+            //IEnumerable<Patient> patients = from s in patientService.GetAllPatients() select s;
+            var patients = from s in patientService.GetAllPatients() select s;
 
             if (!String.IsNullOrEmpty(searchString))
             {
@@ -70,13 +67,8 @@ namespace PainAssessment.Areas.ModuleTwo.Controllers
                 case "Name":
                     patients = patients.OrderByDescending(s => s.Name);
                     break;
-                //case "Date":
-                //    students = students.OrderBy(s => s.EnrollmentDate);
-                //    break;
             }
-            //return View(await students.AsNoTracking().ToListAsync());
 
-            int pageSize = 3;
             //return View(await PaginatedList<Patient>.CreateAsync(patients.AsNoTracking(), pageNumber ?? 1, pageSize));
             return View(patients.ToList());
         }
@@ -163,13 +155,13 @@ namespace PainAssessment.Areas.ModuleTwo.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(Patient patient)            // WILL PROBABLY NEED TO PASS IN PRACTITIONER INFO HERE ALSO
+        public IActionResult Create(Patient patient)            // WILL NEED TO PASS IN PRACTITIONER INFO HERE
         {
             if (ModelState.IsValid)
             {
                 patientService.CreatePatient(patient);
                 patientService.SavePatient();
-                Practitioner practitioner = practitionerService.GetPractitioner(Guid.Parse("bb4d34c0-a43b-4f6f-138b-08da09bb8f40"));
+                Practitioner practitioner = practitionerService.GetPractitioner(Guid.Parse("b8beed0c-a1b8-42e1-7cee-08da118e2549"));
                 practitioner.AddPatientRelation(patient);
                 practitionerService.SavePractitioner();
                 return RedirectToAction(nameof(Index));
