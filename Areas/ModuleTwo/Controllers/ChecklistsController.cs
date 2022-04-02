@@ -25,7 +25,7 @@ namespace PainAssessment.Areas.ModuleTwo.Controllers
         public IActionResult Index()
         {
 
-            var checklists = checklistService.GetAll(2);
+            var checklists = checklistService.GetAll(0);
 
             return View(checklists);
         }
