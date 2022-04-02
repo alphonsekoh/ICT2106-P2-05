@@ -40,8 +40,6 @@ namespace PainAssessment.Areas.ModuleTwo.Controllers
 
         public async Task<IActionResult> Index(string sortOrder, string currentFilter, string searchString, int? pageNumber)
         {
-            //   public async Task<IActionResult> Index(string sortOrder, string searchString){
-
             ViewData["CurrentSort"] = sortOrder;
             ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "Name" : "";
             ViewData["CurrentFilter"] = searchString;
@@ -69,13 +67,8 @@ namespace PainAssessment.Areas.ModuleTwo.Controllers
                 case "Name":
                     patients = patients.OrderByDescending(s => s.Name);
                     break;
-                //case "Date":
-                //    students = students.OrderBy(s => s.EnrollmentDate);
-                //    break;
             }
-            //return View(await students.AsNoTracking().ToListAsync());
 
-            int pageSize = 3;
             //return View(await PaginatedList<Patient>.CreateAsync(patients.AsNoTracking(), pageNumber ?? 1, pageSize));
             return View(patients.ToList());
         }
