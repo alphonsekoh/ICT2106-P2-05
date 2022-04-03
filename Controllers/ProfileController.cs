@@ -45,38 +45,15 @@ namespace PainAssessment.Controllers
             {
                 case "Administrator":
                     // admin
-                    Administrator admin = administratorService.GetOneAdmin(userid);
-                    ClinicalArea clinical = clinicalAreaService.GetClinicalArea(admin.ClinicalAreaID);
-                    var adminViewModel = new AdministratorModel
-                    {
-                        Name = admin.Account.Username,
-                        FullName = admin.FullName,
-                        Role = admin.Account.Role,
-                        Experience = admin.Experience,
-                        ClinicalArea = clinical.Name,
-                        AccountID = admin.Account.AccountId
 
-                    };
-                    string jsonString = JsonSerializer.Serialize(adminViewModel);
+                    string jsonString = JsonSerializer.Serialize(AdminView(userid));
                     return RedirectToAction(actionName: "ViewAdmin", controllerName: "Home",
-                        new { data = jsonString, area = "Admin" });
+                new { data = jsonString, area = "Admin" });
 
                 case "Practitioner":
                     // practitioner
-                    Practitioner practionerDetails = practitionerService.GetPractitioner(new Guid("a6e08001-f5e1-442e-d40f-08da11a4a882"));
-                    ClinicalArea clinicalPrac = clinicalAreaService.GetClinicalArea(practionerDetails.ClinicalAreaID);
-                    var practionerViewModel = new PractionerModel
-                    {
-                        Name = practionerDetails.Name,
-                        FullName = user.Username,
-                        Role = user.Role,
-                        AccountID = user.AccountId,
-                        PriorPainEducation = practionerDetails.PriorPainEducation,
-                        ClinicalArea = clinicalPrac.Name,
-                        PracticeType = practionerDetails.PracticeType.Name
-
-                    };
-                    return View("ViewPrac", practionerViewModel);
+                    var practitionerProfile = PractionerView(user);
+                    return View("ViewPrac", practitionerProfile);
                 default:
                     // unrecognised method; return to the blank form
                     return RedirectToAction("Index");
@@ -86,16 +63,40 @@ namespace PainAssessment.Controllers
         }
 
 
-        /*private ActionResult ViewAdmin()
+        private AdministratorModel AdminView(Guid id)
         {
-            return RedirectToAction(actionName: "ViewAdmin", controllerName: "Home",
-        new {  area = "Admin" });
-            //return View();
-        }*/
+            Administrator admin = administratorService.GetOneAdmin(id);
+            ClinicalArea clinical = clinicalAreaService.GetClinicalArea(admin.ClinicalAreaID);
+            var adminViewModel = new AdministratorModel
+            {
+                Name = admin.Account.Username,
+                FullName = admin.FullName,
+                Role = admin.Account.Role,
+                Experience = admin.Experience,
+                ClinicalArea = clinical.Name,
+                AccountID = admin.Account.AccountId
 
-        private ActionResult ViewPractioner()
+            };
+            return adminViewModel;
+            
+        }
+
+        private PractionerModel PractionerView(Account user)
         {
-            return View();
+            Practitioner practionerDetails = practitionerService.GetPractitioner(new Guid("a6e08001-f5e1-442e-d40f-08da11a4a882"));
+            ClinicalArea clinicalPrac = clinicalAreaService.GetClinicalArea(practionerDetails.ClinicalAreaID);
+            var practionerViewModel = new PractionerModel
+            {
+                Name = practionerDetails.Name,
+                FullName = user.Username,
+                Role = user.Role,
+                AccountID = user.AccountId,
+                PriorPainEducation = practionerDetails.PriorPainEducation,
+                ClinicalArea = clinicalPrac.Name,
+                PracticeType = practionerDetails.PracticeType.Name
+
+            };
+            return practionerViewModel;
         }
 
 
