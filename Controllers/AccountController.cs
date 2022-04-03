@@ -9,6 +9,8 @@ using BC = BCrypt.Net.BCrypt;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using PainAssessment.Areas.Admin.Services;
+using PainAssessment.Areas.Admin.Models;
 
 namespace PainAssessment.Controllers
 {
@@ -19,20 +21,22 @@ namespace PainAssessment.Controllers
         private readonly IAdministratorService administratorService;
         private readonly ILoginService loginService;
 
+        private readonly IPractitionerService practitionerService;
         //private const string REDIRECT_CNTR = "Home";
-        //private const string REDIRECT_ACTN = "Index";
         private const string DIRECT_CNTR = "Login";
         private const string DIRECT_ACTN = "Index";
 
         public AccountController(
             IAccountService accountService,
             IAdministratorService administratorService,
-            ILoginService loginService
+            ILoginService loginService,
+            IPractitionerService practitionerService
            )
         {
             this.accountService = accountService;
             this.administratorService = administratorService;
             this.loginService = loginService;
+            this.practitionerService = practitionerService;
         }
 
         [AllowAnonymous]
@@ -116,9 +120,9 @@ namespace PainAssessment.Controllers
                             };
                             administratorService.CreateAdmin(admin);
                         }
-                        else
+                        else if (account.Role == "Practitioner")
                         {
-                            // Practitioner service
+                            return RedirectToAction("Create", "Practitioners", new {area = "Admin"});
                         }
                         return RedirectToAction(DIRECT_ACTN, DIRECT_CNTR);
                     }
