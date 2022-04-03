@@ -77,6 +77,7 @@ namespace PainAssessment
             services.AddScoped<IGatewayManager, GatewayManager>();
             services.AddScoped<IPainEducationService, PainEducationService>();
 
+
             services.AddControllersWithViews();
             services.AddRazorPages();
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
@@ -112,18 +113,16 @@ namespace PainAssessment
 
             app.UseEndpoints(endpoints =>
             {
-                //app.UseEndpoints(endpoints =>
-                //{
-                //    endpoints.MapControllerRoute(
-                //      name: "Login",
-                //      pattern: "{controller=Login}/{action=Index}/{id?}"
-                //    );
-                //});
+                app.UseEndpoints(endpoints =>
+                {
+                    endpoints.MapControllerRoute(
+                      name: "Admin",
+                      pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
+                    );
+                });
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
-                endpoints.MapRazorPages();
-
             });
         }
     }

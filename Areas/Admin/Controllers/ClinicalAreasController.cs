@@ -13,11 +13,11 @@ namespace PainAssessment.Areas.Admin.Controllers
     public class ClinicalAreasController : Controller
     {
         private readonly IClinicalAreaService clinicalAreaService;
-        private readonly ILog log;
+        private readonly ILogService log;
         public ClinicalAreasController(IClinicalAreaService clinicalAreaService)
         {
             this.clinicalAreaService = clinicalAreaService;
-            log = Log.GetInstance;
+            log = LogService.GetInstance;
         }
         // GET: Admin/ClinicalAreas
         /*

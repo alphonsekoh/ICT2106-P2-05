@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
-using PainAssessment.Areas.Admin.Models.Factory;
+using PainAssessment.Areas.Admin.Models.Builder;
 using PainAssessment.Areas.Admin.Services;
 using System;
 using System.Collections.Generic;
@@ -20,8 +20,7 @@ namespace PainAssessment.Areas.Admin.Models.ModelBinder
         }
         public Task BindModelAsync(ModelBindingContext bindingContext)
         {
-            IPersonFactory personFactory = new PersonFactory();
-            IPractitioner practitioner;
+            Practitioner practitioner;
 
             Microsoft.AspNetCore.Http.IFormCollection data = bindingContext.HttpContext.Request.Form;
             bool nameResult = data.TryGetValue("Name", out Microsoft.Extensions.Primitives.StringValues name);
@@ -41,8 +40,8 @@ namespace PainAssessment.Areas.Admin.Models.ModelBinder
             }
             else
             {
-                int createdPracticeTypeID = 1;
-                int createdClinicID = 1;
+                int createdPracticeTypeID = default;
+                int createdClinicID = default;
                 List<int> priorEducationList = new();
                 if (!parsePracticeSuccess)
                 {
@@ -73,25 +72,18 @@ namespace PainAssessment.Areas.Admin.Models.ModelBinder
                         priorEducationList.Add(newPainEducation.Id);
                     }
                 }
+                IPractitionerBuilder practitionerBuilder = new PractitionerBuilder().WithName(name.ToString())
+                                                                                   .WithExperience(experience.ToString())
+                                                                                   .WithPainEducation(string.Join(",", priorEducationList))
+                                                                                   .WithClinic(parseClinicSuccess ? parsedClinicID : createdClinicID)
+                                                                                   .WithPracticeType(parsePracticeSuccess ? parsedPracticeTypeID : createdPracticeTypeID);
+
 
                 if (idResult)
                 {
-                    practitioner = personFactory.CreatePractitioner(name.ToString(),
-                                    experience.ToString(),
-                                    string.Join(",", priorEducationList),
-                                    parseClinicSuccess ? parsedClinicID : createdClinicID,
-                                    parsePracticeSuccess ? parsedPracticeTypeID : createdPracticeTypeID,
-                                    Guid.Parse(id.ToString()));
+                    practitionerBuilder.WithId(Guid.Parse(id.ToString()));
                 }
-                else
-                {
-                    practitioner = personFactory.CreatePractitioner(name.ToString(),
-                                    experience.ToString(),
-                                    string.Join(",", priorEducationList),
-                                    parseClinicSuccess ? parsedClinicID : createdClinicID,
-                                    parsePracticeSuccess ? parsedPracticeTypeID : createdPracticeTypeID
-                                    );
-                }
+                practitioner = practitionerBuilder.Build();
                 practitioner.SelectedPainEducation = selectedPainEducation;
                 bindingContext.Result = ModelBindingResult.Success(practitioner);
 

@@ -4,13 +4,13 @@ using System.Text;
 
 namespace PainAssessment.Areas.Admin.Services
 {
-    public sealed class Log : ILog
+    public sealed class LogService : ILogService
     {
-        private Log() { }
+        private LogService() { }
 
-        private static readonly Lazy<Log> instance = new(() => new Log());
+        private static readonly Lazy<LogService> instance = new(() => new LogService());
 
-        public static Log GetInstance => instance.Value;
+        public static LogService GetInstance => instance.Value;
         public void LogMessage(string area, string type, string message)
         {
             string date = DateTime.Now.ToShortDateString();

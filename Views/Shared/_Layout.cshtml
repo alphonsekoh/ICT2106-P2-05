@@ -16,6 +16,7 @@
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
+
                 @if (User.Identity.IsAuthenticated)
                 {
                     <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
@@ -26,11 +27,14 @@
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                             </li>
-                            @*@if (User.IsInRole("Admin")){*@
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Profile" asp-action="ViewProfile">ViewProfile</a>
+                            </li>
+                           @if (User.IsInRole("Admin")){
                                  <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="ManageTemplateChecklist">Manage Template Checklist</a>
                             </li>
-                            @*}*@
+                            }
                         </ul>
                     </div>
                     <div>
