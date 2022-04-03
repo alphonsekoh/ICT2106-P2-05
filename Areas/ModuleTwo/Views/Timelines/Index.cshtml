@@ -9,69 +9,55 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
-<h1>Index</h1>
+<h2>Consultation Sessions</h2>
 
-<p>
+@*<p>
   <a class="btn btn-primary btn-sm" role="button" asp-action="Create">Create New</a>
-</p>
+</p>*@
 <table class="table table-bordered">
     <thead>
         <tr class="warning">
-            @*<th>
-                @Html.DisplayNameFor(model => model.Date)
+            <th>
+                Session No.
+                @*@Html.DisplayNameFor(model => model.sessionId)*@
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.SessionNo)
+                Visit Date
+                @*@Html.DisplayNameFor(model => model.createdAt)*@
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.LastVisit)
+                Memo
+                @*@Html.DisplayNameFor(model => model.memo)*@
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ClinicalArea)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CentralModulation)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.RegionalInfluence)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.LocalStimulation)
-            </th>*@
-            <th></th>
         </tr>
     </thead>
     <tbody>
-@*@foreach (var item in Model) {
+@*@foreach (var item in Model)*@
+@*{*@
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Date)
+                Session 1
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.SessionNo)
+                1/1/2022
+            </td>
+            <td>Patient is severely injured. Estimated recovery time 6-8 months</td>
+            <tr>
+            <td>
+                Session 2
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.LastVisit)
+                11/2/2022
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ClinicalArea)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CentralModulation)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RegionalInfluence)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LocalStimulation)
-            </td>
-            <td>
+            <td>Inflammation is recovering. Estimated recovery time 4 months</td>
+            </tr>
+    @*        <td>
                 <a class="btn btn-primary btn-sm" asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
                 <a class="btn btn-primary btn-sm" asp-action="Details" asp-route-id="@item.Id">Details</a> |
                 <a class="btn btn-danger btn-sm" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
+            </td>*@
         </tr>
-}*@
+@*}*@
     </tbody>
 </table>
 <a class="btn btn-primary btn-sm" asp-area="ModuleTwo" asp-controller="PractPatient" asp-action="Index">Back to Patient Records</a>
