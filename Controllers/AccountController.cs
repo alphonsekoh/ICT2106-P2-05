@@ -20,10 +20,7 @@ namespace PainAssessment.Controllers
         private readonly IAccountService accountService;
         private readonly IAdministratorService administratorService;
         private readonly ILoginService loginService;
-        private readonly IPractitionerService practitionerService;
 
-
-        private readonly IPractitionerService practitionerService;
         //private const string REDIRECT_CNTR = "Home";
         private const string DIRECT_CNTR = "Login";
         private const string DIRECT_ACTN = "Index";
@@ -31,14 +28,12 @@ namespace PainAssessment.Controllers
         public AccountController(
             IAccountService accountService,
             IAdministratorService administratorService,
-            ILoginService loginService,
-            IPractitionerService practitionerService
+            ILoginService loginService
            )
         {
             this.accountService = accountService;
             this.administratorService = administratorService;
             this.loginService = loginService;
-            this.practitionerService = practitionerService;
         }
 
         [AllowAnonymous]
