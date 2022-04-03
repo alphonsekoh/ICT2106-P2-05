@@ -5,6 +5,8 @@ using Microsoft.Extensions.Logging;
 using PainAssessment.Areas.Admin.Data;
 using PainAssessment.Data;
 using System;
+using PainAssessment.Areas.ModuleTwo.Data;
+using PainAssessment.Areas.ModuleTwo.Models;
 
 namespace PainAssessment
 {
@@ -12,27 +14,11 @@ namespace PainAssessment
     {
         public static void Main(string[] args)
         {
-            IHost host = CreateHostBuilder(args).Build();
-            CreateDbIfNotExists(host);
+            // IHost host = CreateHostBuilder(args).Build();
+            var host = CreateHostBuilder(args).Build();
+
             host.Run();
         }
-
-        private static void CreateDbIfNotExists(IHost host)
-        {
-            using IServiceScope scope = host.Services.CreateScope();
-            IServiceProvider services = scope.ServiceProvider;
-            try
-            {
-                HospitalContext context = services.GetRequiredService<HospitalContext>();
-                PractitionerClinicDbInitializer.Initialize(context);
-            }
-            catch (Exception ex)
-            {
-                ILogger<Program> logger = services.GetRequiredService<ILogger<Program>>();
-                logger.LogError(ex, "An error occurred creating the DB.");
-            }
-        }
-
 
         public static IHostBuilder CreateHostBuilder(string[] args)
         {
