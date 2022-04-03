@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace PainAssessment.Areas.ModuleTwo.Data
 {
-    public class UnitOfWork : IUnitOfWork
+    public class ChecklistUnitOfWork : IChecklistUnitOfWork
     {
         private MvcChecklistContext _context;
         private MvcConsultationChecklistContext _Consultationcontext;
@@ -13,7 +13,7 @@ namespace PainAssessment.Areas.ModuleTwo.Data
         private IChecklistRepo checklistRepo;
         private IConsultationChecklistRepo consultationChecklistRepo;
 
-        public UnitOfWork(MvcChecklistContext context, MvcConsultationChecklistContext context2)
+        public ChecklistUnitOfWork(MvcChecklistContext context, MvcConsultationChecklistContext context2)
         {
             _context = context;
             _Consultationcontext = context2;
