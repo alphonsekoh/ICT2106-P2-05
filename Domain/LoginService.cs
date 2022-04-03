@@ -43,31 +43,15 @@ namespace PainAssessment.Domain
             }
         }
 
-        //public bool VerifyHash(string unhashedValue, string hashedValue)
-        //{
-        //    if (BC.Verify(unhashedValue, hashedValue).Equals(true))
-        //    {
-        //        return true;
-        //    }
-        //    else return false;
-        //}
-
-        //public string HashValue(string input)
-        //{
-        //    return BC.HashPassword(input);
-        //}
-
-        public string GetRole(Guid accountId)
+        public string GetRole()
         {
-            Account user = _unitOfWork.LoginRepository.GetById<Account, Guid>(accountId);
-            if (user != null)
-            {
-                return user.Role;
-            }
-            else
-            {
-                return null;
-            }
+            return myUser.GetRole;
+
+        }
+
+        public Guid GetAccountId()
+        {
+            return myUser.GetGuid;
         }
 
         public bool CheckInstance()

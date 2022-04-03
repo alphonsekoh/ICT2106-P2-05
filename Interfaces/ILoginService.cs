@@ -13,7 +13,8 @@ namespace PainAssessment.Interfaces
         //string HashValue(string input);
 
         // get role
-        string GetRole(Guid accountId);
+        string GetRole();
+        Guid GetAccountId();
         bool CheckInstance();
         void setFirstSignInFalse(Account account);
         string IsFirstSignIn(Guid accountId);

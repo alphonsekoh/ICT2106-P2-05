@@ -52,13 +52,14 @@ namespace PainAssessment.Controllers
             {
                 if(await AuthenticateUser(model) == true)
                 {
-                    var isFirstSignIn = loginService.IsFirstSignIn(Models.User.GetInstance.GetGuid);
+                    var accId = loginService.GetAccountId();
+                    var isFirstSignIn = loginService.IsFirstSignIn(accId);
                     if (isFirstSignIn.Equals("true"))
                     {
-                        var account = loginService.GetAccount(Models.User.GetInstance.GetGuid);
+                        var account = loginService.GetAccount(accId);
                         account.FirstSignIn = false;
                         loginService.setFirstSignInFalse(account);
-                        return RedirectToAction("FirstSignIn", "Login");
+                        return RedirectToAction("FirstSignIn");
                     }
                     return RedirectToAction(REDIRECT_ACTN, REDIRECT_CNTR);
                 }
@@ -76,10 +77,6 @@ namespace PainAssessment.Controllers
             string username = model.Username;
             string password = model.Password;
 
-            //if (Models.User.hasEmptyProperty())
-            //{
-            //    /// Blah blah blah if empty just log in
-            //}
             var user = loginService.Login(username, password);
 
             if (user != null)
@@ -95,8 +92,6 @@ namespace PainAssessment.Controllers
                  * 7. return true and redirect to the page after successful login
                  * 
                  */
-
-                //var hashUsername = loginService.HashValue(username);
 
                 // Attributes that are for authentication
                 var claims = new List<Claim> {
@@ -126,6 +121,11 @@ namespace PainAssessment.Controllers
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             //Redirect to login page
             return LocalRedirect("/");
+        }
+
+        public IActionResult FirstSignIn()
+        {
+            return View();
         }
 
 
