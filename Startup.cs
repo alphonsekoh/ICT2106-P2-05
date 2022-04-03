@@ -49,7 +49,7 @@ namespace PainAssessment
             options.UseSqlServer(Configuration.GetConnectionString("MvcConsultationChecklistContext")));
 
 
-            services.AddTransient<IUnitOfWork, UnitOfWork>();
+            services.AddTransient<IChecklistUnitOfWork, ChecklistUnitOfWork>();
 
             services.AddTransient<IChecklistService, ChecklistService>();
         }
