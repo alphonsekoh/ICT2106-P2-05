@@ -18,7 +18,7 @@
 //                return;   // DB has been seeded
 //            }
 //            var departments = new Department[]
-//            {          
+//            {
 //            new Department{Name="Neurology"},
 //            new Department{Name="Orthopaedic"},
 //            new Department{Name="Cardiology"},
@@ -26,10 +26,10 @@
 //            new Department{Name="General Surgery"},
 //            new Department{Name="Haematology"},
 //            new Department{Name="Dermatology"}
-//            }; 
+//            };
 
 //            context.Departments.AddRange(departments);
-            
+
 //            context.SaveChanges();
 
 //            var practitioners = new Practitioner[]

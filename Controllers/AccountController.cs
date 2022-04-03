@@ -20,25 +20,20 @@ namespace PainAssessment.Controllers
         private readonly IAccountService accountService;
         private readonly IAdministratorService administratorService;
         private readonly ILoginService loginService;
-        private readonly IPractitionerService practitionerService;
-
 
         //private const string REDIRECT_CNTR = "Home";
-        //private const string REDIRECT_ACTN = "Index";
         private const string DIRECT_CNTR = "Login";
         private const string DIRECT_ACTN = "Index";
 
         public AccountController(
             IAccountService accountService,
             IAdministratorService administratorService,
-            ILoginService loginService,
-            IPractitionerService practitionerService
+            ILoginService loginService
            )
         {
             this.accountService = accountService;
             this.administratorService = administratorService;
             this.loginService = loginService;
-            this.practitionerService = practitionerService;
         }
 
         [AllowAnonymous]
@@ -105,7 +100,7 @@ namespace PainAssessment.Controllers
                         CreatedAt = DateTime.Now,
                         AccountStatus = "active",
                         FirstSignIn = true,
-                        IsAuthenticated = false,
+                        //IsAuthenticated = false,
                     };
 
                     if (account != null)
