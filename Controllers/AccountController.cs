@@ -20,6 +20,8 @@ namespace PainAssessment.Controllers
         private readonly IAccountService accountService;
         private readonly IAdministratorService administratorService;
         private readonly ILoginService loginService;
+        private readonly IPractitionerService practitionerService;
+
 
         private readonly IPractitionerService practitionerService;
         //private const string REDIRECT_CNTR = "Home";
