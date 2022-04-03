@@ -10,6 +10,7 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using System.Threading.Tasks;
+using PainAssessment.Models;
 
 namespace PainAssessment.Controllers
 {
@@ -51,6 +52,15 @@ namespace PainAssessment.Controllers
             {
                 if(await AuthenticateUser(model) == true)
                 {
+                    var accId = loginService.GetAccountId();
+                    var isFirstSignIn = loginService.IsFirstSignIn(accId);
+                    if (isFirstSignIn.Equals("true"))
+                    {
+                        var account = loginService.GetAccount(accId);
+                        account.FirstSignIn = false;
+                        loginService.setFirstSignInFalse(account);
+                        return RedirectToAction("FirstSignIn");
+                    }
                     return RedirectToAction(REDIRECT_ACTN, REDIRECT_CNTR);
                 }
                 else
@@ -67,7 +77,9 @@ namespace PainAssessment.Controllers
             string username = model.Username;
             string password = model.Password;
 
-            if (loginService.Login(username, password) != null)
+            var user = loginService.Login(username, password);
+
+            if (user != null)
             {
 
                 /* TODO 
@@ -80,14 +92,11 @@ namespace PainAssessment.Controllers
                  * 7. return true and redirect to the page after successful login
                  * 
                  */
-                var user = loginService.Login(username, password);
-
-                //var hashUsername = loginService.HashValue(username);
 
                 // Attributes that are for authentication
                 var claims = new List<Claim> {
-                    new Claim(ClaimTypes.NameIdentifier, Convert.ToString(user.AccountId)),
-                    new Claim(ClaimTypes.Role, user.Role),
+                    new Claim(ClaimTypes.NameIdentifier, Convert.ToString(user.GetGuid)),
+                    new Claim(ClaimTypes.Role, user.GetRole),
                 };
 
                 // Initialise instance of ClaimsIdentity
@@ -112,6 +121,11 @@ namespace PainAssessment.Controllers
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             //Redirect to login page
             return LocalRedirect("/");
+        }
+
+        public IActionResult FirstSignIn()
+        {
+            return View();
         }
 
 
