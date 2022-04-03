@@ -1,7 +1,7 @@
-﻿using PainAssessment.Models;
+﻿using PainAssessment.Areas.Admin.Models;
 using System;
 
-namespace PainAssessment.Interfaces
+namespace PainAssessment.Areas.Admin.Services
 {
     public interface IAdministratorService
     {

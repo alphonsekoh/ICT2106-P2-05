@@ -1,7 +1,8 @@
-﻿@model PainAssessment.ViewModels.Profile.PractionerModel
+﻿@model PainAssessment.Areas.Admin.Models.ViewModels.Profile.AdministratorModel
 @{
-    ViewData["Title"] = "ViewPrac";
+    ViewData["Title"] = "ViewAdmin";
 }
+
 <div>
     <h4>Profile</h4>
     <hr />
@@ -27,9 +28,9 @@
     </div>
     <br />
     <div class="row">
-        <div class="col-lg-2"> @Html.DisplayNameFor(model => model.PriorPainEducation)</div>
+        <div class="col-lg-2"> @Html.DisplayNameFor(model => model.Experience)</div>
         <div class="col-lg-10">
-            @Html.TextBoxFor(model => model.PriorPainEducation, new { disabled = "disabled", @readonly = "readonly" })
+            @Html.TextBoxFor(model => model.Experience, new { disabled = "disabled", @readonly = "readonly" })
         </div>
     </div>
     <br />
@@ -39,12 +40,4 @@
             @Html.TextBoxFor(model => model.ClinicalArea, new { disabled = "disabled", @readonly = "readonly" })
         </div>
     </div>
-    <br />
-    <div class="row">
-        <div class="col-lg-2"> @Html.DisplayNameFor(model => model.PracticeType)</div>
-        <div class="col-lg-10">
-            @Html.TextBoxFor(model => model.PracticeType, new { disabled = "disabled", @readonly = "readonly" })
-        </div>
-    </div>
-
 </div>
