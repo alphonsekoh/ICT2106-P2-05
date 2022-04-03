@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 namespace PainAssessment.Areas.ModuleTwo.Models
 {
-    public class Consultation
+    public class Timeline
     {
         public int Id { get; set; }
         [DataType(DataType.Date)]

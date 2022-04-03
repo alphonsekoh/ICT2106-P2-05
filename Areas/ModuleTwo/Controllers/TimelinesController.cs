@@ -11,7 +11,7 @@ using PainAssessment.Areas.ModuleTwo.Models;
 namespace PainAssessment.Areas.ModuleTwo.Controllers
 {
     [Area("ModuleTwo")]
-    public class ConsultationsController : Controller
+    public class TimelinesController : Controller
     {
   
         public async Task<IActionResult> Index()
