@@ -14,7 +14,7 @@ namespace PainAssessment.Areas.ModuleTwo.Controllers
     public class TimelinesController : Controller
     {
   
-        public async Task<IActionResult> Index(int consultationId)
+        public async Task<IActionResult> Index()
         {
             return View();
         }

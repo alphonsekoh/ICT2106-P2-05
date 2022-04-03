@@ -6,14 +6,15 @@ namespace PainAssessment.Areas.ModuleTwo.Models
     public class Timeline
     {
         
-        public int Id { get; set; } 
+
+
         //*** Consultation Entity Dummy Init ***//
         [Display(Name = "consultationId")]
         public int consultationId { get; set; } 
         [Display(Name = "status")]
-        public string status { get; set; }
+        public string Status { get; set; }
         [Display(Name = "description")]
-        public string description { get; set; }
+        public string Description { get; set; }
         [Display(Name = "createdAt")]
         [DataType(DataType.Date)]
         public DateTime createdAt { get; set; }
