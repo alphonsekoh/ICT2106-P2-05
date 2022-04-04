@@ -3,62 +3,70 @@
 @model IEnumerable<PainAssessment.Areas.ModuleTwo.Models.Checklist>
 
 @{
-    ViewData["Title"] = "View Template Checklist";
+    ViewData["Title"] = "ViewTemplateChecklist";
 }
-
-<div class="text-center">
-    <h1 class="display-4">Admin Template checklist </h1>
+<div class="row">
+    <div class="col sm-1 mb-3">
+        <h3 class="font-weight-bold fs-4 text" style="float:left">My Checklists</h3>
+    </div>
+    <div class="col lg-10"></div>
+    <div class="col sm-1"><a class="btn btn-light border border-dark" style="float:right;" asp-action="CreateTemplateChecklist">Create</a></div>
 </div>
 
-<div class="text-center">
-    <div>
-        <div class="accordion md-accordion accordion-blocks" id="accordionDCL" role="tablist"
-             aria-multiselectable="false">
-            <!-- Accordion card -->
-            <div class="card">
-                <!-- Card header -->
-                <div class="card-header" role="tab" id="cMATableHeading">
-                    <!--Options-->
+<div class="row">
+    <table class="table border border-dark rounded-lg ">
+        <thead>
+            <tr>
+                <th>
+                    ID
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ChecklistName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ChecklistDescription)
+                </th>
+                <th>
+                    Created By
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Active)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        <div class="form-check">
+                            @Html.DisplayFor(modelItem => item.ChecklistId)
+                        </div>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ChecklistName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ChecklistDescription)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PractitionerId)
+                    </td>
+                    <td>
+                        @Html.EditorFor(modelItem => item.Active)
+                    </td>
+                    <td>
+                        <a class="btn btn-primary" asp-action="Edit" asp-route-id="@item.ChecklistId">Edit</a>
+                        <a class="btn btn-secondary" asp-action="Details" asp-route-id="@item.ChecklistId">Details</a>
+                        <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.ChecklistId">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
 
-                </div>
-                <table>
 
-                    <tr>
-
-
-                        <th class="th-lg"><a>Checklist Name<i class="fas fa-sort ml-1"></i></a></th>
-                        <th class="th-lg"><a>Default Selection<i class="fas fa-sort ml-1"></i></a></th>
-                        <th class="th-lg" colspan="2"><a>Action<i class="fas fa-sort ml-1"></i></a></th>
-
-                    </tr>
-                    <!--for loop here to display all the checklist -->
-                    <tr>
-
-
-                        <td class="th-lg"><a>Checklist 1</a></td>
-                        <td class="th-lg"><a style="color:lightgreen;"></a></td>
-                        <td class="th-lg">
-                            <a asp-controller="Home" asp-action="ManageTemplateChecklist">Edit Questions</a>
-                        </td>
-                        <!--check if true dun display the selected button
-                        <td class="th-lg"><a>Select as Default</a></td>-->
-
-                    </tr>
-                    <tr>
-
-                        <td class="th-lg"><a>Checklist 2<i class="fas fa-sort ml-1"></i></a></td>
-                        <td class="th-lg"><a style="color:red;">False<i class="fas fa-sort ml-1"></i></a></td>
-                        <td class="th-lg">
-                            <a asp-controller="Home" asp-action="ManageTemplateChecklist">Edit Questions</a>
-                        </td>
-                        <!--check if true dun display the selected button-->
-                        <td class="th-lg"><a asp-controller="Home" asp-action="ManageTemplateChecklist">Select as Default</a></td>
-
-                    </tr>
-
-                </table>
-
-            </div>
-        </div>
 
 

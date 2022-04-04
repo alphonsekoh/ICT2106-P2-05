@@ -14,39 +14,39 @@ namespace PainAssessment.Controllers
     {
         private Areas.ModuleTwo.Services.IChecklistService checklistService;
 
-       // private readonly ILogger<TemplateChecklistController> _logger;
+
+        private readonly ILogger<TemplateChecklistController> _logger;
         // Include services
-        //private readonly ITemplateChecklistService templateChecklistService;
+        private readonly ILoginService loginService;
         //private readonly IDefaultQuestionsService defaultQuestionsService;
 
-        /*public TemplateChecklistController(ILogger<TemplateChecklistController> logger, ITemplateChecklistService templateChecklistService, IDefaultQuestionsService defaultQuestionsService)
+        public TemplateChecklistController(ILogger<TemplateChecklistController> logger, ITemplateChecklistService templateChecklistService, IDefaultQuestionsService defaultQuestionsService, ILoginService loginService, Areas.ModuleTwo.Services.IChecklistService checklistServ)
         {
             _logger = logger;
-            this.templateChecklistService = templateChecklistService;
-            this.defaultQuestionsService = defaultQuestionsService;
-        }*/
-
-        public TemplateChecklistController(Areas.ModuleTwo.Services.IChecklistService checklistServ)
-        {
+            this.loginService = loginService;
             checklistService = checklistServ;
+
+            //this.defaultQuestionsService = defaultQuestionsService;
         }
+
         public IActionResult ViewTemplateChecklist()
         {
-            var checklists = checklistService.GetAll(0);
+            var checklists = checklistService.GetAll(1);
             return View(checklists);
         }
-        /*public IActionResult ManageTemplateChecklist(int num)
-        {
-            var templateQuestionsArr = defaultQuestionsService.GetAllDefaultQuestionsFromTemplateChecklist(num).ToList();
-            return View(templateQuestionsArr);
-        }*/
 
         [HttpGet]
-        public IActionResult Create(int user)
+        public IActionResult CreateTemplateChecklist(int user)
         {
             var checklists = checklistService.InitialiseChecklist();
-             //same thing how to display the object
             return View(checklists);
+        }
+
+        [HttpPost]
+        public IActionResult CreateTemplateChecklist(Areas.ModuleTwo.Models.Checklist checklist)
+        {
+            checklistService.Insert(checklist);
+            return View("TemplateChecklistController");
         }
 
     }

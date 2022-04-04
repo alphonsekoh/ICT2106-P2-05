@@ -73,14 +73,14 @@ namespace PainAssessment.Controllers
 
         }
         [HttpGet]
-        [Authorize]
+        [AllowAnonymous]
         public ActionResult CreateAccount()
         {
             return View(new CreateAccountModel());
         }
 
         [HttpPost]
-        [Authorize]
+        [AllowAnonymous]
         public ActionResult CreateAccount(CreateAccountModel model)
         {
             if (ModelState.IsValid)

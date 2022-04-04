@@ -30,6 +30,9 @@ namespace PainAssessment
         public void ConfigureServices(IServiceCollection services)
         {
 
+            //mod 2 services 
+            //services.AddTransient<IUnitOfwork, UnitOfWork>();
+
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(x => x.LoginPath = "/Login/Index");
 
