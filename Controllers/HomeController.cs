@@ -40,11 +40,11 @@ namespace PainAssessment.Controllers
             return View();
         }
 
-        public IActionResult ManageTemplateChecklist(int num)
+        /*public IActionResult ManageTemplateChecklist(int num)
         {
             var templateQuestionsArr = defaultQuestionsService.GetAllDefaultQuestionsFromTemplateChecklist(num).ToList();
             return View(templateQuestionsArr);
-        }
+        }*/
        /* public IActionResult ManageTemplateChecklist(int checklistID)
         {
             var templateQuestionsArr = defaultQuestionsService.GetAllDefaultQuestionsFromTemplateChecklist(checklistID).ToList();

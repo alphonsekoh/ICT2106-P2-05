@@ -12,9 +12,11 @@ namespace PainAssessment.Controllers
 {
     public class TemplateChecklistController : Controller
     {
-        private Areas.ModuleTwo.Services.IChecklistService checklistService;
+        private readonly ILogger<TemplateChecklistController> _logger;
+        private readonly Areas.ModuleTwo.Services.IChecklistService checklistService;
+        private readonly ILoginService loginService;
 
-       // private readonly ILogger<TemplateChecklistController> _logger;
+        // private readonly ILogger<TemplateChecklistController> _logger;
         // Include services
         //private readonly ITemplateChecklistService templateChecklistService;
         //private readonly IDefaultQuestionsService defaultQuestionsService;
@@ -26,20 +28,24 @@ namespace PainAssessment.Controllers
             this.defaultQuestionsService = defaultQuestionsService;
         }*/
 
-        public TemplateChecklistController(Areas.ModuleTwo.Services.IChecklistService checklistServ)
+        public TemplateChecklistController(ILogger<TemplateChecklistController> logger, Areas.ModuleTwo.Services.IChecklistService checklistServ, ILoginService loginService)
         {
-            checklistService = checklistServ;
+            this._logger = logger;
+            this.checklistService = checklistServ;
+            this.loginService = loginService;
         }
         public IActionResult ViewTemplateChecklist()
         {
             var checklists = checklistService.GetAll(0);
             return View(checklists);
         }
-        /*public IActionResult ManageTemplateChecklist(int num)
+
+        public IActionResult ManageTemplateChecklist()
         {
-            var templateQuestionsArr = defaultQuestionsService.GetAllDefaultQuestionsFromTemplateChecklist(num).ToList();
-            return View(templateQuestionsArr);
-        }*/
+            
+            var checklist = this.checklistService.GetById(1);
+            return View(checklist);
+        }
 
         [HttpGet]
         public IActionResult Create(int user)

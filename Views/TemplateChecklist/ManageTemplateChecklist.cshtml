@@ -1,4 +1,4 @@
-﻿@model List<PainAssessment.Models.DefaultQuestion>
+﻿@model PainAssessment.Areas.ModuleTwo.Models.Checklist
 
 @{
     ViewData["Title"] = "Manage Template Checklist";
@@ -53,40 +53,39 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach(var item in Model)
+                        @foreach(var item in Model.Central)
                         {
-                            @if(item.PainSection == 0)
-                            {
-                                <tr id="row_@item.DQID">
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.DQID)
-                                    </td>
-                                    <td>
-                                        <input type="text" id="qString_@item.DQID" name="qString_@item.DQID" value="@Html.DisplayFor(modelItem => item.QString)">
 
-                                    </td>
-                                    <td>
-                                        <input type="number" id="weightage_@item.DQID" name="weightage_@item.DQID" value="@Html.DisplayFor(modelItem => item.Weightage)">
+                            <tr id="row_@item.RowId">
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.RowId)
+                                </td>
+                                <td>
+                                    <input asp-for="@item.Determinant" type="text" id="qString_@item.RowId" name="qString_@item.RowId" value="@item.Determinant">
 
-                                    </td>
-                                    <td>
-                                        <button onclick="UpdateQuestion(@item.DQID, $('#qString_@item.DQID').val(), $('#weightage_@item.DQID').val())"
-                                                type="button"
-                                                class="btn btn-primary btn-sm">
-                                            Update
-                                        </button>
-                                        <button onclick="ConfirmDeletion(@item.DQID, $('#qString_@item.DQID'))"
-                                                type="button"
-                                                class="btn btn-danger btn-sm">
-                                            Delete
-                                        </button>
-                                    </td>
-                                </tr>
-                            }
+                                </td>
+                                <td>
+                                    <input asp-for="@item.MaxValue" type="number" id="weightage_@item.RowId" name="weightage_@item.RowId" value="@item.MaxValue">
+
+                                </td>
+                                <td>
+                                    <button onclick="UpdateQuestion(@item.RowId, $('#qString_@item.RowId').val(), $('#weightage_@item.MaxValue').val())"
+                                            type="button"
+                                            class="btn btn-primary btn-sm">
+                                        Update
+                                    </button>
+                                    <button onclick="ConfirmDeletion(@item.RowId, $('#qString_@item.RowId'))"
+                                            type="button"
+                                            class="btn btn-danger btn-sm">
+                                        Delete
+                                    </button>
+                                </td>
+                            </tr>
                         }
+
                     </tbody>
                 </table>
-                <button onclick="AddQuestion(@Model.Count(), 0)"
+                <button onclick="AddQuestion(@Model.Central.Count(), 0)"
                         type="button"
                         class="btn btn-primary btn-sm">
                     Add new question to section
@@ -94,7 +93,7 @@
             </div>
         </div>
 
-
+        
         <!-- Accordion card -->
         <div class="card">
             <!-- Card header -->
@@ -131,40 +130,39 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach(var item in Model)
+                        @foreach(var item in Model.Regional)
                         {
-                            @if(item.PainSection == 1)
-                            {
-                                <tr id="row_@item.DQID">
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.DQID)
-                                    </td>
-                                    <td>
-                                        <input type="text" id="qString_@item.DQID" name="qString_@item.DQID" value="@Html.DisplayFor(modelItem => item.QString)">
 
-                                    </td>
-                                    <td>
-                                        <input type="number" id="weightage_@item.DQID" name="weightage_@item.DQID" value="@Html.DisplayFor(modelItem => item.Weightage)">
+                            <tr id="row_@item.RowId">
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.RowId)
+                                </td>
+                                <td>
+                                    <input asp-for="@item.Determinant" type="text" id="qString_@item.RowId" name="qString_@item.RowId" value="@item.Determinant">
 
-                                    </td>
-                                    <td>
-                                        <button onclick="UpdateQuestion(@item.DQID, $('#qString_@item.DQID').val(), $('#weightage_@item.DQID').val())"
-                                                type="button"
-                                                class="btn btn-primary btn-sm">
-                                            Update
-                                        </button>
-                                        <button onclick="ConfirmDeletion(@item.DQID, $('#qString_@item.DQID'))"
-                                                type="button"
-                                                class="btn btn-danger btn-sm">
-                                            Delete
-                                        </button>
-                                    </td>
-                                </tr>
-                            }
+                                </td>
+                                <td>
+                                    <input asp-for="@item.MaxValue" type="number" id="weightage_@item.RowId" name="weightage_@item.RowId" value="@item.MaxValue">
+
+                                </td>
+                                <td>
+                                    <button onclick="UpdateQuestion(@item.RowId, $('#qString_@item.RowId').val(), $('#weightage_@item.RowId').val())"
+                                            type="button"
+                                            class="btn btn-primary btn-sm">
+                                        Update
+                                    </button>
+                                    <button onclick="ConfirmDeletion(@item.RowId, $('#qString_@item.RowId'))"
+                                            type="button"
+                                            class="btn btn-danger btn-sm">
+                                        Delete
+                                    </button>
+                                </td>
+                            </tr>
                         }
+
                     </tbody>
                 </table>
-                <button onclick="AddQuestion(@Model.Count(), 1)"
+                <button onclick="AddQuestion(@Model.Regional.Count(), 1)"
                         type="button"
                         class="btn btn-primary btn-sm">
                     Add new question to section
@@ -210,40 +208,39 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach(var item in Model)
+                        @foreach(var item in Model.Local)
                         {
-                            @if(item.PainSection == 2)
-                            {
-                                <tr id="row_@item.DQID">
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.DQID)
-                                    </td>
-                                    <td>
-                                        <input type="text" id="qString_@item.DQID" name="qString_@item.DQID" value="@Html.DisplayFor(modelItem => item.QString)">
 
-                                    </td>
-                                    <td>
-                                        <input type="number" id="weightage_@item.DQID" name="weightage_@item.DQID" value="@Html.DisplayFor(modelItem => item.Weightage)">
+                            <tr id="row_@item.RowId">
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.RowId)
+                                </td>
+                                <td>
+                                    <input asp-for="@item.Determinant" type="text" id="qString_@item.RowId" name="qString_@item.RowId" value="@item.Determinant">
 
-                                    </td>
-                                    <td>
-                                        <button onclick="UpdateQuestion(@item.DQID, $('#qString_@item.DQID').val(), $('#weightage_@item.DQID').val())"
-                                                type="button"
-                                                class="btn btn-primary btn-sm">
-                                            Update
-                                        </button>
-                                        <button onclick="ConfirmDeletion(@item.DQID, $('#qString_@item.DQID'))"
-                                                type="button"
-                                                class="btn btn-danger btn-sm">
-                                            Delete
-                                        </button>
-                                    </td>
-                                </tr>
-                            }
+                                </td>
+                                <td>
+                                    <input asp-for="@item.MaxValue" type="number" id="weightage_@item.RowId" name="weightage_@item.RowId" value="@item.MaxValue">
+
+                                </td>
+                                <td>
+                                    <button onclick="UpdateQuestion(@item.RowId, $('#qString_@item.RowId').val(), $('#weightage_@item.RowId').val())"
+                                            type="button"
+                                            class="btn btn-primary btn-sm">
+                                        Update
+                                    </button>
+                                    <button onclick="ConfirmDeletion(@item.RowId, $('#qString_@item.RowId'))"
+                                            type="button"
+                                            class="btn btn-danger btn-sm">
+                                        Delete
+                                    </button>
+                                </td>
+                            </tr>
                         }
+
                     </tbody>
                 </table>
-                <button onclick="AddQuestion(@Model.Count(), 2)"
+                <button onclick="AddQuestion(@Model.Local.Count(), 2)"
                         type="button"
                         class="btn btn-primary btn-sm">
                     Add new question to section
@@ -305,7 +302,7 @@
             </div>
             <div>
                 <table>
-                    <tr id=("row_@Model.Count()")>
+                    <tr id=("row_1")>
                         <td id="new_DQID" class="col-sm-1">
                         </td>
                         <td class="col-sm-1">
