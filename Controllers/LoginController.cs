@@ -22,7 +22,7 @@ namespace PainAssessment.Controllers
 
         private const string REDIRECT_CNTR = "Home";
         private const string REDIRECT_ACTN = "Index";
-        private const string DIRECT_CNTR = "Account";
+        private const string FIRSTSIGNIN_ACTN = "FirstSignIn";
         private const string DIRECT_ACTN = "Login";
 
         public LoginController(ILogger<LoginController> logger, ILoginService loginService)
@@ -59,7 +59,7 @@ namespace PainAssessment.Controllers
                         var account = loginService.GetAccount(accId);
                         account.FirstSignIn = false;
                         loginService.setFirstSignInFalse(account);
-                        return RedirectToAction("FirstSignIn");
+                        return RedirectToAction(FIRSTSIGNIN_ACTN);
                     }
                     return RedirectToAction(REDIRECT_ACTN, REDIRECT_CNTR);
                 }
@@ -71,7 +71,6 @@ namespace PainAssessment.Controllers
                 }
             }
         }
-
         private async Task<bool> AuthenticateUser(LoginModel model)
         {
             string username = model.Username;
@@ -82,7 +81,7 @@ namespace PainAssessment.Controllers
             if (user != null)
             {
 
-                /* TODO 
+                /* 
                  * 1. Setup 1 ViewModel (storing data retreived database)
                  * 2. loginService.Login will verify entered credentials
                  * 3. Need to determine a way to retrieve credential details if found
@@ -123,6 +122,8 @@ namespace PainAssessment.Controllers
             return LocalRedirect("/");
         }
 
+        // Return First Sign In Page (Tutorial) for future implementation
+        [Authorize]
         public IActionResult FirstSignIn()
         {
             return View();

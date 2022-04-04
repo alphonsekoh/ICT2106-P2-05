@@ -16,7 +16,6 @@ namespace PainAssessment.Controllers
 {
     public class AccountController : Controller
     {
-        private readonly ILogger<AccountController> _logger;
         private readonly IAccountService accountService;
         private readonly IAdministratorService administratorService;
         private readonly ILoginService loginService;
