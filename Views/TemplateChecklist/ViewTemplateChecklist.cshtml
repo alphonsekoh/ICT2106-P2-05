@@ -7,7 +7,7 @@
 }
 <div class="row">
     <div class="col sm-1 mb-3">
-        <h3 class="font-weight-bold fs-4 text" style="float:left">My Checklists</h3>
+        <h3 class="font-weight-bold fs-4 text" style="float:left">Administrator Checklists</h3>
     </div>
     <div class="col lg-10"></div>
     <div class="col sm-1"><a class="btn btn-light border border-dark" style="float:right;" asp-action="CreateTemplateChecklist">Create</a></div>
@@ -58,8 +58,8 @@
                     </td>
                     <td>
                         <a class="btn btn-primary" asp-action="Edit" asp-route-id="@item.ChecklistId">Edit</a>
-                        <a class="btn btn-secondary" asp-action="Details" asp-route-id="@item.ChecklistId">Details</a>
-                        <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.ChecklistId">Delete</a>
+                        <a class="btn btn-secondary" asp-action="ManageTemplateChecklist" asp-route-id="@item.ChecklistId">Manage</a>
+                        <a class="btn btn-danger" asp-action="DeleteTemplateChecklist" asp-route-id="@item.ChecklistId">Delete</a>
                     </td>
                 </tr>
             }
