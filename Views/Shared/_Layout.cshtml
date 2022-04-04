@@ -17,7 +17,7 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
-                @if (User.Identity.IsAuthenticated)
+                               @if (User.Identity.IsAuthenticated)
                 {
                     <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                         <ul class="navbar-nav flex-grow-1">
@@ -57,6 +57,25 @@
                         </ul>
                     </div>
                 }
+
+                @*<div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="ModuleTwo" asp-controller="Checklists" asp-action="Index">Checklist</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="ModuleTwo" asp-controller="PractPatient" asp-action="Index">Patients</a>
+                        </li>
+                    </ul>
+                </div>*@
+
+
             </div>
         </nav>
     </header>

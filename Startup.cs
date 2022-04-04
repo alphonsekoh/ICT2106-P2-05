@@ -12,6 +12,9 @@ using PainAssessment.Domain;
 using PainAssessment.Interfaces;
 using System;
 
+using PainAssessment.Areas.ModuleTwo.Data;
+using PainAssessment.Areas.ModuleTwo.Services;
+
 namespace PainAssessment
 {
     public class Startup
@@ -26,26 +29,6 @@ namespace PainAssessment
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //services.Configure<IdentityOptions>(options =>
-            //{
-            //    // Password settings.
-            //    options.Password.RequireDigit = true;
-            //    options.Password.RequireLowercase = true;
-            //    options.Password.RequireNonAlphanumeric = true;
-            //    options.Password.RequireUppercase = true;
-            //    options.Password.RequiredLength = 6;
-            //    options.Password.RequiredUniqueChars = 1;
-
-            //    // Lockout settings.
-            //    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
-            //    options.Lockout.MaxFailedAccessAttempts = 5;
-            //    options.Lockout.AllowedForNewUsers = true;
-
-            //    // User settings.
-            //    options.User.AllowedUserNameCharacters =
-            //    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
-            //    options.User.RequireUniqueEmail = false;
-            //});
 
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(x => x.LoginPath = "/Login/Index");
@@ -63,9 +46,9 @@ namespace PainAssessment
 
             services.AddDbContext<HospitalContext>(options =>
             // Localdb connection 
-            // options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             // MySQL connection
-            options.UseMySQL(Configuration.GetConnectionString("DefaultConnection")));
+            // options.UseMySQL(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddDatabaseDeveloperPageExceptionFilter();
 
@@ -79,15 +62,24 @@ namespace PainAssessment
 
 
             services.AddControllersWithViews();
-            services.AddRazorPages();
+
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             services.AddTransient<IUnitOfWork, UnitOfWork>();
             // To add everytime there's new interface
             services.AddTransient<ITemplateChecklistService, TemplateChecklistService>();
             services.AddTransient<IDefaultQuestionsService, DefaultQuestionService>();
             services.AddTransient<ILoginService, LoginService>();
+          
+            services.AddDbContext<MvcChecklistContext>(options =>
+            options.UseSqlServer(Configuration.GetConnectionString("MvcChecklistContext")));
+
+            services.AddDbContext<MvcConsultationChecklistContext>(options =>
+            options.UseSqlServer(Configuration.GetConnectionString("MvcConsultationChecklistContext")));
+            services.AddTransient<IChecklistUnitOfWork, ChecklistUnitOfWork>();
+            services.AddTransient<IChecklistService, ChecklistService>();
             services.AddTransient<IAccountService, AccountService>();
             services.AddTransient<IAdministratorService, AdministratorService>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -104,6 +96,9 @@ namespace PainAssessment
                 app.UseHsts();
             }
             app.UseHttpsRedirection();
+
+            app.UseStatusCodePagesWithReExecute("/Home/ErrorPage", "?statusCode={0}");
+
             app.UseStaticFiles();
 
             app.UseRouting();
@@ -119,10 +114,16 @@ namespace PainAssessment
                       name: "Admin",
                       pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
                     );
+                    endpoints.MapControllerRoute(
+                      name: "Module2",
+                      pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
+                    );
                 });
+
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+
             });
         }
     }
