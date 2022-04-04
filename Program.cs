@@ -5,6 +5,8 @@ using Microsoft.Extensions.Logging;
 using PainAssessment.Areas.Admin.Data;
 using PainAssessment.Data;
 using System;
+using PainAssessment.Areas.ModuleTwo.Data;
+using PainAssessment.Areas.ModuleTwo.Models;
 
 namespace PainAssessment
 {
@@ -12,7 +14,7 @@ namespace PainAssessment
     {
         public static void Main(string[] args)
         {
-            IHost host = CreateHostBuilder(args).Build();
+            var host = CreateHostBuilder(args).Build();
             CreateDbIfNotExists(host);
             host.Run();
         }
@@ -33,14 +35,13 @@ namespace PainAssessment
             }
         }
 
-
         public static IHostBuilder CreateHostBuilder(string[] args)
         {
             return Host.CreateDefaultBuilder(args)
-.ConfigureWebHostDefaults(webBuilder =>
-{
-    webBuilder.UseStartup<Startup>();
-});
+            .ConfigureWebHostDefaults(webBuilder =>
+            {
+                webBuilder.UseStartup<Startup>();
+            });
         }
     }
 }

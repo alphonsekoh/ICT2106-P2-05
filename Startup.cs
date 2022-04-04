@@ -10,6 +10,9 @@ using PainAssessment.Areas.Admin.Services;
 using PainAssessment.Data;
 
 
+using PainAssessment.Areas.ModuleTwo.Data;
+using PainAssessment.Areas.ModuleTwo.Services;
+
 namespace PainAssessment
 {
     public class Startup
@@ -38,6 +41,17 @@ namespace PainAssessment
 
 
             services.AddControllersWithViews();
+
+            services.AddDbContext<MvcChecklistContext>(options =>
+            options.UseSqlServer(Configuration.GetConnectionString("MvcChecklistContext")));
+
+            services.AddDbContext<MvcConsultationChecklistContext>(options =>
+            options.UseSqlServer(Configuration.GetConnectionString("MvcConsultationChecklistContext")));
+
+
+            services.AddTransient<IChecklistUnitOfWork, ChecklistUnitOfWork>();
+
+            services.AddTransient<IChecklistService, ChecklistService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -69,6 +83,10 @@ namespace PainAssessment
                 {
                     endpoints.MapControllerRoute(
                       name: "Admin",
+                      pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
+                    );
+                    endpoints.MapControllerRoute(
+                      name: "Module2",
                       pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
                     );
                 });
