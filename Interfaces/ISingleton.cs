@@ -1,6 +1,7 @@
 ﻿namespace PainAssessment.Interfaces
 {
-    public class ISingleton
+    public interface ISingleton
     {
+        string operationID { get; }
     }
 }

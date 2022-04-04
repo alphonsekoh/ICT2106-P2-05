@@ -2,7 +2,6 @@
 using Microsoft.EntityFrameworkCore;
 using PainAssessment.Areas.Admin.Models;
 using PainAssessment.Areas.Admin.Services;
-using PainAssessment.Areas.Admin.Util;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,11 +13,15 @@ namespace PainAssessment.Areas.Admin.Controllers
     {
         private readonly IPainEducationService painEducationService;
         private readonly ILogService log;
+        private readonly ITableUtilityService<PainEducation> tableUtilityService;
+
         public PainEducationsController(IPainEducationService painEducationService)
         {
             this.painEducationService = painEducationService;
             log = LogService.GetInstance;
+            tableUtilityService = TableUtilityService<PainEducation>.GetInstance;
         }
+
         // GET: Admin/PainEducations
         /*
          Index function to take in input from get upon search, sorting and page change
@@ -26,43 +29,23 @@ namespace PainAssessment.Areas.Admin.Controllers
         public IActionResult Index(string sortOrder, string searchString, int page = 1)
         {
             ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "Name" : "";
-            IEnumerable<PainEducation> painEducation = from d in painEducationService.GetAllPainEducations() select d;
-            painEducation = sortOrder switch // check input of what is being sorted
-            {
-                "Name" => painEducation.OrderByDescending(d => d.Name),
-                _ => painEducation.OrderBy(d => d.Name),
-            };
+            ViewData["searchString"] = searchString;
+            searchString = String.IsNullOrEmpty(searchString) ? "" : searchString;
 
+            IEnumerable<PainEducation> painEducations = painEducationService.GetAllPainEducations();
 
+            painEducations = tableUtilityService.Sort(painEducations, "Name", String.IsNullOrEmpty(sortOrder) ? tableUtilityService.ORDER_BY : tableUtilityService.ORDER_BY_DESC);
 
-            // check if not search input not empty
-            if (!String.IsNullOrEmpty(searchString))
-            {
-                painEducation = painEducation.Where(d => d.Name.Contains(searchString));
-            }
+            painEducations = tableUtilityService.Search(painEducations, searchString.ToLower());
 
-            ViewData["total_count"] = painEducation.Count(); // get count of all from
+            // Pagination.
+            ViewData["max_page"] = tableUtilityService.GetMaxPageCount(painEducations);
+            ViewData["current_page"] = page = tableUtilityService.ValidateCurrentPage(page, painEducations);
+            painEducations = tableUtilityService.GetPageData(painEducations, page);
 
-            int max_page = (int)Math.Ceiling((decimal)(painEducation.Count() / 8.0));
+            ViewData["total_count"] = painEducations.Count();
 
-            if (page > max_page)
-            {
-                page = max_page;
-            }
-            if (page < 1)
-            {
-                page = 1;
-            }
-
-            ViewData["max_page"] = max_page;
-            ViewData["current_page"] = page;
-
-            if (painEducation.Any())
-            {
-                painEducation = painEducation.ChunkBy(8).ElementAt(page - 1);
-            }
-
-            return View(painEducation.ToList());
+            return View(painEducations.ToList());
         }
 
         // GET: Admin/PainEducations/Details/5

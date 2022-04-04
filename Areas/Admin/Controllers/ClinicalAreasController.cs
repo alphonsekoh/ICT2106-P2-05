@@ -2,7 +2,6 @@
 using Microsoft.EntityFrameworkCore;
 using PainAssessment.Areas.Admin.Models;
 using PainAssessment.Areas.Admin.Services;
-using PainAssessment.Areas.Admin.Util;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,12 +12,16 @@ namespace PainAssessment.Areas.Admin.Controllers
     public class ClinicalAreasController : Controller
     {
         private readonly IClinicalAreaService clinicalAreaService;
+        private readonly ITableUtilityService<ClinicalArea> tableUtilityService;
         private readonly ILogService log;
+
         public ClinicalAreasController(IClinicalAreaService clinicalAreaService)
         {
             this.clinicalAreaService = clinicalAreaService;
             log = LogService.GetInstance;
+            tableUtilityService = TableUtilityService<ClinicalArea>.GetInstance;
         }
+
         // GET: Admin/ClinicalAreas
         /*
          Index function to take in input from get upon search, sorting and page change
@@ -26,43 +29,23 @@ namespace PainAssessment.Areas.Admin.Controllers
         public IActionResult Index(string sortOrder, string searchString, int page = 1)
         {
             ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "Name" : "";
-            IEnumerable<ClinicalArea> clinicalArea = from d in clinicalAreaService.GetAllClinicalAreas() select d;
-            clinicalArea = sortOrder switch // check input of what is being sorted
-            {
-                "Name" => clinicalArea.OrderByDescending(d => d.Name),
-                _ => clinicalArea.OrderBy(d => d.Name),
-            };
+            ViewData["searchString"] = searchString;
+            searchString = String.IsNullOrEmpty(searchString) ? "" : searchString;
 
+            IEnumerable<ClinicalArea> clinicalAreas = clinicalAreaService.GetAllClinicalAreas();
 
+            clinicalAreas = tableUtilityService.Sort(clinicalAreas, "Name", String.IsNullOrEmpty(sortOrder) ? tableUtilityService.ORDER_BY : tableUtilityService.ORDER_BY_DESC);
 
-            // check if not search input not empty
-            if (!String.IsNullOrEmpty(searchString))
-            {
-                clinicalArea = clinicalArea.Where(d => d.Name.Contains(searchString));
-            }
+            clinicalAreas = tableUtilityService.Search(clinicalAreas, searchString.ToLower());
 
-            ViewData["total_count"] = clinicalArea.Count(); // get count of all from
+            // Pagination.
+            ViewData["max_page"] = tableUtilityService.GetMaxPageCount(clinicalAreas);
+            ViewData["current_page"] = page = tableUtilityService.ValidateCurrentPage(page, clinicalAreas);
+            clinicalAreas = tableUtilityService.GetPageData(clinicalAreas, page);
 
-            int max_page = (int)Math.Ceiling((decimal)(clinicalArea.Count() / 8.0));
+            ViewData["total_count"] = clinicalAreas.Count();
 
-            if (page > max_page)
-            {
-                page = max_page;
-            }
-            if (page < 1)
-            {
-                page = 1;
-            }
-
-            ViewData["max_page"] = max_page;
-            ViewData["current_page"] = page;
-
-            if (clinicalArea.Any())
-            {
-                clinicalArea = clinicalArea.ChunkBy(8).ElementAt(page - 1);
-            }
-
-            return View(clinicalArea.ToList());
+            return View(clinicalAreas.ToList());
         }
 
         // GET: Admin/ClinicalAreas/Details/5

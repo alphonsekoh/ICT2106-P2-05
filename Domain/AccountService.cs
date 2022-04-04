@@ -1,4 +1,4 @@
-﻿using PainAssessment.Interfaces;
+using PainAssessment.Interfaces;
 using PainAssessment.Models;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,15 +35,12 @@ namespace PainAssessment.Domain
 
         }
 
-        // Reset Password (might use email??)
-
-
         // Update AccountStatus
         public void UpdateAccountStatus(Account account)
         {
-
+            _unitOfWork.AccountRepository.Update(account);
+            _unitOfWork.Save();
         }
-
 
         // Create Account
         public void CreateAcc(Account account)
