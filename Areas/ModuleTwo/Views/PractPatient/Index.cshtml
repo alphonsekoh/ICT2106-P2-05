@@ -1,0 +1,171 @@
+﻿@*model IEnumerable<PainAssessment.Areas.ModuleTwo.Models.Patient>*@
+@model IEnumerable<PainAssessment.Areas.Admin.Models.Patient>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
+</head>
+
+<div class="row justify-content-between">
+    <div class="col-sm-10">
+        <h1>Manage Patients</h1>
+        <p class="text-muted">Practitioners can manage their own patients.</p>
+        <p class="text-muted">This includes creating, reading, updating and deleting patient information.</p>
+    </div>
+    <div class="col-sm-2 align-self-center">
+        <a asp-action="Create" type="button" class="btn btn-primary btn-block">Create New</a>
+    </div>
+</div>
+
+<div class="d-flex-col mt-2">
+    <form class="d-flex justify-content-end mb-3" method="get" asp-action="Index">
+        <input class="form-control me-2"
+               type="search"
+               name="searchString"
+               placeholder="Search with Name"
+               aria-label="Search"
+               value="@ViewData["searchString"]" />
+        <button type="submit" class="btn btn-outline-success">
+            Search
+        </button>
+    </form>
+    <a asp-action="Index" class="=">Clear Search</a>
+</div>
+
+<div class="row mb-3 d-flex justify-content-end">
+    <div class="">
+        <label class="switch">
+            <input type="checkbox" id="toggleSwitch" onclick="toggleView()" autocomplete="off">
+            <span class="slider round"></span>
+        </label>
+    </div>
+</div>
+
+<div class="d-flex-col mb-5">
+    <table class="table display" id="practPatientTable">
+        <thead>
+            <tr>
+                <th id="patientNamesCol">
+                    <a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParm"]">@Html.DisplayNameFor(model => model.Name)</a>
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Age)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Condition)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Gender)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Notes)
+                </th>
+                <th>
+
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td class="patientNames">
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Age)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Condition)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Gender)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Notes)
+                    </td>
+                    <td>
+                        <a type="button" class="btn btn-secondary btn-sm" asp-action="Details" asp-route-id="@item.Id">View</a>
+                        <a type="button" class="btn btn-primary btn-sm" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                        <a type="button" class="btn btn-danger btn-sm" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <div class="mb-5 justify-content-end d-flex">
+        <button onclick="topFunction()" id="backToTop" title="Go to top" class="btn btn-primary">Back to top</button>
+    </div>
+    <br />
+</div>
+
+<script>
+        window.onload = load;
+
+        function toggleView() {
+            var checkBox = document.getElementById("toggleSwitch");
+            var patientNames = document.getElementById("patientNames");
+            var patientNamesCol = document.getElementById("patientNamesCol");
+            if (checkBox.checked == true) {
+                save();
+                patientNamesCol.style.display = "none";
+                var patientNames = document.getElementsByClassName("patientNames");
+                for (var i = 0; i < patientNames.length; i++) {
+                    patientNames[i].style.display = "none";
+                }
+            }
+            else {
+                save();
+                patientNamesCol.style.display = "block";
+                var patientNames = document.getElementsByClassName("patientNames");
+                for (var i = 0; i < patientNames.length; i++) {
+                    patientNames[i].style.display = "block";
+                }
+            }
+        }
+
+        function save() {
+        var checkbox = document.getElementById("toggleSwitch");
+        sessionStorage.setItem("toggleSwitchState", checkbox.checked);
+    }
+
+        function load() {
+            var checkBox = document.getElementById("toggleSwitch");
+            var switchState = sessionStorage.getItem("toggleSwitchState");
+            if (switchState === "true") {
+                checkBox.checked = true;
+            }
+            else {
+                checkBox.checked = false;
+            }
+
+            if(checkBox.checked) {
+                patientNamesCol.style.display = "none";
+                var patientNames = document.getElementsByClassName("patientNames");
+                for (var i = 0; i < patientNames.length; i++) {
+                    patientNames[i].style.display = "none";
+                }
+            }
+            else {
+                patientNamesCol.style.display = "block";
+                var patientNames = document.getElementsByClassName("patientNames");
+                for (var i = 0; i < patientNames.length; i++) {
+                    patientNames[i].style.display = "block";
+                }
+            }
+        }
+
+    function topFunction() {
+        document.body.scrollTop = 0;
+        document.documentElement.scrollTop = 0;
+    }
+</script>
