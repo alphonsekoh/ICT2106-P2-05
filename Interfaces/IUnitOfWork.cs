@@ -1,4 +1,5 @@
-﻿using PainAssessment.Models;
+﻿using PainAssessment.Areas.Admin.Models;
+using PainAssessment.Models;
 using System;
 
 namespace PainAssessment.Interfaces

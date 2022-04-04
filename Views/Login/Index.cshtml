@@ -1,7 +1,9 @@
-﻿@model PainAssessment.ViewModels.LoginModel
+﻿
+
+@model PainAssessment.ViewModels.LoginModel
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Login";
 }
 
 <!DOCTYPE html>
@@ -11,41 +13,25 @@
     <meta name="viewport" content="width=device-width" />
     <title>Index</title>
 </head>
-
 <body>
-    @if (ViewData["Message"] != null)
-    {
-        <div class="form-group">
-            <div class="col-sm-offset-4 col-sm-5">
-                <div class="alert alert-@ViewData["MsgType"]">
-                    <text>@ViewData["Message"]</text>
-                </div>
-            </div>
-        </div>
-    }
-    @using (Html.BeginForm("Index", "Login", FormMethod.Post))
-    {
-        <div class="form-horizontal">
-            <hr />
-          @*  <div class="text-success">
-                @ViewBag.Message
-            </div>*@
+    <h4>Login Page</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Index">
             <div class="form-group">
-                <label class="control-label col-md-2">Username</label>
-                @Html.TextBoxFor(user => user.Username, new { @class = "form-control" })
-                @Html.ValidationMessageFor(m => m.Username)
+                <label asp-for="Username" class="control-label"></label>
+                <input asp-for="Username" class="form-control" />
+                <span asp-validation-for="Username" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label class="control-label col-md-2">Password</label>
-                @Html.PasswordFor(user => user.Password, new { @class = "form-control" })
-                @Html.ValidationMessageFor(m => m.Password)
+                <label asp-for="Password" class="control-label"></label>
+                <input asp-for="Password" class="form-control" />
+                <span asp-validation-for="Password" class="text-danger"></span>
             </div>
-            <div class="form-group">
+             <div class="form-group">
                 <label class="checkbox-incline" asp-for="RememberMe">
                     <input asp-for="RememberMe" />Remember Me
-                </label>
-                <label>
-                    <a asp-controller="Account" asp-action="ChangePassword">Forget Password</a>
                 </label>
             </div>
             <div class="form-group">
@@ -53,10 +39,9 @@
                     <input type="submit" value="Submit" class="btn btn-primary" />
                 </div>
             </div>
-        </div>
-
-    }
+        </form>
+    </div>
+</div>
 
 </body>
-
 </html>

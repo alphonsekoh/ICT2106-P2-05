@@ -10,6 +10,7 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using System.Threading.Tasks;
+using PainAssessment.Models;
 
 namespace PainAssessment.Controllers
 {
@@ -21,7 +22,7 @@ namespace PainAssessment.Controllers
 
         private const string REDIRECT_CNTR = "Home";
         private const string REDIRECT_ACTN = "Index";
-        private const string DIRECT_CNTR = "Account";
+        private const string FIRSTSIGNIN_ACTN = "FirstSignIn";
         private const string DIRECT_ACTN = "Login";
 
         public LoginController(ILogger<LoginController> logger, ILoginService loginService)
@@ -51,6 +52,15 @@ namespace PainAssessment.Controllers
             {
                 if(await AuthenticateUser(model) == true)
                 {
+                    var accId = loginService.GetAccountId();
+                    var isFirstSignIn = loginService.IsFirstSignIn(accId);
+                    if (isFirstSignIn.Equals("true"))
+                    {
+                        var account = loginService.GetAccount(accId);
+                        account.FirstSignIn = false;
+                        loginService.setFirstSignInFalse(account);
+                        return RedirectToAction(FIRSTSIGNIN_ACTN);
+                    }
                     return RedirectToAction(REDIRECT_ACTN, REDIRECT_CNTR);
                 }
                 else
@@ -61,16 +71,17 @@ namespace PainAssessment.Controllers
                 }
             }
         }
-
         private async Task<bool> AuthenticateUser(LoginModel model)
         {
             string username = model.Username;
             string password = model.Password;
 
-            if (loginService.Login(username, password) != null)
+            var user = loginService.Login(username, password);
+
+            if (user != null)
             {
 
-                /* TODO 
+                /* 
                  * 1. Setup 1 ViewModel (storing data retreived database)
                  * 2. loginService.Login will verify entered credentials
                  * 3. Need to determine a way to retrieve credential details if found
@@ -80,14 +91,11 @@ namespace PainAssessment.Controllers
                  * 7. return true and redirect to the page after successful login
                  * 
                  */
-                var user = loginService.Login(username, password);
-
-                //var hashUsername = loginService.HashValue(username);
 
                 // Attributes that are for authentication
                 var claims = new List<Claim> {
-                    new Claim(ClaimTypes.NameIdentifier, Convert.ToString(user.AccountId)),
-                    new Claim(ClaimTypes.Role, user.Role),
+                    new Claim(ClaimTypes.NameIdentifier, Convert.ToString(user.GetGuid)),
+                    new Claim(ClaimTypes.Role, user.GetRole),
                 };
 
                 // Initialise instance of ClaimsIdentity
@@ -112,6 +120,13 @@ namespace PainAssessment.Controllers
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             //Redirect to login page
             return LocalRedirect("/");
+        }
+
+        // Return First Sign In Page (Tutorial) for future implementation
+        [Authorize]
+        public IActionResult FirstSignIn()
+        {
+            return View();
         }
 
 
