@@ -10,6 +10,7 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using System.Threading.Tasks;
+using PainAssessment.Models;
 
 namespace PainAssessment.Controllers
 {
@@ -21,7 +22,7 @@ namespace PainAssessment.Controllers
 
         private const string REDIRECT_CNTR = "Home";
         private const string REDIRECT_ACTN = "Index";
-        private const string DIRECT_CNTR = "Account";
+        private const string FIRSTSIGNIN_ACTN = "FirstSignIn";
         private const string DIRECT_ACTN = "Login";
 
         public LoginController(ILogger<LoginController> logger, ILoginService loginService)
@@ -49,36 +50,38 @@ namespace PainAssessment.Controllers
             }
             else
             {
-                //if (loginService.Login(accountId, password) == true)
-                //{
-                //    return RedirectToAction(REDIRECT_ACTN, REDIRECT_CNTR);
-                //}
-                //else
-                //{
-                //    ViewData["test"] = false;
-                //    return View();
-                //}
-
                 if(await AuthenticateUser(model) == true)
                 {
+                    var accId = loginService.GetAccountId();
+                    var isFirstSignIn = loginService.IsFirstSignIn(accId);
+                    if (isFirstSignIn.Equals("true"))
+                    {
+                        var account = loginService.GetAccount(accId);
+                        account.FirstSignIn = false;
+                        loginService.setFirstSignInFalse(account);
+                        return RedirectToAction(FIRSTSIGNIN_ACTN);
+                    }
                     return RedirectToAction(REDIRECT_ACTN, REDIRECT_CNTR);
                 }
                 else
                 {
+                    ViewData["Message"] = "Login details is incorrect";
+                    ViewData["MsgType"] = "danger";
                     return View(model);
                 }
             }
         }
-
         private async Task<bool> AuthenticateUser(LoginModel model)
         {
             string username = model.Username;
             string password = model.Password;
 
-            if (loginService.Login(username, password) != null)
+            var user = loginService.Login(username, password);
+
+            if (user != null)
             {
 
-                /* TODO 
+                /* 
                  * 1. Setup 1 ViewModel (storing data retreived database)
                  * 2. loginService.Login will verify entered credentials
                  * 3. Need to determine a way to retrieve credential details if found
@@ -89,14 +92,10 @@ namespace PainAssessment.Controllers
                  * 
                  */
 
-                var user = loginService.Login(username, password);
-
                 // Attributes that are for authentication
                 var claims = new List<Claim> {
-                    new Claim(ClaimTypes.NameIdentifier, Convert.ToString(user.Account.Username)),
-                    new Claim(ClaimTypes.Name, user.Name),
-                    new Claim(ClaimTypes.Role, user.Role),
-                    new Claim("Email", user.Email)
+                    new Claim(ClaimTypes.NameIdentifier, Convert.ToString(user.GetGuid)),
+                    new Claim(ClaimTypes.Role, user.GetRole),
                 };
 
                 // Initialise instance of ClaimsIdentity
@@ -123,29 +122,11 @@ namespace PainAssessment.Controllers
             return LocalRedirect("/");
         }
 
-        [AllowAnonymous]
-        [HttpGet]
-        public ActionResult ChangePassword()
+        // Return First Sign In Page (Tutorial) for future implementation
+        [Authorize]
+        public IActionResult FirstSignIn()
         {
             return View();
-        }
-
-        [AllowAnonymous]
-        [HttpPost]
-        public ActionResult ChangePassword(ChangePasswordModel model)
-        {
-            if (!ModelState.IsValid)
-            {
-                loginService.UpdatePassword(model.Username, model.NewPassword, model.ConfirmPassword);
-                //ViewData["Message"] = "Password successfully changed!";
-                //ViewData["MsgType"] = "success";
-                return View(model);
-            }
-            else
-            {
-                return View();
-            }
-
         }
 
 

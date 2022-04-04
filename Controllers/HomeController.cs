@@ -41,6 +41,11 @@ namespace PainAssessment.Controllers
             return View(templateQuestionsArr);
         }
 
+        /*public IActionResult ViewProfile()
+        {
+            return View();
+        }*/
+
         [HttpPost]
         public string UpdateQuestion(int DQID, string QString, string weightage)
         {

@@ -69,18 +69,16 @@ namespace PainAssessment
             services.AddTransient<ITemplateChecklistService, TemplateChecklistService>();
             services.AddTransient<IDefaultQuestionsService, DefaultQuestionService>();
             services.AddTransient<ILoginService, LoginService>();
-
-
+          
             services.AddDbContext<MvcChecklistContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("MvcChecklistContext")));
 
             services.AddDbContext<MvcConsultationChecklistContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("MvcConsultationChecklistContext")));
-
-
             services.AddTransient<IChecklistUnitOfWork, ChecklistUnitOfWork>();
-
             services.AddTransient<IChecklistService, ChecklistService>();
+            services.AddTransient<IAccountService, AccountService>();
+            services.AddTransient<IAdministratorService, AdministratorService>();
 
         }
 
@@ -125,8 +123,7 @@ namespace PainAssessment
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
-               
-                
+
             });
         }
     }

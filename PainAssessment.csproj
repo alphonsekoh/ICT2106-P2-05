@@ -19,6 +19,7 @@
 	  <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2" />
 	  <PackageReference Include="MySql.EntityFrameworkCore" Version="5.0.10" />
   </ItemGroup>
+
 	<ItemGroup>
 		<None Remove="Areas\Admin\Views\Practitioners\" />
 	</ItemGroup>
@@ -29,4 +30,9 @@
     <None Include="wwwroot\css\chosen.min.css" />
     <None Include="wwwroot\js\chosen.jquery.min.js" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Areas\Admin\Views\Administrator\" />
+  </ItemGroup>
+
 </Project>

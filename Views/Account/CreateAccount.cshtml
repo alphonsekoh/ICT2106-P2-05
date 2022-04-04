@@ -1,0 +1,70 @@
+﻿@model PainAssessment.ViewModels.CreateAccountModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<body>
+    <div class=" container-fluid row">
+        <div class="col p-5 text-center text-3xl">
+            <h1> Create new account</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col mx-auto">
+            <div class="bg-white rounded-lg shadow p-5">
+                <div class="form-group">
+                    <div class="alert alert-@ViewData["MsgType"]">
+                        <text>@ViewData["Message"]</text>
+                    </div>
+                    <form asp-controller="Account" asp-action="CreateAccount" method="post">
+
+                        <div class="form-row">
+                            <div class="form-group col-md">
+                                @Html.LabelFor(acc => acc.Username,new {@class="font-weight-bold font-italic"})
+                                <input type="text" class="form-control" id="@Html.IdFor(acc => acc.Username)" name="@Html.NameFor(acc => acc.Username)" placeholder="Enter your username" required>
+                                @Html.ValidationMessageFor(acc => acc.Username)
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group col-md">
+                                @Html.LabelFor(acc => acc.Password,new {@class="font-weight-bold font-italic"})
+                                <input type="password" class="form-control" id="@Html.IdFor(acc => acc.Password)" name="@Html.NameFor(acc => acc.Password)" placeholder="Enter your password" required>
+                                @Html.ValidationMessageFor(acc => acc.Password)
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group col-md">
+                                @Html.LabelFor(acc => acc.Role,new {@class="font-weight-bold font-italic"})
+                                <select id="@Html.IdFor(acc => acc.Role)" name="@Html.NameFor(acc => acc.Role)" class="form-control" asp-for="Role" required>
+                                    <option>Administrator</option>
+                                    <option>Practitioner</option>
+                                </select>
+                                @*@Html.ValidationMessageFor(acc => acc.Role)*@
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group col-md">
+                                @Html.LabelFor(acc => acc.FullName,new {@class="font-weight-bold font-italic"})
+                                <input type="text" class="form-control" id="@Html.IdFor(acc => acc.FullName)" name="@Html.NameFor(acc => acc.FullName)" placeholder="Enter your full name" required>
+                                @Html.ValidationMessageFor(acc => acc.FullName)
+                            </div>
+                        </div>
+
+                        <div class="form-row d-flex justify-content-center">
+                            <button type="submit" class="btn btn-primary ">Submit</button>
+                        </div>
+
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script>
+</script>
