@@ -26,8 +26,8 @@ namespace PainAssessment.Controllers
 
         public IActionResult Index()
         {
-            var templateChecklistArr = templateChecklistService.GetAllTemplateChecklist().ToList();
-            return View(templateChecklistArr);
+            //var templateChecklistArr = templateChecklistService.GetAllTemplateChecklist().ToList();
+            return View();
         }
 
         public IActionResult Privacy()
