@@ -25,14 +25,14 @@ namespace PainAssessment.Controllers
         private readonly IAdministratorService administratorService;
         private readonly IClinicalAreaService clinicalAreaService;
 
-        public ProfileController(ILogger<ProfileController> logger, ILoginService loginService,  IPractitionerService practitionerService, IAdministratorService administratorService, IClinicalAreaService clinicalAreaService)
+        public ProfileController(ILogger<ProfileController> logger, ILoginService loginService, IPractitionerService practitionerService, IAdministratorService administratorService, IClinicalAreaService clinicalAreaService)
         {
             _logger = logger;
             this.loginService = loginService;
             this.practitionerService = practitionerService;
             this.administratorService = administratorService;
             this.clinicalAreaService = clinicalAreaService;
-            
+
         }
 
         public ActionResult ViewProfile()
@@ -65,7 +65,9 @@ namespace PainAssessment.Controllers
 
         private AdministratorModel AdminView(Guid id)
         {
+           
             Administrator admin = administratorService.GetOneAdmin(id);
+            admin.ClinicalAreaID = 11; // initiate admin area to 11 
             ClinicalArea clinical = clinicalAreaService.GetClinicalArea(admin.ClinicalAreaID);
             var adminViewModel = new AdministratorModel
             {
@@ -78,12 +80,13 @@ namespace PainAssessment.Controllers
 
             };
             return adminViewModel;
-            
+
         }
 
         private PractionerModel PractionerView(Account user)
         {
-            Practitioner practionerDetails = practitionerService.GetPractitioner(new Guid("a6e08001-f5e1-442e-d40f-08da11a4a882"));
+            // Dummy Practitioner Guid
+            Practitioner practionerDetails = practitionerService.GetPractitioner(new Guid("d92c3f35-7725-45cd-e68d-08da16c94c38"));
             ClinicalArea clinicalPrac = clinicalAreaService.GetClinicalArea(practionerDetails.ClinicalAreaID);
             var practionerViewModel = new PractionerModel
             {
@@ -98,29 +101,5 @@ namespace PainAssessment.Controllers
             };
             return practionerViewModel;
         }
-
-
-   /*     // GET: ProfileController/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: ProfileController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }*/
-
-      
     }
 }
