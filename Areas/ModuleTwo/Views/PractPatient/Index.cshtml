@@ -5,20 +5,10 @@
     ViewData["Title"] = "Index";
 }
 
-@*<head>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-      <link href="https://fonts.googleapis.com/css?family=Arapey:400,400i,600|Open+Sans:300" rel="stylesheet">  
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
-    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
-</head>*@
 <head>
     @*<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>*@
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
-
 </head>
 
 <div class="row justify-content-between">
@@ -56,7 +46,7 @@
     </div>
 </div>
 
-<div class="d-flex-col mb-3">
+<div class="d-flex-col mb-2">
     <table class="table display" id="practPatientTable">
         <thead>
             <tr>
@@ -108,7 +98,7 @@
             }
         </tbody>
     </table>
-    <div class="mt-3 justify-content-end d-flex">
+    <div class="mt-5 justify-content-start d-flex">
         <button onclick="topFunction()" id="backToTop" title="Go to top" class="btn btn-primary">Back to top</button>
     </div>
     <br />
