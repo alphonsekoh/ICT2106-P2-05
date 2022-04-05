@@ -12,6 +12,7 @@ namespace PainAssessment.Controllers
 {
     public class TemplateChecklistController : Controller
     {
+
         //include services and logger
         private Areas.ModuleTwo.Services.IChecklistService checklistService;
 
@@ -21,6 +22,7 @@ namespace PainAssessment.Controllers
         private readonly IDefaultQuestionsService defaultQuestionsService;
         private ITemplateChecklistAdapter TChecklistAdapter;
 
+
         public TemplateChecklistController(ILogger<TemplateChecklistController> logger, ITemplateChecklistService templateChecklistService, IDefaultQuestionsService defaultQuestionsService, ILoginService loginService, Areas.ModuleTwo.Services.IChecklistService checklistServ, ITemplateChecklistAdapter tchecklistadapter)
         {
             _logger = logger;
@@ -28,7 +30,6 @@ namespace PainAssessment.Controllers
             checklistService = checklistServ;
             this.defaultQuestionsService = defaultQuestionsService;
             this.TChecklistAdapter = tchecklistadapter;
-
         }
 
         //get all template checklist by admin and display
@@ -37,6 +38,14 @@ namespace PainAssessment.Controllers
             var checklists = checklistService.GetAll(1);
             return View(checklists);
         }
+
+        public IActionResult ManageTemplateChecklist()
+        {
+            
+            var checklist = this.checklistService.GetById(1);
+            return View(checklist);
+        }
+
 
         //navigate to create template checklist and initialise checklist object
         [HttpGet]
