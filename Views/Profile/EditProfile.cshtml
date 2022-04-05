@@ -13,9 +13,9 @@
     </div>
     <br />
     <div class="row">
-        <div class="col-lg-2"> @Html.DisplayNameFor(model => model.FullName)</div>
+        <div class="col-lg-2"> Username </div>
         <div class="col-lg-10">
-            @Html.TextBoxFor(model => model.FullName, new { disabled = "disabled", @readonly = "readonly" })
+            @Html.TextBoxFor(model => model.FullName)
         </div>
     </div>
     <br />
@@ -46,15 +46,13 @@
             @Html.TextBoxFor(model => model.PracticeType, new { disabled = "disabled", @readonly = "readonly" })
         </div>
     </div>
-
+    </br>
     <div class="flex-parent jc-center">
-        <input type="button" class="btn btn-info"
+        <input type="button" class="btn btn-success"
         value="Save"/>
-    </div>
 
-    <div>
-        <input type="button" class="btn btn-info"
-        value="Cancel"/>
+        <a href="ViewProfile"><input type="button" class="btn btn-secondary"
+        value="Cancel"/></a>
     </div>
 
 </div>

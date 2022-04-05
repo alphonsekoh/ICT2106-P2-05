@@ -62,6 +62,31 @@ namespace PainAssessment.Controllers
 
         }
 
+        public ActionResult EditProfile()
+        {
+            var userid = loginService.GetAccountId();
+            var user = loginService.GetAccount(userid);
+
+            switch (user.Role)
+            {
+                case "Administrator":
+                    // admin
+
+                    string jsonString = JsonSerializer.Serialize(AdminView(userid));
+                    return RedirectToAction(actionName: "ViewAdmin", controllerName: "Home",
+                new { data = jsonString, area = "Admin" });
+
+                case "Practitioner":
+                    // practitioner
+                    var practitionerProfile = PractionerView(user);
+                    return View("EditProfile", practitionerProfile);
+                default:
+                    // unrecognised method; return to the blank form
+                    return RedirectToAction("Index");
+
+            }
+        }
+
 
         private AdministratorModel AdminView(Guid id)
         {
