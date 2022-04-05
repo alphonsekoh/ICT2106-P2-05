@@ -19,24 +19,11 @@ namespace PainAssessment.Areas.ModuleTwo.Controllers
         private readonly IPatientService patientService;
         private readonly IPractitionerService practitionerService;
 
-        //public PatientController(IPatientService patientService)
         public PractPatientController(IPatientService patientService, IPractitionerService practitionerService)
         {
             this.patientService = patientService;
             this.practitionerService = practitionerService;
-            //log = LogService.GetInstance;
         }
-
-        // GET: Admin/Patients
-        //public IActionResult Index()            // Will need to pass in Practitioner GUID here
-        //{
-        //    //Practitioner practitioner = practitionerService.GetPractitioner(Guid.Parse("bb4d34c0-a43b-4f6f-138b-08da09bb8f40"));
-        //    //Patient patient = patientService.GetPatient(Guid.Parse("85f853ef-876e-48fb-173b-08da04e2f772"));
-        //    //practitioner.AddPatientRelation(patient);
-        //    //practitionerService.SavePractitioner();
-        //    //return View(practitioner.Patients);
-        //    return View(patientService.GetAllPatients());
-        //}
 
         public async Task<IActionResult> Index(string sortOrder, string currentFilter, string searchString, int? pageNumber)
         {
@@ -44,7 +31,6 @@ namespace PainAssessment.Areas.ModuleTwo.Controllers
             ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "Name" : "";
             ViewData["CurrentFilter"] = searchString;
 
-            //IEnumerable<Patient> patients = from s in patientService.GetAllPatients() select s;
             var patients = from s in patientService.GetAllPatients() select s;
 
             if (!String.IsNullOrEmpty(searchString))
@@ -69,7 +55,6 @@ namespace PainAssessment.Areas.ModuleTwo.Controllers
                     break;
             }
 
-            //return View(await PaginatedList<Patient>.CreateAsync(patients.AsNoTracking(), pageNumber ?? 1, pageSize));
             return View(patients.ToList());
         }
 
@@ -125,8 +110,6 @@ namespace PainAssessment.Areas.ModuleTwo.Controllers
                 {
                     patientService.UpdatePatient(patient);
                     patientService.SavePatient();
-                    //log.LogMessage("Info", GetType().Name, string.Format("{0} was modified.", patient.Name));
-
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -194,7 +177,6 @@ namespace PainAssessment.Areas.ModuleTwo.Controllers
         {
             patientService.DeletePatient(id);
             patientService.SavePatient();
-            //log.LogMessage("Info", GetType().Name, string.Format("{0} was deleted.", id));
             return RedirectToAction(nameof(Index));
         }
     }
