@@ -27,11 +27,15 @@ namespace PainAssessment.Areas.ModuleTwo.Controllers
 
         public async Task<IActionResult> Index(string sortOrder, string currentFilter, string searchString, int? pageNumber)
         {
+            Practitioner practitioner = practitionerService.GetPractitioner(Guid.Parse("b8beed0c-a1b8-42e1-7cee-08da118e2549"));
+            //Patient patient = patientService.GetAllPatients;
+
             ViewData["CurrentSort"] = sortOrder;
             ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "Name" : "";
             ViewData["CurrentFilter"] = searchString;
 
-            var patients = from s in patientService.GetAllPatients() select s;
+            var patients = from s in practitioner.Patients select s;
+            //var patients = from s in patientService.GetAllPatients() select s;
 
             if (!String.IsNullOrEmpty(searchString))
             {
