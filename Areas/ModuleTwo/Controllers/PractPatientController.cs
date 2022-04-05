@@ -19,12 +19,14 @@ namespace PainAssessment.Areas.ModuleTwo.Controllers
         private readonly IPatientService patientService;
         private readonly IPractitionerService practitionerService;
 
+ 
         public PractPatientController(IPatientService patientService, IPractitionerService practitionerService)
         {
             this.patientService = patientService;
             this.practitionerService = practitionerService;
         }
 
+        // GET: ModuleTwo/PractPatient/
         public async Task<IActionResult> Index(string sortOrder, string currentFilter, string searchString, int? pageNumber)
         {
             Practitioner practitioner = practitionerService.GetPractitioner(Guid.Parse("b8beed0c-a1b8-42e1-7cee-08da118e2549"));
@@ -62,7 +64,7 @@ namespace PainAssessment.Areas.ModuleTwo.Controllers
             return View(patients.ToList());
         }
 
-        // GET: Admin/Patients/Details/5
+        // GET: ModuleTwo/PractPatient/Details/5
         public IActionResult Details(Guid? id)
         {
             if (id == null)
@@ -80,7 +82,7 @@ namespace PainAssessment.Areas.ModuleTwo.Controllers
             return View(patient);
         }
 
-        // GET: Admin/Patients/Edit/5
+        // GET: ModuleTwo/PractPatient/Edit/5
         public IActionResult Edit(Guid? id)
         {
             if (id == null)
@@ -96,7 +98,7 @@ namespace PainAssessment.Areas.ModuleTwo.Controllers
             return View(patient);
         }
 
-        // POST: Admin/Patients/Edit/5
+        // POST: ModuleTwo/PractPatient/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -131,13 +133,13 @@ namespace PainAssessment.Areas.ModuleTwo.Controllers
             return View(patient);
         }
 
-        // GET: Admin/Patients/Create
+        // GET: ModuleTwo/PractPatient/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Admin/Patients/Create
+        // POST: ModuleTwo/PractPatient/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -156,7 +158,7 @@ namespace PainAssessment.Areas.ModuleTwo.Controllers
             return View(patient);
         }
 
-        // GET: Admin/Patients/Delete/5
+        // GET: ModuleTwo/PractPatient/Delete/5
         public IActionResult Delete(Guid? id)
         {
             if (id == null)
@@ -174,7 +176,7 @@ namespace PainAssessment.Areas.ModuleTwo.Controllers
             return View(patient);
         }
 
-        // POST: Admin/Patients/Delete/5
+        // POST: ModuleTwo/PractPatient/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public IActionResult DeleteConfirmed(Guid id)
