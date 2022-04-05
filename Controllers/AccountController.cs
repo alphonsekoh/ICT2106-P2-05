@@ -20,10 +20,12 @@ namespace PainAssessment.Controllers
         private readonly IAdministratorService administratorService;
         private readonly ILoginService loginService;
 
-        //private const string REDIRECT_CNTR = "Home";
         private const string DIRECT_CNTR = "Login";
         private const string DIRECT_ACTN = "Index";
 
+        /**
+         * Constructor
+         */
         public AccountController(
             IAccountService accountService,
             IAdministratorService administratorService,
@@ -35,6 +37,11 @@ namespace PainAssessment.Controllers
             this.loginService = loginService;
         }
 
+        /**
+         * Change Password
+         * Function to return view for the user to change password
+         */
+
         [AllowAnonymous]
         [HttpGet]
         public ActionResult ChangePassword()
@@ -42,6 +49,10 @@ namespace PainAssessment.Controllers
             return View();
         }
 
+        /**
+         * Function to change password
+         * 
+         */
         [AllowAnonymous]
         [HttpPost]
         public ActionResult ChangePassword(ChangePasswordModel model)
@@ -72,15 +83,30 @@ namespace PainAssessment.Controllers
             }
 
         }
+
+        /**
+         * Description: When users wants to create accounts for administrators and practitioners. 
+         * 
+         * Return to View(CreateAccountModel) if the user is an administrator, practitioner will see a 404 page
+         */
         [HttpGet]
-        [Authorize]
+        [Authorize(Roles ="Administrator")]
         public ActionResult CreateAccount()
         {
             return View(new CreateAccountModel());
         }
 
+        /**
+         * Description: When users wants to create accounts for administrators and practitioners
+         * 
+         * Before creating an account, the accountService will check for any duplicate username. If it is not, it will do the following:
+         * 
+         * 1. If the account role is an administrator, it will call the administratorService.
+         * 2. If the account role is an practitioners, it will call the practitionerService which is done by P2-3
+         * 
+         */
         [HttpPost]
-        [Authorize]
+        [Authorize(Roles = "Administrator")]
         public ActionResult CreateAccount(CreateAccountModel model)
         {
             if (ModelState.IsValid)

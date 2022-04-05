@@ -18,13 +18,11 @@ namespace PainAssessment.Domain
             _unitOfWork = unitOfWork;
         }
 
+        /**
+         * Find account and set instance to User Object
+         */
         public User Login(string username, string password)
         {
-
-            /*
-             * Left one part to show the need of singleton pattern in User class
-             * 
-             */
 
             IEnumerable<Account> account = _unitOfWork.LoginRepository.Find(Acc => Acc.Username.Equals(username));
             // Check if account exists and password matches to the one in db
@@ -43,17 +41,26 @@ namespace PainAssessment.Domain
             }
         }
 
+        /**
+         * Get current logged in user's role from instance
+         */
         public string GetRole()
         {
             return myUser.GetRole;
 
         }
 
+        /**
+         * Get current logged in user's account Id from instance
+         */
         public Guid GetAccountId()
         {
             return myUser.GetGuid;
         }
 
+        /**
+         * Check if instance is initiated, return a boolean
+         */
         public bool CheckInstance()
         {
             if (User.GetInstance != null)
@@ -66,6 +73,9 @@ namespace PainAssessment.Domain
             }
         }
 
+        /**
+         * Check if user is first sign in. 
+         */
         public string IsFirstSignIn(Guid accountId)
         {
             Account user = _unitOfWork.LoginRepository.GetById<Account, Guid>(accountId);
@@ -87,12 +97,18 @@ namespace PainAssessment.Domain
 
         }
 
+        /**
+         * Update firstSignIn field
+         */
         public void setFirstSignInFalse(Account account)
         {
             _unitOfWork.AccountRepository.Update(account);
             _unitOfWork.Save();
         }
 
+        /**
+         * Get account
+         */
         public Account GetAccount(Guid accountId)
         {
             Account user = _unitOfWork.LoginRepository.GetById<Account, Guid>(accountId);

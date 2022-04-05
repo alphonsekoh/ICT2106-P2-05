@@ -10,28 +10,28 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using System.Threading.Tasks;
-using PainAssessment.Models;
 
 namespace PainAssessment.Controllers
 {
     public class LoginController : Controller
     {
-
-        private readonly ILogger<LoginController> _logger;
         private readonly ILoginService loginService;
 
         private const string REDIRECT_CNTR = "Home";
         private const string REDIRECT_ACTN = "Index";
         private const string FIRSTSIGNIN_ACTN = "FirstSignIn";
-        private const string DIRECT_ACTN = "Login";
 
+        /**
+         * Constructor
+         */
         public LoginController(ILogger<LoginController> logger, ILoginService loginService)
         {
-            _logger = logger;
             this.loginService = loginService;
         }
 
-        // GET: LoginController
+        /**
+         * Return Login Page to user
+         */
         [AllowAnonymous]
         [HttpGet]
         public ActionResult Index()
@@ -39,7 +39,9 @@ namespace PainAssessment.Controllers
             return View();
         }
 
-        // POST: LoginController
+        /**
+         * Description: To allow user to log in to the system to access authorized features
+         */
         [AllowAnonymous]
         [HttpPost]
         public async Task<ActionResult> Index(LoginModel model)
@@ -71,6 +73,10 @@ namespace PainAssessment.Controllers
                 }
             }
         }
+
+        /**
+         * Function to authenticate the user and set identity
+         */
         private async Task<bool> AuthenticateUser(LoginModel model)
         {
             string username = model.Username;
@@ -114,7 +120,9 @@ namespace PainAssessment.Controllers
             return false;
         }
 
-        // Log out function
+        /**
+         * FUnction to allow user to log out
+         */
         public async Task<IActionResult> LogOut()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
@@ -122,7 +130,10 @@ namespace PainAssessment.Controllers
             return LocalRedirect("/");
         }
 
-        // Return First Sign In Page (Tutorial) for future implementation
+        /**
+         * First Sign In Page
+         * This is a page for future implementation for the client as they want participants to accesss training when first sign in like a popup
+         */
         [Authorize]
         public IActionResult FirstSignIn()
         {
