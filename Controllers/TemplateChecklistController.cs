@@ -39,12 +39,6 @@ namespace PainAssessment.Controllers
             return View(checklists);
         }
 
-        public IActionResult ManageTemplateChecklist()
-        {
-            
-            var checklist = this.checklistService.GetById(1);
-            return View(checklist);
-        }
 
 
         //navigate to create template checklist and initialise checklist object
@@ -98,13 +92,41 @@ namespace PainAssessment.Controllers
             return RedirectToAction(nameof(ViewTemplateChecklist));
         }
 
-
+        /*
         //hui yang's manage checklist
         [HttpGet]
         public IActionResult ManageTemplateChecklist(int num)
         {
             var templateQuestionsArr = defaultQuestionsService.GetAllDefaultQuestionsFromTemplateChecklist(num).ToList();
             return View(templateQuestionsArr);
+        }*/
+        [HttpGet]
+        public IActionResult ManageTemplateChecklist()
+        {
+
+            var checklist = this.checklistService.GetById(13);
+            return View(checklist);
+        }
+
+
+        public IActionResult ManageTemplateChecklist(int checklistID)
+        {
+
+            var checklist = this.checklistService.GetById(checklistID);
+            return View(checklist);
+        }
+
+
+        [HttpPost]
+        public IActionResult AddQuestion(int checklistID, int domain, string new_determinant, string new_sub_domain, int new_max_weightage)
+        {
+
+            //defaultQuestionsService.CreateDefaultQuestion(1, QString, "", int.Parse(PainSection), double.Parse(weightage));
+            this.TChecklistAdapter.addQuestion(checklistID, new_sub_domain, new_determinant, domain, new_max_weightage);
+            Console.WriteLine("Inside addQuestion");
+            //RedirectToAction()
+            var newChecklistID = this.TChecklistAdapter.getRecentlyModifiedChecklist();
+            return RedirectToAction("ManageTemplateChecklist", newChecklistID);
         }
 
     }

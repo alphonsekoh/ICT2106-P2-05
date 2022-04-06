@@ -8,5 +8,12 @@ namespace PainAssessment.Interfaces
     public interface ITemplateChecklistAdapter
     {
         void updateActive(int checklistID);
+
+        /// Domain has been simplified to 
+        /// 0 - Central
+        /// 1 - Regional
+        /// 2 - Local
+        void addQuestion(int checklistID, string subDomain, string determinant, int domain, int maxWeightage);
+        int getRecentlyModifiedChecklist();
     }
 }
