@@ -21,8 +21,8 @@ namespace PainAssessment.ViewModels
         [Required(ErrorMessage = "Please enter your full name")]
         public string FullName { get; set; }
 
-        [DisplayName("Prior Pain Education")]
-        public string PriorPainEducation { get; set; }
+        //[DisplayName("Prior Pain Education")]
+        //public string PriorPainEducation { get; set; }
         [Required(ErrorMessage = "Clinical Area is required.")]
         public int ClinicalAreaID { get; set; }
 
@@ -32,7 +32,7 @@ namespace PainAssessment.ViewModels
 
         public PracticeType PracticeType { get; set; }
 
-        [Required(ErrorMessage = "Prior pain education is required.")]
-        public string[] SelectedPainEducation { get; set; }
+        //[Required(ErrorMessage = "Prior pain education is required.")]
+        //public string[] SelectedPainEducation { get; set; }
     }
 }
