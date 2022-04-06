@@ -27,8 +27,8 @@ namespace PainAssessment.Controllers
         private readonly IPracticeTypeService practiceTypeService;
 
 
-        //private const string REDIRECT_CNTR = "Home";
-        private const string DIRECT_CNTR = "Login";
+        private const string REDIRECT_CNTR = "Home";
+        //private const string DIRECT_CNTR = "Login";
         private const string DIRECT_ACTN = "Index";
 
         /**
@@ -68,7 +68,8 @@ namespace PainAssessment.Controllers
         }
 
         /**
-         * Function to change password
+         * Description: Function to change password
+         * It will call accountService to check if there's an account with the same username
          * 
          */
         [AllowAnonymous]
@@ -80,7 +81,7 @@ namespace PainAssessment.Controllers
                 if (accountService.CheckUsername(model.Username).Equals(true))
                 {
                     System.Diagnostics.Debug.WriteLine(model.NewPassword);
-                    var user = accountService.GetAccount(model.Username);
+                    var user = accountService.GetAccountByUsername(model.Username);
                     System.Diagnostics.Debug.WriteLine(user.Password);
                     if (user != null)
                     {
@@ -108,7 +109,7 @@ namespace PainAssessment.Controllers
          * Return to View(CreateAccountModel) if the user is an administrator, practitioner will see a 404 page
          */
         [HttpGet]
-        [Authorize(Roles ="Administrator")]
+        [Authorize(Roles = "Administrator")]
         public IActionResult CreateAccount()
         {
             ViewData["ClinicalAreaID"] = new SelectList(clinicalAreaService.GetAllClinicalAreas(), "Id", "Name");
@@ -163,18 +164,18 @@ namespace PainAssessment.Controllers
                             };*/
 
                             Administrator admin = new Administrator(
-                                model.FullName,model.Username, model.Role, "0", model.ClinicalAreaID, AccountId);
+                                model.FullName, model.Username, model.Role, "0", model.ClinicalAreaID, AccountId);
                             administratorService.CreateAdmin(admin);
 
                         }
                         else if (account.Role == "Practitioner")
                         {
                             Practitioner p = new Practitioner(
-                                model.FullName, "0 years","0", model.ClinicalAreaID, model.PracticeTypeID, AccountId);
+                                model.FullName, "0 years", "0", model.ClinicalAreaID, model.PracticeTypeID, AccountId);
                             practitionerService.CreatePractitioner(p);
                             practitionerService.SavePractitioner();
                         }
-                        return RedirectToAction(DIRECT_ACTN, DIRECT_CNTR);
+                        return RedirectToAction(DIRECT_ACTN, REDIRECT_CNTR);
                     }
                     return View(model);
                 }

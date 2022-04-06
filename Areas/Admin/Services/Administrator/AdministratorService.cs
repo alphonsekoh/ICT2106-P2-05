@@ -15,14 +15,18 @@ namespace PainAssessment.Areas.Admin.Services
             _unitOfWork = unitOfWork;
         }
 
-        // Create Admin
+        /**
+         * Create Admin
+         */
         public void CreateAdmin(Administrator admin)
         {
             _unitOfWork.AdministratorRepository.Add(admin);
             _unitOfWork.Save();
         }
 
-        // Get one Admin
+        /**
+         * Get one Admin
+         */
         public Administrator GetOneAdmin(Guid id)
         {
             /*IEnumerable<Administrator> admin = _unitOfWork.AdministratorRepository.Find(Acc => Acc.Account.AccountId.Equals(id));
@@ -31,21 +35,27 @@ namespace PainAssessment.Areas.Admin.Services
             return adminDetails;
         }
 
-        // Get all Admin
+        /**
+         * Get all Admin
+         */
         public Administrator GetAllAdmin()
         {
             return (Administrator)_unitOfWork.AdministratorRepository.GetAll();
         }
 
 
-        // Update Admin
+        /**
+         * Update Admin
+         */
         public void UpdateAdmin(Administrator admin)
         {
             _unitOfWork.AdministratorRepository.Update(admin);
             _unitOfWork.Save();
         }
 
-        // Delete Admin
+        /**
+         * Delete Admin
+         */
         public void DeleteAdmin(int id)
         {
             _unitOfWork.AdministratorRepository.Delete(id);

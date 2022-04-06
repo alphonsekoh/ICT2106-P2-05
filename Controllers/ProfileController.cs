@@ -19,20 +19,26 @@ namespace PainAssessment.Controllers
     public class ProfileController : Controller
     {
         private readonly ILogger<ProfileController> _logger;
-        // Include services
+        /**
+         * Include services
+         */
         private readonly ILoginService loginService;
         private readonly IPractitionerService practitionerService;
         private readonly IAdministratorService administratorService;
         private readonly IClinicalAreaService clinicalAreaService;
+        private readonly IAccountService accountService;
 
-        public ProfileController(ILogger<ProfileController> logger, ILoginService loginService, IPractitionerService practitionerService, IAdministratorService administratorService, IClinicalAreaService clinicalAreaService)
+        /**
+         * Constructor
+         */
+        public ProfileController(ILogger<ProfileController> logger, ILoginService loginService,  IPractitionerService practitionerService, IAdministratorService administratorService, IClinicalAreaService clinicalAreaService, IAccountService accountService)
         {
-            _logger = logger;
             this.loginService = loginService;
             this.practitionerService = practitionerService;
             this.administratorService = administratorService;
             this.clinicalAreaService = clinicalAreaService;
 
+            this.accountService = accountService;
         }
         /*
          returns the details based on the role of the user
@@ -41,8 +47,8 @@ namespace PainAssessment.Controllers
         public ActionResult ViewProfile()
         {
 
-            var userid = loginService.GetAccountId();
-            var user = loginService.GetAccount(userid);
+            Guid userid = loginService.GetAccountId();
+            var user = accountService.GetAccount(userid);
 
             switch (user.Role)
             {
@@ -53,7 +59,7 @@ namespace PainAssessment.Controllers
                 case "Practitioner":
                     // practitioner
                     var practitionerProfile = PractionerView(user);
-                    return View("ViewPrac", practitionerProfile);
+                    return View("ViewPractitionerProfile", practitionerProfile);
                 default:
                     // unrecognised method; return to the blank form
                     return RedirectToAction("Index", "Home");
@@ -73,7 +79,6 @@ namespace PainAssessment.Controllers
             var clinicalArea = clinicalAreaService.GetClinicalArea(admin.ClinicalAreaID);
             admin.ClinicalArea = clinicalArea.Name;
             return View("AdminProfile", admin);
-
         }
 
         /*
