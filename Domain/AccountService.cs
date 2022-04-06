@@ -2,8 +2,7 @@ using PainAssessment.Interfaces;
 using PainAssessment.Models;
 using System.Collections.Generic;
 using System.Linq;
-using BC = BCrypt.Net.BCrypt;
-using Org.BouncyCastle.Crypto.Generators;
+using System;
 
 namespace PainAssessment.Domain
 {
@@ -18,7 +17,20 @@ namespace PainAssessment.Domain
         /**
          * Get User Account details
          */
-        public Account GetAccount(string username)
+        public Account GetAccount(Guid accountId)
+        {
+            Account user = _unitOfWork.AccountRepository.GetById<Account, Guid>(accountId);
+            if (user != null)
+            {
+                return user;
+            }
+            else return null;
+        }
+
+        /**
+         * Get User Account details by Username
+         */
+        public Account GetAccountByUsername(string username)
         {
             IEnumerable<Account> account = _unitOfWork.AccountRepository.Find(Acc => Acc.Username.Equals(username));
             Account userAcc = account.First();
