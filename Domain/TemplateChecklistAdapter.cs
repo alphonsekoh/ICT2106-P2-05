@@ -233,6 +233,7 @@ namespace PainAssessment.Domain
                                     tem.SubDomain = subDomain;
                                     tem.Determinant = determinant;
                                     tem.MaxValue = maxWeightage;
+                                    
                                 }
                             }
 
@@ -253,6 +254,90 @@ namespace PainAssessment.Domain
                                     tem.Determinant = determinant;
                                     tem.MaxValue = maxWeightage;
                                 }
+                            }
+
+                        }
+                    }
+                    break;
+                default:
+                    // Smth wrong
+                    break;
+            }
+
+            // Delete old and insert a new one due to service limitations
+            checklistser.Delete(currChecklist);
+            checklistser.Insert(newChecklist);
+        }
+
+        public void deleteQuestion(int checklistID, string subDomain, string determinant, int domain, int maxWeightage, int rowId)
+        {
+            Checklist currChecklist = checklistser.GetById(checklistID);
+
+            Checklist newChecklist = copyChecklistForInsertion(currChecklist);
+
+            switch(domain)
+            {
+                case 0:
+                    // Central
+                    foreach(var item in currChecklist.Central)
+                    {
+                        if(item.RowId == rowId)
+                        {
+                            CentralDomain temp = null;
+                            foreach(var tem in newChecklist.Central)
+                            {
+                                if(tem.SubDomain == item.SubDomain && tem.Determinant == item.Determinant && tem.MaxValue == item.MaxValue)
+                                {
+                                    temp = tem;
+                                }
+                            }
+                            if(temp != null)
+                            {
+                                newChecklist.Central.Remove(temp);
+                            }
+
+                        }
+                    }
+                    break;
+                case 1:
+                    // Regional
+                    foreach(var item in currChecklist.Regional)
+                    {
+                        if(item.RowId == rowId)
+                        {
+                            RegionalDomain temp = null;
+                            foreach(var tem in newChecklist.Regional)
+                            {
+                                if(tem.SubDomain == item.SubDomain && tem.Determinant == item.Determinant && tem.MaxValue == item.MaxValue)
+                                {
+                                    temp = tem;
+                                }
+                            }
+                            if(temp != null)
+                            {
+                                newChecklist.Regional.Remove(temp);
+                            }
+
+                        }
+                    }
+                    break;
+                case 2:
+                    // Local
+                    foreach(var item in currChecklist.Local)
+                    {
+                        if(item.RowId == rowId)
+                        {
+                            LocalDomain temp = null;
+                            foreach(var tem in newChecklist.Local)
+                            {
+                                if(tem.SubDomain == item.SubDomain && tem.Determinant == item.Determinant && tem.MaxValue == item.MaxValue)
+                                {
+                                    temp = tem;
+                                }
+                            }
+                            if(temp != null)
+                            {
+                                newChecklist.Local.Remove(temp);
                             }
 
                         }

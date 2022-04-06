@@ -120,5 +120,15 @@ namespace PainAssessment.Controllers
             return RedirectToAction("ManageTemplateChecklist", new { id = newChecklistID });
         }
 
+        [HttpGet]
+        public IActionResult DeleteQuestion(int checklistId, int domain, int rowId, string determinant, string sub_domain, int max_value)
+        {
+            this.TChecklistAdapter.deleteQuestion(checklistId, sub_domain, determinant, domain, max_value, rowId);
+
+            var newChecklistID = this.TChecklistAdapter.getRecentlyModifiedChecklist();
+
+            return RedirectToAction("ManageTemplateChecklist", new { id = newChecklistID });
+        }
+
     }
 }
