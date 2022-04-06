@@ -89,10 +89,10 @@ namespace PainAssessment.Controllers
         }
 
         [HttpGet]
-        public IActionResult ManageTemplateChecklist(int checklistID)
+        public IActionResult ManageTemplateChecklist(int id)
         {
 
-            var checklist = this.checklistService.GetById(checklistID);
+            var checklist = this.checklistService.GetById(id);
             return View(checklist);
         }
 
@@ -106,7 +106,7 @@ namespace PainAssessment.Controllers
             Console.WriteLine("Inside addQuestion");
             //RedirectToAction()
             var newChecklistID = this.TChecklistAdapter.getRecentlyModifiedChecklist();
-            return RedirectToAction("ManageTemplateChecklist", newChecklistID);
+            return RedirectToAction("ManageTemplateChecklist", new { id  = newChecklistID});
         }
 
     }

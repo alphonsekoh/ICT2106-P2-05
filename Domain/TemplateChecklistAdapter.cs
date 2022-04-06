@@ -104,6 +104,7 @@ namespace PainAssessment.Domain
             // Copy checklist details
             newChecklist.ChecklistName = originalChecklist.ChecklistName;
             newChecklist.ChecklistDescription = originalChecklist.ChecklistDescription;
+            newChecklist.PractitionerId = originalChecklist.PractitionerId;
 
             #region Deep copy Central domain
             List<CentralDomain> tempCentral = new List<CentralDomain>();
@@ -191,6 +192,17 @@ namespace PainAssessment.Domain
             }
             return i;
         }
+
+
+        /*
+        public Checklist getById(int checklistId)
+        {
+            Checklist tempChecklist = this.checklistser.GetById(checklistId);
+
+            #region Checks to prevent 0 questions in domain
+
+            #endregion
+        }*/
     }
 
 }
