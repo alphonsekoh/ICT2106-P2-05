@@ -65,12 +65,14 @@
                             <span asp-validation-for="PracticeTypeID" class="text-danger"></span>
                         </div>
 
-                       @* <div class="form-group">
+                        @* <div class="form-group">
+                            <div class="form-group">
                             <label asp-for="PriorPainEducation" class="control-label">PriorPainEducation</label>
                             @Html.ListBoxFor(model => model.SelectedPainEducation, ViewBag.PainEducationID as MultiSelectList, new { id = "PriorPainEducation", multiple = "multiple" })
                             <span asp-validation-for="SelectedPainEducation" class="text-danger"></span>
-                        </div>
-*@
+                            </div>
+                        *@
+
                         <div class="form-row d-flex justify-content-center">
                             <button type="submit" class="btn btn-primary ">Submit</button>
                         </div>
@@ -85,66 +87,68 @@
 
 <script>
 
-    // #1. Add modal into your view
-    // #2. Select Dropdown element
-    // #3. onChange listener => toggle modal
+       // #1. Add modal into your view
+       // #2. Select Dropdown element
+       // #3. onChange listener => toggle modal
 
- @{await Html.RenderPartialAsync("_ValidationScriptsPartial", new {area = "Admin"});}
-    <script type="text/javascript">
-        var lastResults = [];
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial", new { area = "Admin" });
+    }
+       <script type="text/javascript">
+           var lastResults = [];
 
-        $(function () {
-            clinicalArea = $("#ClinicalAreaID").select2({
-                tags: true,
-                selectOnClose: true,
-                createTag: function (params) {
-                    var term = $.trim(params.term);
-                    if (term === '') {
-                        return null;
-                    }
-                    var capitalizedTerm = term.charAt(0).toUpperCase() + term.slice(1);
-                    return term.match(/^[a-zA-Z]+$/g) ? { id: params.term, text: capitalizedTerm, newTag: true } : null;
-                },
-    
-            }).on("select2:select", function (e) {
-                if (e.params.data.newTag) {
-                    alert(`${e.params.data.text} does not exist. It will be created as a new Clinical Area.`);
-                }
-            });
+           $(function () {
+               clinicalArea = $("#ClinicalAreaID").select2({
+                   tags: true,
+                   selectOnClose: true,
+                   createTag: function (params) {
+                       var term = $.trim(params.term);
+                       if (term === '') {
+                           return null;
+                       }
+                       var capitalizedTerm = term.charAt(0).toUpperCase() + term.slice(1);
+                       return term.match(/^[a-zA-Z]+$/g) ? { id: params.term, text: capitalizedTerm, newTag: true } : null;
+                   },
 
-            practiceType = $("#PracticeTypeID").select2({
-                tags: true,
-                selectOnClose: true,
-                createTag: function (params) {
-                    var term = $.trim(params.term);
-                    if (term === '') {
-                        return null;
-                    }
-                    var capitalizedTerm = term.charAt(0).toUpperCase() + term.slice(1);
-                    return term.match(/^[a-zA-Z]+$/g) ? { id: params.term, text: capitalizedTerm, newTag: true } : null;
-                },
-            }).on("select2:select", function (e) {
-                if (e.params.data.newTag) {
-                    alert(`${e.params.data.text} does not exist. It will be created as a new Practice Type.`);
-                }
+               }).on("select2:select", function (e) {
+                   if (e.params.data.newTag) {
+                       alert(`${e.params.data.text} does not exist. It will be created as a new Clinical Area.`);
+                   }
+               });
 
-            });
-            painEducation = $("#PriorPainEducation").select2({
-                tags: true,
-                createTag: function (params) {
-                    var term = $.trim(params.term);
-                    if (term === '') {
-                        return null;
-                    }
-                    var capitalizedTerm = term.charAt(0).toUpperCase() + term.slice(1);
-                    return term.match(/^[a-zA-Z]+$/g) ? { id: params.term, text: capitalizedTerm, newTag: true } : null;
-                },
-            }).on("select2:select", function (e) {
-                if (e.params.data.newTag) {
-                    alert(`${e.params.data.text} does not exist. It will be created.`);
-                }
-            });
+               practiceType = $("#PracticeTypeID").select2({
+                   tags: true,
+                   selectOnClose: true,
+                   createTag: function (params) {
+                       var term = $.trim(params.term);
+                       if (term === '') {
+                           return null;
+                       }
+                       var capitalizedTerm = term.charAt(0).toUpperCase() + term.slice(1);
+                       return term.match(/^[a-zA-Z]+$/g) ? { id: params.term, text: capitalizedTerm, newTag: true } : null;
+                   },
+               }).on("select2:select", function (e) {
+                   if (e.params.data.newTag) {
+                       alert(`${e.params.data.text} does not exist. It will be created as a new Practice Type.`);
+                   }
 
-        })
+               });
+               painEducation = $("#PriorPainEducation").select2({
+                   tags: true,
+                   createTag: function (params) {
+                       var term = $.trim(params.term);
+                       if (term === '') {
+                           return null;
+                       }
+                       var capitalizedTerm = term.charAt(0).toUpperCase() + term.slice(1);
+                       return term.match(/^[a-zA-Z]+$/g) ? { id: params.term, text: capitalizedTerm, newTag: true } : null;
+                   },
+               }).on("select2:select", function (e) {
+                   if (e.params.data.newTag) {
+                       alert(`${e.params.data.text} does not exist. It will be created.`);
+                   }
+               });
+
+           })
 
 </script>
