@@ -41,7 +41,6 @@ namespace PainAssessment.Controllers
 
         public IActionResult ManageTemplateChecklist()
         {
-            
             var checklist = this.checklistService.GetById(1);
             return View(checklist);
         }
