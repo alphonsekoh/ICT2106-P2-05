@@ -19,20 +19,25 @@ namespace PainAssessment.Controllers
     public class ProfileController : Controller
     {
         private readonly ILogger<ProfileController> _logger;
-        // Include services
+        /**
+         * Include services
+         */
         private readonly ILoginService loginService;
         private readonly IPractitionerService practitionerService;
         private readonly IAdministratorService administratorService;
         private readonly IClinicalAreaService clinicalAreaService;
 
-        public ProfileController(ILogger<ProfileController> logger, ILoginService loginService,  IPractitionerService practitionerService, IAdministratorService administratorService, IClinicalAreaService clinicalAreaService)
+        /**
+         * Constructor
+         */
+        public ProfileController(ILogger<ProfileController> logger, ILoginService loginService, IPractitionerService practitionerService, IAdministratorService administratorService, IClinicalAreaService clinicalAreaService)
         {
             _logger = logger;
             this.loginService = loginService;
             this.practitionerService = practitionerService;
             this.administratorService = administratorService;
             this.clinicalAreaService = clinicalAreaService;
-            
+
         }
         /*
          returns the details based on the role of the user
@@ -53,16 +58,16 @@ namespace PainAssessment.Controllers
                 case "Practitioner":
                     // practitioner
                     var practitionerProfile = PractionerView(user);
-                    return View("ViewPrac", practitionerProfile);
+                    return View("ViewPractitionerProfile", practitionerProfile);
                 default:
                     // unrecognised method; return to the blank form
-                    return RedirectToAction("Index","Home");
+                    return RedirectToAction("Index", "Home");
 
             }
 
         }
 
-        
+
         /*
          returns the details of the specific admin
          */
@@ -71,7 +76,7 @@ namespace PainAssessment.Controllers
             Administrator admin = administratorService.GetOneAdmin(id);
             var clinicalArea = clinicalAreaService.GetClinicalArea(admin.ClinicalAreaID);
             admin.ClinicalArea = clinicalArea.Name;
-            return View("AdminProfile",admin);
+            return View("ViewAdminProfile", admin);
 
         }
 

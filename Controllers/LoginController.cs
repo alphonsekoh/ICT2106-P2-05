@@ -121,7 +121,7 @@ namespace PainAssessment.Controllers
         }
 
         /**
-         * FUnction to allow user to log out
+         * Function to allow user to log out
          */
         public async Task<IActionResult> LogOut()
         {

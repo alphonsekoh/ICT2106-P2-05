@@ -32,7 +32,7 @@ namespace PainAssessment.ViewModels
 
         public PracticeType PracticeType { get; set; }
 
-       // [Required(ErrorMessage = "Prior pain education is required.")]
+        //[Required(ErrorMessage = "Prior pain education is required.")]
         //public string[] SelectedPainEducation { get; set; }
     }
 }
