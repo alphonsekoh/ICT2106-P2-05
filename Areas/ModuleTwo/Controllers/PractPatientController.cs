@@ -31,10 +31,13 @@ namespace PainAssessment.Areas.ModuleTwo.Controllers
         // GET: ModuleTwo/PractPatient/
         public async Task<IActionResult> Index(string sortOrder, string currentFilter, string searchString, int? pageNumber)
         {
+
+            Practitioner practitioner = practitionerService.GetPractitioner(Guid.Parse("aa93a858-0c0d-4dd9-58d1-08da170fb044"));
+
             //Code to get the logged in service
             //var loginID = loginService.GetAccountId;
 
-            Practitioner practitioner = practitionerService.GetPractitioner(Guid.Parse("b8beed0c-a1b8-42e1-7cee-08da118e2549"));
+
             //Patient patient = patientService.GetAllPatients;
 
             ViewData["CurrentSort"] = sortOrder;
@@ -158,7 +161,7 @@ namespace PainAssessment.Areas.ModuleTwo.Controllers
             {
                 patientService.CreatePatient(patient);
                 patientService.SavePatient();
-                Practitioner practitioner = practitionerService.GetPractitioner(Guid.Parse("b8beed0c-a1b8-42e1-7cee-08da118e2549"));
+                Practitioner practitioner = practitionerService.GetPractitioner(Guid.Parse("aa93a858-0c0d-4dd9-58d1-08da170fb044"));
                 practitioner.AddPatientRelation(patient);
                 practitionerService.SavePractitioner();
                 return RedirectToAction(nameof(Index));

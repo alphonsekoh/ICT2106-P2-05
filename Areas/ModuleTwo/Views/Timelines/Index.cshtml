@@ -1,5 +1,5 @@
 ﻿@*@model IEnumerable<PainAssessment.Areas.ModuleTwo.Models.Timeline>*@
-
+@*@model PainAssessment.Areas.Admin.Models.Patient*@
 @{
     ViewData["Title"] = "Index";
 }
@@ -9,7 +9,8 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
-<h2>Consultation Sessions</h2>
+<h1>Consultation Sessions</h1>
+<p class="text-muted">Patient @(ViewContext.RouteData.Values["id"])</p>
 
 @*<p>
   <a class="btn btn-primary btn-sm" role="button" asp-action="Create">Create New</a>
@@ -60,4 +61,5 @@
 @*}*@
     </tbody>
 </table>
-<a class="btn btn-primary btn-sm" asp-area="ModuleTwo" asp-controller="PractPatient" asp-action="Index">Back to Patient Records</a>
+@*<a class="btn btn-primary btn-sm" asp-area="ModuleTwo" asp-controller="PractPatient" asp-action="Index">Back to Patient Records</a>*@
+<a type="button" class="btn btn-secondary btn-sm" asp-controller="PractPatient" asp-action="Details" asp-route-id="@(ViewContext.RouteData.Values["id"])">Back to Patient Details</a>
