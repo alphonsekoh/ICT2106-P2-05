@@ -128,7 +128,7 @@ namespace PainAssessment.Controllers
          * 
          */
         [HttpPost]
-        [Authorize(Roles = "Administrator")]
+        [AllowAnonymous]
         public IActionResult CreateAccount(CreateAccountModel model)
         {
             if (ModelState.IsValid)

@@ -11,8 +11,10 @@ using PainAssessment.ViewModels.Profile;
 using System.Security.Claims;
 using PainAssessment.Models;
 using PainAssessment.Areas.Admin.Models;
-using PainAssessment.Areas.Admin.Models.ViewModels.Profile;
+using PainAssessment.Areas.Admin.Models.ViewModels;
 using System.Text.Json;
+using BC = BCrypt.Net.BCrypt;
+using PainAssessment.ViewModels;
 
 namespace PainAssessment.Controllers
 {
@@ -28,15 +30,13 @@ namespace PainAssessment.Controllers
         private readonly IClinicalAreaService clinicalAreaService;
         private readonly IAccountService accountService;
 
-        /**
-         * Constructor
-         */
-        public ProfileController(ILogger<ProfileController> logger, ILoginService loginService,  IPractitionerService practitionerService, IAdministratorService administratorService, IClinicalAreaService clinicalAreaService, IAccountService accountService)
+        public ProfileController(ILogger<ProfileController> logger, ILoginService loginService, IPractitionerService practitionerService, IAdministratorService administratorService, IClinicalAreaService clinicalAreaService, IAccountService accountService)
         {
             this.loginService = loginService;
             this.practitionerService = practitionerService;
             this.administratorService = administratorService;
             this.clinicalAreaService = clinicalAreaService;
+            this.accountService = accountService;
 
             this.accountService = accountService;
         }
@@ -103,21 +103,40 @@ namespace PainAssessment.Controllers
         }
 
 
-        // POST: ProfileController/Edit/5
-        /** [HttpPost]
-         [ValidateAntiForgeryToken]
-         public ActionResult Edit(int id, IFormCollection collection)
-         {
-             try
-             {
-                 return RedirectToAction(nameof(Index));
-             }
-             catch
-             {
-                 return View();
-             }
-         }*/
+        /**
+         * returns the information that the user wishes to edit
+         */
+        [HttpGet]
+        public IActionResult EditProfile()
+        {
+            var userid = loginService.GetAccountId();
+            var user = loginService.GetAccount(userid);
 
-        //}
-    }
+            switch (user.Role)
+            {
+                case "Administrator":
+                    // admin
+                    return (ActionResult)AdminView(userid);
+
+                case "Practitioner":
+                    // practitioner
+                    var practitionerProfile = PractionerView(user);
+                    return View("EditProfile", practitionerProfile);
+                default:
+                    // unrecognised method; return to the blank form
+                    return RedirectToAction("Index", "Home");
+            }
+        }
+
+        [HttpPost]
+        public IActionResult EditProfile(PractionerModel practionerModel)
+        {
+            var user = accountService.GetAccount(practionerModel.FullName.ToString());
+            accountService.UpdateAccountStatus(user);
+            ViewData["Message"] = "Username successfully changed!";
+            ViewData["MsgType"] = "success";
+            return View("EditProfile", practionerModel);
+        }
+
+        }
 }

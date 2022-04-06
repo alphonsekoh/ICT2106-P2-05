@@ -1,10 +1,21 @@
 ﻿@model PainAssessment.ViewModels.Profile.PractionerModel
 @{
-    ViewData["Title"] = "ViewPrac";
+    ViewData["Title"] = "EditProfile";
 }
-<div>
     <h4>Profile</h4>
     <hr />
+    @using (Html.BeginForm("EditProfile", "Profile", FormMethod.Post)){
+   @if (ViewData["Message"] != null)
+    {
+        <div class="form-group">
+            <div class="col-sm-offset-4 col-sm-5">
+                <div class="alert alert-@ViewData["MsgType"]">
+                    <text>@ViewData["Message"]</text>
+                </div>
+            </div>
+        </div>
+    }
+
     <div class="row">
         <div class="col-lg-2"> @Html.DisplayNameFor(model => model.Name)</div>
         <div class="col-lg-10">
@@ -46,13 +57,14 @@
             @Html.TextBoxFor(model => model.PracticeType, new { disabled = "disabled", @readonly = "readonly" })
         </div>
     </div>
-    </br>
+
+    <br />
     <div class="flex-parent jc-center">
-        <input type="button" class="btn btn-success"
+        <input type="submit" class="btn btn-success"
         value="Save"/>
 
         <a href="ViewProfile"><input type="button" class="btn btn-secondary"
         value="Cancel"/></a>
     </div>
+    }
 
-</div>
