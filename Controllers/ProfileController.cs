@@ -34,7 +34,10 @@ namespace PainAssessment.Controllers
             this.clinicalAreaService = clinicalAreaService;
             
         }
-
+        /*
+         returns the details based on the role of the user
+         if the user has no role, return to the home page
+         */
         public ActionResult ViewProfile()
         {
 
@@ -53,12 +56,16 @@ namespace PainAssessment.Controllers
                     return View("ViewPrac", practitionerProfile);
                 default:
                     // unrecognised method; return to the blank form
-                    return RedirectToAction("Index");
+                    return RedirectToAction("Index","Home");
 
             }
 
         }
-        //returns the admin view
+
+        
+        /*
+         returns the details of the specific admin
+         */
         public IActionResult AdminView(Guid id)
         {
             Administrator admin = administratorService.GetOneAdmin(id);
@@ -68,7 +75,9 @@ namespace PainAssessment.Controllers
 
         }
 
-
+        /*
+         returns the details of the specific practitioner
+         */
         private PractionerModel PractionerView(Account user)
         {
             Practitioner practionerDetails = practitionerService.GetPractitioner(user.AccountId);

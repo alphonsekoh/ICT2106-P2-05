@@ -10,7 +10,7 @@ namespace PainAssessment.Areas.Admin.Models.Builder
         private string role;
         private string experience;
         private int clinicId;
-        private DateTime dob;
+        //private DateTime dob;
 
 
         public IAdminBuilder WithClinic(int clinicId)
@@ -44,11 +44,6 @@ namespace PainAssessment.Areas.Admin.Models.Builder
         public IAdminBuilder WithRole(string role)
         {
             this.role = role;
-            return this;
-        }
-        public IAdminBuilder WithDOB(DateTime dob)
-        {
-            this.dob = dob;
             return this;
         }
 
