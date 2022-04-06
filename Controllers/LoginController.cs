@@ -34,7 +34,7 @@ namespace PainAssessment.Controllers
          */
         [AllowAnonymous]
         [HttpGet]
-        public ActionResult Index()
+        public IActionResult Index()
         {
             return View();
         }
@@ -44,7 +44,7 @@ namespace PainAssessment.Controllers
          */
         [AllowAnonymous]
         [HttpPost]
-        public async Task<ActionResult> Index(LoginModel model)
+        public async Task<IActionResult> Index(LoginModel model)
         {
             if (!ModelState.IsValid)
             {
