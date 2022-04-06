@@ -19,7 +19,7 @@ namespace PainAssessment.Areas.ModuleTwo.Controllers
         private readonly IPatientService patientService;
         private readonly IPractitionerService practitionerService;
 
- 
+
         public PractPatientController(IPatientService patientService, IPractitionerService practitionerService)
         {
             this.patientService = patientService;
