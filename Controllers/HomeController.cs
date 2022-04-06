@@ -26,8 +26,8 @@ namespace PainAssessment.Controllers
 
         public IActionResult Index()
         {
-            var templateChecklistArr = templateChecklistService.GetAllTemplateChecklist().ToList();
-            return View(templateChecklistArr);
+            //var templateChecklistArr = templateChecklistService.GetAllTemplateChecklist().ToList();
+            return View();
         }
 
         public IActionResult Privacy()
@@ -35,11 +35,22 @@ namespace PainAssessment.Controllers
             return View();
         }
 
-        public IActionResult ManageTemplateChecklist()
+        public IActionResult ViewTemplateChecklist()
         {
-            var templateQuestionsArr = defaultQuestionsService.GetAllDefaultQuestionsFromTemplateChecklist(1).ToList();
-            return View(templateQuestionsArr);
+            return View();
         }
+
+        /*public IActionResult ManageTemplateChecklist(int num)
+        {
+            var templateQuestionsArr = defaultQuestionsService.GetAllDefaultQuestionsFromTemplateChecklist(num).ToList();
+            return View(templateQuestionsArr);
+        }*/
+       /* public IActionResult ManageTemplateChecklist(int checklistID)
+        {
+            var templateQuestionsArr = defaultQuestionsService.GetAllDefaultQuestionsFromTemplateChecklist(checklistID).ToList();
+            return View(templateQuestionsArr);
+        }*/
+
 
         /*public IActionResult ViewProfile()
         {

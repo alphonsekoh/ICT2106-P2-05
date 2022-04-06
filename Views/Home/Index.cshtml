@@ -8,28 +8,4 @@
     <h1 class="display-4">This the the default page for ASP. </h1>
 </div>
 
-<table>
-    <thead>
-        <tr>
-           <th>TemplateID</th> 
-           <th>Template Name</th> 
-           <th>Description</th> 
-        </tr>
-    </thead>
-    <tbody>
-        @foreach(var item in Model)
-        {
-            <tr>
-               <td>
-                   @Html.DisplayFor(modelItem => item.TemplateChecklistId)
-               </td>
-               <td>
-                   @Html.DisplayFor(modelItem => item.TemplateName)
-               </td>
-               <td>
-                   @Html.DisplayFor(modelItem => item.Description)
-               </td>
-            </tr>
-        }
-    </tbody>
-</table>
+
