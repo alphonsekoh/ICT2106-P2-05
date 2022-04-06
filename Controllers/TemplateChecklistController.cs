@@ -15,18 +15,14 @@ namespace PainAssessment.Controllers
 
         //include services and logger
         private Areas.ModuleTwo.Services.IChecklistService checklistService;
-
-        private readonly ILogger<TemplateChecklistController> _logger;
-        
-        private readonly ILoginService loginService;
+        private readonly ILogger<TemplateChecklistController> _logger;        
         private readonly IDefaultQuestionsService defaultQuestionsService;
         private ITemplateChecklistAdapter TChecklistAdapter;
 
 
-        public TemplateChecklistController(ILogger<TemplateChecklistController> logger, ITemplateChecklistService templateChecklistService, IDefaultQuestionsService defaultQuestionsService, ILoginService loginService, Areas.ModuleTwo.Services.IChecklistService checklistServ, ITemplateChecklistAdapter tchecklistadapter)
+        public TemplateChecklistController(ILogger<TemplateChecklistController> logger, ITemplateChecklistService templateChecklistService, IDefaultQuestionsService defaultQuestionsService, Areas.ModuleTwo.Services.IChecklistService checklistServ, ITemplateChecklistAdapter tchecklistadapter)
         {
             _logger = logger;
-            this.loginService = loginService;
             checklistService = checklistServ;
             this.defaultQuestionsService = defaultQuestionsService;
             this.TChecklistAdapter = tchecklistadapter;
@@ -38,7 +34,6 @@ namespace PainAssessment.Controllers
             var checklists = checklistService.GetAll(1);
             return View(checklists);
         }
-
 
 
         //navigate to create template checklist and initialise checklist object
@@ -81,6 +76,7 @@ namespace PainAssessment.Controllers
         [HttpPost]
         public IActionResult EditTemplateChecklist(Areas.ModuleTwo.Models.Checklist checklist)
         {
+       
             checklistService.Update(checklist);
             return RedirectToAction(nameof(ViewTemplateChecklist));
         }
@@ -92,23 +88,7 @@ namespace PainAssessment.Controllers
             return RedirectToAction(nameof(ViewTemplateChecklist));
         }
 
-        /*
-        //hui yang's manage checklist
         [HttpGet]
-        public IActionResult ManageTemplateChecklist(int num)
-        {
-            var templateQuestionsArr = defaultQuestionsService.GetAllDefaultQuestionsFromTemplateChecklist(num).ToList();
-            return View(templateQuestionsArr);
-        }*/
-        [HttpGet]
-        public IActionResult ManageTemplateChecklist()
-        {
-
-            var checklist = this.checklistService.GetById(13);
-            return View(checklist);
-        }
-
-
         public IActionResult ManageTemplateChecklist(int checklistID)
         {
 

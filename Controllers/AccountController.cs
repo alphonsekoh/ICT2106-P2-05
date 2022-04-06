@@ -11,6 +11,8 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using PainAssessment.Areas.Admin.Services;
 using PainAssessment.Areas.Admin.Models;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using PainAssessment.Areas.Admin.Models.Builder;
 
 namespace PainAssessment.Controllers
 {
@@ -19,39 +21,67 @@ namespace PainAssessment.Controllers
         private readonly IAccountService accountService;
         private readonly IAdministratorService administratorService;
         private readonly ILoginService loginService;
+        private readonly IPractitionerService practitionerService;
+        private readonly IClinicalAreaService clinicalAreaService;
+        private readonly IPainEducationService painEducationService;
+        private readonly IPracticeTypeService practiceTypeService;
 
-        //private const string REDIRECT_CNTR = "Home";
-        private const string DIRECT_CNTR = "Login";
+
+        private const string REDIRECT_CNTR = "Home";
+        //private const string DIRECT_CNTR = "Login";
         private const string DIRECT_ACTN = "Index";
 
+        /**
+         * Constructor
+         */
         public AccountController(
             IAccountService accountService,
             IAdministratorService administratorService,
-            ILoginService loginService
+            ILoginService loginService,
+            IPractitionerService practitionerService,
+            IClinicalAreaService clinicalAreaService,
+            IPainEducationService painEducationService,
+            IPracticeTypeService practiceTypeService
+
            )
         {
             this.accountService = accountService;
             this.administratorService = administratorService;
             this.loginService = loginService;
+            this.practitionerService = practitionerService;
+            this.clinicalAreaService = clinicalAreaService;
+            this.painEducationService = painEducationService;
+            this.practiceTypeService = practiceTypeService;
+
         }
+
+        /**
+         * Change Password
+         * Function to return view for the user to change password
+         */
 
         [AllowAnonymous]
         [HttpGet]
-        public ActionResult ChangePassword()
+        public IActionResult ChangePassword()
         {
             return View();
         }
 
+        /**
+         * Description: Function to change password
+         * It will call accountService to check if there's an account with the same username
+         * 
+         */
         [AllowAnonymous]
         [HttpPost]
-        public ActionResult ChangePassword(ChangePasswordModel model)
+        public IActionResult ChangePassword(ChangePasswordModel model)
         {
             if (ModelState.IsValid)
             {
                 if (accountService.CheckUsername(model.Username).Equals(true))
                 {
                     System.Diagnostics.Debug.WriteLine(model.NewPassword);
-                    var user = accountService.GetAccount(model.Username);
+                    var user = accountService.GetAccountByUsername(model.Username);
                     System.Diagnostics.Debug.WriteLine(user.Password);
                     if (user != null)
                     {
@@ -72,16 +102,34 @@ namespace PainAssessment.Controllers
             }
 
         }
+
+        /**
+         * Description: When users wants to create accounts for administrators and practitioners. 
+         * 
+         * Return to View(CreateAccountModel) if the user is an administrator, practitioner will see a 404 page
+         */
         [HttpGet]
-        [AllowAnonymous]
-        public ActionResult CreateAccount()
+        [Authorize(Roles = "Administrator")]
+        public IActionResult CreateAccount()
         {
+            ViewData["ClinicalAreaID"] = new SelectList(clinicalAreaService.GetAllClinicalAreas(), "Id", "Name");
+            ViewData["PracticeTypeID"] = new SelectList(practiceTypeService.GetAllPracticeTypes(), "Id", "Name");
+            ViewData["PainEducationID"] = new MultiSelectList(painEducationService.GetAllPainEducations(), "Id", "Name");
             return View(new CreateAccountModel());
         }
 
+        /**
+         * Description: When users wants to create accounts for administrators and practitioners
+         * 
+         * Before creating an account, the accountService will check for any duplicate username. If it is not, it will do the following:
+         * 
+         * 1. If the account role is an administrator, it will call the administratorService.
+         * 2. If the account role is an practitioners, it will call the practitionerService which is done by P2-3
+         * 
+         */
         [HttpPost]
-        [AllowAnonymous]
-        public ActionResult CreateAccount(CreateAccountModel model)
+        [Authorize(Roles = "Administrator")]
+        public IActionResult CreateAccount(CreateAccountModel model)
         {
             if (ModelState.IsValid)
             {
@@ -108,19 +156,26 @@ namespace PainAssessment.Controllers
                         if (account.Role == "Administrator")
                         {
                             // Administrator service
-                            Administrator admin = new Administrator
+                            /*Administrator admin = new Administrator
                             {
                                 Account = account,
                                 FullName = model.FullName,
                                 Experience = 0
-                            };
+                            };*/
+
+                            Administrator admin = new Administrator(
+                                model.FullName, model.Username, model.Role, "0", model.ClinicalAreaID, AccountId);
                             administratorService.CreateAdmin(admin);
+
                         }
                         else if (account.Role == "Practitioner")
                         {
-                            return RedirectToAction("Create", "Practitioners", new {area = "Admin"});
+                            Practitioner p = new Practitioner(
+                                model.FullName, "0 years", "0", model.ClinicalAreaID, model.PracticeTypeID, AccountId);
+                            practitionerService.CreatePractitioner(p);
+                            practitionerService.SavePractitioner();
                         }
-                        return RedirectToAction(DIRECT_ACTN, DIRECT_CNTR);
+                        return RedirectToAction(DIRECT_ACTN, REDIRECT_CNTR);
                     }
                     return View(model);
                 }
