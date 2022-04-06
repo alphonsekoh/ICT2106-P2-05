@@ -28,7 +28,6 @@ namespace PainAssessment.Areas.Admin.Models.ModelBinder
             Microsoft.AspNetCore.Http.IFormCollection data = bindingContext.HttpContext.Request.Form;
             bool fullNameResult = data.TryGetValue("FullName", out Microsoft.Extensions.Primitives.StringValues fullName);
             bool nameResult = data.TryGetValue("Name", out Microsoft.Extensions.Primitives.StringValues name);
-            bool roleResult = data.TryGetValue("Role", out Microsoft.Extensions.Primitives.StringValues role);
             bool idResult = data.TryGetValue("Id", out Microsoft.Extensions.Primitives.StringValues id);
             bool experienceResult = data.TryGetValue("Experience", out Microsoft.Extensions.Primitives.StringValues experience);
             bool clinicResult = data.TryGetValue("ClinicalAreaID", out Microsoft.Extensions.Primitives.StringValues clinicalAreaID);
@@ -36,7 +35,7 @@ namespace PainAssessment.Areas.Admin.Models.ModelBinder
             bool parseClinicSuccess = int.TryParse(clinicalAreaID, out int parsedClinicID);
 
 
-            if (!fullNameResult || !nameResult || !roleResult|| !experienceResult || !clinicResult )
+            if (!fullNameResult || !nameResult || !experienceResult || !clinicResult )
             {
                 bindingContext.Result = ModelBindingResult.Failed();
             }
@@ -53,7 +52,6 @@ namespace PainAssessment.Areas.Admin.Models.ModelBinder
                 }
                 IAdminBuilder adminBuilder = new AdminBuilder().WithName(name.ToString())
                                                                                    .WithFullName(fullName)
-                                                                                   .WithRole(role)
                                                                                    .WithExperience(experience)
                                                                                    .WithClinic(parseClinicSuccess ? parsedClinicID : createdClinicID);
 
