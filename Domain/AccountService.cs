@@ -15,7 +15,9 @@ namespace PainAssessment.Domain
         {
             _unitOfWork = unitOfWork;
         }
-
+        /**
+         * Get User Account details
+         */
         public Account GetAccount(string username)
         {
             IEnumerable<Account> account = _unitOfWork.AccountRepository.Find(Acc => Acc.Username.Equals(username));
@@ -27,7 +29,9 @@ namespace PainAssessment.Domain
             else return null;
         }
 
-        // Update Password
+        /**
+         * Update User Password
+         */
         public void UpdatePassword(Account account)
         {
             _unitOfWork.AccountRepository.Update(account);
@@ -35,21 +39,27 @@ namespace PainAssessment.Domain
 
         }
 
-        // Update AccountStatus
+        /**
+         * Update AccountStatus
+         */
         public void UpdateAccountStatus(Account account)
         {
             _unitOfWork.AccountRepository.Update(account);
             _unitOfWork.Save();
         }
 
-        // Create Account
+        /**
+         * Create Account
+         */
         public void CreateAcc(Account account)
         {
             _unitOfWork.AccountRepository.Add(account);
             _unitOfWork.Save();
         }
 
-        // Check Duplicate Username
+        /**
+         * Function to check duplicate username in repository
+         */
         public bool CheckUsername(string username)
         {
             IEnumerable<Account> account = _unitOfWork.AccountRepository.Find(Acc => Acc.Username.Equals(username));

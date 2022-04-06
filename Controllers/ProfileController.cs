@@ -34,7 +34,10 @@ namespace PainAssessment.Controllers
             this.clinicalAreaService = clinicalAreaService;
 
         }
-
+        /*
+         returns the details based on the role of the user
+         if the user has no role, return to the home page
+         */
         public ActionResult ViewProfile()
         {
 
@@ -45,10 +48,7 @@ namespace PainAssessment.Controllers
             {
                 case "Administrator":
                     // admin
-
-                    string jsonString = JsonSerializer.Serialize(AdminView(userid));
-                    return RedirectToAction(actionName: "ViewAdmin", controllerName: "Home",
-                new { data = jsonString, area = "Admin" });
+                    return (ActionResult)AdminView(userid);
 
                 case "Practitioner":
                     // practitioner
@@ -56,62 +56,32 @@ namespace PainAssessment.Controllers
                     return View("ViewPrac", practitionerProfile);
                 default:
                     // unrecognised method; return to the blank form
-                    return RedirectToAction("Index");
+                    return RedirectToAction("Index", "Home");
 
             }
 
         }
 
-        public ActionResult EditProfile()
+
+        /*
+         returns the details of the specific admin
+         */
+        public IActionResult AdminView(Guid id)
         {
-            var userid = loginService.GetAccountId();
-            var user = loginService.GetAccount(userid);
 
-            switch (user.Role)
-            {
-                case "Administrator":
-                    // admin
-
-                    string jsonString = JsonSerializer.Serialize(AdminView(userid));
-                    return RedirectToAction(actionName: "ViewAdmin", controllerName: "Home",
-                new { data = jsonString, area = "Admin" });
-
-                case "Practitioner":
-                    // practitioner
-                    var practitionerProfile = PractionerView(user);
-                    return View("EditProfile", practitionerProfile);
-                default:
-                    // unrecognised method; return to the blank form
-                    return RedirectToAction("Index");
-
-            }
-        }
-
-
-        private AdministratorModel AdminView(Guid id)
-        {
-           
             Administrator admin = administratorService.GetOneAdmin(id);
-            admin.ClinicalAreaID = 11; // initiate admin area to 11 
-            ClinicalArea clinical = clinicalAreaService.GetClinicalArea(admin.ClinicalAreaID);
-            var adminViewModel = new AdministratorModel
-            {
-                Name = admin.Account.Username,
-                FullName = admin.FullName,
-                Role = admin.Account.Role,
-                Experience = admin.Experience,
-                ClinicalArea = clinical.Name,
-                AccountID = admin.Account.AccountId
-
-            };
-            return adminViewModel;
+            var clinicalArea = clinicalAreaService.GetClinicalArea(admin.ClinicalAreaID);
+            admin.ClinicalArea = clinicalArea.Name;
+            return View("AdminProfile", admin);
 
         }
 
+        /*
+         returns the details of the specific practitioner
+         */
         private PractionerModel PractionerView(Account user)
         {
-            // Dummy Practitioner Guid
-            Practitioner practionerDetails = practitionerService.GetPractitioner(new Guid("d92c3f35-7725-45cd-e68d-08da16c94c38"));
+            Practitioner practionerDetails = practitionerService.GetPractitioner(user.AccountId);
             ClinicalArea clinicalPrac = clinicalAreaService.GetClinicalArea(practionerDetails.ClinicalAreaID);
             var practionerViewModel = new PractionerModel
             {
@@ -126,5 +96,23 @@ namespace PainAssessment.Controllers
             };
             return practionerViewModel;
         }
+
+
+        // POST: ProfileController/Edit/5
+        /** [HttpPost]
+         [ValidateAntiForgeryToken]
+         public ActionResult Edit(int id, IFormCollection collection)
+         {
+             try
+             {
+                 return RedirectToAction(nameof(Index));
+             }
+             catch
+             {
+                 return View();
+             }
+         }*/
+
+        //}
     }
 }
