@@ -1,4 +1,4 @@
-﻿@model PainAssessment.ViewModels.Profile.PractionerModel
+﻿@model PainAssessment.ViewModels.UpdateUsernameModel
 @{
     ViewData["Title"] = "EditProfile";
 }
@@ -16,52 +16,52 @@
         </div>
     }
 
-    <div class="row">
+    <div class="row form-group">
         <div class="col-lg-2"> @Html.DisplayNameFor(model => model.Name)</div>
         <div class="col-lg-10">
-            @Html.TextBoxFor(model => model.Name, new { disabled = "disabled", @readonly = "readonly" })
+            @Html.TextBoxFor(model => model.Name, new { disabled = "disabled", @readonly = "readonly", @class = "form-control" })
         </div>
     </div>
     <br />
-    <div class="row">
+    <div class="row form-group">
         <div class="col-lg-2"> Username </div>
         <div class="col-lg-10">
-            @Html.TextBoxFor(model => model.FullName)
+            @Html.TextBoxFor(model => model.NewUserName, new {@class = "form-control"})
         </div>
     </div>
     <br />
-    <div class="row">
+    <div class="row form-group">
         <div class="col-lg-2"> @Html.DisplayNameFor(model => model.Role)</div>
         <div class="col-lg-10">
-            @Html.TextBoxFor(model => model.Role, new { disabled = "disabled", @readonly = "readonly" })
+            @Html.TextBoxFor(model => model.Role, new { disabled = "disabled", @readonly = "readonly", @class = "form-control" })
         </div>
     </div>
     <br />
-    <div class="row">
+    <div class="row form-group">
         <div class="col-lg-2"> @Html.DisplayNameFor(model => model.PriorPainEducation)</div>
         <div class="col-lg-10">
-            @Html.TextBoxFor(model => model.PriorPainEducation, new { disabled = "disabled", @readonly = "readonly" })
+            @Html.TextBoxFor(model => model.PriorPainEducation, new { disabled = "disabled", @readonly = "readonly", @class = "form-control" })
         </div>
     </div>
     <br />
-    <div class="row">
+    <div class="row form-group">
         <div class="col-lg-2"> @Html.DisplayNameFor(model => model.ClinicalArea)</div>
         <div class="col-lg-10">
-            @Html.TextBoxFor(model => model.ClinicalArea, new { disabled = "disabled", @readonly = "readonly" })
+            @Html.TextBoxFor(model => model.ClinicalArea, new { disabled = "disabled", @readonly = "readonly", @class = "form-control" })
         </div>
     </div>
     <br />
-    <div class="row">
+    <div class="row form-group">
         <div class="col-lg-2"> @Html.DisplayNameFor(model => model.PracticeType)</div>
         <div class="col-lg-10">
-            @Html.TextBoxFor(model => model.PracticeType, new { disabled = "disabled", @readonly = "readonly" })
+            @Html.TextBoxFor(model => model.PracticeType, new { disabled = "disabled", @readonly = "readonly", @class = "form-control" })
         </div>
     </div>
 
     <br />
     <div class="flex-parent jc-center">
-        <input type="submit" class="btn btn-success"
-        value="Save"/>
+        <input type="submit" class="btn btn-primary"
+        value="Submit"/>
 
         <a href="ViewProfile"><input type="button" class="btn btn-secondary"
         value="Cancel"/></a>

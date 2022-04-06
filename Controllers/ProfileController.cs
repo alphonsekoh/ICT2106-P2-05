@@ -78,7 +78,7 @@ namespace PainAssessment.Controllers
             Administrator admin = administratorService.GetOneAdmin(id);
             var clinicalArea = clinicalAreaService.GetClinicalArea(admin.ClinicalAreaID);
             admin.ClinicalArea = clinicalArea.Name;
-            return View("AdminProfile", admin);
+            return View("ViewAdminProfile", admin);
         }
 
         /*
@@ -103,15 +103,37 @@ namespace PainAssessment.Controllers
         }
 
 
+        private UpdateUsernameModel UpdatePractionerView(Account user)
+        {
+            Practitioner practionerDetails = practitionerService.GetPractitioner(user.AccountId);
+            ClinicalArea clinicalPrac = clinicalAreaService.GetClinicalArea(practionerDetails.ClinicalAreaID);
+            var practionerViewModel = new UpdateUsernameModel
+            {
+                Name = practionerDetails.Name,
+                NewUserName = user.Username,
+                Role = user.Role,
+                AccountID = user.AccountId,
+                PriorPainEducation = practionerDetails.PriorPainEducation,
+                ClinicalArea = clinicalPrac.Name,
+                PracticeType = practionerDetails.PracticeType.Name
+
+            };
+            return practionerViewModel;
+        }
+
         /**
          * returns the information that the user wishes to edit
          */
         [HttpGet]
         public IActionResult EditProfile()
         {
-            var userid = loginService.GetAccountId();
-            var user = loginService.GetAccount(userid);
 
+            Guid userid = loginService.GetAccountId();
+            var user = accountService.GetAccount(userid);
+            System.Diagnostics.Debug.WriteLine(user.AccountId);
+            System.Diagnostics.Debug.WriteLine(user.AccountStatus);
+            System.Diagnostics.Debug.WriteLine(user.Password);
+            System.Diagnostics.Debug.WriteLine(user.Username);
             switch (user.Role)
             {
                 case "Administrator":
@@ -120,7 +142,7 @@ namespace PainAssessment.Controllers
 
                 case "Practitioner":
                     // practitioner
-                    var practitionerProfile = PractionerView(user);
+                    var practitionerProfile = UpdatePractionerView(user);
                     return View("EditProfile", practitionerProfile);
                 default:
                     // unrecognised method; return to the blank form
@@ -129,10 +151,20 @@ namespace PainAssessment.Controllers
         }
 
         [HttpPost]
-        public IActionResult EditProfile(PractionerModel practionerModel)
+        public IActionResult EditProfile(UpdateUsernameModel practionerModel)
         {
-            var user = accountService.GetAccount(practionerModel.FullName.ToString());
+            Guid userid = loginService.GetAccountId();
+            var userUpdate = accountService.GetAccount(userid);
+            System.Diagnostics.Debug.WriteLine(practionerModel.AccountID);
+            var user = accountService.GetAccount(practionerModel.AccountID);
+            System.Diagnostics.Debug.WriteLine(practionerModel.NewUserName);
             accountService.UpdateAccountStatus(user);
+            System.Diagnostics.Debug.WriteLine("------- Edit Username -------");
+            System.Diagnostics.Debug.WriteLine(user.AccountId);
+            System.Diagnostics.Debug.WriteLine(user.AccountStatus);
+            System.Diagnostics.Debug.WriteLine(user.Password);
+            System.Diagnostics.Debug.WriteLine(user.Username);
+            System.Diagnostics.Debug.WriteLine(practionerModel.NewUserName);
             ViewData["Message"] = "Username successfully changed!";
             ViewData["MsgType"] = "success";
             return View("EditProfile", practionerModel);
