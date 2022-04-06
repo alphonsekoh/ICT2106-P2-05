@@ -37,8 +37,6 @@ namespace PainAssessment.Controllers
             this.administratorService = administratorService;
             this.clinicalAreaService = clinicalAreaService;
             this.accountService = accountService;
-
-            this.accountService = accountService;
         }
         /*
          returns the details based on the role of the user
