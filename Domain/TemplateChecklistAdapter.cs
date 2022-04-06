@@ -105,6 +105,7 @@ namespace PainAssessment.Domain
             newChecklist.ChecklistName = originalChecklist.ChecklistName;
             newChecklist.ChecklistDescription = originalChecklist.ChecklistDescription;
             newChecklist.PractitionerId = originalChecklist.PractitionerId;
+            newChecklist.Active = originalChecklist.Active;
 
             #region Deep copy Central domain
             List<CentralDomain> tempCentral = new List<CentralDomain>();
