@@ -12,6 +12,5 @@ namespace PainAssessment.Interfaces
         bool CheckInstance();
         void setFirstSignInFalse(Account account);
         string IsFirstSignIn(Guid accountId);
-        Account GetAccount(Guid accountId);
     }
 }

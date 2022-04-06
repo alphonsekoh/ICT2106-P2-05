@@ -1,10 +1,13 @@
 ﻿using PainAssessment.Models;
+using System;
+using System.Collections.Generic;
 
 namespace PainAssessment.Interfaces
 {
     public interface IAccountService
     {
-        Account GetAccount(string username);
+        Account GetAccount(Guid accountId);
+        Account GetAccountByUsername(string username); 
         void UpdatePassword(Account account);
         void CreateAcc(Account account);
         bool CheckUsername(string username);

@@ -16,6 +16,7 @@ namespace PainAssessment.Controllers
     public class LoginController : Controller
     {
         private readonly ILoginService loginService;
+        private readonly IAccountService accountService;
 
         private const string REDIRECT_CNTR = "Home";
         private const string REDIRECT_ACTN = "Index";
@@ -24,9 +25,10 @@ namespace PainAssessment.Controllers
         /**
          * Constructor
          */
-        public LoginController(ILogger<LoginController> logger, ILoginService loginService)
+        public LoginController(ILogger<LoginController> logger, ILoginService loginService, IAccountService accountService)
         {
             this.loginService = loginService;
+            this.accountService = accountService;
         }
 
         /**
@@ -58,7 +60,7 @@ namespace PainAssessment.Controllers
                     var isFirstSignIn = loginService.IsFirstSignIn(accId);
                     if (isFirstSignIn.Equals("true"))
                     {
-                        var account = loginService.GetAccount(accId);
+                        var account = accountService.GetAccount(accId);
                         account.FirstSignIn = false;
                         loginService.setFirstSignInFalse(account);
                         return RedirectToAction(FIRSTSIGNIN_ACTN);
