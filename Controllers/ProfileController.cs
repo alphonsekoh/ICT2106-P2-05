@@ -121,6 +121,16 @@ namespace PainAssessment.Controllers
             return practionerViewModel;
         }
 
+        private UpdatePasswordModel UpdatePasswordView(Account user)
+        {
+            Practitioner practionerDetails = practitionerService.GetPractitioner(user.AccountId);
+            var practionerViewModel = new UpdatePasswordModel
+            {
+                Username = user.Username
+            };
+            return practionerViewModel;
+        }
+
         /**
          * returns the information that the user wishes to edit
          */
@@ -166,5 +176,44 @@ namespace PainAssessment.Controllers
             return View("EditProfile", practionerModel);
         }
 
+        /**
+     * returns the information that the user wishes to edit
+     */
+        [HttpGet]
+        public IActionResult UpdatePassword()
+        {
+
+            Guid userid = loginService.GetAccountId();
+            var user = accountService.GetAccount(userid);
+            switch (user.Role)
+            {
+                case "Administrator":
+                    // admin
+                    return (ActionResult)AdminView(userid);
+
+                case "Practitioner":
+                    // practitioner
+                    var practitionerProfile = UpdatePasswordView(user);
+                    return View("UpdatePassword", practitionerProfile);
+                default:
+                    // unrecognised method; return to the blank form
+                    return RedirectToAction("Index", "Home");
+            }
         }
+
+        [HttpPost]
+        public IActionResult UpdatePassword(UpdatePasswordModel practionerModel)
+        {
+            Guid userid = loginService.GetAccountId();
+            var userAccount = accountService.GetAccount(userid);
+            userAccount.Password = BC.HashPassword(practionerModel.NewPassword);
+            practionerModel = UpdatePasswordView(userAccount);
+            System.Diagnostics.Debug.WriteLine(practionerModel.NewPassword);
+            accountService.UpdatePassword(userAccount);
+            ViewData["Message"] = "Password successfully changed!";
+            ViewData["MsgType"] = "success";
+            return View("UpdatePassword", practionerModel);
+        }
+
+    }
 }
