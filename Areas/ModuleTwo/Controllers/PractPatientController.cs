@@ -10,6 +10,7 @@ using PainAssessment.Areas.Admin.Models;
 //using PainAssessment.Areas.ModuleTwo.Models;
 using PainAssessment.Areas.Admin.Services;
 using System.Data;
+using PainAssessment.Interfaces;
 
 namespace PainAssessment.Areas.ModuleTwo.Controllers
 {
@@ -18,17 +19,21 @@ namespace PainAssessment.Areas.ModuleTwo.Controllers
     {
         private readonly IPatientService patientService;
         private readonly IPractitionerService practitionerService;
+        private readonly ILoginService loginService;
 
-
-        public PractPatientController(IPatientService patientService, IPractitionerService practitionerService)
+        public PractPatientController(IPatientService patientService, IPractitionerService practitionerService, ILoginService loginService)
         {
             this.patientService = patientService;
             this.practitionerService = practitionerService;
+            this.loginService = loginService;
         }
 
         // GET: ModuleTwo/PractPatient/
         public async Task<IActionResult> Index(string sortOrder, string currentFilter, string searchString, int? pageNumber)
         {
+            //Code to get the logged in service
+            //var loginID = loginService.GetAccountId;
+
             Practitioner practitioner = practitionerService.GetPractitioner(Guid.Parse("b8beed0c-a1b8-42e1-7cee-08da118e2549"));
             //Patient patient = patientService.GetAllPatients;
 
@@ -146,6 +151,9 @@ namespace PainAssessment.Areas.ModuleTwo.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Create(Patient patient)            // WILL NEED TO PASS IN PRACTITIONER INFO HERE
         {
+            //Code to get the logged in service
+            //var loginID = loginService.GetAccountId;
+
             if (ModelState.IsValid)
             {
                 patientService.CreatePatient(patient);
