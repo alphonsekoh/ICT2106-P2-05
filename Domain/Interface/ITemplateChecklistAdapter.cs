@@ -15,5 +15,7 @@ namespace PainAssessment.Interfaces
         /// 2 - Local
         void addQuestion(int checklistID, string subDomain, string determinant, int domain, int maxWeightage);
         int getRecentlyModifiedChecklist();
+
+        public void updateQuestion(int checklistID, string subDomain, string determinant, int domain, int maxWeightage, int rowId);
     }
 }

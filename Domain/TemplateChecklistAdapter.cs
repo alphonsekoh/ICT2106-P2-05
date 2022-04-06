@@ -193,16 +193,80 @@ namespace PainAssessment.Domain
             return i;
         }
 
-
-        /*
-        public Checklist getById(int checklistId)
+        public void updateQuestion(int checklistID, string subDomain, string determinant, int domain, int maxWeightage, int rowId)
         {
-            Checklist tempChecklist = this.checklistser.GetById(checklistId);
+            Checklist currChecklist = checklistser.GetById(checklistID);
 
-            #region Checks to prevent 0 questions in domain
+            Checklist newChecklist = copyChecklistForInsertion(currChecklist);
 
-            #endregion
-        }*/
+            switch(domain)
+            {
+                case 0:
+                    // Central
+                    foreach(var item in currChecklist.Central)
+                    {
+                        if(item.RowId == rowId)
+                        {
+                            foreach(var tem in newChecklist.Central)
+                            {
+                                if(tem.SubDomain == item.SubDomain && tem.Determinant == item.Determinant && tem.MaxValue == item.MaxValue)
+                                {
+                                    tem.SubDomain = subDomain;
+                                    tem.Determinant = determinant;
+                                    tem.MaxValue = maxWeightage;
+                                }
+                            }
+
+                        }
+                    }
+                    break;
+                case 1:
+                    // Regional
+                    foreach(var item in currChecklist.Regional)
+                    {
+                        if(item.RowId == rowId)
+                        {
+                            foreach(var tem in newChecklist.Regional)
+                            {
+                                if(tem.SubDomain == item.SubDomain && tem.Determinant == item.Determinant && tem.MaxValue == item.MaxValue)
+                                {
+                                    tem.SubDomain = subDomain;
+                                    tem.Determinant = determinant;
+                                    tem.MaxValue = maxWeightage;
+                                }
+                            }
+
+                        }
+                    }
+                    break;
+                case 2:
+                    // Local
+                    foreach(var item in currChecklist.Local)
+                    {
+                        if(item.RowId == rowId)
+                        {
+                            foreach(var tem in newChecklist.Local)
+                            {
+                                if(tem.SubDomain == item.SubDomain && tem.Determinant == item.Determinant && tem.MaxValue == item.MaxValue)
+                                {
+                                    tem.SubDomain = subDomain;
+                                    tem.Determinant = determinant;
+                                    tem.MaxValue = maxWeightage;
+                                }
+                            }
+
+                        }
+                    }
+                    break;
+                default:
+                    // Smth wrong
+                    break;
+            }
+
+            // Delete old and insert a new one due to service limitations
+            checklistser.Delete(currChecklist);
+            checklistser.Insert(newChecklist);
+        }
     }
 
 }

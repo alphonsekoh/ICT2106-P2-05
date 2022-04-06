@@ -62,25 +62,42 @@
                                 {
 
                                     <tr id="row_@item.RowId">
+                                        <form>
+
+
                                         <td>
                                             @i
-                                            <input asp-for="@item.RowId" type="hidden" id="qrowId_@item.RowId" name="@item.RowId" value="@item.RowId">
+                                            <div class="form-group">
+
+                                                <input asp-for="@item.RowId" type="hidden" id="qrowId_@item.RowId" name="rowId" value="@item.RowId">
+                                            </div>
                                         </td>
                                         <td>
-                                            <input asp-for="@item.SubDomain" type="text" id="qSubDomain_@item.RowId" name="@item.SubDomain" value="@item.SubDomain">
+                                            <div class="form-group">
+
+                                                <input asp-for="@item.SubDomain" type="text" id="qSubDomain_@item.RowId" name="sub_domain" value="@item.SubDomain">
+                                            </div>
 
                                         </td>
                                         <td>
-                                            <input asp-for="@item.Determinant" type="text" id="qString_@item.RowId" name="@item.Determinant" value="@item.Determinant">
+                                            <div class="form-group">
+
+                                                <input asp-for="@item.Determinant" type="text" id="qString_@item.RowId" name="determinant" value="@item.Determinant">
+                                            </div>
 
                                         </td>
                                         <td>
-                                            <input asp-for="@item.MaxValue" type="number" id="weightage_@item.RowId" name="@item.MaxValue" value="@item.MaxValue">
+                                            <div class="form-group">
+
+                                                <input asp-for="@item.MaxValue" type="number" id="weightage_@item.RowId" name="max_value" value="@item.MaxValue">
+                                            </div>
 
                                         </td>
                                         <td>
-                                            <button onclick="UpdateQuestion(@item.RowId, $('#qString_@item.RowId').val(), $('#weightage_@item.MaxValue').val())"
-                                                    type="button"
+                                            <input type="hidden" name="domain" value="0" />
+                                            <input type="hidden" name="checklistId" value="@item.ChecklistId" />
+                                            <button type="submit"
+                                                    asp-action="UpdateQuestion"
                                                     class="btn btn-primary btn-sm">
                                                 Update
                                             </button>
@@ -90,6 +107,7 @@
                                                 Delete
                                             </button>
                                         </td>
+                                        </form>
                                     </tr>
                                     i++;
                                 }
@@ -150,25 +168,39 @@
                                 {
 
                                     <tr id="row_@item.RowId">
+                                        <form>
+
+
                                         <td>
                                             @j
-                                            <input asp-for="@item.RowId" type="hidden" id="qrowId_@item.RowId" name="@item.RowId" value="@item.RowId">
+                                            <div class="form-group">
+                                                <input asp-for="@item.RowId" type="hidden" id="qrowId_@item.RowId" name="rowId" value="@item.RowId">
+                                            </div>
                                         </td>
                                         <td>
-                                            <input asp-for="@item.SubDomain" type="text" id="qSubDomain_@item.RowId" name="@item.SubDomain" value="@item.SubDomain">
+                                            <div class="form-group">
+                                                <input asp-for="@item.SubDomain" type="text" id="qSubDomain_@item.RowId" name="sub_domain" value="@item.SubDomain">
+                                            </div>
 
                                         </td>
                                         <td>
-                                            <input asp-for="@item.Determinant" type="text" id="qString_@item.RowId" name="@item.Determinant" value="@item.Determinant">
+                                            <div class="form-group">
+                                                <input asp-for="@item.Determinant" type="text" id="qString_@item.RowId" name="determinant" value="@item.Determinant">
+                                            </div>
 
                                         </td>
                                         <td>
-                                            <input asp-for="@item.MaxValue" type="number" id="weightage_@item.RowId" name="@item.MaxValue" value="@item.MaxValue">
+                                            <div class="form-group">
+
+                                                <input asp-for="@item.MaxValue" type="number" id="weightage_@item.RowId" name="max_value" value="@item.MaxValue">
+                                            </div>
 
                                         </td>
                                         <td>
-                                            <button onclick="UpdateQuestion(@item.RowId, $('#qString_@item.RowId').val(), $('#weightage_@item.RowId').val())"
-                                                    type="button"
+                                            <input type="hidden" name="domain" value="1" />
+                                            <input type="hidden" name="checklistId" value="@item.ChecklistId" />
+                                            <button asp-action="UpdateQuestion"
+                                                    type="submit"
                                                     class="btn btn-primary btn-sm">
                                                 Update
                                             </button>
@@ -178,6 +210,7 @@
                                                 Delete
                                             </button>
                                         </td>
+                                        </form>
                                     </tr>
                                     j++;
                                 }
@@ -241,25 +274,40 @@
                                 {
 
                                     <tr id="row_@item.RowId">
+                                        <form>
                                         <td>
                                             @k
-                                            <input asp-for="@item.RowId" type="hidden" id="qrowId_@item.RowId" name="@item.RowId" value="@item.RowId">
+                                            <div class="form-group">
+
+                                            <input asp-for="@item.RowId" type="hidden" id="qrowId_@item.RowId" name="rowId" value="@item.RowId">
+                                            </div>
                                         </td>
                                         <td>
-                                            <input asp-for="@item.SubDomain" type="text" id="qSubDomain_@item.RowId" name="@item.SubDomain" value="@item.SubDomain">
+                                            <div class="form-group">
+
+                                            <input asp-for="@item.SubDomain" type="text" id="qSubDomain_@item.RowId" name="sub_domain" value="@item.SubDomain">
+                                            </div>
 
                                         </td>
                                         <td>
-                                            <input asp-for="@item.Determinant" type="text" id="qString_@item.RowId" name="@item.Determinant" value="@item.Determinant">
+                                            <div class="form-group">
+
+                                            <input asp-for="@item.Determinant" type="text" id="qString_@item.RowId" name="determinant" value="@item.Determinant">
+                                            </div>
 
                                         </td>
                                         <td>
-                                            <input asp-for="@item.MaxValue" type="number" id="weightage_@item.RowId" name="@item.MaxValue" value="@item.MaxValue">
+                                            <div class="form-group">
+
+                                            <input asp-for="@item.MaxValue" type="number" id="weightage_@item.RowId" name="max_value" value="@item.MaxValue">
+                                            </div>
 
                                         </td>
                                         <td>
-                                            <button onclick="UpdateQuestion(@item.RowId, $('#qString_@item.RowId').val(), $('#weightage_@item.RowId').val())"
-                                                    type="button"
+                                            <input type="hidden" name="domain" value="2" />
+                                            <input type="hidden" name="checklistId" value="@item.ChecklistId" />
+                                            <button asp-action="UpdateQuestion"
+                                                    type="submit"
                                                     class="btn btn-primary btn-sm">
                                                 Update
                                             </button>
@@ -269,6 +317,7 @@
                                                 Delete
                                             </button>
                                         </td>
+                                        </form>
                                     </tr>
                                     k++;
                                 }
@@ -387,18 +436,6 @@
 
 @section scripts{
     <script>
-        var UpdateQuestion = function (DQID, QString, weightage) {
-            $.ajax({
-                type: "POST",
-                url: "UpdateQuestion",
-                data: { DQID: DQID, QString: QString, weightage: weightage },
-                success: function (result) {
-                    $("#updatedQuestion").text(QString);
-                    $("#updateModal").modal("show");
-                }
-            })
-        }
-
         var DeleteQuestionFromDB = function (DQID) {
             console.log(DQID)
             $.ajax({
