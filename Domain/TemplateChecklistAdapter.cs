@@ -21,17 +21,39 @@ namespace PainAssessment.Domain
         public void updateActive(int checklistID)
         {
 
-            var checklist = checklistser.GetById(checklistID);
-                if (checklist.Active)
+            Checklist checklist = checklistser.GetById(checklistID);
+
+            Checklist newChecklist = copyChecklistForInsertion(checklist);
+
+
+                if (newChecklist.Active)
                 {
-                    checklist.Active = false;
+                    newChecklist.Active = false;
                  
                 }
                 else
                 {
-                    checklist.Active = true;
+                    newChecklist.Active = true;
                 }
-            checklistser.Update(checklist);
+            checklistser.Delete(checklist);
+            checklistser.Insert(newChecklist);
+      
+        }
+
+        public void editTemplate(int checklistID, string name, string description, bool active)
+        {
+
+            Checklist checklist = checklistser.GetById(checklistID);
+
+            Checklist newChecklist = copyChecklistForInsertion(checklist);
+
+
+            newChecklist.ChecklistName = name;
+            newChecklist.ChecklistDescription = description;
+            newChecklist.Active = active;
+            checklistser.Delete(checklist);
+            checklistser.Insert(newChecklist);
+
         }
 
         public void addQuestion(int checklistID, string subDomain, string determinant, int domain, int maxWeightage)
