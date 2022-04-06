@@ -7,7 +7,6 @@ namespace PainAssessment.Areas.Admin.Models.Builder
         IAdminBuilder WithId(Guid id);
         IAdminBuilder WithName(string name);
         IAdminBuilder WithFullName(string fullName);
-        IAdminBuilder WithRole(string role);
         IAdminBuilder WithExperience(string experience);
         IAdminBuilder WithClinic(int clinicId);
 

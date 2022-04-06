@@ -24,8 +24,16 @@ The [Area](https://docs.microsoft.com/en-us/aspnet/core/mvc/controllers/areas?vi
 ## Initial Setup for Database
 
 ```bash
-dotnet ef migrations add InitialCreate
-dotnet ef database update
+dotnet ef migrations add InitialCreate --context HospitalContext
+dotnet ef database update --context HospitalContext
+
+// Mod2 DB
+dotnet ef migrations add InitialCreate --context MvcConsultationChecklistContext
+dotnet ef database update --context MvcConsultationChecklistContext
+
+dotnet ef migrations add InitialCreate --context MvcChecklistContext
+dotnet ef database update --context MvcChecklistContext
+
 ```
 
 For more information, read [Database Migration](https://docs.microsoft.com/en-us/ef/core/managing-schemas/migrations/?tabs=dotnet-core-cli).

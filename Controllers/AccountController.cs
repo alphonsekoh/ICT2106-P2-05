@@ -164,7 +164,7 @@ namespace PainAssessment.Controllers
                             };*/
 
                             Administrator admin = new Administrator(
-                                model.FullName, model.Username, model.Role, "0", model.ClinicalAreaID, AccountId);
+                                model.FullName, model.Username,  "0", model.ClinicalAreaID, AccountId);
                             administratorService.CreateAdmin(admin);
 
                         }
