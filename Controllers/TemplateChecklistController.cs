@@ -15,18 +15,14 @@ namespace PainAssessment.Controllers
 
         //include services and logger
         private Areas.ModuleTwo.Services.IChecklistService checklistService;
-
-        private readonly ILogger<TemplateChecklistController> _logger;
-        
-        private readonly ILoginService loginService;
+        private readonly ILogger<TemplateChecklistController> _logger;        
         private readonly IDefaultQuestionsService defaultQuestionsService;
         private ITemplateChecklistAdapter TChecklistAdapter;
 
 
-        public TemplateChecklistController(ILogger<TemplateChecklistController> logger, ITemplateChecklistService templateChecklistService, IDefaultQuestionsService defaultQuestionsService, ILoginService loginService, Areas.ModuleTwo.Services.IChecklistService checklistServ, ITemplateChecklistAdapter tchecklistadapter)
+        public TemplateChecklistController(ILogger<TemplateChecklistController> logger, ITemplateChecklistService templateChecklistService, IDefaultQuestionsService defaultQuestionsService, Areas.ModuleTwo.Services.IChecklistService checklistServ, ITemplateChecklistAdapter tchecklistadapter)
         {
             _logger = logger;
-            this.loginService = loginService;
             checklistService = checklistServ;
             this.defaultQuestionsService = defaultQuestionsService;
             this.TChecklistAdapter = tchecklistadapter;
@@ -37,12 +33,6 @@ namespace PainAssessment.Controllers
         {
             var checklists = checklistService.GetAll(1);
             return View(checklists);
-        }
-
-        public IActionResult ManageTemplateChecklist()
-        {
-            var checklist = this.checklistService.GetById(1);
-            return View(checklist);
         }
 
 
@@ -98,13 +88,25 @@ namespace PainAssessment.Controllers
             return RedirectToAction(nameof(ViewTemplateChecklist));
         }
 
-
-        //hui yang's manage checklist
         [HttpGet]
-        public IActionResult ManageTemplateChecklist(int num)
+        public IActionResult ManageTemplateChecklist(int checklistID)
         {
-            var templateQuestionsArr = defaultQuestionsService.GetAllDefaultQuestionsFromTemplateChecklist(num).ToList();
-            return View(templateQuestionsArr);
+
+            var checklist = this.checklistService.GetById(checklistID);
+            return View(checklist);
+        }
+
+
+        [HttpPost]
+        public IActionResult AddQuestion(int checklistID, int domain, string new_determinant, string new_sub_domain, int new_max_weightage)
+        {
+
+            //defaultQuestionsService.CreateDefaultQuestion(1, QString, "", int.Parse(PainSection), double.Parse(weightage));
+            this.TChecklistAdapter.addQuestion(checklistID, new_sub_domain, new_determinant, domain, new_max_weightage);
+            Console.WriteLine("Inside addQuestion");
+            //RedirectToAction()
+            var newChecklistID = this.TChecklistAdapter.getRecentlyModifiedChecklist();
+            return RedirectToAction("ManageTemplateChecklist", newChecklistID);
         }
 
     }
