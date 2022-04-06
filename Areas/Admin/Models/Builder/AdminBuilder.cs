@@ -76,18 +76,14 @@ namespace PainAssessment.Areas.Admin.Models.Builder
             {
                 throw new ArgumentException("Parameter cannot be null", nameof(clinicId));
             }
-            if (dob == default)
-            {
-                throw new ArgumentException("Parameter cannot be null", nameof(dob));
-            }
 
             if (id == default)
             {
-                return new Administrator(fullName, name,role, experience, clinicId, dob);
+                return new Administrator(fullName, name,role, experience, clinicId);
             }
             else
             {
-                return new Administrator(name, fullName, role, experience, clinicId, dob, id);
+                return new Administrator(name, fullName, role, experience, clinicId, id);
             }
         }
     }

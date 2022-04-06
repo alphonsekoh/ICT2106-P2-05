@@ -10,7 +10,6 @@ namespace PainAssessment.Areas.Admin.Models.Builder
         IAdminBuilder WithRole(string role);
         IAdminBuilder WithExperience(string experience);
         IAdminBuilder WithClinic(int clinicId);
-        IAdminBuilder WithDOB(DateTime dob);
 
         Administrator Build();
     }

@@ -30,22 +30,19 @@ namespace PainAssessment.Areas.Admin.Models.ModelBinder
             bool nameResult = data.TryGetValue("Name", out Microsoft.Extensions.Primitives.StringValues name);
             bool roleResult = data.TryGetValue("Role", out Microsoft.Extensions.Primitives.StringValues role);
             bool idResult = data.TryGetValue("Id", out Microsoft.Extensions.Primitives.StringValues id);
-            bool dobResult = data.TryGetValue("DOB", out Microsoft.Extensions.Primitives.StringValues dob);
             bool experienceResult = data.TryGetValue("Experience", out Microsoft.Extensions.Primitives.StringValues experience);
             bool clinicResult = data.TryGetValue("ClinicalAreaID", out Microsoft.Extensions.Primitives.StringValues clinicalAreaID);
 
             bool parseClinicSuccess = int.TryParse(clinicalAreaID, out int parsedClinicID);
-            bool parseDOBSuccess = DateTime.TryParse(dob, out DateTime parsedDOB);
 
 
-            if (!fullNameResult || !nameResult || !roleResult|| !experienceResult || !dobResult || !clinicResult )
+            if (!fullNameResult || !nameResult || !roleResult|| !experienceResult || !clinicResult )
             {
                 bindingContext.Result = ModelBindingResult.Failed();
             }
             else
             {
                 int createdClinicID = default;
-                DateTime date = default;
                 List<int> priorEducationList = new();
                 if (!parseClinicSuccess)
                 {
@@ -58,8 +55,7 @@ namespace PainAssessment.Areas.Admin.Models.ModelBinder
                                                                                    .WithFullName(fullName)
                                                                                    .WithRole(role)
                                                                                    .WithExperience(experience)
-                                                                                   .WithClinic(parseClinicSuccess ? parsedClinicID : createdClinicID)
-                                                                                   .WithDOB(DateTime.Parse(dob));
+                                                                                   .WithClinic(parseClinicSuccess ? parsedClinicID : createdClinicID);
 
 
                 if (idResult)

@@ -137,14 +137,14 @@ namespace PainAssessment.Controllers
                             };*/
 
                             Administrator admin = new Administrator(
-                                model.FullName,model.Username, model.Role, "0", model.ClinicalAreaID, Convert.ToDateTime("05/05/2005"), AccountId);
+                                model.FullName,model.Username, model.Role, "0", model.ClinicalAreaID, AccountId);
                             administratorService.CreateAdmin(admin);
 
                         }
                         else if (account.Role == "Practitioner")
                         {
                             Practitioner p = new Practitioner(
-                                model.FullName, "0","0", model.ClinicalAreaID, model.PracticeTypeID, AccountId);
+                                model.FullName, "0 years","0", model.ClinicalAreaID, model.PracticeTypeID, AccountId);
                             practitionerService.CreatePractitioner(p);
                             practitionerService.SavePractitioner();
                         }
