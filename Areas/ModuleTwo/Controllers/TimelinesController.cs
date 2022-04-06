@@ -13,8 +13,11 @@ namespace PainAssessment.Areas.ModuleTwo.Controllers
     [Area("ModuleTwo")]
     public class TimelinesController : Controller
     {
-  
-        public async Task<IActionResult> Index(int consultationId)
+        //        private readonly ILoginService patientService;
+        //        private readonly IConsultationService consultationService;
+        //        private readonly ISessionService sessionService;
+
+        public async Task<IActionResult> Index(int id)
         {
             return View();
         }
