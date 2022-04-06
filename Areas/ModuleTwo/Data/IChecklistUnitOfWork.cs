@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace PainAssessment.Areas.ModuleTwo.Data
 {
-    public interface IUnitOfWork
+    public interface IChecklistUnitOfWork
     {
         IChecklistRepo ChecklistRepo { get; }
         IConsultationChecklistRepo ConsultationChecklistRepo { get; }

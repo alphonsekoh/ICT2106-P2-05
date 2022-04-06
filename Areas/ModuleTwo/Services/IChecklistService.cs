@@ -9,7 +9,7 @@ namespace PainAssessment.Areas.ModuleTwo.Services
 {
     public interface IChecklistService
     {
-        public IUnitOfWork UnitOfWork { get; }
+        public IChecklistUnitOfWork ChecklistUnitOfWork { get; }
         public Checklist GetById(int id);
         public List<Checklist> GetAll(int user);
         public List<Checklist> GetActiveChecklists();

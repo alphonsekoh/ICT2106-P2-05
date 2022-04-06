@@ -77,12 +77,15 @@ namespace PainAssessment.Areas.ModuleTwo.Data
 
         public Checklist InsertGet()
         {
-            Checklist checklist = new Checklist();
-            checklist.Central.Add(new CentralDomain() { RowId = 1 });
-            checklist.Regional.Add(new RegionalDomain() { RowId = 1 });
-            checklist.Local.Add(new LocalDomain() { RowId = 1 });
+            //Checklist checklist = new Checklist();
+            //checklist.Central.Add(new CentralDomain() { RowId = 1 });
+            //checklist.Regional.Add(new RegionalDomain() { RowId = 1 });
+            //checklist.Local.Add(new LocalDomain() { RowId = 1 });
 
-            return checklist;
+            ChecklistBuilder builder = new ChecklistBuilder();
+            builder.buildChecklist();
+
+            return builder.getChecklist();
         }
 
         public Checklist InsertGetTest()
