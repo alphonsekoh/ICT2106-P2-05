@@ -106,21 +106,5 @@ namespace PainAssessment.Domain
             _unitOfWork.Save();
         }
 
-        /**
-         * Get account
-         */
-        public Account GetAccount(Guid accountId)
-        {
-            Account user = _unitOfWork.LoginRepository.GetById<Account, Guid>(accountId);
-            if (user != null)
-            {
-                return user;
-            }
-            else
-            {
-                return null;
-            }
-        }
-
     }
 }

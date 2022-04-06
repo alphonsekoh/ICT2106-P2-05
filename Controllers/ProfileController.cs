@@ -18,20 +18,20 @@ namespace PainAssessment.Controllers
 {
     public class ProfileController : Controller
     {
-        private readonly ILogger<ProfileController> _logger;
         // Include services
         private readonly ILoginService loginService;
         private readonly IPractitionerService practitionerService;
         private readonly IAdministratorService administratorService;
         private readonly IClinicalAreaService clinicalAreaService;
+        private readonly IAccountService accountService;
 
-        public ProfileController(ILogger<ProfileController> logger, ILoginService loginService,  IPractitionerService practitionerService, IAdministratorService administratorService, IClinicalAreaService clinicalAreaService)
+        public ProfileController(ILogger<ProfileController> logger, ILoginService loginService,  IPractitionerService practitionerService, IAdministratorService administratorService, IClinicalAreaService clinicalAreaService, IAccountService accountService)
         {
-            _logger = logger;
             this.loginService = loginService;
             this.practitionerService = practitionerService;
             this.administratorService = administratorService;
             this.clinicalAreaService = clinicalAreaService;
+            this.accountService = accountService;
             
         }
         /*
@@ -41,8 +41,8 @@ namespace PainAssessment.Controllers
         public ActionResult ViewProfile()
         {
 
-            var userid = loginService.GetAccountId();
-            var user = loginService.GetAccount(userid);
+            Guid userid = loginService.GetAccountId();
+            var user = accountService.GetAccount(userid);
 
             switch (user.Role)
             {

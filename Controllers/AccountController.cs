@@ -80,7 +80,7 @@ namespace PainAssessment.Controllers
                 if (accountService.CheckUsername(model.Username).Equals(true))
                 {
                     System.Diagnostics.Debug.WriteLine(model.NewPassword);
-                    var user = accountService.GetAccount(model.Username);
+                    var user = accountService.GetAccountByUsername(model.Username);
                     System.Diagnostics.Debug.WriteLine(user.Password);
                     if (user != null)
                     {
