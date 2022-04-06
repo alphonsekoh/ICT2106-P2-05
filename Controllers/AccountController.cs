@@ -171,7 +171,7 @@ namespace PainAssessment.Controllers
                         else if (account.Role == "Practitioner")
                         {
                             Practitioner p = new Practitioner(
-                                model.FullName, "0 years", model.PriorPainEducation, model.ClinicalAreaID, model.PracticeTypeID, AccountId);
+                                model.FullName, "0 years", "0", model.ClinicalAreaID, model.PracticeTypeID, AccountId);
                             practitionerService.CreatePractitioner(p);
                             practitionerService.SavePractitioner();
                         }
