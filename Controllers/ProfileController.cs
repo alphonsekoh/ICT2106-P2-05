@@ -34,7 +34,10 @@ namespace PainAssessment.Controllers
             this.clinicalAreaService = clinicalAreaService;
             
         }
-
+        /*
+         returns the details based on the role of the user
+         if the user has no role, return to the home page
+         */
         public ActionResult ViewProfile()
         {
 
@@ -45,10 +48,7 @@ namespace PainAssessment.Controllers
             {
                 case "Administrator":
                     // admin
-
-                    string jsonString = JsonSerializer.Serialize(AdminView(userid));
-                    return RedirectToAction(actionName: "ViewAdmin", controllerName: "Home",
-                new { data = jsonString, area = "Admin" });
+                    return (ActionResult)AdminView(userid);
 
                 case "Practitioner":
                     // practitioner
@@ -56,34 +56,31 @@ namespace PainAssessment.Controllers
                     return View("ViewPrac", practitionerProfile);
                 default:
                     // unrecognised method; return to the blank form
-                    return RedirectToAction("Index");
+                    return RedirectToAction("Index","Home");
 
             }
 
         }
 
-
-        private AdministratorModel AdminView(Guid id)
+        
+        /*
+         returns the details of the specific admin
+         */
+        public IActionResult AdminView(Guid id)
         {
             Administrator admin = administratorService.GetOneAdmin(id);
-            ClinicalArea clinical = clinicalAreaService.GetClinicalArea(admin.ClinicalAreaID);
-            var adminViewModel = new AdministratorModel
-            {
-                Name = admin.Account.Username,
-                FullName = admin.FullName,
-                Role = admin.Account.Role,
-                Experience = admin.Experience,
-                ClinicalArea = clinical.Name,
-                AccountID = admin.Account.AccountId
+            var clinicalArea = clinicalAreaService.GetClinicalArea(admin.ClinicalAreaID);
+            admin.ClinicalArea = clinicalArea.Name;
+            return View("AdminProfile",admin);
 
-            };
-            return adminViewModel;
-            
         }
 
+        /*
+         returns the details of the specific practitioner
+         */
         private PractionerModel PractionerView(Account user)
         {
-            Practitioner practionerDetails = practitionerService.GetPractitioner(new Guid("a6e08001-f5e1-442e-d40f-08da11a4a882"));
+            Practitioner practionerDetails = practitionerService.GetPractitioner(user.AccountId);
             ClinicalArea clinicalPrac = clinicalAreaService.GetClinicalArea(practionerDetails.ClinicalAreaID);
             var practionerViewModel = new PractionerModel
             {
@@ -100,27 +97,7 @@ namespace PainAssessment.Controllers
         }
 
 
-   /*     // GET: ProfileController/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
 
-        // POST: ProfileController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }*/
 
-      
     }
 }

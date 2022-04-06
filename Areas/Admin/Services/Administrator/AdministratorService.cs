@@ -25,9 +25,9 @@ namespace PainAssessment.Areas.Admin.Services
         // Get one Admin
         public Administrator GetOneAdmin(Guid id)
         {
-            IEnumerable<Administrator> admin = _unitOfWork.AdministratorRepository.Find(Acc => Acc.Account.AccountId.Equals(id));
-            Administrator adminAcc = admin.First();
-            Administrator adminDetails = _unitOfWork.AdministratorRepository.GetById<Administrator,Guid>(adminAcc.AdminId);
+            /*IEnumerable<Administrator> admin = _unitOfWork.AdministratorRepository.Find(Acc => Acc.Account.AccountId.Equals(id));
+            Administrator adminAcc = admin.First();*/
+            Administrator adminDetails = _unitOfWork.AdministratorRepository.GetById<Administrator,Guid>(id);
             return adminDetails;
         }
 
