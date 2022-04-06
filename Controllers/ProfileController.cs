@@ -45,10 +45,7 @@ namespace PainAssessment.Controllers
             {
                 case "Administrator":
                     // admin
-
-                    string jsonString = JsonSerializer.Serialize(AdminView(userid));
-                    return RedirectToAction(actionName: "ViewAdmin", controllerName: "Home",
-                new { data = jsonString, area = "Admin" });
+                    return (ActionResult)AdminView(userid);
 
                 case "Practitioner":
                     // practitioner
@@ -61,29 +58,20 @@ namespace PainAssessment.Controllers
             }
 
         }
-
-
-        private AdministratorModel AdminView(Guid id)
+        //returns the admin view
+        public IActionResult AdminView(Guid id)
         {
             Administrator admin = administratorService.GetOneAdmin(id);
-            ClinicalArea clinical = clinicalAreaService.GetClinicalArea(admin.ClinicalAreaID);
-            var adminViewModel = new AdministratorModel
-            {
-                Name = admin.Account.Username,
-                FullName = admin.FullName,
-                Role = admin.Account.Role,
-                Experience = admin.Experience,
-                ClinicalArea = clinical.Name,
-                AccountID = admin.Account.AccountId
+            var clinicalArea = clinicalAreaService.GetClinicalArea(admin.ClinicalAreaID);
+            admin.ClinicalArea = clinicalArea.Name;
+            return View("AdminProfile",admin);
 
-            };
-            return adminViewModel;
-            
         }
+
 
         private PractionerModel PractionerView(Account user)
         {
-            Practitioner practionerDetails = practitionerService.GetPractitioner(new Guid("a6e08001-f5e1-442e-d40f-08da11a4a882"));
+            Practitioner practionerDetails = practitionerService.GetPractitioner(user.AccountId);
             ClinicalArea clinicalPrac = clinicalAreaService.GetClinicalArea(practionerDetails.ClinicalAreaID);
             var practionerViewModel = new PractionerModel
             {
@@ -100,27 +88,7 @@ namespace PainAssessment.Controllers
         }
 
 
-   /*     // GET: ProfileController/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
 
-        // POST: ProfileController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }*/
 
-      
     }
 }

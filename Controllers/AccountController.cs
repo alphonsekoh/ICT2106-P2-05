@@ -129,13 +129,17 @@ namespace PainAssessment.Controllers
                         if (account.Role == "Administrator")
                         {
                             // Administrator service
-                            Administrator admin = new Administrator
+                            /*Administrator admin = new Administrator
                             {
                                 Account = account,
                                 FullName = model.FullName,
                                 Experience = 0
-                            };
+                            };*/
+
+                            Administrator admin = new Administrator(
+                                model.FullName,model.Username, model.Role, "0", model.ClinicalAreaID, Convert.ToDateTime("05/05/2005"), AccountId);
                             administratorService.CreateAdmin(admin);
+
                         }
                         else if (account.Role == "Practitioner")
                         {
