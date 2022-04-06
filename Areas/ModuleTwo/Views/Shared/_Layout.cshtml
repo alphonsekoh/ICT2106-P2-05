@@ -6,6 +6,9 @@
     <title>@ViewData["Title"] - PainAssessment</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
+        <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
 </head>
 <body>
     <header>
@@ -25,7 +28,10 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
                         <li class="nav-item">
-                            @*<a class="nav-link text-dark" asp-area="ModuleTwo" asp-controller="Patients" asp-action="Index">Patient</a>*@
+                            <a class="nav-link text-dark" asp-area="ModuleTwo" asp-controller="Checklists" asp-action="Index">Checklists</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="ModuleTwo" asp-controller="PractPatient" asp-action="Index">Patients</a>
                         </li>
                     </ul>
                 </div>
@@ -43,9 +49,7 @@
             &copy; 2022 - PainAssessment - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
+
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
