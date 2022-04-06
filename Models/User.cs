@@ -7,11 +7,18 @@ namespace PainAssessment.Models
         private static User _instance = null;
         private static Guid _AccountId = Guid.Empty;
         private static string _Role = null;
+
+        /**
+         * Function to return account Id from instance
+         */
         public Guid GetGuid
         {
             get { return _AccountId; }
         }
 
+        /**
+         * Function to return account role from instance
+         */
         public string GetRole
         {
             get { return _Role; }
@@ -22,6 +29,9 @@ namespace PainAssessment.Models
         //    return User._AccountId == Guid.Empty || User._Role != null;
         //}
 
+        /**
+         * Set account id and role to instance
+         */
         public void setProperty(Guid guid, string role)
         {
             _Role = role;
