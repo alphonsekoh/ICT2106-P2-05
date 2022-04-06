@@ -11,6 +11,8 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using PainAssessment.Areas.Admin.Services;
 using PainAssessment.Areas.Admin.Models;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using PainAssessment.Areas.Admin.Models.Builder;
 
 namespace PainAssessment.Controllers
 {
@@ -20,6 +22,12 @@ namespace PainAssessment.Controllers
         private readonly IAdministratorService administratorService;
         private readonly ILoginService loginService;
 
+        private readonly IPractitionerService practitionerService;
+        private readonly IClinicalAreaService clinicalAreaService;
+        private readonly IPainEducationService painEducationService;
+        private readonly IPracticeTypeService practiceTypeService;
+
+
         //private const string REDIRECT_CNTR = "Home";
         private const string DIRECT_CNTR = "Login";
         private const string DIRECT_ACTN = "Index";
@@ -27,12 +35,22 @@ namespace PainAssessment.Controllers
         public AccountController(
             IAccountService accountService,
             IAdministratorService administratorService,
-            ILoginService loginService
+            ILoginService loginService,
+            IPractitionerService practitionerService,
+            IClinicalAreaService clinicalAreaService,
+            IPainEducationService painEducationService,
+            IPracticeTypeService practiceTypeService
+
            )
         {
             this.accountService = accountService;
             this.administratorService = administratorService;
             this.loginService = loginService;
+            this.practitionerService = practitionerService;
+            this.clinicalAreaService = clinicalAreaService;
+            this.painEducationService = painEducationService;
+            this.practiceTypeService = practiceTypeService;
+
         }
 
         [AllowAnonymous]
@@ -73,15 +91,18 @@ namespace PainAssessment.Controllers
 
         }
         [HttpGet]
-        [Authorize]
-        public ActionResult CreateAccount()
+        [AllowAnonymous]
+        public IActionResult CreateAccount()
         {
+            ViewData["ClinicalAreaID"] = new SelectList(clinicalAreaService.GetAllClinicalAreas(), "Id", "Name");
+            ViewData["PracticeTypeID"] = new SelectList(practiceTypeService.GetAllPracticeTypes(), "Id", "Name");
+            ViewData["PainEducationID"] = new MultiSelectList(painEducationService.GetAllPainEducations(), "Id", "Name");
             return View(new CreateAccountModel());
         }
 
         [HttpPost]
-        [Authorize]
-        public ActionResult CreateAccount(CreateAccountModel model)
+        [AllowAnonymous]
+        public IActionResult CreateAccount( CreateAccountModel model)
         {
             if (ModelState.IsValid)
             {
@@ -118,7 +139,10 @@ namespace PainAssessment.Controllers
                         }
                         else if (account.Role == "Practitioner")
                         {
-                            return RedirectToAction("Create", "Practitioners", new {area = "Admin"});
+                            Practitioner p = new Practitioner(
+                                model.FullName, "0","0", model.ClinicalAreaID, model.PracticeTypeID, AccountId);
+                            practitionerService.CreatePractitioner(p);
+                            practitionerService.SavePractitioner();
                         }
                         return RedirectToAction(DIRECT_ACTN, DIRECT_CNTR);
                     }
