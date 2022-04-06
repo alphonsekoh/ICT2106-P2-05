@@ -19,71 +19,73 @@ namespace PainAssessment.Controllers
     public class ProfileController : Controller
     {
         private readonly ILogger<ProfileController> _logger;
-        // Include services
+        /**
+         * Include services
+         */
         private readonly ILoginService loginService;
         private readonly IPractitionerService practitionerService;
         private readonly IAdministratorService administratorService;
         private readonly IClinicalAreaService clinicalAreaService;
+        private readonly IAccountService accountService;
 
-        public ProfileController(ILogger<ProfileController> logger, ILoginService loginService,  IPractitionerService practitionerService, IAdministratorService administratorService, IClinicalAreaService clinicalAreaService)
+        /**
+         * Constructor
+         */
+        public ProfileController(ILogger<ProfileController> logger, ILoginService loginService,  IPractitionerService practitionerService, IAdministratorService administratorService, IClinicalAreaService clinicalAreaService, IAccountService accountService)
         {
-            _logger = logger;
             this.loginService = loginService;
             this.practitionerService = practitionerService;
             this.administratorService = administratorService;
             this.clinicalAreaService = clinicalAreaService;
-            
+            this.accountService = accountService;
         }
-
+        /*
+         returns the details based on the role of the user
+         if the user has no role, return to the home page
+         */
         public ActionResult ViewProfile()
         {
 
-            var userid = loginService.GetAccountId();
-            var user = loginService.GetAccount(userid);
+            Guid userid = loginService.GetAccountId();
+            var user = accountService.GetAccount(userid);
 
             switch (user.Role)
             {
                 case "Administrator":
                     // admin
-
-                    string jsonString = JsonSerializer.Serialize(AdminView(userid));
-                    return RedirectToAction(actionName: "ViewAdmin", controllerName: "Home",
-                new { data = jsonString, area = "Admin" });
+                    return (ActionResult)AdminView(userid);
 
                 case "Practitioner":
                     // practitioner
                     var practitionerProfile = PractionerView(user);
-                    return View("ViewPrac", practitionerProfile);
+                    return View("ViewPractitionerProfile", practitionerProfile);
                 default:
                     // unrecognised method; return to the blank form
-                    return RedirectToAction("Index");
+                    return RedirectToAction("Index", "Home");
 
             }
 
         }
 
 
-        private AdministratorModel AdminView(Guid id)
+        /*
+         returns the details of the specific admin
+         */
+        public IActionResult AdminView(Guid id)
         {
             Administrator admin = administratorService.GetOneAdmin(id);
-            ClinicalArea clinical = clinicalAreaService.GetClinicalArea(admin.ClinicalAreaID);
-            var adminViewModel = new AdministratorModel
-            {
-                Name = admin.Account.Username,
-                FullName = admin.FullName,
-                Role = admin.Account.Role,
-                Experience = admin.Experience,
-                ClinicalArea = clinical.Name,
-                AccountID = admin.Account.AccountId
+            var clinicalArea = clinicalAreaService.GetClinicalArea(admin.ClinicalAreaID);
+            admin.ClinicalArea = clinicalArea.Name;
+            return View("ViewAdminProfile", admin);
 
-            };
-            return adminViewModel;
-            
         }
 
+        /*
+         returns the details of the specific practitioner
+         */
         private PractionerModel PractionerView(Account user)
         {
-            Practitioner practionerDetails = practitionerService.GetPractitioner(new Guid("a6e08001-f5e1-442e-d40f-08da11a4a882"));
+            Practitioner practionerDetails = practitionerService.GetPractitioner(user.AccountId);
             ClinicalArea clinicalPrac = clinicalAreaService.GetClinicalArea(practionerDetails.ClinicalAreaID);
             var practionerViewModel = new PractionerModel
             {
@@ -100,27 +102,7 @@ namespace PainAssessment.Controllers
         }
 
 
-   /*     // GET: ProfileController/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
 
-        // POST: ProfileController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }*/
 
-      
     }
 }
