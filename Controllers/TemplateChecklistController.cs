@@ -87,6 +87,7 @@ namespace PainAssessment.Controllers
         [HttpPost]
         public IActionResult EditTemplateChecklist(Areas.ModuleTwo.Models.Checklist checklist)
         {
+       
             checklistService.Update(checklist);
             return RedirectToAction(nameof(ViewTemplateChecklist));
         }

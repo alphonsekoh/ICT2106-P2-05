@@ -19,17 +19,17 @@ namespace PainAssessment.Domain
         }
         public void updateActive(int checklistID)
         {
-         
-            Checklist checklist = checklistser.GetById(checklistID);
+
+            var checklist = checklistser.GetById(checklistID);
                 if (checklist.Active)
                 {
                     checklist.Active = false;
+                 
                 }
                 else
                 {
                     checklist.Active = true;
                 }
-
             checklistser.Update(checklist);
         }
     }
