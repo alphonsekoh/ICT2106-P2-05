@@ -154,16 +154,12 @@ namespace PainAssessment.Controllers
         public IActionResult EditProfile(UpdateUsernameModel practionerModel)
         {
             Guid userid = loginService.GetAccountId();
-            var userUpdate = accountService.GetAccount(userid);
+            var userAccount = accountService.GetAccount(userid);
+            userAccount.Username = practionerModel.NewUserName;
+            practionerModel = UpdatePractionerView(userAccount);
             System.Diagnostics.Debug.WriteLine(practionerModel.AccountID);
-            var user = accountService.GetAccount(practionerModel.AccountID);
             System.Diagnostics.Debug.WriteLine(practionerModel.NewUserName);
-            accountService.UpdateAccountStatus(user);
-            System.Diagnostics.Debug.WriteLine("------- Edit Username -------");
-            System.Diagnostics.Debug.WriteLine(user.AccountId);
-            System.Diagnostics.Debug.WriteLine(user.AccountStatus);
-            System.Diagnostics.Debug.WriteLine(user.Password);
-            System.Diagnostics.Debug.WriteLine(user.Username);
+            accountService.UpdateAccountStatus(userAccount);
             System.Diagnostics.Debug.WriteLine(practionerModel.NewUserName);
             ViewData["Message"] = "Username successfully changed!";
             ViewData["MsgType"] = "success";
