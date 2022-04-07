@@ -27,6 +27,7 @@ namespace PainAssessment.Interfaces
 
         List<Areas.ModuleTwo.Models.Checklist> GetAllAdminChecklists();
 
+        Areas.ModuleTwo.Models.Checklist InitialiseChecklist();
         void InsertNewChecklist(Areas.ModuleTwo.Models.Checklist checklist);
     }
 }

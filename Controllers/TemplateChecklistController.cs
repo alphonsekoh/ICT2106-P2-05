@@ -14,16 +14,15 @@ namespace PainAssessment.Controllers
     {
 
         //include services and logger
-        private Areas.ModuleTwo.Services.IChecklistService checklistService;
+      
         private readonly ILogger<TemplateChecklistController> _logger;        
         private readonly IDefaultQuestionsService defaultQuestionsService;
         private ITemplateChecklistAdapter TChecklistAdapter;
 
 
-        public TemplateChecklistController(ILogger<TemplateChecklistController> logger, ITemplateChecklistService templateChecklistService, IDefaultQuestionsService defaultQuestionsService, Areas.ModuleTwo.Services.IChecklistService checklistServ, ITemplateChecklistAdapter tchecklistadapter)
+        public TemplateChecklistController(ILogger<TemplateChecklistController> logger, ITemplateChecklistService templateChecklistService, IDefaultQuestionsService defaultQuestionsService, ITemplateChecklistAdapter tchecklistadapter)
         {
             _logger = logger;
-            checklistService = checklistServ;
             this.defaultQuestionsService = defaultQuestionsService;
             this.TChecklistAdapter = tchecklistadapter;
         }
@@ -31,7 +30,7 @@ namespace PainAssessment.Controllers
         //get all template checklist by admin and display
         public IActionResult ViewTemplateChecklist()
         {
-            var checklists = checklistService.GetAll(1);
+            var checklists = TChecklistAdapter.GetAllAdminChecklists();
             return View(checklists);
         }
 
@@ -40,14 +39,14 @@ namespace PainAssessment.Controllers
         [HttpGet]
         public IActionResult CreateTemplateChecklist(int user)
         {
-            var checklists = checklistService.InitialiseChecklist();
+            var checklists = TChecklistAdapter.InitialiseChecklist();
             return View(checklists);
         }
         //create template checklist
         [HttpPost]
         public IActionResult CreateTemplateChecklist(Areas.ModuleTwo.Models.Checklist checklist)
         {
-            checklistService.Insert(checklist);
+            TChecklistAdapter.InsertNewChecklist(checklist);
             return RedirectToAction(nameof(ViewTemplateChecklist));
         }
 
@@ -55,21 +54,21 @@ namespace PainAssessment.Controllers
         [HttpGet]
         public IActionResult DeleteTemplateChecklist(int id)
         {
-            var checklist = checklistService.GetById(id);
+            var checklist = TChecklistAdapter.GetChecklistByChecklistID(id);
             return View(checklist);
         }
         // confirm delete template checklist
         [HttpPost]
         public IActionResult DeleteTemplateChecklist(Areas.ModuleTwo.Models.Checklist checklist)
         {
-            checklistService.Delete(checklist);
+            TChecklistAdapter.DeleteChecklist(checklist.ChecklistId);
             return RedirectToAction(nameof(ViewTemplateChecklist));
         }
         // navigate to edit/update template checklist with the checklist id
         [HttpGet]
         public IActionResult EditTemplateChecklist(int id)
         {
-            var checklist = checklistService.GetById(id);
+            var checklist = TChecklistAdapter.GetChecklistByChecklistID(id);
             return View(checklist);
         }
         // edit/update template checklist with the checklist
@@ -92,7 +91,7 @@ namespace PainAssessment.Controllers
         public IActionResult ManageTemplateChecklist(int id)
         {
 
-            var checklist = this.checklistService.GetById(id);
+            var checklist = TChecklistAdapter.GetChecklistByChecklistID(id);
             return View(checklist);
         }
 
