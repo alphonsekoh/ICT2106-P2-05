@@ -1,13 +1,18 @@
 ﻿using PainAssessment.Areas.Admin.Models;
+using PainAssessment.Areas.Admin.Services;
 using PainAssessment.Data;
+using PainAssessment.Interfaces;
+using PainAssessment.Models;
 using System;
 using System.Linq;
+using BC = BCrypt.Net.BCrypt;
 
 
 namespace PainAssessment.Areas.Admin.Data
 {
     public static class PractitionerClinicDbInitializer
     {
+        private static readonly IUnitOfWork unitOfWork;
         public static void Initialize(HospitalContext context)
         {
 
@@ -127,13 +132,51 @@ namespace PainAssessment.Areas.Admin.Data
 
             context.Patients.AddRange(patients);
             context.SaveChanges();
-            
-            for(int i = 0; i < practitioners.Length; i++)
+
+            for (int i = 0; i < practitioners.Length; i++)
             {
                 practitioners[i].AddPatientRelation(patients[i]);
             }
             context.SaveChanges();
+            var accid = Guid.Empty;
 
+            Account[] account = new Account[]
+           {
+                new Account(accid, "Abby", BC.HashPassword("123123"), "active", "Administrator", DateTime.Now,  true),
+                new Account(accid, "Bob", BC.HashPassword("123123"), "active", "Administrator", DateTime.Now,  true),
+                new Account(accid, "Cindy", BC.HashPassword("123123"), "active", "Practitioner", DateTime.Now,  true),
+           };
+
+            Administrator[] admin = new Administrator[]
+            {
+                new Administrator("Abby", "Abby", "5", 1, accid),
+                new Administrator("Bob", "Bob", "10", 2, accid),
+            };
+
+            for (int i = 0; i < account.Length; i++)
+            {
+                var AccountId = Guid.NewGuid();
+
+
+                account[i].AccountId = AccountId;
+                // insert account to db
+                unitOfWork.AccountRepository.Add(account[i]);
+                unitOfWork.Save();
+
+                if (i <= 1)
+                {
+                    admin[i].AdminId = AccountId;
+                    // insert admin to db
+                    unitOfWork.AdministratorRepository.Add(admin[i]);
+                    unitOfWork.Save();
+                }
+                else
+                {
+                    Practitioner prac = new Practitioner("Cindy", "10 years", "1", 3, 2, AccountId);
+                    context.Practitioners.AddRange(prac);
+                    context.SaveChanges();
+                };
+            };
         }
     }
 }
