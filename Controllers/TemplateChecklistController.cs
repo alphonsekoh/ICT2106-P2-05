@@ -77,14 +77,14 @@ namespace PainAssessment.Controllers
         public IActionResult EditTemplateChecklist(Areas.ModuleTwo.Models.Checklist checklist)
         {
 
-            TChecklistAdapter.editTemplate(checklist.ChecklistId, checklist.ChecklistName, checklist.ChecklistDescription, checklist.Active);
+            TChecklistAdapter.EditTemplate(checklist.ChecklistId, checklist.ChecklistName, checklist.ChecklistDescription, checklist.Active);
             return RedirectToAction(nameof(ViewTemplateChecklist));
         }
 
         [HttpPost]
         public ActionResult Update(int checklistID)
         {
-            TChecklistAdapter.updateActive(checklistID);
+            TChecklistAdapter.UpdateActive(checklistID);
             return RedirectToAction(nameof(ViewTemplateChecklist));
         }
 
@@ -102,10 +102,10 @@ namespace PainAssessment.Controllers
         {
 
             //defaultQuestionsService.CreateDefaultQuestion(1, QString, "", int.Parse(PainSection), double.Parse(weightage));
-            this.TChecklistAdapter.addQuestion(checklistID, new_sub_domain, new_determinant, domain, new_max_weightage);
+            this.TChecklistAdapter.AddQuestion(checklistID, new_sub_domain, new_determinant, domain, new_max_weightage);
             Console.WriteLine("Inside addQuestion");
             //RedirectToAction()
-            var newChecklistID = this.TChecklistAdapter.getRecentlyModifiedChecklist();
+            var newChecklistID = this.TChecklistAdapter.GetRecentlyModifiedChecklist();
             return RedirectToAction("ManageTemplateChecklist", new { id  = newChecklistID});
         }
 
@@ -113,9 +113,9 @@ namespace PainAssessment.Controllers
         [HttpGet]
         public IActionResult UpdateQuestion(int checklistId, int domain, int rowId, string determinant, string sub_domain, int max_value)
         {
-            this.TChecklistAdapter.updateQuestion(checklistId, sub_domain, determinant, domain, max_value, rowId);
+            this.TChecklistAdapter.UpdateQuestion(checklistId, sub_domain, determinant, domain, max_value, rowId);
 
-            var newChecklistID = this.TChecklistAdapter.getRecentlyModifiedChecklist();
+            var newChecklistID = this.TChecklistAdapter.GetRecentlyModifiedChecklist();
 
             return RedirectToAction("ManageTemplateChecklist", new { id = newChecklistID });
         }
@@ -123,9 +123,9 @@ namespace PainAssessment.Controllers
         [HttpGet]
         public IActionResult DeleteQuestion(int checklistId, int domain, int rowId, string determinant, string sub_domain, int max_value)
         {
-            this.TChecklistAdapter.deleteQuestion(checklistId, sub_domain, determinant, domain, max_value, rowId);
+            this.TChecklistAdapter.DeleteQuestion(checklistId, sub_domain, determinant, domain, max_value, rowId);
 
-            var newChecklistID = this.TChecklistAdapter.getRecentlyModifiedChecklist();
+            var newChecklistID = this.TChecklistAdapter.GetRecentlyModifiedChecklist();
 
             return RedirectToAction("ManageTemplateChecklist", new { id = newChecklistID });
         }

@@ -18,7 +18,7 @@ namespace PainAssessment.Domain
             checklistser = checklistservice;
         }
 
-        public void updateActive(int checklistID)
+        public void UpdateActive(int checklistID)
         {
 
             Checklist checklist = checklistser.GetById(checklistID);
@@ -40,7 +40,7 @@ namespace PainAssessment.Domain
       
         }
 
-        public void editTemplate(int checklistID, string name, string description, bool active)
+        public void EditTemplate(int checklistID, string name, string description, bool active)
         {
 
             Checklist checklist = checklistser.GetById(checklistID);
@@ -56,7 +56,7 @@ namespace PainAssessment.Domain
 
         }
 
-        public void addQuestion(int checklistID, string subDomain, string determinant, int domain, int maxWeightage)
+        public void AddQuestion(int checklistID, string subDomain, string determinant, int domain, int maxWeightage)
         {
             Checklist currChecklist = checklistser.GetById(checklistID);
 
@@ -200,7 +200,7 @@ namespace PainAssessment.Domain
         ///  causing the checklist ID to change
         /// </summary>
         /// <returns></returns>
-        public int getRecentlyModifiedChecklist()
+        public int GetRecentlyModifiedChecklist()
         {
             List<Checklist> allChecklist = checklistser.GetAll(1);
 
@@ -216,7 +216,7 @@ namespace PainAssessment.Domain
             return i;
         }
 
-        public void updateQuestion(int checklistID, string subDomain, string determinant, int domain, int maxWeightage, int rowId)
+        public void UpdateQuestion(int checklistID, string subDomain, string determinant, int domain, int maxWeightage, int rowId)
         {
             Checklist currChecklist = checklistser.GetById(checklistID);
 
@@ -292,7 +292,7 @@ namespace PainAssessment.Domain
             checklistser.Insert(newChecklist);
         }
 
-        public void deleteQuestion(int checklistID, string subDomain, string determinant, int domain, int maxWeightage, int rowId)
+        public void DeleteQuestion(int checklistID, string subDomain, string determinant, int domain, int maxWeightage, int rowId)
         {
             Checklist currChecklist = checklistser.GetById(checklistID);
 
