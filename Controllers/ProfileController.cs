@@ -11,7 +11,6 @@ using PainAssessment.ViewModels.Profile;
 using System.Security.Claims;
 using PainAssessment.Models;
 using PainAssessment.Areas.Admin.Models;
-using PainAssessment.Areas.Admin.Models.ViewModels;
 using System.Text.Json;
 using BC = BCrypt.Net.BCrypt;
 using PainAssessment.ViewModels;
