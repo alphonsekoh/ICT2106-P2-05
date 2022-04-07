@@ -13,6 +13,7 @@ using PainAssessment.Areas.Admin.Services;
 using PainAssessment.Areas.Admin.Models;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using PainAssessment.Areas.Admin.Models.Builder;
+using System.Collections.Generic;
 
 namespace PainAssessment.Controllers
 {
@@ -131,6 +132,7 @@ namespace PainAssessment.Controllers
         [Authorize(Roles = "Administrator")]
         public IActionResult CreateAccount(CreateAccountModel model)
         {
+           
             if (ModelState.IsValid)
             {
                 if (accountService.CheckUsername(model.Username).Equals(false))
@@ -170,8 +172,30 @@ namespace PainAssessment.Controllers
                         }
                         else if (account.Role == "Practitioner")
                         {
-                            Practitioner p = new Practitioner(
-                                model.FullName, "0 years", "0", model.ClinicalAreaID, model.PracticeTypeID, AccountId);
+                            List<int> priorEducationList = new();
+                            foreach (string prior in model.SelectedPainEducation)
+                            {
+                                bool parsePriorSuccess = int.TryParse(prior, out int parsedPainEducation);
+                                if (parsePriorSuccess)
+                                {
+                                    priorEducationList.Add(parsedPainEducation);
+                                }
+                                else
+                                {
+                                    PainEducation newPainEducation = new(prior);
+                                    painEducationService.CreatePainEducation(newPainEducation);
+                                    painEducationService.SavePainEducation();
+                                    priorEducationList.Add(newPainEducation.Id);
+                                }
+                            }
+                           IPractitionerBuilder practitionerBuilder = new PractitionerBuilder().WithName(model.FullName)
+                                                                                   .WithExperience("0")
+                                                                                   .WithPainEducation(string.Join(",", priorEducationList))
+                                                                                   .WithClinic(model.ClinicalAreaID)
+                                                                                   .WithPracticeType(model.PracticeTypeID);
+
+
+                            Practitioner p = practitionerBuilder.Build();
                             practitionerService.CreatePractitioner(p);
                             practitionerService.SavePractitioner();
                         }
