@@ -20,5 +20,13 @@ namespace PainAssessment.Interfaces
 
         void UpdateQuestion(int checklistID, string subDomain, string determinant, int domain, int maxWeightage, int rowId);
         void DeleteQuestion(int checklistID, string subDomain, string determinant, int domain, int maxWeightage, int rowId);
+
+        void DeleteChecklist(int checklistID);
+
+        Areas.ModuleTwo.Models.Checklist GetChecklistByChecklistID(int checklistID);
+
+        List<Areas.ModuleTwo.Models.Checklist> GetAllAdminChecklists();
+
+        void InsertNewChecklist(Areas.ModuleTwo.Models.Checklist checklist);
     }
 }

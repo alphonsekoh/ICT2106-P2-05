@@ -375,6 +375,28 @@ namespace PainAssessment.Domain
             checklistser.Delete(currChecklist);
             checklistser.Insert(newChecklist);
         }
+
+        public void DeleteChecklist(int checklistID)
+        {
+            Checklist checklistToDelete = this.checklistser.GetById(checklistID);
+            this.checklistser.Delete(checklistToDelete);
+        }
+
+        Areas.ModuleTwo.Models.Checklist GetChecklistByChecklistID(int checklistID)
+        {
+            return this.checklistser.GetById(checklistID);
+        }
+
+        List<Areas.ModuleTwo.Models.Checklist> GetAllAdminChecklists()
+        {
+            // This is hardcoded due to the service limitations
+            return this.checklistser.GetAll(1);
+        }
+
+        void InsertNewChecklist(Areas.ModuleTwo.Models.Checklist checklist)
+        {
+            this.checklistser.Insert(checklist);
+        }
     }
 
 }
